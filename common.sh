@@ -1,0 +1,1 @@
+: "${TARGET:=/usr/local}"
