@@ -2,8 +2,7 @@
 
 set -o errexit
 
-BASE=$(dirname $(readlink -f "$0"))
-source ${BASE}/../common.sh
+: "${TARGET:=/usr/local}"
 
 curl --silent https://api.github.com/repos/moby/buildkit/releases | \
     jq 'map(select(.tag_name | startswith("v"))) | .[0]' | \

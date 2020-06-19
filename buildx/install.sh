@@ -2,8 +2,7 @@
 
 set -o errexit
 
-BASE=$(dirname $(readlink -f "$0"))
-source ${BASE}/../common.sh
+: "${TARGET:=/usr/local}"
 
 mkdir --parents ~/.docker/cli-plugins
 curl --silent https://api.github.com/repos/docker/buildx/releases/latest | \

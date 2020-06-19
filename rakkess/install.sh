@@ -2,8 +2,7 @@
 
 set -o errexit
 
-BASE=$(dirname $(readlink -f "$0"))
-source ${BASE}/../common.sh
+: "${TARGET:=/usr/local}"
 
 curl --silent https://api.github.com/repos/corneliusweig/rakkess/releases/latest | \
     jq --raw-output '.assets[] | select(.name == "rakkess-amd64-linux.tar.gz") | .browser_download_url' | \

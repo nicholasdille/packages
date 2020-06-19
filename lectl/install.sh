@@ -2,8 +2,7 @@
 
 set -o errexit
 
-BASE=$(dirname $(readlink -f "$0"))
-source ${BASE}/../common.sh
+: "${TARGET:=/usr/local}"
 
 curl --silent https://api.github.com/repos/sahsanu/lectl/releases/latest | \
     jq --raw-output '.tag_name' | \

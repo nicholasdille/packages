@@ -2,8 +2,7 @@
 
 set -o errexit
 
-BASE=$(dirname $(readlink -f "$0"))
-source ${BASE}/../common.sh
+: "${TARGET:=/usr/local}"
 
 curl --silent https://storage.googleapis.com/kubernetes-release/release/stable.txt | \
     xargs -I{} sudo curl --location --output ${TARGET}/bin/kubectl https://storage.googleapis.com/kubernetes-release/release/{}/bin/linux/amd64/kubectl

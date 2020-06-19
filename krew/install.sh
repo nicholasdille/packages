@@ -2,8 +2,7 @@
 
 set -o errexit
 
-BASE=$(dirname $(readlink -f "$0"))
-source ${BASE}/../common.sh
+: "${TARGET:=/usr/local}"
 
 curl --silent https://api.github.com/repos/kubernetes-sigs/krew/releases/latest | \
     jq --raw-output '.assets[] | select(.name == "krew.tar.gz") | .browser_download_url' | \

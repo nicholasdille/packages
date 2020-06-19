@@ -2,8 +2,7 @@
 
 set -o errexit
 
-BASE=$(dirname $(readlink -f "$0"))
-source ${BASE}/../common.sh
+: "${TARGET:=/usr/local}"
 
 curl --silent --location -o /dev/null -w %{url_effective} https://github.com/helm/helm/releases/latest | \
     grep -oE "[^/]+$" | \

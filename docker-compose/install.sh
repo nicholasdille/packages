@@ -2,8 +2,7 @@
 
 set -o errexit
 
-BASE=$(dirname $(readlink -f "$0"))
-source ${BASE}/../common.sh
+: "${TARGET:=/usr/local}"
 
 curl --silent https://api.github.com/repos/docker/compose/releases/latest | \
     jq --raw-output '.assets[] | select(.name == "docker-compose-Linux-x86_64") | .browser_download_url' | \
