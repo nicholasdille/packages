@@ -8,7 +8,7 @@ trap clean EXIT
 
 : "${TARGET:=/usr/local}"
 
-TAG_NAME=$(curl -s https://api.github.com/repos/containers/buildah/releases/latest | jq --raw-output '.tag_name')
+TAG_NAME=$(curl --silent https://api.github.com/repos/containers/buildah/releases/latest | jq --raw-output '.tag_name')
 if test -z "${TAG_NAME}"; then
     echo "ERROR: Unable to determine tag name"
     exit 1

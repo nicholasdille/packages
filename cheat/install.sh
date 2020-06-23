@@ -4,9 +4,9 @@ set -o errexit
 
 : "${TARGET:=/usr/local}"
 
-curl -s https://api.github.com/repos/cheat/cheat/releases/latest | \
+curl --silent https://api.github.com/repos/cheat/cheat/releases/latest | \
     jq --raw-output '.assets[] | select(.name == "cheat-linux-amd64.gz") | .browser_download_url' | \
-    xargs curl -Lf | \
+    xargs curl --location --fail | \
     gunzip | \
     sudo tee ${TARGET}/bin/cheat >/dev/null
 sudo chmod +x ${TARGET}/bin/cheat

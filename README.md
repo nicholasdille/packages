@@ -7,5 +7,5 @@ Installation script for tools I use regularly
 Install package, e.g. `kind`:
 
 ```bash
-curl -s https://github.com/nicholasdille/packages/raw/master/kind/install.sh | sh
+curl --silent https://github.com/nicholasdille/packages/raw/master/kind/install.sh | sh
 ```
