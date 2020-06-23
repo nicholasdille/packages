@@ -9,4 +9,6 @@ curl --silent https://api.github.com/repos/xetys/hetzner-kube/releases/latest | 
     xargs sudo curl --location --fail --output ${TARGET}/bin/hetzner-kube
 sudo chmod +x ${TARGET}/bin/hetzner-kube
 
-# hetzner-kube completion bash
+sudo mkdir -p ${TARGET}/etc/bash_completion.d
+hetzner-kube completion bash | sudo tee ${TARGET}/etc/bash_completion.d/hetzner-kube.sh >/dev/null
+sudo ln -s ${TARGET}/etc/bash_completion.d/hetzner-kube.sh /etc/bash_completion.d/

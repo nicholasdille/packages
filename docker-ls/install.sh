@@ -19,5 +19,10 @@ EOF
 docker cp docker-ls:/docker-ls - | sudo tar -xvC ${TARGET}/bin/
 docker cp docker-ls:/docker-rm - | sudo tar -xvC ${TARGET}/bin/
 
-# docker-ls autocomplete bash
-# docker-rm autocomplete bash
+sudo mkdir -p ${TARGET}/etc/bash_completion.d
+
+docker-ls autocomplete bash | sudo tee ${TARGET}/etc/bash_completion.d/docker-ls.sh >/dev/null
+sudo ln -s ${TARGET}/etc/bash_completion.d/docker-ls.sh /etc/bash_completion.d/
+
+docker-rm autocomplete bash | sudo tee ${TARGET}/etc/bash_completion.d/docker-rm.sh >/dev/null
+sudo ln -s ${TARGET}/etc/bash_completion.d/docker-rm.sh /etc/bash_completion.d/

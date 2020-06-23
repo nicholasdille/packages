@@ -9,4 +9,6 @@ curl --silent https://api.github.com/repos/hetznercloud/cli/releases/latest | \
     xargs curl --location --fail | \
     sudo tar -xzC ${TARGET}/bin/ hcloud
 
-# hcloud completion bash
+sudo mkdir -p ${TARGET}/etc/bash_completion.d
+hcloud completion bash | sudo tee ${TARGET}/etc/bash_completion.d/hcloud.sh >/dev/null
+sudo ln -s ${TARGET}/etc/bash_completion.d/hcloud.sh /etc/bash_completion.d/

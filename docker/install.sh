@@ -5,8 +5,13 @@ set -o errexit
 : "${TARGET:=/usr/local}"
 
 curl --silent https://api.github.com/repos/docker/docker-ce/releases/latest | \
-    jq --raw-output '.name' | \
+    jq --raw-output '.tag_name' | \
     xargs -I{} curl --location --fail https://download.docker.com/linux/static/stable/x86_64/docker-{}.tgz | \
     sudo tar -xzC ${TARGET}/bin/ --strip-components=1
 
-# https://github.com/docker/cli/blob/master/contrib/completion/bash/docker
+sudo mkdir -p ${TARGET}/etc/bash_completion.d
+curl --silent https://api.github.com/repos/docker/docker-ce/releases/latest | \
+    jq --raw-output '.tag_name' | \
+    xargs -I{} curl --location --fail https://github.com/docker/cli/blob/{}/contrib/completion/bash/docker | \
+    sudo tee ${TARGET}/etc/bash_completion.d/docker.sh >/dev/null
+sudo ln -s ${TARGET}/etc/bash_completion.d/docker.sh /etc/bash_completion.d/

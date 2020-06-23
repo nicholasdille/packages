@@ -9,4 +9,6 @@ curl -s https://api.github.com/repos/kubernetes-sigs/cri-tools/releases/latest |
     xargs curl -Lf | \
     sudo tar -xzC ${TARGET}/bin
 
-# crictl completion bash
+sudo mkdir -p ${TARGET}/etc/bash_completion.d
+crictl completion bash | sudo tee ${TARGET}/etc/bash_completion.d/crictl.sh >/dev/null
+sudo ln -s ${TARGET}/etc/bash_completion.d/crictl.sh /etc/bash_completion.d/

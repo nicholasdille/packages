@@ -9,4 +9,6 @@ curl --silent https://api.github.com/repos/zaquestion/lab/releases/latest | \
     xargs curl --location --fail | \
     sudo tar -xzC ${TARGET}/bin/ lab
 
-# lab completion bash
+sudo mkdir -p ${TARGET}/etc/bash_completion.d
+lab completion bash | sudo tee ${TARGET}/etc/bash_completion.d/lab.sh >/dev/null
+sudo ln -s ${TARGET}/etc/bash_completion.d/lab.sh /etc/bash_completion.d/
