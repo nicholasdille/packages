@@ -21,4 +21,4 @@ curl --silent https://api.github.com/repos/cli/cli/releases/latest | \
     sudo tar -xzC ${TARGET}/bin/ --wildcards --strip-components=2 */bin/gh
 
 gh completion | sudo tee ${TARGET}/etc/bash_completion.d/gh.sh >/dev/null
-sudo ln -s ${TARGET}/etc/bash_completion.d/gh.sh /etc/bash_completion.d/
+sudo ln -sf ${TARGET}/etc/bash_completion.d/gh.sh /etc/bash_completion.d/

@@ -11,4 +11,4 @@ sudo chmod +x ${TARGET}/bin/kind
 
 sudo mkdir -p ${TARGET}/etc/bash_completion.d
 kind completion bash | sudo tee ${TARGET}/etc/bash_completion.d/kind.sh >/dev/null
-sudo ln -s ${TARGET}/etc/bash_completion.d/kind.sh /etc/bash_completion.d/
+sudo ln -sf ${TARGET}/etc/bash_completion.d/kind.sh /etc/bash_completion.d/

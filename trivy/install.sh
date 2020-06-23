@@ -9,7 +9,6 @@ curl --silent https://api.github.com/repos/aquasecurity/trivy/releases/latest | 
     xargs curl --location --fail | \
     sudo tar -xzC ${TARGET}/bin trivy
 
-# Download databases to avoid delay
 if [[ ! -d ~/.cache/trivy ]]; then
     trivy --refresh
 fi

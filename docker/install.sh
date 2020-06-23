@@ -14,4 +14,4 @@ curl --silent https://api.github.com/repos/docker/docker-ce/releases/latest | \
     jq --raw-output '.tag_name' | \
     xargs -I{} curl --location --fail https://github.com/docker/cli/blob/{}/contrib/completion/bash/docker | \
     sudo tee ${TARGET}/etc/bash_completion.d/docker.sh >/dev/null
-sudo ln -s ${TARGET}/etc/bash_completion.d/docker.sh /etc/bash_completion.d/
+sudo ln -sf ${TARGET}/etc/bash_completion.d/docker.sh /etc/bash_completion.d/

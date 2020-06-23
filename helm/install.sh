@@ -11,4 +11,4 @@ curl --silent --location -o /dev/null -w %{url_effective} https://github.com/hel
 
 sudo mkdir -p ${TARGET}/etc/bash_completion.d
 helm completion bash | sudo tee ${TARGET}/etc/bash_completion.d/helm.sh >/dev/null
-sudo ln -s ${TARGET}/etc/bash_completion.d/helm.sh /etc/bash_completion.d/
+sudo ln -sf ${TARGET}/etc/bash_completion.d/helm.sh /etc/bash_completion.d/
