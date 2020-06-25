@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -o errexit
+
 clean() {
     docker rm flarectl
 }
