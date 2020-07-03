@@ -8,7 +8,7 @@ trap clean EXIT
 
 : "${TARGET:=/usr/local}"
 
-docker run -i --name kube-ps1 alpine sh <<EOF
+docker run -i --name kube-ps1 alpine sh -xe <<EOF
 apk add --update-cache --no-cache git curl jq
 git clone https://github.com/jonmosco/kube-ps1
 cd kube-ps1

@@ -10,7 +10,7 @@ trap clean EXIT
 
 : "${TARGET:=/usr/local}"
 
-docker run -i --name skopeo golang bash <<EOF
+docker run -i --name skopeo golang bash -xe <<EOF
 git clone --depth 1 https://github.com/containers/skopeo
 cd skopeo
 make bin/skopeo DISABLE_CGO=1

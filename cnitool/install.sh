@@ -10,7 +10,7 @@ trap clean EXIT
 
 : "${TARGET:=/usr/local}"
 
-docker run -i --name cnitool golang bash <<EOF
+docker run -i --name cnitool golang bash -xe <<EOF
 go get github.com/containernetworking/cni
 go install github.com/containernetworking/cni/cnitool
 cp /go/bin/cnitool /

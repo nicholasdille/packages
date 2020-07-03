@@ -14,7 +14,7 @@ if test -z "${TAG_NAME}"; then
     exit 1
 fi
 
-docker run -i --name buildah golang:1.12 bash -e <<EOF
+docker run -i --name buildah golang:1.12 bash -xe <<EOF
 apt-get update
 #apt-get -y install --no-install-recommends software-properties-common
 #add-apt-repository -y ppa:alexlarsson/flatpak
