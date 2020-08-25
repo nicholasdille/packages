@@ -12,6 +12,7 @@ sudo mv ${TARGET}/bin/krew-linux_amd64 ${TARGET}/bin/krew
 krew update
 krew install \
     access-matrix \
+    advise-psp \
     debug \
     doctor \
     exec-as \
