@@ -13,6 +13,7 @@ krew update
 krew install \
     access-matrix \
     advise-psp \
+    cert-manager \
     debug \
     doctor \
     exec-as \
