@@ -29,6 +29,7 @@ krew install \
     sort-manifests \
     status \
     sudo \
+    tap \
     tmux-exec \
     tree \
     view-allocations \
