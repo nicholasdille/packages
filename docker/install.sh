@@ -15,3 +15,17 @@ curl --silent https://api.github.com/repos/docker/docker-ce/releases/latest | \
     xargs -I{} curl --location --fail https://raw.githubusercontent.com/docker/cli/{}/contrib/completion/bash/docker | \
     sudo tee ${TARGET}/etc/bash_completion.d/docker.sh >/dev/null
 sudo ln -sf ${TARGET}/etc/bash_completion.d/docker.sh /etc/bash_completion.d/
+
+: "${DOCKER_CONFIG:=${HOME}/.docker}"
+if ! test -d "${DOCKER_CONFIG}"; then
+    mkdir --parents ${DOCKER_CONFIG}
+fi
+
+if ! test -f "${DOCKER_CONFIG}/config.json"; then
+    echo "{}" >${DOCKER_CONFIG}/config.json
+fi
+
+cp ${DOCKER_CONFIG}/config.json ${DOCKER_CONFIG}/config.json.bak
+cat ${DOCKER_CONFIG}/config.json.bak | \
+    jq '. + {"features":{"buildkit":true}}' \
+    >${DOCKER_CONFIG}/config.json
