@@ -10,5 +10,5 @@ curl --silent https://api.github.com/repos/kubernetes-sigs/kustomize/releases | 
     sudo tar -xzC ${TARGET}/bin/
 
 sudo mkdir -p ${TARGET}/etc/bash_completion.d
-kustomize install-completion | sudo tee ${TARGET}/etc/bash_completion.d/kustomize.sh >/dev/null
+echo "complete -C ${TARGET}/bin/kustomize kustomize" | sudo tee ${TARGET}/etc/bash_completion.d/kustomize.sh >/dev/null
 sudo ln -sf ${TARGET}/etc/bash_completion.d/kustomize.sh /etc/bash_completion.d/
