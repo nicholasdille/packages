@@ -9,8 +9,12 @@ curl --silent https://api.github.com/repos/kubernetes-sigs/krew/releases/latest 
     xargs curl --location --fail | \
     sudo tar -xzC ${TARGET}/bin/ ./krew-linux_amd64
 sudo mv ${TARGET}/bin/krew-linux_amd64 ${TARGET}/bin/krew
+
 krew update
-krew index add kvaps https://github.com/kvaps/krew-index
+if ! krew index list | grep --quiet kvaps; then
+    krew index add kvaps https://github.com/kvaps/krew-index
+fi
+
 krew install \
     access-matrix \
     advise-psp \
