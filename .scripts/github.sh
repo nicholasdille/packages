@@ -31,14 +31,27 @@ function github_select_asset_by_name() {
 function github_select_asset_by_suffix() {
     local asset_name_suffix=$1
 
-    if test -z "${asset_name}"; then
-        echo "ERROR: Asset name not specified."
+    if test -z "${asset_name_suffix}"; then
+        echo "ERROR: Asset name suffix not specified."
         return 1
     fi
 
     >&2 echo "Selecting asset by suffix..."
-    github_find_latest_release "${project}" | \
+    cat | \
         jq --raw-output --arg asset_name_suffix "${asset_name_suffix}" '.assets[] | select(.name | endswith($asset_name_suffix))'
+}
+
+function github_select_asset_by_prefix() {
+    local asset_name_prefix=$1
+
+    if test -z "${asset_name_prefix}"; then
+        echo "ERROR: Asset name prefix not specified."
+        return 1
+    fi
+
+    >&2 echo "Selecting asset by suffix..."
+    cat | \
+        jq --raw-output --arg asset_name_prefix "${asset_name_prefix}" '.assets[] | select(.name | startswith($asset_name_prefix))'
 }
 
 github_download_asset() {
@@ -48,8 +61,34 @@ github_download_asset() {
         xargs curl --location --fail
 }
 
-function github_untar_asset() {
-    >&2 echo "Unpacking asset..."
+github_download_asset() {
+    >&2 echo "Downloading asset..."
     cat | \
-        sudo tar -xzC ${TARGET}/bin
+        jq --raw-output '.browser_download_url' | \
+        xargs curl --location --fail
+}
+
+github_download_asset_silent() {
+    >&2 echo "Downloading asset..."
+    cat | \
+        jq --raw-output '.browser_download_url' | \
+        xargs curl --silent --location --fail
+}
+
+function github_untar_asset() {
+    local filter=$@
+
+    >&2 echo "Unpacking asset..."
+    >&2 echo "  Including <${filter}>"
+    cat | \
+        sudo tar -x -z -C ${TARGET}/bin ${filter}
+}
+
+function github_untar_asset_verbose() {
+    local filter=$@
+
+    >&2 echo "Unpacking asset..."
+    >&2 echo "  Including <${filter}>"
+    cat | \
+        sudo tar -x -v -z -C ${TARGET}/bin ${filter}
 }
