@@ -1,6 +1,6 @@
 BASE_DIR=$(dirname $(readlink -f "$0"))
 
-: "${SOURCE_LOCAL_SCRIPTS:=false}"
+: "${SOURCE_LOCAL_FILES:=false}"
 
 : "${TARGET:=/usr/local}"
 
@@ -10,7 +10,7 @@ BASE_DIR=$(dirname $(readlink -f "$0"))
 for file in github; do
     >&2 echo "Sourcing ${file}..."
 
-    if ${SOURCE_LOCAL_SCRIPTS}; then
+    if ${SOURCE_LOCAL_FILES}; then
         >&2 echo "  !!! FROM LOCAL FILE !!!"
         source "${BASE_DIR}/../.scripts/${file}.sh"
     else
