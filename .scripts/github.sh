@@ -54,21 +54,21 @@ function github_select_asset_by_prefix() {
         jq --raw-output --arg asset_name_prefix "${asset_name_prefix}" '.assets[] | select(.name | startswith($asset_name_prefix))'
 }
 
-github_download_asset() {
+function github_download_asset() {
     >&2 echo "Downloading asset..."
     cat | \
         jq --raw-output '.browser_download_url' | \
         xargs curl --location --fail
 }
 
-github_download_asset() {
+function github_download_asset() {
     >&2 echo "Downloading asset..."
     cat | \
         jq --raw-output '.browser_download_url' | \
         xargs curl --location --fail
 }
 
-github_download_asset_silent() {
+function github_download_asset_silent() {
     >&2 echo "Downloading asset..."
     cat | \
         jq --raw-output '.browser_download_url' | \
