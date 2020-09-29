@@ -54,41 +54,8 @@ function github_select_asset_by_prefix() {
         jq --raw-output --arg asset_name_prefix "${asset_name_prefix}" '.assets[] | select(.name | startswith($asset_name_prefix))'
 }
 
-function github_download_asset() {
-    >&2 echo "Downloading asset..."
+function github_get_asset_download_url() {
+    >&2 echo "Fetching asset download URL..."
     cat | \
-        jq --raw-output '.browser_download_url' | \
-        xargs curl --location --fail
-}
-
-function github_download_asset() {
-    >&2 echo "Downloading asset..."
-    cat | \
-        jq --raw-output '.browser_download_url' | \
-        xargs curl --location --fail
-}
-
-function github_download_asset_silent() {
-    >&2 echo "Downloading asset..."
-    cat | \
-        jq --raw-output '.browser_download_url' | \
-        xargs curl --silent --location --fail
-}
-
-function github_untar_asset() {
-    local filter=$@
-
-    >&2 echo "Unpacking asset..."
-    >&2 echo "  Including <${filter}>"
-    cat | \
-        sudo tar -x -z -C ${TARGET}/bin ${filter}
-}
-
-function github_untar_asset_verbose() {
-    local filter=$@
-
-    >&2 echo "Unpacking asset..."
-    >&2 echo "  Including <${filter}>"
-    cat | \
-        sudo tar -x -v -z -C ${TARGET}/bin ${filter}
+        jq --raw-output '.browser_download_url'
 }

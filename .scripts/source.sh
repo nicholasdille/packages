@@ -2,12 +2,12 @@ BASE_DIR=$(dirname $(readlink -f "$0"))
 
 : "${SOURCE_LOCAL_FILES:=false}"
 
-: "${TARGET:=/usr/local}"
+: "${TARGET_DIR:=/usr/local}"
 
-: "${CURL_DOWNLOAD_SILENT:=true}"
+: "${CURL_DOWNLOAD_SILENT:=false}"
 : "${TAR_VERBOSE:=false}"
 
-for file in github; do
+for file in linux github; do
     >&2 echo "Sourcing ${file}..."
 
     if ${SOURCE_LOCAL_FILES}; then
