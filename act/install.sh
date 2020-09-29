@@ -2,9 +2,12 @@
 
 set -o errexit
 
-: "${TARGET:=/usr/local}"
+source <(curl --silent --location --fail https://pkg.dille.io/.scripts/source.sh)
 
-curl --silent https://api.github.com/repos/nektos/act/releases/latest | \
-    jq --raw-output '.assets[] | select(.name == "act_Linux_x86_64.tar.gz") | .browser_download_url' | \
-    xargs curl --location --fail | \
-    sudo tar -xzC ${TARGET}/bin/ act
+unlock_sudo
+
+github_find_latest_release nektos/act | \
+    github_select_asset_by_suffix _Linux_x86_64.tar.gz | \
+    github_get_asset_download_url | \
+    download_file | \
+    untar_file act
