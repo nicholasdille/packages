@@ -52,3 +52,26 @@ function untar_file() {
     cat | \
         sudo tar -x -z ${TAR_ADDITIONAL_PARAMS} -C ${TARGET}/bin ${filter}
 }
+
+function store_file() {
+    local filename=$1
+
+    if test -z "${filename}"; then
+        echo "ERROR: File name not specified."
+        return 1
+    fi
+
+    cat | \
+        sudo tee ${TARGET}/bin/${filename} >/dev/null
+}
+
+function make_executable() {
+    local filename=$1
+
+    if test -z "${filename}"; then
+        echo "ERROR: File name not specified."
+        return 1
+    fi
+
+    sudo chmod +x ${TARGET}/bin/${filename}
+}
