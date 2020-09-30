@@ -2,7 +2,7 @@ BASE_DIR=$(dirname $(readlink -f "$0"))
 
 : "${SOURCE_LOCAL_FILES:=false}"
 
-: "${TARGET_DIR:=/usr/local}"
+: "${TARGET:=/usr/local}"
 
 : "${CURL_DOWNLOAD_SILENT:=false}"
 : "${TAR_VERBOSE:=false}"
