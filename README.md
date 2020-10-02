@@ -12,7 +12,7 @@ curl --silent https://pkg.dille.io/kind/install.sh | sh
 
 ## Writing a new packages
 
-XXX
+Installation scripts for new packages can be composed from the function library:
 
 ```bash
 set -o errexit
