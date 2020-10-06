@@ -2,9 +2,16 @@
 
 set -o errexit
 
-: "${TARGET:=/usr/local}"
+source <(curl --silent --location --fail https://pkg.dille.io/.scripts/source.sh)
 
-curl --silent https://api.github.com/repos/kubernetes-sigs/cluster-api/releases/latest | \
-    jq --raw-output '.assets[] | select(.name == "clusterctl-linux-amd64") | .browser_download_url' | \
-    xargs sudo curl --silent --location --fail --output ${TARGET}/bin/clusterctl
-sudo chmod +x ${TARGET}/bin/clusterctl
+unlock_sudo
+
+github_install \
+    --name clusterctl \
+    --repo kubernetes-sigs/cluster-api \
+    --match name \
+    --asset clusterctl-linux-amd64 \
+    --type binary
+
+clusterctl completion bash | \
+    store_completion clusterctl

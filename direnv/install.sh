@@ -2,12 +2,16 @@
 
 set -o errexit
 
-: "${TARGET:=/usr/local}"
+source <(curl --silent --location --fail https://pkg.dille.io/.scripts/source.sh)
 
-curl --silent https://api.github.com/repos/direnv/direnv/releases/latest | \
-    jq --raw-output '.assets[] | select(.name == "direnv.linux-amd64") | .browser_download_url' | \
-    xargs sudo curl --location --fail --output ${TARGET}/bin/direnv
-sudo chmod +x ${TARGET}/bin/direnv
+unlock_sudo
+
+github_install \
+    --name direnv \
+    --repo direnv/direnv \
+    --match name \
+    --asset direnv.linux-amd64 \
+    --type binary
 
 echo
 echo "#############################################"

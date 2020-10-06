@@ -2,9 +2,13 @@
 
 set -o errexit
 
-: "${TARGET:=/usr/local}"
+source <(curl --silent --location --fail https://pkg.dille.io/.scripts/source.sh)
 
-curl --silent https://api.github.com/repos/alexellis/arkade/releases/latest | \
-    jq --raw-output '.assets[] | select(.name == "arkade") | .browser_download_url' | \
-    xargs sudo curl --silent --location --fail --output ${TARGET}/bin/arkade
-sudo chmod +x ${TARGET}/bin/arkade
+unlock_sudo
+
+github_install \
+    --name arkade \
+    --repo alexellis/arkade \
+    --match name \
+    --asset arkade \
+    --type binary

@@ -10,8 +10,8 @@ github_install \
     --name argocd \
     --repo argoproj/argo-cd \
     --match name \
-    --asset argocd-linux-amd64
-    --type binary \
+    --asset argocd-linux-amd64 \
+    --type binary
 
 argocd completion bash | \
     store_completion argocd
