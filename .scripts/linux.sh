@@ -1,6 +1,6 @@
 function target_requires_sudo() {
     # target directory is root-owned
-    if test "$(stat ${TARGET} -c '%u:%g')" == "0:0"; then
+    if test "$(stat "${TARGET_BASE}" -c '%u:%g')" == "0:0"; then
 
         # we are not root right now
         if test "$(id -u)" != "0"; then
@@ -50,19 +50,37 @@ function untar_file() {
     >&2 echo "Unpacking asset to directory ${directory}..."
     >&2 echo "  Including <${filter}>"
     cat | \
-        sudo tar -x -z ${TAR_ADDITIONAL_PARAMS} -C ${TARGET}/bin ${filter}
+        sudo tar -x -z ${TAR_ADDITIONAL_PARAMS} -C ${TARGET_BIN} ${filter}
+}
+
+function unzip_file {
+    local file=$1
+    shift
+    local filter=$@
+
+    ZIP_ADDITIONAL_PARAMS="-q"
+    if ${TAR_VERBOSE}; then
+        ZIP_ADDITIONAL_PARAMS="-v"
+    fi
+
+    sudo unzip -o ${ZIP_ADDITIONAL_PARAMS} -d ${TARGET_BIN} ${file} ${filter}
 }
 
 function store_file() {
     local filename=$1
+    local dirname=$2
 
     if test -z "${filename}"; then
         echo "ERROR: File name not specified."
         return 1
     fi
 
+    if test -z "${dirname}"; then
+        dirname=${TARGET_BIN}
+    fi
+
     cat | \
-        sudo tee ${TARGET}/bin/${filename} >/dev/null
+        sudo tee ${dirname}/${filename} >/dev/null
 }
 
 function make_executable() {
@@ -73,5 +91,18 @@ function make_executable() {
         return 1
     fi
 
-    sudo chmod +x ${TARGET}/bin/${filename}
+    sudo chmod +x ${TARGET_BIN}/${filename}
+}
+
+function store_completion() {
+    local filename=$1
+
+    if test -z "${filename}"; then
+        echo "ERROR: File name not specified."
+        return 1
+    fi
+
+    cat | \
+        store_file ${filename}.sh ${TARGET_COMPLETION}
+    sudo ln -sf ${TARGET_COMPLETION}/${filename}.sh /etc/bash_completion.d/
 }

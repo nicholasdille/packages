@@ -4,3 +4,4 @@
 
 : "${CURL_DOWNLOAD_SILENT:=false}"
 : "${TAR_VERBOSE:=false}"
+: "${ZIP_VERBOSE:=false}"

@@ -59,3 +59,141 @@ function github_get_asset_download_url() {
     cat | \
         jq --raw-output '.browser_download_url'
 }
+
+function help_github_install() {
+    echo "github_install <options>"
+    echo
+    echo "Options:"
+    echo "    --name,     -n    Name of the binary to install"
+    echo "    --repo,     -n    Repo to install the binary from"
+    echo "    --type,     -t    Type of the asset of GitHub (binary, tarball, zip)"
+    echo "    --include,  -i    List of files to include when unpacking type tarball or zip"
+    echo "    --match,    -m    How to match the asset (name, prefix, suffix)"
+    echo "    --asset,    -a    String to match the asset name"
+    echo "    --help,     -h    This message"
+    echo
+
+    if test "$#" == 1; then
+        exit $1
+    fi
+}
+
+function github_install() {
+    while test "$#" -gt 0; do
+        local param=$1
+        shift
+
+        case "${param}" in
+            --name|-n)
+                local name=$1
+            ;;
+            --repo|-r)
+                local repo=$1
+            ;;
+            --type|-t)
+                local type=$1
+            ;;
+            --include|-i)
+                local include=$1
+            ;;
+            --match|-m)
+                local match=$1
+            ;;
+            --asset|-a)
+                local asset=$1
+            ;;
+            --help|-h)
+                help_github_install 0
+            ;;
+        esac
+
+        shift
+    done
+
+    if test -z "${name}"; then
+        >&2 echo "ERROR: Parameter <name> must not be empty."
+        help_github_install 1
+    fi
+    if test -z "${repo}"; then
+        >&2 echo "ERROR: Parameter <repo> must not be empty."
+        help_github_install 1
+    fi
+    if test -z "${type}"; then
+        # TODO: Determine type from name
+        >&2 echo "ERROR: Parameter <type> must not be empty."
+        help_github_install 1
+    fi
+    if test -z "${match}"; then
+        >&2 echo "ERROR: Parameter <match> must not be empty."
+        help_github_install 1
+    fi
+    if test -z "${asset}"; then
+        >&2 echo "ERROR: Parameter <asset> must not be empty."
+        help_github_install 1
+    fi
+
+    >&2 echo "name=${name},repo=${repo},type=${type},include=${include},match=${match},asset=${asset}."
+
+    case "${type}" in
+        binary)
+            :
+        ;;
+        tarball)
+            test -n "${include}" || help_github_install 1
+        ;;
+        zip)
+            test -n "${include}" || help_github_install 1
+            tmpdir=$(mktemp -d)
+            mkdir -p ${tmpdir}
+            >&2 echo "Using temporary directory <${tmpdir}>"
+        ;;
+        *)
+            help_github_install 1
+        ;;
+    esac
+    case "${match}" in
+        name|prefix|suffix)
+            :
+        ;;
+        *)
+            help_github_install 1
+        ;;
+    esac
+
+    github_find_latest_release ${repo} | \
+        case "${match}" in
+            name)
+                github_select_asset_by_name ${asset}
+            ;;
+            prefix)
+                github_select_asset_by_prefix ${asset}
+            ;;
+            suffix)
+                github_select_asset_by_suffix ${asset}
+            ;;
+        esac | \
+        github_get_asset_download_url | \
+        download_file | \
+        case "${type}" in
+            binary)
+                store_file ${name}
+            ;;
+            tarball)
+                untar_file ${include}
+            ;;
+            *)
+                store_file ${name}.zip ${tmpdir}
+                unzip_file ${tmpdir}/${name}.zip ${include}
+            ;;
+        esac
+
+    case "${type}" in
+        binary)
+            make_executable ${name}
+        ;;
+        zip)
+            rm -f ${tmpdir}/${name}.zip
+            rmdir ${tmpdir}
+        ;;
+    esac
+}

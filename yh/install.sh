@@ -2,10 +2,14 @@
 
 set -o errexit
 
-: "${TARGET:=/usr/local}"
+source <(curl --silent --location --fail https://pkg.dille.io/.scripts/source.sh)
 
-curl --silent https://api.github.com/repos/andreazorzetto/yh/releases/latest | \
-    jq --raw-output '.assets[] | select(.name == "yh-linux-amd64.zip") | .browser_download_url' | \
-    xargs curl --location --fail --output /tmp/yh-linux-amd64.zip
-sudo unzip -o -d ${TARGET}/bin /tmp/yh-linux-amd64.zip
-rm -f /tmp/yh-linux-amd64.zip
+unlock_sudo
+
+github_install \
+    --name yh \
+    --repo andreazorzetto/yh \
+    --match name \
+    --asset yh-linux-amd64.zip \
+    --type zip \
+    --include yh
