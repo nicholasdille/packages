@@ -119,7 +119,6 @@ function github_install() {
         help_github_install 1
     fi
     if test -z "${type}"; then
-        # TODO: Determine type from name
         >&2 echo "ERROR: Parameter <type> must not be empty."
         help_github_install 1
     fi
