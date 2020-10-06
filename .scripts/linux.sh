@@ -102,6 +102,8 @@ function store_completion() {
         return 1
     fi
 
+    sudo mkdir -p ${TARGET_COMPLETION}
+
     cat | \
         store_file ${filename}.sh ${TARGET_COMPLETION}
     sudo ln -sf ${TARGET_COMPLETION}/${filename}.sh /etc/bash_completion.d/
