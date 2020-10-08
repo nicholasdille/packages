@@ -8,11 +8,12 @@ function github_find_latest_release() {
 
     GITHUB_AUTH_PARAMETER=""
     if test -n "${GITHUB_USER}" && test -n "${GITHUB_TOKEN}"; then
-        GITHUB_AUTH_PARAMETER="--user \"${GITHUB_USER}:${GITHUB_TOKEN}\""
+        >&2 echo "Using authentication for GitHub"
+        GITHUB_AUTH_PARAMETER="--user ${GITHUB_USER}:${GITHUB_TOKEN}"
     fi
 
     >&2 echo "Fetching latest release for ${project}..."
-    curl ${GITHUB_AUTH_PARAMETER} --silent https://api.github.com/repos/${project}/releases/latest
+    curl ${GITHUB_AUTH_PARAMETER} --silent --fail https://api.github.com/repos/${project}/releases/latest
 }
 
 function github_select_asset_by_name() {
