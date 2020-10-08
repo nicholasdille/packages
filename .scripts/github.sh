@@ -28,7 +28,7 @@ function github_select_asset_by_name() {
         return 1
     fi
 
-    >&2 echo "Selecting asset by name..."
+    >&2 echo "Selecting asset by name <${asset_name}>..."
     cat | \
         jq --raw-output --compact-output --monochrome-output --arg asset_name "${asset_name}" 'select(.name == $asset_name)'
 }
@@ -41,7 +41,7 @@ function github_select_asset_by_suffix() {
         return 1
     fi
 
-    >&2 echo "Selecting asset by suffix..."
+    >&2 echo "Selecting asset by suffix <${asset_name_suffix}>..."
     cat | \
         jq --raw-output --compact-output --monochrome-output --arg asset_name_suffix "${asset_name_suffix}" 'select(.name | endswith($asset_name_suffix))'
 }
@@ -54,7 +54,7 @@ function github_select_asset_by_prefix() {
         return 1
     fi
 
-    >&2 echo "Selecting asset by suffix..."
+    >&2 echo "Selecting asset by prefix <${asset_name_prefix}>..."
     cat | \
         jq --raw-output --compact-output --monochrome-output --arg asset_name_prefix "${asset_name_prefix}" 'select(.name | startswith($asset_name_prefix))'
 }
