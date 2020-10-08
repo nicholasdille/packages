@@ -13,7 +13,7 @@ function github_find_latest_release() {
     fi
 
     >&2 echo "Fetching latest release for ${project}..."
-    curl ${GITHUB_AUTH_PARAMETER} --silent --fail https://api.github.com/repos/${project}/releases/latest
+    curl ${GITHUB_AUTH_PARAMETER} --silent https://api.github.com/repos/${project}/releases/latest
 }
 
 function github_resolve_assets() {
