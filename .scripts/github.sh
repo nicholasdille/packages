@@ -16,6 +16,10 @@ function github_find_latest_release() {
     curl ${GITHUB_AUTH_PARAMETER} --silent --fail https://api.github.com/repos/${project}/releases/latest
 }
 
+function github_resolve_assets() {
+    jq --raw-output '.assets[]'
+}
+
 function github_select_asset_by_name() {
     local asset_name=$1
 
@@ -26,7 +30,7 @@ function github_select_asset_by_name() {
 
     >&2 echo "Selecting asset by name..."
     cat | \
-        jq --raw-output --arg asset_name "${asset_name}" '.assets[] | select(.name == $asset_name)'
+        jq --raw-output --arg asset_name "${asset_name}" 'select(.name == $asset_name)'
 }
 
 function github_select_asset_by_suffix() {
@@ -39,7 +43,7 @@ function github_select_asset_by_suffix() {
 
     >&2 echo "Selecting asset by suffix..."
     cat | \
-        jq --raw-output --arg asset_name_suffix "${asset_name_suffix}" '.assets[] | select(.name | endswith($asset_name_suffix))'
+        jq --raw-output --arg asset_name_suffix "${asset_name_suffix}" 'select(.name | endswith($asset_name_suffix))'
 }
 
 function github_select_asset_by_prefix() {
@@ -52,7 +56,7 @@ function github_select_asset_by_prefix() {
 
     >&2 echo "Selecting asset by suffix..."
     cat | \
-        jq --raw-output --arg asset_name_prefix "${asset_name_prefix}" '.assets[] | select(.name | startswith($asset_name_prefix))'
+        jq --raw-output --arg asset_name_prefix "${asset_name_prefix}" 'select(.name | startswith($asset_name_prefix))'
 }
 
 function github_get_asset_download_url() {
@@ -161,6 +165,7 @@ function github_install() {
     esac
 
     github_find_latest_release ${repo} | \
+        github_resolve_assets | \
         case "${match}" in
             name)
                 github_select_asset_by_name ${asset}
