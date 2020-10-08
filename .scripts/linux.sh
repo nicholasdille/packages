@@ -81,18 +81,24 @@ function store_file() {
         dirname=${TARGET_BIN}
     fi
 
+    >&2 echo "Creating file ${dirname}/${filename}"
     cat | \
         sudo tee ${dirname}/${filename} >/dev/null
+    echo ${dirname}/${filename}
 }
 
 function make_executable() {
     local filename=$1
 
     if test -z "${filename}"; then
-        echo "ERROR: File name not specified."
-        return 1
+        cat | while read filename; do
+            >&2 echo "Setting executable bits on ${filename}"
+            sudo chmod +x ${filename}
+        done
+        return
     fi
 
+    >&2 echo "Setting executable bits on ${filename}"
     sudo chmod +x ${TARGET_BIN}/${filename}
 }
 
