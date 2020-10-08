@@ -24,8 +24,10 @@ function sudo_requires_password() {
 function unlock_sudo() {
     if target_requires_sudo; then
         if sudo_requires_password; then
-            echo "Please enter your password to unlock sudo for the installation."
+            >&2 echo "Please enter your password to unlock sudo for the installation."
             sudo true
+        else
+            >&2 echo "Sudo does not require a password (this time)."
         fi
     fi
 }
