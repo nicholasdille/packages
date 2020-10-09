@@ -2,8 +2,7 @@
 
 set -o errexit
 
-#source <(curl --silent --location --fail https://pkg.dille.io/.scripts/source.sh)
-source .scripts/source.sh
+source <(curl --silent --location --fail https://pkg.dille.io/.scripts/source.sh)
 
 unlock_sudo
 
