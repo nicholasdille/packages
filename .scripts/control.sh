@@ -21,7 +21,7 @@ function run_filters() {
         >&2 echo "Applying filter $i <${filters[$i]}>..."
 
         # apply filter and store output
-        DATA=$(echo -n "${data}" | eval "${filters[$i]}")
+        data=$(echo -n "${data}" | eval "${filters[$i]}")
     done
     echo "${data}"
 }
