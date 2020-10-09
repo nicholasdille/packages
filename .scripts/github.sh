@@ -75,7 +75,7 @@ function help_github_install() {
     echo "Options:"
     echo "    --name,     -n    Name of the binary to install"
     echo "    --repo,     -n    Repo to install the binary from"
-    echo "    --type,     -t    Type of the asset of GitHub (binary, tarball, zip)"
+    echo "    --type,     -t    Type of the asset of GitHub (binary, gunzip, tarball, zip)"
     echo "    --include,  -i    List of files to include when unpacking type tarball or zip"
     echo "    --match,    -m    How to match the asset (name, prefix, suffix)"
     echo "    --asset,    -a    String to match the asset name"
@@ -143,8 +143,8 @@ function github_install() {
     >&2 echo "name=${name},repo=${repo},type=${type},include=${include},match=${match},asset=${asset}."
 
     case "${type}" in
-        binary)
-            :
+        binary|gunzip)
+            test -n "${name}" || help_github_install 1
         ;;
         tarball)
             test -n "${include}" || help_github_install 1
@@ -186,6 +186,11 @@ function github_install() {
         case "${type}" in
             binary)
                 store_file ${name}
+            ;;
+            gunzip)
+                gunzip_file | \
+                store_file ${name} | \
+                make_executable
             ;;
             tarball)
                 untar_file ${include}

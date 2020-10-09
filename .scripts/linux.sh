@@ -68,6 +68,11 @@ function unzip_file {
     sudo unzip -o ${ZIP_ADDITIONAL_PARAMS} -d ${TARGET_BIN} ${file} ${filter}
 }
 
+function gunzip_file() {
+    cat | \
+        gunzip
+}
+
 function store_file() {
     local filename=$1
     local dirname=$2
