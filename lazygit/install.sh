@@ -2,9 +2,13 @@
 
 set -o errexit
 
-: "${TARGET:=/usr/local}"
+source <(curl --silent --location --fail https://pkg.dille.io/.scripts/source.sh)
 
-curl --silent https://api.github.com/repos/jesseduffield/lazygit/releases/latest | \
-    jq --raw-output '.assets[] | select(.name | endswith("_Linux_x86_64.tar.gz")) | .browser_download_url' | \
-    xargs curl --location --fail | \
-    sudo tar -xzC ${TARGET}/bin/ lazygit
+unlock_sudo
+
+github_install \
+    --repo jesseduffield/lazygit \
+    --match suffix \
+    --asset _Linux_x86_64.tar.gz \
+    --type tarball \
+    --include lazygit

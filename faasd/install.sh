@@ -2,9 +2,13 @@
 
 set -o errexit
 
-: "${TARGET:=/usr/local}"
+source <(curl --silent --location --fail https://pkg.dille.io/.scripts/source.sh)
 
-curl --silent https://api.github.com/repos/openfaas/faasd/releases/latest | \
-    jq --raw-output '.assets[] | select(.name == "faasd") | .browser_download_url' | \
-    xargs sudo curl --silent --location --fail --output ${TARGET}/bin/faasd
-sudo chmod +x ${TARGET}/bin/faasd
+unlock_sudo
+
+github_install \
+    --repo openfaas/faasd \
+    --match name \
+    --asset faasd \
+    --type binary \
+    --name faasd

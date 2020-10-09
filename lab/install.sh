@@ -2,13 +2,16 @@
 
 set -o errexit
 
-: "${TARGET:=/usr/local}"
+source <(curl --silent --location --fail https://pkg.dille.io/.scripts/source.sh)
 
-curl --silent https://api.github.com/repos/zaquestion/lab/releases/latest | \
-    jq --raw-output '.assets[] | select(.name | endswith("_linux_amd64.tar.gz")) | .browser_download_url' | \
-    xargs curl --location --fail | \
-    sudo tar -xzC ${TARGET}/bin/ lab
+unlock_sudo
 
-sudo mkdir -p ${TARGET}/etc/bash_completion.d
-lab completion bash | sudo tee ${TARGET}/etc/bash_completion.d/lab.sh >/dev/null
-sudo ln -sf ${TARGET}/etc/bash_completion.d/lab.sh /etc/bash_completion.d/
+github_install \
+    --repo zaquestion/lab \
+    --match suffix \
+    --asset _linux_amd64.tar.gz \
+    --type tarball \
+    --include lab
+
+lab completion bash | \
+    store_completion lab

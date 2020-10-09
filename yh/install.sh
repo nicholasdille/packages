@@ -7,7 +7,6 @@ source <(curl --silent --location --fail https://pkg.dille.io/.scripts/source.sh
 unlock_sudo
 
 github_install \
-    --name yh \
     --repo andreazorzetto/yh \
     --match name \
     --asset yh-linux-amd64.zip \

@@ -1,3 +1,23 @@
+function github_get_releases() {
+    local project=$1
+
+    if test -z "${project}"; then
+        echo "ERROR: Project not specified."
+        return 1
+    fi
+
+    GITHUB_AUTH_PARAMETER=""
+    if test -n "${GITHUB_USER}" && test -n "${GITHUB_TOKEN}"; then
+        >&2 echo "Using authentication for GitHub"
+        GITHUB_AUTH_PARAMETER="--user ${GITHUB_USER}:${GITHUB_TOKEN}"
+    fi
+
+    >&2 echo "Fetching releases for ${project}..."
+    curl https://api.github.com/repos/${project}/releases \
+            ${GITHUB_AUTH_PARAMETER} \
+            --silent
+}
+
 function github_find_latest_release() {
     local project=$1
 

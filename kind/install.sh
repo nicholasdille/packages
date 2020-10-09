@@ -2,13 +2,16 @@
 
 set -o errexit
 
-: "${TARGET:=/usr/local}"
+source <(curl --silent --location --fail https://pkg.dille.io/.scripts/source.sh)
 
-curl --silent https://api.github.com/repos/kubernetes-sigs/kind/releases/latest | \
-    jq --raw-output '.assets[] | select(.name == "kind-linux-amd64") | .browser_download_url' | \
-    xargs sudo curl --location --fail --output ${TARGET}/bin/kind
-sudo chmod +x ${TARGET}/bin/kind
+unlock_sudo
 
-sudo mkdir -p ${TARGET}/etc/bash_completion.d
-kind completion bash | sudo tee ${TARGET}/etc/bash_completion.d/kind.sh >/dev/null
-sudo ln -sf ${TARGET}/etc/bash_completion.d/kind.sh /etc/bash_completion.d/
+github_install \
+    --repo kubernetes-sigs/kind \
+    --match name \
+    --asset kind-linux-amd64 \
+    --type binary \
+    --name kind
+
+kind completion bash | \
+    store_completion kind

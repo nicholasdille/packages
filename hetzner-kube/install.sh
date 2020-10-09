@@ -2,13 +2,16 @@
 
 set -o errexit
 
-: "${TARGET:=/usr/local}"
+source <(curl --silent --location --fail https://pkg.dille.io/.scripts/source.sh)
 
-curl --silent https://api.github.com/repos/xetys/hetzner-kube/releases/latest | \
-    jq --raw-output '.assets[] | select(.name | endswith("-linux-amd64")) | .browser_download_url' | \
-    xargs sudo curl --location --fail --output ${TARGET}/bin/hetzner-kube
-sudo chmod +x ${TARGET}/bin/hetzner-kube
+unlock_sudo
 
-sudo mkdir -p ${TARGET}/etc/bash_completion.d
-hetzner-kube completion bash | sudo tee ${TARGET}/etc/bash_completion.d/hetzner-kube.sh >/dev/null
-sudo ln -sf ${TARGET}/etc/bash_completion.d/hetzner-kube.sh /etc/bash_completion.d/
+github_install \
+    --repo xetys/hetzner-kube \
+    --match suffix \
+    --asset -linux-amd64 \
+    --type binary \
+    --name hetzner-kube
+
+hetzner-kube completion bash | \
+    store_completion hetzner-kube

@@ -2,9 +2,11 @@
 
 set -o errexit
 
-: "${TARGET:=/usr/local}"
+source <(curl --silent --location --fail https://pkg.dille.io/.scripts/source.sh)
 
-curl --silent https://api.github.com/repos/sahsanu/lectl/releases/latest | \
+unlock_sudo
+
+github_find_latest_release sahsanu/lectl | \
     jq --raw-output '.tag_name' | \
-    xargs -I{} sudo curl --location --fail --output ${TARGET}/bin/lectl https://raw.githubusercontent.com/sahsanu/lectl/{}/lectl
-sudo chmod +x ${TARGET}/bin/lectl
+    xargs -I{} curl --location --fail https://raw.githubusercontent.com/sahsanu/lectl/{}/lectl | \
+    store_file lectl

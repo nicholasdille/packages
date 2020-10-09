@@ -2,9 +2,13 @@
 
 set -o errexit
 
-: "${TARGET:=/usr/local}"
+source <(curl --silent --location --fail https://pkg.dille.io/.scripts/source.sh)
 
-curl --silent https://api.github.com/repos/tianon/gosu/releases/latest | \
-    jq --raw-output '.assets[] | select(.name == "gosu-amd64") | .browser_download_url' | \
-    xargs sudo curl --location --fail --output ${TARGET}/bin/gosu
-sudo chmod +x ${TARGET}/bin/gosu
+unlock_sudo
+
+github_install \
+    --repo tianon/gosu \
+    --match name \
+    --asset gosu-amd64 \
+    --type binary \
+    --name gosu

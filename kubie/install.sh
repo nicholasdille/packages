@@ -2,13 +2,18 @@
 
 set -o errexit
 
-: "${TARGET:=/usr/local}"
+source <(curl --silent --location --fail https://pkg.dille.io/.scripts/source.sh)
 
-curl --silent https://api.github.com/repos/sbstp/kubie/releases/latest | \
-    jq --raw-output '.assets[] | select(.name == "kubie-linux-amd64") | .browser_download_url' | \
-    xargs sudo curl --location --fail --output ${TARGET}/bin/kubie
-sudo chmod +x ${TARGET}/bin/kubie
+unlock_sudo
 
-curl --silent https://api.github.com/repos/sbstp/kubie/releases/latest | \
+github_install \
+    --repo sbstp/kubie \
+    --match name \
+    --asset kubie-linux-amd64 \
+    --type binary \
+    --name kubie
+
+github_find_latest_release sbstp/kubie | \
     jq --raw-output '.tag_name' | \
-    xargs -I{} sudo curl --location --fail --output ${TARGET}/etc/bash_completion.d/kubie.sh https://github.com/sbstp/kubie/raw/{}/completion/kubie.bash
+    xargs -I{} curl --location --fail https://github.com/sbstp/kubie/raw/{}/completion/kubie.bash | \
+    store_completion kubie

@@ -2,9 +2,12 @@
 
 set -o errexit
 
-: "${TARGET:=/usr/local}"
+source <(curl --silent --location --fail https://pkg.dille.io/.scripts/source.sh)
 
-curl --silent https://api.github.com/repos/inlets/inletsctl/releases/latest | \
-    jq --raw-output '.assets[] | select(.name == "inletsctl.tgz") | .browser_download_url' | \
-    xargs curl --location --fail | \
-    sudo tar -xzC ${TARGET} bin/inletsctl
+unlock_sudo
+
+github_find_latest_release inlets/inletsctl | \
+    github_resolve_assets | \
+    github_select_asset_by_name inletsctl.tgz | \
+    download_file | \
+    sudo tar -xzC ${TARGET_BASE} bin/inletsctl

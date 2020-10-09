@@ -2,9 +2,14 @@
 
 set -o errexit
 
-: "${TARGET:=/usr/local}"
+source <(curl --silent --location --fail https://pkg.dille.io/.scripts/source.sh)
 
-curl --silent https://api.github.com/repos/containerd/containerd/releases/latest | \
-    jq --raw-output '.assets[] | select(.name | endswith(".linux-amd64.tar.gz")) | .browser_download_url' | \
-    xargs curl --location --fail | \
-    sudo tar -xzC ${TARGET}
+unlock_sudo
+
+github_find_latest_release containerd/containerd | \
+    github_resolve_assets | \
+    github_select_asset_by_prefix containerd- | \
+    github_select_asset_by_suffix -linux-amd64.tar.gz | \
+    github_get_asset_download_url | \
+    download_file | \
+    sudo tar -xzC ${TARGET_BASE}

@@ -2,10 +2,13 @@
 
 set -o errexit
 
-: "${TARGET:=/usr/local}"
+source <(curl --silent --location --fail https://pkg.dille.io/.scripts/source.sh)
 
-curl --silent https://api.github.com/repos/simeji/jid/releases/latest | \
-    jq --raw-output '.assets[] | select(.name == "jid_linux_amd64.zip") | .browser_download_url' | \
-    xargs curl --location --fail --remote-name
-sudo unzip -d ${TARGET}/bin/ jid_linux_amd64.zip
-rm jid_linux_amd64.zip
+unlock_sudo
+
+github_install \
+    --repo simeji/jid \
+    --match name \
+    --asset jid_linux_amd64.zip \
+    --type zip \
+    --include jid

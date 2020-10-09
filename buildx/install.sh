@@ -2,7 +2,10 @@
 
 set -o errexit
 
-: "${TARGET:=/usr/local}"
+source <(curl --silent --location --fail https://pkg.dille.io/.scripts/source.sh)
+
+unlock_sudo
+
 : "${DOCKER_CLI_DIR:=${TARGET}/lib/docker/cli-plugins}"
 : "${DOCKER_CONFIG:=${HOME}/.docker}"
 
@@ -24,10 +27,13 @@ fi
 
 sudo mkdir --parents ${DOCKER_CLI_DIR}
 
-curl --silent https://api.github.com/repos/docker/buildx/releases/latest | \
-    jq --raw-output '.assets[] | select(.name | endswith(".linux-amd64")) | .browser_download_url' | \
-    xargs sudo curl --location --fail --output ${DOCKER_CLI_DIR}/docker-buildx
-sudo chmod +x ${DOCKER_CLI_DIR}/docker-buildx
+github_find_latest_release docker/buildx | \
+    github_resolve_assets | \
+    github_select_asset_by_suffix .linux-amd64 | \
+    github_get_asset_download_url | \
+    download_file | \
+    store_file docker-buildx ${DOCKER_CLI_DIR} | \
+    make_executable
 
 if ! test -f "${DOCKER_CONFIG}/config.json"; then
     echo "{}" >${DOCKER_CONFIG}/config.json

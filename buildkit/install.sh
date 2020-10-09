@@ -2,15 +2,20 @@
 
 set -o errexit
 
-: "${TARGET:=/usr/local}"
+source <(curl --silent --location --fail https://pkg.dille.io/.scripts/source.sh)
 
-curl --silent https://api.github.com/repos/moby/buildkit/releases | \
+unlock_sudo
+
+github_get_releases moby/buildkit | \
     jq 'map(select(.tag_name | startswith("v"))) | .[0]' | \
-    jq --raw-output '.assets[] | select(.name | endswith(".linux-amd64.tar.gz")) | .browser_download_url' | \
-    xargs curl --location --fail | \
-    sudo tar -xzC ${TARGET}
+    github_resolve_assets | \
+    github_select_asset_by_suffix .linux-amd64.tar.gz | \
+    github_get_asset_download_url | \
+    download_file | \
+    sudo tar -xzC ${TARGET_BASE}
 
-curl --silent https://api.github.com/repos/moby/buildkit/releases | \
+github_get_releases moby/buildkit | \
     jq --raw-output 'map(select(.tag_name | startswith("v"))) | .[0].tag_name' | \
-    xargs -I{} sudo curl --location --fail --output ${TARGET}/bin/buildctl-daemonless.sh https://raw.githubusercontent.com/moby/buildkit/{}/examples/buildctl-daemonless/buildctl-daemonless.sh
-sudo chmod +x ${TARGET}/bin/buildctl-daemonless.sh
+    xargs -I{} sudo curl --location --fail https://raw.githubusercontent.com/moby/buildkit/{}/examples/buildctl-daemonless/buildctl-daemonless.sh | \
+    store_file buildctl-daemonless.sh | \
+    make_executable

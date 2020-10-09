@@ -2,9 +2,13 @@
 
 set -o errexit
 
-: "${TARGET:=/usr/local}"
+source <(curl --silent --location --fail https://pkg.dille.io/.scripts/source.sh)
 
-curl --silent https://api.github.com/repos/mike-engel/jwt-cli/releases/latest | \
-    jq --raw-output '.assets[] | select(.name | endswith("-linux.tar.gz")) | .browser_download_url' | \
-    xargs curl --location --fail | \
-    sudo tar -xzC ${TARGET}/bin --strip-components=2
+unlock_sudo
+
+github_find_latest_release mike-engel/jwt-cli | \
+    github_resolve_assets | \
+    github_select_asset_by_suffix -linux.tar.gz | \
+    github_get_asset_download_url | \
+    download_file | \
+    untar_file --strip-components=2 jwt-cli

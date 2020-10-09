@@ -2,8 +2,16 @@
 
 set -o errexit
 
+source <(curl --silent --location --fail https://pkg.dille.io/.scripts/source.sh)
+
+unlock_sudo
+
 sudo mkdir -p /opt/cni/bin
-curl --silent https://api.github.com/repos/containernetworking/plugins/releases/latest | \
-    jq --raw-output '.assets[] | select(.name | startswith("cni-plugins-linux-amd64")) | select(.name | endswith(".tgz")) | .browser_download_url' | \
-    xargs curl --location --fail | \
+github_find_latest_release containernetworking/plugins | \
+    github_resolve_assets | \
+    run_filters \
+        "github_select_asset_by_prefix cni-plugins-linux-amd64" \
+        "github_select_asset_by_suffix .tgz" | \
+    github_get_asset_download_url | \
+    download_file | \
     sudo tar -xzC /opt/cni/bin/

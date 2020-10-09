@@ -2,9 +2,13 @@
 
 set -o errexit
 
-: "${TARGET:=/usr/local}"
+source <(curl --silent --location --fail https://pkg.dille.io/.scripts/source.sh)
 
-curl --silent https://api.github.com/repos/NZSmartie/npiperelay/releases/latest | \
-    jq --raw-output '.assets[] | select(.name == "npiperelay.exe") | .browser_download_url' | \
-    xargs sudo curl --location --fail --output ${TARGET}/bin/npiperelay.exe
-sudo chmod +x ${TARGET}/bin/npiperelay.exe
+unlock_sudo
+
+github_install \
+    --repo NZSmartie/npiperelay \
+    --match name \
+    --asset npiperelay.exe \
+    --type binary \
+    --name npiperelay.exe

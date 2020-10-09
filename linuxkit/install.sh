@@ -2,9 +2,13 @@
 
 set -o errexit
 
-: "${TARGET:=/usr/local}"
+source <(curl --silent --location --fail https://pkg.dille.io/.scripts/source.sh)
 
-curl --silent https://api.github.com/repos/linuxkit/linuxkit/releases/latest | \
-    jq --raw-output '.assets[] | select(.name == "linuxkit-linux-amd64") | .browser_download_url' | \
-    xargs sudo curl --silent --location --fail --output ${TARGET}/bin/linuxkit
-sudo chmod +x ${TARGET}/bin/linuxkit
+unlock_sudo
+
+github_install \
+    --repo linuxkit/linuxkit \
+    --match name \
+    --asset linuxkit-linux-amd64 \
+    --type binary \
+    --name linuxkit
