@@ -119,10 +119,6 @@ function github_install() {
         shift
     done
 
-    if test -z "${name}"; then
-        >&2 echo "ERROR: Parameter <name> must not be empty."
-        help_github_install 1
-    fi
     if test -z "${repo}"; then
         >&2 echo "ERROR: Parameter <repo> must not be empty."
         help_github_install 1
@@ -185,7 +181,8 @@ function github_install() {
         download_file | \
         case "${type}" in
             binary)
-                store_file ${name}
+                store_file ${name} | \
+                make_executable
             ;;
             gunzip)
                 gunzip_file | \
@@ -202,9 +199,6 @@ function github_install() {
         esac
 
     case "${type}" in
-        binary)
-            make_executable ${name}
-        ;;
         zip)
             rm -f ${tmpdir}/${name}.zip
             rmdir ${tmpdir}
