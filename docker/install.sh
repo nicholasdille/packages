@@ -2,19 +2,19 @@
 
 set -o errexit
 
-: "${TARGET:=/usr/local}"
+source <(curl --silent --location --fail https://pkg.dille.io/.scripts/source.sh)
 
-curl --silent https://api.github.com/repos/docker/docker-ce/releases/latest | \
+unlock_sudo
+
+github_find_latest_release docker/docker-ce | \
     jq --raw-output '.name' | \
     xargs -I{} curl --location --fail https://download.docker.com/linux/static/stable/x86_64/docker-{}.tgz | \
-    sudo tar -xzC ${TARGET}/bin/ --strip-components=1
+    untar_file --strip-components=1
 
-sudo mkdir -p ${TARGET}/etc/bash_completion.d
-curl --silent https://api.github.com/repos/docker/docker-ce/releases/latest | \
+github_find_latest_release docker/docker-ce | \
     jq --raw-output '.tag_name' | \
     xargs -I{} curl --location --fail https://raw.githubusercontent.com/docker/cli/{}/contrib/completion/bash/docker | \
-    sudo tee ${TARGET}/etc/bash_completion.d/docker.sh >/dev/null
-sudo ln -sf ${TARGET}/etc/bash_completion.d/docker.sh /etc/bash_completion.d/
+    store_completion docker
 
 : "${DOCKER_CONFIG:=${HOME}/.docker}"
 if ! test -d "${DOCKER_CONFIG}"; then

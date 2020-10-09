@@ -43,16 +43,16 @@ function download_file() {
 }
 
 function untar_file() {
-    local filter=$@
+    local parameters=$@
 
     if ${TAR_VERBOSE}; then
         TAR_ADDITIONAL_PARAMS="-v"
     fi
 
     >&2 echo "Unpacking asset to directory ${directory}..."
-    >&2 echo "  Including <${filter}>"
+    >&2 echo "  Including parameters <${parameters}>"
     cat | \
-        sudo tar -x -z ${TAR_ADDITIONAL_PARAMS} -C ${TARGET_BIN} ${filter}
+        sudo tar -x -z ${TAR_ADDITIONAL_PARAMS} -C ${TARGET_BIN} ${parameters}
 }
 
 function unzip_file {
