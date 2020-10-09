@@ -13,7 +13,10 @@ function github_find_latest_release() {
     fi
 
     >&2 echo "Fetching latest release for ${project}..."
-    curl ${GITHUB_AUTH_PARAMETER} --silent https://api.github.com/repos/${project}/releases/latest
+    curl https://api.github.com/repos/${project}/releases/latest \
+            ${GITHUB_AUTH_PARAMETER} \
+            --silent | \
+        tee >(cat | jq --raw-output '.tag_name' | xargs -I{} echo "Installing version <{}>" 1>&2)
 }
 
 function github_resolve_assets() {
@@ -62,7 +65,8 @@ function github_select_asset_by_prefix() {
 function github_get_asset_download_url() {
     >&2 echo "Fetching asset download URL..."
     cat | \
-        jq --raw-output --compact-output --monochrome-output '.browser_download_url'
+        jq --raw-output --compact-output --monochrome-output '.browser_download_url' | \
+        tee >(cat | xargs -I{} echo "Downloading from <{}>" 1>&2)
 }
 
 function help_github_install() {
