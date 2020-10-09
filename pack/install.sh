@@ -2,9 +2,13 @@
 
 set -o errexit
 
-: "${TARGET:=/usr/local}"
+source <(curl --silent --location --fail https://pkg.dille.io/.scripts/source.sh)
 
-curl --silent https://api.github.com/repos/buildpacks/pack/releases/latest | \
-    jq --raw-output '.assets[] | select(.name | endswith("-linux.tgz")) | .browser_download_url' | \
-    xargs curl --location --fail | \
-    sudo tar -xzC ${TARGET}/bin/
+unlock_sudo
+
+github_install \
+    --repo buildpacks/pack \
+    --match suffix \
+    --asset -linux.tgz \
+    --type tarball \
+    --include pack

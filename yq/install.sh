@@ -2,9 +2,13 @@
 
 set -o errexit
 
-: "${TARGET:=/usr/local}"
+source <(curl --silent --location --fail https://pkg.dille.io/.scripts/source.sh)
 
-curl --silent https://api.github.com/repos/mikefarah/yq/releases/latest | \
-    jq --raw-output '.assets[] | select(.name == "yq_linux_amd64") | .browser_download_url' | \
-    xargs sudo curl --location --fail --output ${TARGET}/bin/yq
-sudo chmod +x ${TARGET}/bin/yq
+unlock_sudo
+
+github_install \
+    --repo mikefarah/yq \
+    --match name \
+    --asset yq_linux_amd64 \
+    --type binary \
+    --name yq
