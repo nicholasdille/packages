@@ -5,16 +5,33 @@ set -o errexit
 MY_REPO=nicholasdille/packages
 
 function show_help() {
+    echo
     echo "Usage: sh ./pkg.sh <command>"
     echo "       ./pkg.sh <command>"
     echo "       curl https://pkg.dille.io/pkg.sh | sh -s <command>"
     echo
     echo "Commands:"
-    echo "    help, h       XXX"
-    echo "    install, i    XXX"
-    echo "    list, l       XXX"
-    echo "    search, s     XXX"
-    echo "    tags, t       XXX"
+    echo "    help, h       This message"
+    echo "    install, i    Install a package"
+    echo "    list, l       List available packages"
+    echo "    search, s     Search packages (name, description and tags)"
+    echo "    tags, t       Show tags"
+    echo
+}
+
+function show_help_install() {
+    echo
+    echo "Usage: sh ./pkg.sh install <package>"
+    echo "       ./pkg.sh install <package>"
+    echo "       curl https://pkg.dille.io/pkg.sh | sh -s install <package>"
+    echo
+}
+
+function show_help_search() {
+    echo
+    echo "Usage: sh ./pkg.sh search <string>"
+    echo "       ./pkg.sh search <string>"
+    echo "       curl https://pkg.dille.io/pkg.sh | sh -s search <string>"
     echo
 }
 
@@ -23,48 +40,75 @@ function get_packages() {
         cat packages.json
     else
         curl --silent https://api.github.com/repos/${MY_REPO}/releases/tags/${TAG} | \
-            jq --raw-output '.assets[] | select(.name == "packages.json")'
+            jq --raw-output '.assets[] | select(.name == "packages.json") | .browser_download_url' | \
+            xargs curl --silent --location
     fi
 }
 
 function install() {
-    curl --silent https://pkg.dille.io/$1/install.sh | sh
+    local package=$1
+
+    if test -z "${package}"; then
+        echo "ERROR: No package specified."
+        show_help_install
+        exit 1
+    fi
+
+    curl --silent https://pkg.dille.io/${package}/install.sh | bash
 }
 
 function list() {
     get_packages | \
         jq --raw-output '
             .tools[] | 
-            "\(.name)\t\(.description)"
-        '
+            "\(.name);\(.description)"
+        ' | \
+        uniq | \
+        sort | \
+        column -t -s ';'
 }
 
 function search() {
-    get_packages | \
-        jq --raw-output --arg search $1 '
-            .tools[] | 
-            select(.name | ascii_downcase | contains($search | ascii_downcase)) | 
-            "\(.name)\t\(.description)"
-        '
+    local search=$1
 
-    get_packages | \
-        jq --raw-output --arg search $1 '
-            .tools[] | 
-            select(.description | ascii_downcase | contains($search | ascii_downcase)) | 
-            "\(.name)\t\(.description)"
-        '
+    if test -z "${search}"; then
+        echo "ERROR: No search term specified."
+        show_help_search
+        exit 1
+    fi
 
-    get_packages | \
-        jq --raw-output --arg search $1 '
-            .tools[] | 
-            select(.tags[] | contains($search | ascii_downcase)) | 
-            "\(.name)\t\(.description)"
-        '
+    PACKAGES=$(get_packages)
+
+    (
+        echo "${PACKAGES}" | \
+            jq --raw-output --arg search ${search} '
+                .tools[] | 
+                select(.name | ascii_downcase | contains($search | ascii_downcase)) |
+                "\(.name);\(.description)"
+            '
+        echo "${PACKAGES}" | \
+            jq --raw-output --arg search ${search} '
+                .tools[] | 
+                select(.description | ascii_downcase | contains($search | ascii_downcase)) | 
+                "\(.name);\(.description)"
+            '
+        echo "${PACKAGES}" | \
+            jq --raw-output --arg search ${search} '
+                .tools[] | 
+                select(.tags[] | contains($search | ascii_downcase)) |
+                "\(.name);\(.description)"
+            '
+    ) | \
+    uniq | \
+    sort | \
+    column -t -s ';'
 }
 
 function tags() {
     get_packages | \
-        jq --raw-output --arg search container '.tools[].tags[] | unique | sort'
+        jq --raw-output '.tools[].tags[]' | \
+        uniq | \
+        sort
 }
 
 function prepare() {
