@@ -1,0 +1,13 @@
+name: conftest
+description: Write tests against structured configuration data using the Open Policy Agent Rego query language
+repo: open-policy-agent/conftest
+links:
+- text: Homepage
+  url: https://conftest.dev/
+tags:
+- validation
+- schema
+- configuration
+- test
+- query
+- rego
