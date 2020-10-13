@@ -1,4 +1,4 @@
-if test "$0" == "bash"; then
+if test "$0" == "-bash"; then
     >&2 echo "ERROR: Do not source this file."
     exit 1
 fi
