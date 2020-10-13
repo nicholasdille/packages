@@ -1,0 +1,9 @@
+name: docker
+description: Docker Community Edition
+repo: docker/docker-ce
+links:
+- text: Homepage
+  url: https://www.docker.com/
+tags:
+- docker
+- container

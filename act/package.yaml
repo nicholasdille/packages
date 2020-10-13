@@ -1,0 +1,11 @@
+name: act
+description: Run your GitHub Actions locally
+repo: nektos/act
+tags:
+- pipeline
+- continuous
+- ci/cd
+- integration
+- delivery
+- deployment
+- container
