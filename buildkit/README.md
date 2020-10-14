@@ -1,4 +1,4 @@
-# BuildKit
+# buildkit
 
 Concurrent, cache-efficient, and Dockerfile-agnostic builder toolkit
 

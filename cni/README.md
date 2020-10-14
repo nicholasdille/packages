@@ -1,4 +1,4 @@
-# CNI plugins
+# cni
 
 Some reference and example networking plugins
 

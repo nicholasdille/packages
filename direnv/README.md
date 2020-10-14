@@ -1,7 +1,7 @@
 # direnv
 
-unclutter your .profile
-
-[Homepage](https://direnv.net/)
+Unclutter your .profile
 
 [GitHub](https://github.com/direnv/direnv)
+
+[Homepage](https://direnv.net/)

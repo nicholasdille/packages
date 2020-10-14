@@ -2,8 +2,8 @@
 
 The Kubernetes Package Manager
 
-[Homepage](https://helm.sh/)
-
 [GitHub](https://github.com/helm/helm)
+
+[Homepage](https://helm.sh/)
 
 [Helm Hub](https://hub.helm.sh/)
