@@ -126,6 +126,11 @@ function prepare() {
 }
 
 function main() {
+    if test "$#" -eq 0; then
+        show_help
+        exit 0
+    fi
+
     while test "$#" -gt 0; do
         param=$1
         shift
