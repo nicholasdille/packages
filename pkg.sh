@@ -107,8 +107,8 @@ search() {
 tags() {
     get_packages | \
         jq --raw-output '.tools[].tags[]' | \
-        uniq | \
-        sort
+        sort | \
+        uniq
 }
 
 prepare() {
