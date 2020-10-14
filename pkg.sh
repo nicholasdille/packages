@@ -69,35 +69,67 @@ list() {
 }
 
 search() {
-    search=$1
+    SEARCH_TERM=""
+    SEARCH_NAME=false
+    SEARCH_DESC=false
+    SEARCH_TAGS=false
+    while test "$#" -gt 0; do
+        case "$1" in
+            --name)
+                SEARCH_NAME=true
+            ;;
+            --desc)
+                SEARCH_DESC=true
+            ;;
+            --tags)
+                SEARCH_TAGS=true
+            ;;
+            *)
+                if test -z "${SEARCH_TERM}"; then
+                    SEARCH_TERM=$1
+                fi
+            ;;
+        esac
+        shift
+    done
 
-    if test -z "${search}"; then
+    if test -z "${SEARCH_TERM}"; then
         echo "ERROR: No search term specified."
         show_help_search
         exit 1
     fi
+    if ! ${SEARCH_NAME} && ! ${SEARCH_DESC} && ! ${SEARCH_TAGS}; then
+        SEARCH_NAME=true
+        SEARCH_DESC=true
+        SEARCH_TAGS=true
+    fi
 
     PACKAGES=$(get_packages)
-
     (
-        echo "${PACKAGES}" | \
-            jq --raw-output --arg search "${search}" '
-                .tools[] | 
-                select(.name | ascii_downcase | contains($search | ascii_downcase)) |
-                "\(.name);\(.description)"
-            '
-        echo "${PACKAGES}" | \
-            jq --raw-output --arg search "${search}" '
-                .tools[] | 
-                select(.description | ascii_downcase | contains($search | ascii_downcase)) | 
-                "\(.name);\(.description)"
-            '
-        echo "${PACKAGES}" | \
-            jq --raw-output --arg search "${search}" '
-                .tools[] | 
-                select(.tags[] | contains($search | ascii_downcase)) |
-                "\(.name);\(.description)"
-            '
+        if ${SEARCH_NAME}; then
+            echo "${PACKAGES}" | \
+                jq --raw-output --arg search "${SEARCH_TERM}" '
+                    .tools[] | 
+                    select(.name | ascii_downcase | contains($search | ascii_downcase)) |
+                    "\(.name);\(.description)"
+                '
+        fi
+        if ${SEARCH_DESC}; then
+            echo "${PACKAGES}" | \
+                jq --raw-output --arg search "${SEARCH_TERM}" '
+                    .tools[] | 
+                    select(.description | ascii_downcase | contains($search | ascii_downcase)) | 
+                    "\(.name);\(.description)"
+                '
+        fi
+        if ${SEARCH_TAGS}; then
+            echo "${PACKAGES}" | \
+                jq --raw-output --arg search "${SEARCH_TERM}" '
+                    .tools[] | 
+                    select(.tags[] | contains($search | ascii_downcase)) |
+                    "\(.name);\(.description)"
+                '
+        fi
     ) | \
     sort | \
     uniq | \
