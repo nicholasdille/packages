@@ -1,4 +1,4 @@
-name: BuildKit
+name: buildkit
 description: Concurrent, cache-efficient, and Dockerfile-agnostic builder toolkit
 repo: moby/buildkit
 links:
@@ -8,3 +8,4 @@ tags:
 - container
 - build
 - builder
+- moby

@@ -1,4 +1,4 @@
-name: CNI plugins
+name: cni
 description: Some reference and example networking plugins
 repo: containernetworking/plugins
 tags:
