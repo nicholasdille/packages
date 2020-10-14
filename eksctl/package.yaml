@@ -1,0 +1,11 @@
+name: eksctl
+description: The official CLI for Amazon EKS
+repo: weaveworks/eksctl
+tags:
+- pipeline
+- continuous
+- ci/cd
+- integration
+- delivery
+- deployment
+- container
