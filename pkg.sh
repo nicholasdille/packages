@@ -4,7 +4,7 @@ set -o errexit
 
 MY_REPO=nicholasdille/packages
 
-function show_help() {
+show_help() {
     echo
     echo "Usage: sh ./pkg.sh <command>"
     echo "       ./pkg.sh <command>"
@@ -19,7 +19,7 @@ function show_help() {
     echo
 }
 
-function show_help_install() {
+show_help_install() {
     echo
     echo "Usage: sh ./pkg.sh install <package>"
     echo "       ./pkg.sh install <package>"
@@ -27,7 +27,7 @@ function show_help_install() {
     echo
 }
 
-function show_help_search() {
+show_help_search() {
     echo
     echo "Usage: sh ./pkg.sh search <string>"
     echo "       ./pkg.sh search <string>"
@@ -35,18 +35,18 @@ function show_help_search() {
     echo
 }
 
-function get_packages() {
+get_packages() {
     if test -f packages.json; then
         cat packages.json
     else
-        curl --silent https://api.github.com/repos/${MY_REPO}/releases/tags/${TAG} | \
+        curl --silent "https://api.github.com/repos/${MY_REPO}/releases/tags/${TAG}" | \
             jq --raw-output '.assets[] | select(.name == "packages.json") | .browser_download_url' | \
             xargs curl --silent --location
     fi
 }
 
-function install() {
-    local package=$1
+install() {
+    package=$1
 
     if test -z "${package}"; then
         echo "ERROR: No package specified."
@@ -54,10 +54,10 @@ function install() {
         exit 1
     fi
 
-    curl --silent https://pkg.dille.io/${package}/install.sh | bash
+    curl --silent "https://pkg.dille.io/${package}/install.sh" | bash
 }
 
-function list() {
+list() {
     get_packages | \
         jq --raw-output '
             .tools[] | 
@@ -68,8 +68,8 @@ function list() {
         column -t -s ';'
 }
 
-function search() {
-    local search=$1
+search() {
+    search=$1
 
     if test -z "${search}"; then
         echo "ERROR: No search term specified."
@@ -81,19 +81,19 @@ function search() {
 
     (
         echo "${PACKAGES}" | \
-            jq --raw-output --arg search ${search} '
+            jq --raw-output --arg search "${search}" '
                 .tools[] | 
                 select(.name | ascii_downcase | contains($search | ascii_downcase)) |
                 "\(.name);\(.description)"
             '
         echo "${PACKAGES}" | \
-            jq --raw-output --arg search ${search} '
+            jq --raw-output --arg search "${search}" '
                 .tools[] | 
                 select(.description | ascii_downcase | contains($search | ascii_downcase)) | 
                 "\(.name);\(.description)"
             '
         echo "${PACKAGES}" | \
-            jq --raw-output --arg search ${search} '
+            jq --raw-output --arg search "${search}" '
                 .tools[] | 
                 select(.tags[] | contains($search | ascii_downcase)) |
                 "\(.name);\(.description)"
@@ -104,14 +104,14 @@ function search() {
     column -t -s ';'
 }
 
-function tags() {
+tags() {
     get_packages | \
         jq --raw-output '.tools[].tags[]' | \
         uniq | \
         sort
 }
 
-function prepare() {
+prepare() {
     : "${VERSION:=latest}"
     if test -z "${TAG}"; then
         TAG=$(
@@ -125,7 +125,7 @@ function prepare() {
     fi
 }
 
-function main() {
+main() {
     if test "$#" -eq 0; then
         show_help
         exit 0
@@ -168,14 +168,15 @@ function main() {
 
 case "$0" in
     -bash)
+        # Was started using "source pkg.sh"
         echo "ERROR: Do not source this script."
     ;;
     bash)
-        EXECUTION_TYPE=pipe
+        # Was started using "bash pkg.sh"
         main "$@"
     ;;
     *)
-        EXECUTION_TYPE=script
+        # Was started using "./pkg.sh"
         main "$@"
     ;;
 esac
