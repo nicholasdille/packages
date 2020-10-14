@@ -1,0 +1,9 @@
+name: cheat
+description: cheat allows you to create and view interactive cheatsheets on the command-line
+repo: cheat/cheat
+tags:
+- shell
+- help
+- support
+- man
+- manpage

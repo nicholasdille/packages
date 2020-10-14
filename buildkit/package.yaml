@@ -1,0 +1,10 @@
+name: BuildKit
+description: Concurrent, cache-efficient, and Dockerfile-agnostic builder toolkit
+repo: moby/buildkit
+links:
+- text: Using BuildKit in Docker >=18.09
+  url: https://docs.docker.com/develop/develop-images/build_enhancements/
+tags:
+- container
+- build
+- builder

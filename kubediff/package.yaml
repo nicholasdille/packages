@@ -1,0 +1,10 @@
+name: kubediff
+description: A tool for Kubernetes to show differences between running state and version controlled configuration
+repo: weaveworks/kubediff
+tags:
+- kubernetes
+- k8s
+- difference
+- state
+- configuration
+- manifest

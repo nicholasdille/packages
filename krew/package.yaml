@@ -1,0 +1,10 @@
+name: krew
+description: Find and install kubectl plugins
+repo: kubernetes-sigs/krew
+links:
+- text: Homepage
+  url: https://krew.sigs.k8s.io/
+tags:
+- kubernetes
+- k8s
+- plugins

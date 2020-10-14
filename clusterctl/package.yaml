@@ -1,0 +1,13 @@
+name: clusterctl
+description: The clusterctl CLI tool handles the lifecycle of a Cluster API management cluster
+repo: kubernetes-sigs/cluster-api
+links:
+- text: Homepage
+  url: https://cluster-api.sigs.k8s.io/
+tags:
+- kubernetes
+- k8s
+- deployment
+- bootstrap
+- cluster
+- api

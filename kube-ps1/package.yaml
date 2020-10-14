@@ -1,0 +1,8 @@
+name: kube-ps1
+description: Kubernetes prompt info for bash and zsh
+repo: jonmosco/kube-ps1
+tags:
+- kubernetes
+- k8s
+- shell
+- prompt

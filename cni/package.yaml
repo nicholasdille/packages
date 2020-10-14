@@ -1,0 +1,9 @@
+name: CNI plugins
+description: Some reference and example networking plugins
+repo: containernetworking/plugins
+tags:
+- kubernetes
+- k8s
+- network
+- plugin
+- cni

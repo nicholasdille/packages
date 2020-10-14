@@ -1,0 +1,6 @@
+name: arkade
+description: Your one-stop CLI for Kubernetes
+repo: alexellis/arkade
+tags:
+- kubernetes
+- k8s

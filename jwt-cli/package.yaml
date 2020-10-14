@@ -1,0 +1,5 @@
+name: jwt-cli
+description: A super fast CLI tool to decode and encode JWTs built in Rust
+repo: mike-engel/jwt-cli
+tags:
+- jwt

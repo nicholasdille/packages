@@ -1,0 +1,11 @@
+name: sshocker
+description: ssh + reverse sshfs + port forwarder, in Docker-like CLI
+repo: AkihiroSuda/sshocker
+tags:
+- docker
+- container
+- ssh
+- sshfs
+- forward
+- volume
+- mount

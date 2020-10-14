@@ -1,0 +1,6 @@
+name: yaml-patch
+description: A library to apply YAML versions of RFC6902 patches
+repo: krishicks/yaml-patch
+tags:
+- yaml
+- patch

@@ -1,0 +1,12 @@
+name: linkchecker
+description: Check websites for broken links
+repo: linkchecker/linkchecker
+links:
+- text: Homepage
+  url: https://linkchecker.github.io/linkchecker/
+tags:
+- web
+- html
+- link
+- test
+- quality

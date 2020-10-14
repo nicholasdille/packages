@@ -1,0 +1,7 @@
+name: kubeletctl
+description: A client for kubelet
+repo: cyberark/kubeletctl
+tags:
+- kubernetes
+- k8s
+- kubelet

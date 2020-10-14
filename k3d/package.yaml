@@ -1,0 +1,12 @@
+name: k3d
+description: Little helper to run Rancher Lab's k3s in Docker
+repo: rancher/k3d
+links:
+- text: Homepage
+  url: https://k3d.io/
+tags:
+- kubernetes
+- k8s
+- container
+- dind
+- docker

@@ -1,0 +1,9 @@
+name: kubectl
+description: The Kubernetes command-line tool
+repo: kubernetes/kubectl
+links:
+- text: Reference
+  url: https://kubernetes.io/docs/reference/kubectl/kubectl/
+tags:
+- kubernetes
+- k8s

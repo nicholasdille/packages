@@ -1,0 +1,11 @@
+name: kubeadm
+description: Bootstrap a Kubernetes cluster
+repo: kubernetes/kubeadm
+links:
+- text: Documentation
+  url: https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/#installing-kubeadm-kubelet-and-kubectl
+tags:
+- kubernetes
+- k8s
+- cluster
+- bootstrap

@@ -1,0 +1,9 @@
+name: lectl
+description: Script to check issued certificates by Let's Encrypt on CTL (Certificate Transparency Log) using https://crt.sh
+repo: sahsanu/lectl
+links:
+- text: Certificate search
+  url: https://crt.sh
+tags:
+- letsencrypt
+- certificate

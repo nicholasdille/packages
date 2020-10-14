@@ -1,0 +1,7 @@
+name: argocd
+description: Declarative continuous deployment for Kubernetes
+repo: argoproj/argo-cd
+tags:
+- gitops
+- kubernetes
+- k8s

@@ -1,0 +1,12 @@
+name: cnitool
+description: A simple program that executes a CNI configuration
+repo: containernetworking/cni
+links:
+- text: Usage
+  url: https://github.com/containernetworking/cni/tree/master/cnitool
+tags:
+- kubernetes
+- k8s
+- network
+- plugin
+- cni

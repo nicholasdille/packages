@@ -1,0 +1,7 @@
+name: crictl
+description: CLI and validation tools for Kubelet Container Runtime Interface (CRI)
+repo: kubernetes-sigs/cri-tools
+tags:
+- container
+- runtime
+- cri

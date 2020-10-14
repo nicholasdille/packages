@@ -1,0 +1,6 @@
+name: hcloud
+description: A command-line interface for Hetzner Cloud
+repo: hetznercloud/cli
+tags:
+- hetzner
+- cloud

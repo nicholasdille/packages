@@ -1,0 +1,10 @@
+name: docker-compose
+description: Define and run multi-container applications with Docker
+repo: docker/compose
+links:
+- text: Specification
+  url: https://compose-spec.io/
+tags:
+- docker
+- container
+- compose

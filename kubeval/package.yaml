@@ -1,0 +1,12 @@
+name: kubeval
+description: Validate your Kubernetes configuration files, supports multiple Kubernetes versions
+repo: instrumenta/kubeval
+tags:
+- kubernetes
+- k8s
+- manifest
+- yaml
+- configuration
+- validate
+- test
+- quality

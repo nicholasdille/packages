@@ -1,0 +1,6 @@
+name: ksort
+description: Sort manifest files in a proper order by Kind
+repo: superbrothers/ksort
+tags:
+- kubernetes
+- k8s

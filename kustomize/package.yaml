@@ -1,0 +1,15 @@
+name: kustomize
+description: Customization of kubernetes YAML configurations
+repo: kubernetes-sigs/kustomize
+links:
+- text: Homepage
+  url: https://kustomize.io/
+tags:
+- kubernetes
+- k8s
+- template
+- configuration
+- substitution
+- expansion
+- package
+- yaml

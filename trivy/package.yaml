@@ -1,0 +1,9 @@
+name: trivy
+description: A Simple and Comprehensive Vulnerability Scanner for Containers, Suitable for CI
+repo: aquasecurity/trivy
+tags:
+- container
+- security
+- scan
+- test
+- quality

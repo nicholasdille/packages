@@ -1,0 +1,10 @@
+name: manifest-tool
+description: Manifest tool for manifest list object creation/query
+repo: estesp/manifest-tool
+tags:
+- docker
+- container
+- image
+- registry
+- platform
+- architecture

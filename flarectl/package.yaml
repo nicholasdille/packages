@@ -1,0 +1,10 @@
+name: flarectl
+description: A CLI application for interacting with a Cloudflare account
+repo: cloudflare/cloudflare-go
+links:
+- text: Usage
+  url: https://github.com/cloudflare/cloudflare-go/tree/master/cmd/flarectl
+- text: CloudFlare API
+  url: https://api.cloudflare.com/
+tags:
+- dns

@@ -1,0 +1,6 @@
+name: kdo
+description: Deployless Development on Kubernetes
+repo: stepro/kdo
+tags:
+- kubernetes
+- k8s

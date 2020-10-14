@@ -1,0 +1,11 @@
+name: asciinema
+description: Record and share your terminal sessions
+repo: asciinema/asciinema
+links:
+- text: Homepage
+  url: https://asciinema.org/
+tags:
+- shell
+- record
+- cast
+- screen

@@ -1,0 +1,5 @@
+name: gosu
+description: Simple Go-based setuid+setgid+setgroups+exec
+repo: tianon/gosu
+tags:
+- sudo

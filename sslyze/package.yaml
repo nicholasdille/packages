@@ -1,0 +1,9 @@
+name: sslyze
+description: Fast and powerful SSL/TLS scanning library
+repo: nabla-c0d3/sslyze
+tags:
+- ssl
+- tls
+- scan
+- test
+- quality

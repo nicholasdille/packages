@@ -1,0 +1,7 @@
+name: skopeo
+description: Work with remote images registries - retrieving information, images, signing content
+repo: containers/skopeo
+tags:
+- container
+- registry
+- image

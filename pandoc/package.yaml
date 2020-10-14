@@ -1,0 +1,9 @@
+name: pandoc
+description: Universal markup converter
+repo: jgm/pandoc
+links:
+- text: Homepage
+  url: https://pandoc.org/
+tags:
+- converter
+- markup

@@ -1,0 +1,5 @@
+name: bin
+description: Effortless binary manager
+repo: marcosnils/bin
+tags:
+- shell

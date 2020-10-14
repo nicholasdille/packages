@@ -1,0 +1,12 @@
+name: imgpkg
+description: Store application configuration files in Docker/OCI registries
+repo: k14s/imgpkg
+links:
+- text: Homepage
+  url: https://carvel.dev/
+tags:
+- docker
+- registry
+- oci
+- oras
+- artifact

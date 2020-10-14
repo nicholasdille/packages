@@ -1,0 +1,10 @@
+name: inletsctl
+description: Cloud Native Tunnel for APIs
+repo: inlets/inlets
+links:
+- text: Homepage
+  url: https://inlets.dev/
+tags:
+- kubernetes
+- k8s
+- tunnel

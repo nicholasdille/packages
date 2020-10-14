@@ -1,0 +1,8 @@
+name: pack
+description: CLI for building apps using Cloud Native Buildpacks
+repo: buildpacks/pack
+links:
+- text: Homepage
+  url: https://buildpacks.io/
+tags:
+- build

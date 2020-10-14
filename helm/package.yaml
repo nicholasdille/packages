@@ -1,0 +1,16 @@
+name: helm
+description: The Kubernetes Package Manager
+repo: helm/helm
+links:
+- text: Homepage
+  url: https://helm.sh/
+- text: Helm Hub
+  url: https://hub.helm.sh/
+tags:
+- kubernetes
+- k8s
+- package
+- template
+- substituton
+- expansion
+- configuration

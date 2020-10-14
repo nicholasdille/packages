@@ -1,0 +1,10 @@
+name: oras
+description: OCI Registry As Storage
+repo: deislabs/oras
+links:
+- text: OCI artifacts
+  url: https://github.com/opencontainers/artifacts
+tags:
+- oci
+- registry
+- artifact

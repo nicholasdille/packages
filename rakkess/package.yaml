@@ -1,0 +1,10 @@
+name: rakkess
+description: Review Access - kubectl plugin to show an access matrix for k8s server resources
+repo: corneliusweig/rakkess
+tags:
+- kubernetes
+- k8s
+- rbac
+- security
+- plugin
+- kubectl

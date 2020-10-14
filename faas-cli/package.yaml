@@ -1,0 +1,11 @@
+name: faas-cli
+description: Official CLI for OpenFaaS
+repo: openfaas/faas-cli
+links:
+- text: Homepage
+  url: https://www.openfaas.com/
+tags:
+- openfaas
+- function
+- service
+- serverless

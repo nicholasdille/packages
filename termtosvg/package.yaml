@@ -1,0 +1,8 @@
+name: termtosvg
+description: (UNMAINTAINED) Record terminal sessions as SVG animations
+repo: nbedos/termtosvg
+tags:
+- shell
+- record
+- cast
+- screen

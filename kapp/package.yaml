@@ -1,0 +1,11 @@
+name: kapp
+description: kapp is a simple deployment tool focused on the concept of "Kubernetes application" — a set of resources with the same label
+repo: k14s/kapp
+links:
+- text: Homepage
+  url: https://carvel.dev/
+tags:
+- kubernetes
+- k8s
+- ui
+- package

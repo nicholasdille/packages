@@ -1,0 +1,10 @@
+name: rio
+description: Application Deployment Engine for Kubernetes
+repo: rancher/rio
+links:
+- text: Homepage
+  url: https://rio.io/
+tags:
+- kubernetes
+- k8s
+- paas

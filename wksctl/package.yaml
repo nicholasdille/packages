@@ -1,0 +1,8 @@
+name: wksctl
+description: Open Source Weaveworks Kubernetes System
+repo: weaveworks/wksctl
+tags:
+- kubernetes
+- k8s
+- cluster
+- bootstrap

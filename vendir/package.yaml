@@ -1,0 +1,8 @@
+name: vendir
+description: Easy way to vendor portions of git repos, github releases, etc. declaratively
+repo: k14s/vendir
+links:
+- text: Homepage
+  url: https://carvel.dev/
+tags:
+- shell

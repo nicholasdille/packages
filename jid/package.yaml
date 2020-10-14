@@ -1,0 +1,5 @@
+name: jid
+description: json incremental digger
+repo: simeji/jid
+tags:
+- json

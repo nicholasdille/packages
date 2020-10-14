@@ -1,0 +1,12 @@
+name: httpie
+description: Modern, user-friendly command-line HTTP client for the API era
+repo: httpie/httpie
+links:
+- text: Homepage
+  url: https://httpie.org/
+tags:
+- web
+- http
+- https
+- test
+- quality

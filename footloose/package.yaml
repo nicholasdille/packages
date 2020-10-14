@@ -1,0 +1,9 @@
+name: footloose
+description: Container Machines - Containers that look like Virtual Machines
+repo: weaveworks/footloose
+tags:
+- container
+- vm
+- systemd
+- ssh
+- linux

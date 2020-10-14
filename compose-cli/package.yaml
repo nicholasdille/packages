@@ -1,0 +1,13 @@
+name: compose-cli
+description: Easily run your Compose application to the cloud with compose-cli
+repo: docker/compose-cli
+tags:
+- docker
+- compose
+- cli
+- plugin
+- ecs
+- azure
+- aws
+- aci
+- container

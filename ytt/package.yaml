@@ -1,0 +1,12 @@
+name: ytt
+description: YAML templating tool that works on YAML structure instead of text
+repo: k14s/ytt
+links:
+- text: Homepage
+  url: https://carvel.dev/
+tags:
+- yaml
+- configuration
+- template
+- substitution
+- expansion

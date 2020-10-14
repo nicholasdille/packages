@@ -1,0 +1,10 @@
+name: umoci
+description: umoci modifies Open Container images
+repo: opencontainers/umoci
+links:
+- text: Homepage
+  url: https://umo.ci/
+tags:
+- container
+- image
+- oci

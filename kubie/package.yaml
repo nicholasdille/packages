@@ -1,0 +1,8 @@
+name: kubie
+description: A more powerful alternative to kubectx and kubens
+repo: sbstp/kubie
+tags:
+- kubernetes
+- k8s
+- context
+- namespace

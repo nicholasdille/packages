@@ -1,0 +1,6 @@
+name: yh
+description: YAML syntax highlighter to bring colours where only jq could
+repo: andreazorzetto/yh
+tags:
+- yaml
+- shell

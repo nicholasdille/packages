@@ -1,0 +1,13 @@
+name: kind
+description: Kubernetes IN Docker - local clusters for testing Kubernetes
+repo: kubernetes-sigs/kind
+links:
+- text: Homepage
+  url: https://kind.sigs.k8s.io/
+tags:
+- kubernetes
+- k8s
+- dind
+- docker
+- cluster
+- bootstrap

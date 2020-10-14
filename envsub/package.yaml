@@ -1,0 +1,8 @@
+name: envsub
+description: An alternative envsubst that allows for `${foo:-default}` expansion too
+repo: stephenc/envsub
+tags:
+- shell
+- substitution
+- expansion
+- variables

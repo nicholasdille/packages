@@ -1,0 +1,12 @@
+name: faasd
+description: faasd - Serverless for everyone else
+repo: openfaas/faasd
+links:
+- text: Homepage
+  url: https://openfaas.com/blog/introducing-faasd/
+tags:
+- openfaas
+- function
+- service
+- serverless
+- containerd

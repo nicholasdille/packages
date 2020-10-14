@@ -1,0 +1,9 @@
+name: dive
+description: A tool for exploring each layer in a docker image
+repo: wagoodman/dive
+tags:
+- docker
+- container
+- layers
+- images
+- quality

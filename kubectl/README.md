@@ -2,4 +2,4 @@
 
 The Kubernetes command-line tool
 
-[Reference](https://kubernetes.io/docs/reference/kubectl/kubectl/)]
+[Reference](https://kubernetes.io/docs/reference/kubectl/kubectl/)

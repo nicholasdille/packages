@@ -1,0 +1,8 @@
+name: kubens
+description: Faster way to switch between clusters and namespaces in kubectl
+repo: ahmetb/kubectx
+tags:
+- kubernetes
+- k8s
+- context
+- namespaces

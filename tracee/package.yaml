@@ -1,0 +1,8 @@
+name: tracee
+description: Container and system event tracing using eBPF
+repo: aquasecurity/tracee
+tags:
+- container
+- ebpf
+- security
+- tracing

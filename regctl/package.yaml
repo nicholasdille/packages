@@ -1,0 +1,7 @@
+name: regctl
+description: Client interface for the registry API
+repo: regclient/regclient
+tags:
+- docker
+- container
+- registry

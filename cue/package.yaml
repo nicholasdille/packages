@@ -1,0 +1,8 @@
+name: cue
+description: Validate and define text-based and dynamic configuration
+repo: cuelang/cue
+links:
+- text: Homepage
+  url: https://cuelang.org/
+tags:
+- configuration

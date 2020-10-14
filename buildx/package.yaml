@@ -1,0 +1,13 @@
+name: buildx
+description: Docker CLI plugin for extended build capabilities with BuildKit
+repo: docker/buildx
+links:
+- text: Docker CLI plugins proposal
+  url: https://github.com/docker/cli/issues/1534
+tags:
+- docker
+- container
+- build
+- builder
+- plugin
+- image

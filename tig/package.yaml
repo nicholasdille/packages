@@ -1,0 +1,6 @@
+name: tig
+description: Text-mode interface for git
+repo: jonas/tig
+tags:
+- git
+- ui

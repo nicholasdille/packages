@@ -1,0 +1,8 @@
+name: yamllint
+description: A linter for YAML files
+repo: adrienverge/yamllint
+tags:
+- yaml
+- linter
+- test
+- quality

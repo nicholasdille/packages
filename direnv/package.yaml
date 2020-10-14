@@ -1,0 +1,9 @@
+name: direnv
+description: Unclutter your .profile
+repo: direnv/direnv
+links:
+- text: Homepage
+  url: https://direnv.net/
+tags:
+- shell
+- configuration

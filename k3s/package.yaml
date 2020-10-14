@@ -1,0 +1,9 @@
+name: k3s
+description: Lightweight Kubernetes
+repo: rancher/k3s
+links:
+- text: Homepage
+  url: https://k3s.io/
+tags:
+- kubernetes
+- k8s

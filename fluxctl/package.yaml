@@ -1,0 +1,10 @@
+name: fluxctl
+description: The GitOps Kubernetes operator
+repo: fluxcd/flux
+links:
+- text: Homepage
+  url: https://fluxcd.io/
+tags:
+- gitops
+- kubernetes
+- k8s

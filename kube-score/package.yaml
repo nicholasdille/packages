@@ -1,0 +1,7 @@
+name: kube-score
+description: Kubernetes object analysis with recommendations for improved reliability and security
+repo: zegl/kube-score
+tags:
+- kubernetes
+- k8s
+- security

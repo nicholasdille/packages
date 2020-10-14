@@ -1,0 +1,10 @@
+name: k3sup
+description: bootstrap Kubernetes with k3s over SSH < 1 min
+repo: alexellis/k3sup
+tags:
+- kubernetes
+- k8s
+- k3s
+- ssh
+- bootstrap
+- cluster

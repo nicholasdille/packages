@@ -1,0 +1,9 @@
+name: runc
+description: CLI tool for spawning and running containers according to the OCI specification
+repo: opencontainers/runc
+links:
+- text: Runtime spec
+  url: https://github.com/opencontainers/runtime-spec
+tags:
+- container
+- oci
