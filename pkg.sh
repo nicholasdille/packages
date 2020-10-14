@@ -99,8 +99,8 @@ search() {
                 "\(.name);\(.description)"
             '
     ) | \
-    uniq | \
     sort | \
+    uniq | \
     column -t -s ';'
 }
 
