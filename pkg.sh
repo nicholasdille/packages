@@ -144,18 +144,22 @@ function main() {
             install|i)
                 prepare
                 install "$@"
+                exit 0
             ;;
             list|l)
                 prepare
                 list "$@"
+                exit 0
             ;;
             search|s)
                 prepare
                 search "$@"
+                exit 0
             ;;
             tags|t)
                 prepare
                 tags "$@"
+                exit 0
             ;;
         esac
         shift
