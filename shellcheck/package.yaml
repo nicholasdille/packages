@@ -1,0 +1,9 @@
+name: shellcheck
+description: A static analysis tool for shell scripts
+repo: koalaman/shellcheck
+tags:
+- shell
+- quality
+- test
+- validate
+- analysis
