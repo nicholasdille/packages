@@ -120,6 +120,23 @@ function make_executable() {
     sudo chmod +x ${TARGET_BIN}/${filename}
 }
 
+function rename_file() {
+    local old_name=$1
+    local new_name=$2
+
+    if test -z "${old_name}"; then
+        echo "ERROR: Name of existing file not specified."
+        exit 1
+    fi
+    if test -z "${new_name}"; then
+        echo "ERROR: New name of file not specified."
+        exit 1
+    fi
+
+    >&2 echo "Renaming ${old_name} to ${new_name}..."
+    sudo mv ${TARGET_BIN}/${old_name} ${TARGET_BIN}/${new_name}
+}
+
 function store_completion() {
     local filename=$1
 
