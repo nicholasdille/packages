@@ -2,12 +2,40 @@
 
 Installation script for tools I use regularly
 
-## Usage
+## Using the package manager
 
-Install package, e.g. `kind`:
+Install the package manager:
 
 ```bash
-curl --silent https://pkg.dille.io/kind/install.sh | sh
+curl --silent https://pkg.dille.io/pkg.sh > sudo tee /usr/local/bin/pkg
+sudo chmod +x /usr/local/bin/pkg
+```
+
+List available packages:
+
+```bash
+pkg list
+```
+
+Search packages:
+
+```bash
+pkg search docker
+pkg search --tags docker
+```
+
+Install a package:
+
+```bash
+pkg install kind
+```
+
+## Installing a package without the package manager
+
+Install a package, e.g. `kind`:
+
+```bash
+curl --silent https://pkg.dille.io/kind/install.sh | bash
 ```
 
 ## Writing a new packages
@@ -21,9 +49,10 @@ source <(curl --silent --location --fail https://pkg.dille.io/.scripts/source.sh
 
 unlock_sudo
 
-github_find_latest_release nektos/act | \
-    github_select_asset_by_suffix _Linux_x86_64.tar.gz | \
-    github_get_asset_download_url | \
-    download_file | \
-    untar_file act
+github_install \
+    --repo nektos/act \
+    --match suffix \
+    --asset _Linux_x86_64.tar.gz \
+    --type tarball \
+    --include act
 ```
