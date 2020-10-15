@@ -3,6 +3,17 @@ READMES     := $(DEFINITIONS:package.yaml=README.md)
 SCRIPTS     := $(shell find . -type f -name \*.sh | sort)
 
 .PHONY:
+clean:
+	@\
+	rm packages.json
+
+.PHONY:
+tidy: clean
+	@\
+	rm .bin/*; \
+	rmdir .bin
+
+.PHONY:
 tools: .bin/jq .bin/yq
 
 .bin:
@@ -24,7 +35,7 @@ check:
 	@\
 	shellcheck $(SCRIPTS)
 
-packages.json: $(DEFINITIONS)
+packages.json: $(DEFINITIONS) tools
 	@\
 	(\
 		echo "tools:"; \
