@@ -2,6 +2,7 @@
 
 set -o errexit
 
+# shellcheck source=.scripts/source.sh
 source <(curl --silent --location --fail https://pkg.dille.io/.scripts/source.sh)
 
 unlock_sudo
@@ -18,14 +19,12 @@ github_find_latest_release docker/docker-ce | \
 
 : "${DOCKER_CONFIG:=${HOME}/.docker}"
 if ! test -d "${DOCKER_CONFIG}"; then
-    mkdir --parents ${DOCKER_CONFIG}
+    mkdir --parents "${DOCKER_CONFIG}"
 fi
 
 if ! test -f "${DOCKER_CONFIG}/config.json"; then
-    echo "{}" >${DOCKER_CONFIG}/config.json
+    echo "{}" >"${DOCKER_CONFIG}/config.json"
 fi
 
-cp ${DOCKER_CONFIG}/config.json ${DOCKER_CONFIG}/config.json.bak
-cat ${DOCKER_CONFIG}/config.json.bak | \
-    jq '. + {"features":{"buildkit":true}}' \
-    >${DOCKER_CONFIG}/config.json
+cp "${DOCKER_CONFIG}/config.json" "${DOCKER_CONFIG}/config.json.bak"
+jq '. + {"features":{"buildkit":true}}' "${DOCKER_CONFIG}/config.json.bak" >"${DOCKER_CONFIG}/config.json"

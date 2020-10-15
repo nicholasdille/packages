@@ -1,3 +1,5 @@
+#!/bin/bash
+
 function add_prefix() {
     local prefix=$1
 
@@ -6,7 +8,7 @@ function add_prefix() {
         exit 1
     fi
 
-    cat | while read LINE; do
+    cat | while read -r LINE; do
         echo "${prefix}: ${LINE}"
     done
 }

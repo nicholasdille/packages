@@ -1,3 +1,5 @@
+#!/bin/bash
+
 function github_get_releases() {
     local project=$1
 
@@ -6,15 +8,15 @@ function github_get_releases() {
         return 1
     fi
 
-    GITHUB_AUTH_PARAMETER=""
+    GITHUB_AUTH_PARAMETER=()
     if test -n "${GITHUB_USER}" && test -n "${GITHUB_TOKEN}"; then
         >&2 echo "Using authentication for GitHub"
-        GITHUB_AUTH_PARAMETER="--user ${GITHUB_USER}:${GITHUB_TOKEN}"
+        GITHUB_AUTH_PARAMETER=("--user" "${GITHUB_USER}:${GITHUB_TOKEN}")
     fi
 
     >&2 echo "Fetching releases for ${project}..."
-    curl https://api.github.com/repos/${project}/releases \
-            ${GITHUB_AUTH_PARAMETER} \
+    curl "https://api.github.com/repos/${project}/releases" \
+            "${GITHUB_AUTH_PARAMETER[@]}" \
             --silent
 }
 
@@ -26,15 +28,15 @@ function github_find_latest_release() {
         return 1
     fi
 
-    GITHUB_AUTH_PARAMETER=""
+    GITHUB_AUTH_PARAMETER=()
     if test -n "${GITHUB_USER}" && test -n "${GITHUB_TOKEN}"; then
         >&2 echo "Using authentication for GitHub"
-        GITHUB_AUTH_PARAMETER="--user ${GITHUB_USER}:${GITHUB_TOKEN}"
+        GITHUB_AUTH_PARAMETER=("--user" "${GITHUB_USER}:${GITHUB_TOKEN}")
     fi
 
     >&2 echo "Fetching latest release for ${project}..."
-    curl https://api.github.com/repos/${project}/releases/latest \
-            ${GITHUB_AUTH_PARAMETER} \
+    curl "https://api.github.com/repos/${project}/releases/latest" \
+            "${GITHUB_AUTH_PARAMETER[@]}" \
             --silent | \
         tee >(cat | jq --raw-output '.tag_name' | xargs -I{} echo "Installing version <{}>" 1>&2)
 }
@@ -103,7 +105,7 @@ function help_github_install() {
     echo
 
     if test "$#" == 1; then
-        exit $1
+        exit "$1"
     fi
 }
 
@@ -156,8 +158,6 @@ function github_install() {
         help_github_install 1
     fi
 
-    >&2 echo "name=${name},repo=${repo},type=${type},include=${include},match=${match},asset=${asset}."
-
     case "${type}" in
         binary|gunzip)
             test -n "${name}" || help_github_install 1
@@ -168,7 +168,7 @@ function github_install() {
         zip)
             test -n "${include}" || help_github_install 1
             tmpdir=$(mktemp -d)
-            mkdir -p ${tmpdir}
+            mkdir -p "${tmpdir}"
             >&2 echo "Using temporary directory <${tmpdir}>"
         ;;
         *)
@@ -184,47 +184,47 @@ function github_install() {
         ;;
     esac
 
-    github_find_latest_release ${repo} | \
+    github_find_latest_release "${repo}" | \
         github_resolve_assets | \
         case "${match}" in
             name)
-                github_select_asset_by_name ${asset}
+                github_select_asset_by_name "${asset}"
             ;;
             prefix)
-                github_select_asset_by_prefix ${asset}
+                github_select_asset_by_prefix "${asset}"
             ;;
             suffix)
-                github_select_asset_by_suffix ${asset}
+                github_select_asset_by_suffix "${asset}"
             ;;
         esac | \
         github_get_asset_download_url | \
         download_file | \
         case "${type}" in
             binary)
-                store_file ${name} | \
+                store_file "${name}" | \
                 make_executable
             ;;
             gunzip)
                 gunzip_file | \
-                store_file ${name} | \
+                store_file "${name}" | \
                 make_executable
             ;;
             tarball)
-                untar_file ${include}
+                untar_file "${include}"
             ;;
             xz)
-                unxz_file ${include}
+                unxz_file "${include}"
             ;;
             *)
-                store_file ${name}.zip ${tmpdir}
-                unzip_file ${tmpdir}/${name}.zip ${include}
+                store_file "${name}.zip" "${tmpdir}"
+                unzip_file "${tmpdir}/${name}.zip" "${include}"
             ;;
         esac
 
     case "${type}" in
         zip)
-            rm -f ${tmpdir}/${name}.zip
-            rmdir ${tmpdir}
+            rm -f "${tmpdir}/${name}.zip"
+            rmdir "${tmpdir}"
         ;;
     esac
 }

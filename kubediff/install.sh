@@ -3,7 +3,7 @@
 set -o errexit
 
 clean() {
-    rm -rf ${MKTEMP}
+    rm -rf "${MKTEMP}"
 }
 
 trap clean EXIT
@@ -11,8 +11,8 @@ trap clean EXIT
 : "${TARGET:=/usr/local}"
 
 MKTEMP=$(mktemp --directory)
-git clone https://github.com/weaveworks/kubediff ${MKTEMP}
-cd ${MKTEMP}
+git clone https://github.com/weaveworks/kubediff "${MKTEMP}"
+cd "${MKTEMP}"
 pip install .
 pip install -r requirements.txt
-sudo cp kubediff ${TARGET}/bin/
+sudo cp kubediff "${TARGET}/bin/"

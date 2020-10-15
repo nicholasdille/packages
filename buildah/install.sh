@@ -33,7 +33,7 @@ apt-get -y install --no-install-recommends \
     go-md2man
 mkdir ~/buildah
 cd ~/buildah
-export GOPATH=`pwd`
+export GOPATH=$(pwd)
 git clone https://github.com/containers/buildah ./src/github.com/containers/buildah
 cd ./src/github.com/containers/buildah
 git checkout ${TAG_NAME}

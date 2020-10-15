@@ -2,9 +2,9 @@
 
 set -o errexit
 
-ROOT=$(dirname $(readlink -f "$0"))
+ROOT=$(dirname "$(readlink -f "$0")")
 
 pip install --user yamllint
 
-mkdir ~/.config/yamllint/
-cp ${ROOT}/yamllint.yaml ~/.config/yamllint/config
+mkdir "${HOME}/.config/yamllint/"
+cp "${ROOT}/yamllint.yaml" "${HOME}/.config/yamllint/config"

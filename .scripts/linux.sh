@@ -1,3 +1,5 @@
+#!/bin/bash
+
 function target_requires_sudo() {
     # target directory is root-owned
     if test "$(stat "${TARGET_BASE}" -c '%u:%g')" == "0:0"; then
@@ -43,42 +45,42 @@ function download_file() {
 }
 
 function untar_file() {
-    local parameters=$@
+    local parameters=("$@")
 
     if ${TAR_VERBOSE}; then
         TAR_ADDITIONAL_PARAMS="-v"
     fi
 
-    >&2 echo "Unpacking asset to directory ${directory}..."
-    >&2 echo "  Including parameters <${parameters}>"
+    >&2 echo "Unpacking asset to directory ${TARGET_BIN}..."
+    >&2 echo "  Including parameters <${parameters[*]}>"
     cat | \
-        sudo tar -x -z ${TAR_ADDITIONAL_PARAMS} -C ${TARGET_BIN} ${parameters}
+        sudo tar -x -z ${TAR_ADDITIONAL_PARAMS} -C "${TARGET_BIN}" "${parameters[@]}"
 }
 
 function unxz_file() {
-    local parameters=$@
+    local parameters=("$@")
 
     if ${TAR_VERBOSE}; then
         TAR_ADDITIONAL_PARAMS="-v"
     fi
 
-    >&2 echo "Unpacking asset to directory ${directory}..."
-    >&2 echo "  Including parameters <${parameters}>"
+    >&2 echo "Unpacking asset to directory ${TARGET_BIN}..."
+    >&2 echo "  Including parameters <${parameters[*]}>"
     cat | \
-        sudo tar -x -J ${TAR_ADDITIONAL_PARAMS} -C ${TARGET_BIN} ${parameters}
+        sudo tar -x -J ${TAR_ADDITIONAL_PARAMS} -C "${TARGET_BIN}" "${parameters[@]}"
 }
 
 function unzip_file {
     local file=$1
     shift
-    local filter=$@
+    local filter=("$@")
 
     ZIP_ADDITIONAL_PARAMS="-q"
     if ${TAR_VERBOSE}; then
         ZIP_ADDITIONAL_PARAMS="-v"
     fi
 
-    sudo unzip -o ${ZIP_ADDITIONAL_PARAMS} -d ${TARGET_BIN} ${file} ${filter}
+    sudo unzip -o ${ZIP_ADDITIONAL_PARAMS} -d "${TARGET_BIN}" "${file}" "${filter[@]}"
 }
 
 function gunzip_file() {
@@ -96,28 +98,28 @@ function store_file() {
     fi
 
     if test -z "${dirname}"; then
-        dirname=${TARGET_BIN}
+        dirname="${TARGET_BIN}"
     fi
 
     >&2 echo "Creating file ${dirname}/${filename}"
     cat | \
-        sudo tee ${dirname}/${filename} >/dev/null
-    echo ${dirname}/${filename}
+        sudo tee "${dirname}/${filename}" >/dev/null
+    echo "${dirname}/${filename}"
 }
 
 function make_executable() {
     local filename=$1
 
     if test -z "${filename}"; then
-        cat | while read filename; do
-            >&2 echo "Setting executable bits on ${filename}"
-            sudo chmod +x ${filename}
+        cat | while read -r filename2; do
+            >&2 echo "Setting executable bits on ${filename2}"
+            sudo chmod +x "${filename2}"
         done
         return
     fi
 
     >&2 echo "Setting executable bits on ${filename}"
-    sudo chmod +x ${TARGET_BIN}/${filename}
+    sudo chmod +x "${TARGET_BIN}/${filename}"
 }
 
 function rename_file() {
@@ -134,7 +136,7 @@ function rename_file() {
     fi
 
     >&2 echo "Renaming ${old_name} to ${new_name}..."
-    sudo mv ${TARGET_BIN}/${old_name} ${TARGET_BIN}/${new_name}
+    sudo mv "${TARGET_BIN}/${old_name}" "${TARGET_BIN}/${new_name}"
 }
 
 function store_completion() {
@@ -145,9 +147,9 @@ function store_completion() {
         return 1
     fi
 
-    sudo mkdir -p ${TARGET_COMPLETION}
+    sudo mkdir -p "${TARGET_COMPLETION}"
 
     cat | \
-        store_file ${filename}.sh ${TARGET_COMPLETION}
-    sudo ln -sf ${TARGET_COMPLETION}/${filename}.sh /etc/bash_completion.d/
+        store_file "${filename}.sh" "${TARGET_COMPLETION}"
+    sudo ln -sf "${TARGET_COMPLETION}/${filename}.sh" /etc/bash_completion.d/
 }

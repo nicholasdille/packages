@@ -3,15 +3,15 @@
 set -o errexit
 
 : "${TARGET:=/usr/local}"
-ROOT=$(dirname $(readlink -f "$0"))
+ROOT=$(dirname "$(readlink -f "$0")")
 
 curl --silent https://api.github.com/repos/justjanne/powerline-go/releases/latest | \
     jq --raw-output '.assets[] | select(.name | endswith("-linux-amd64")) | .browser_download_url' | \
     xargs sudo curl --location --fail --output ${TARGET}/bin/powerline-go
 sudo chmod +x ${TARGET}/bin/powerline-go
 
-mkdir -p ~/.local/etc
-cp ${ROOT}/theme.json ~/.local/etc/powerline-go-theme.json
+mkdir -p "${HOME}/.local/etc"
+cp "${ROOT}/theme.json" "${HOME}/.local/etc/powerline-go-theme.json"
 
 echo
 echo "############################################################"

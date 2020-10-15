@@ -2,6 +2,7 @@
 
 set -o errexit
 
+# shellcheck source=.scripts/source.sh
 source <(curl --silent --location --fail https://pkg.dille.io/.scripts/source.sh)
 
 unlock_sudo
@@ -19,6 +20,5 @@ if ! test -f /etc/docker/daemon.json; then
 fi
 
 sudo mv /etc/docker/daemon.json /etc/docker/daemon.json.bak
-cat /etc/docker/daemon.json.bak | \
-    jq --arg bin "${TARGET_BIN}" '. * {"runtimes": {"crun": {"path": ($bin + "/crun")}}}' | \
+jq --arg bin "${TARGET_BIN}" '. * {"runtimes": {"crun": {"path": ($bin + "/crun")}}}' /etc/docker/daemon.json.bak | \
     sudo tee /etc/docker/daemon.json >/dev/null

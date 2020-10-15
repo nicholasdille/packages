@@ -1,5 +1,11 @@
 DEFINITIONS := $(shell find . -type f -name package.yaml)
 READMES     := $(DEFINITIONS:package.yaml=README.md)
+SCRIPTS     := $(shell find . -type f -name \*.sh | sort)
+
+.PHONY:
+check:
+	@\
+	shellcheck $(SCRIPTS)
 
 packages.json: $(DEFINITIONS)
 	@\

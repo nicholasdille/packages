@@ -2,6 +2,7 @@
 
 set -o errexit
 
+# shellcheck source=.scripts/source.sh
 source <(curl --silent --location --fail https://pkg.dille.io/.scripts/source.sh)
 
 unlock_sudo
@@ -25,21 +26,19 @@ if test "${DOCKER_VERSION}" != "${REQUIRED_DOCKER_VERSION}"; then
     exit 1
 fi
 
-sudo mkdir --parents ${DOCKER_CLI_DIR}
+sudo mkdir --parents "${DOCKER_CLI_DIR}"
 
 github_find_latest_release docker/buildx | \
     github_resolve_assets | \
     github_select_asset_by_suffix .linux-amd64 | \
     github_get_asset_download_url | \
     download_file | \
-    store_file docker-buildx ${DOCKER_CLI_DIR} | \
+    store_file docker-buildx "${DOCKER_CLI_DIR}" | \
     make_executable
 
 if ! test -f "${DOCKER_CONFIG}/config.json"; then
-    echo "{}" >${DOCKER_CONFIG}/config.json
+    echo "{}" >"${DOCKER_CONFIG}/config.json"
 fi
 
-cp ${DOCKER_CONFIG}/config.json ${DOCKER_CONFIG}/config.json.bak
-cat ${DOCKER_CONFIG}/config.json.bak | \
-    jq '. + {"experimental": "enabled"}' \
-    >${DOCKER_CONFIG}/config.json
+cp "${DOCKER_CONFIG}/config.json" "${DOCKER_CONFIG}/config.json.bak"
+jq '. + {"experimental": "enabled"}' "${DOCKER_CONFIG}/config.json.bak" >"${DOCKER_CONFIG}/config.json"
