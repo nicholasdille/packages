@@ -2,7 +2,7 @@
 
 container_name=$(basename "$(mktemp --dry-run)")
 docker_clean() {
-    docker rm "${container_name}"
+    docker ps --all --quiet --filter name=${container_name} | xargs --no-run-if-empty docker rm
 }
 trap docker_clean EXIT
 
