@@ -14,7 +14,7 @@ tidy: clean
 	rmdir .bin
 
 .PHONY:
-tools: .bin/jq .bin/yq
+tools: .bin/jq .bin/yq .bin/shellcheck
 
 .bin:
 	@\
@@ -30,10 +30,16 @@ tools: .bin/jq .bin/yq
 	curl --silent --location --output .bin/jq https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64; \
 	chmod +x .bin/jq
 
-.PHONY:
-check:
+.bin/shellcheck: .bin
 	@\
-	shellcheck $(SCRIPTS)
+	curl --silent --location https://github.com/koalaman/shellcheck/releases/download/v0.7.1/shellcheck-v0.7.1.linux.x86_64.tar.xz | \
+		tar -xvJC .bin --wildcards --strip-components=1 */shellcheck; \
+	chmod +x .bin/jq
+
+.PHONY:
+check: tools
+	@\
+	.bin/shellcheck $(SCRIPTS)
 
 packages.json: $(DEFINITIONS) tools
 	@\
