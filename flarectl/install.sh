@@ -2,16 +2,14 @@
 
 set -o errexit
 
-clean() {
-    docker rm flarectl
-}
+# shellcheck source=.scripts/source.sh
+source <(curl --silent --location --fail https://pkg.dille.io/.scripts/source.sh)
 
-trap clean EXIT
+check_docker
+unlock_sudo
 
-: "${TARGET:=/usr/local}"
-
-docker run -i --name flarectl golang bash -xe <<EOF
+build_containerized golang <<EOF
 go get -u github.com/cloudflare/cloudflare-go/cmd/flarectl
 cp /go/bin/flarectl /
 EOF
-docker cp flarectl:/flarectl - | sudo tar -xvC ${TARGET}/bin/
+extract_file_from_container flarectl

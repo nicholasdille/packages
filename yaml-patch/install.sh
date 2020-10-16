@@ -2,16 +2,19 @@
 
 set -o errexit
 
-clean() {
-    docker rm yamlpatch
-}
+# shellcheck source=.scripts/source.sh
+source <(curl --silent --location --fail https://pkg.dille.io/.scripts/source.sh)
 
-trap clean EXIT
+check_docker
+unlock_sudo
 
-: "${TARGET:=/usr/local}"
+TAG=$(
+    github_get_tags filosottile/age | \
+        github_select_latest_tag
+)
 
-docker run -i --name yamlpatch golang bash -xe <<EOF
+build_containerized golang <<EOF
 go get github.com/krishicks/yaml-patch/cmd/yaml-patch
 cp /go/bin/yaml-patch /
 EOF
-docker cp yamlpatch:/yaml-patch - | sudo tar -xvC ${TARGET}/bin/
+extract_file_from_container yaml-patch

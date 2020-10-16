@@ -1,20 +1,19 @@
 #!/bin/bash
 
-clean() {
-    docker rm buildah
-}
+set -o errexit
 
-trap clean EXIT
+# shellcheck source=.scripts/source.sh
+source <(curl --silent --location --fail https://pkg.dille.io/.scripts/source.sh)
 
-: "${TARGET:=/usr/local}"
+check_docker
+unlock_sudo
 
-TAG_NAME=$(curl --silent https://api.github.com/repos/containers/buildah/releases/latest | jq --raw-output '.tag_name')
-if test -z "${TAG_NAME}"; then
-    echo "ERROR: Unable to determine tag name"
-    exit 1
-fi
+TAG=$(
+    github_find_latest_release containers/buildah | \
+    jq --raw-output '.tag_name'
+)
 
-docker run -i --name buildah golang:1.12 bash -xe <<EOF
+build_containerized golang:1.12 <<EOF
 apt-get update
 #apt-get -y install --no-install-recommends software-properties-common
 #add-apt-repository -y ppa:alexlarsson/flatpak
@@ -36,13 +35,13 @@ cd ~/buildah
 export GOPATH=$(pwd)
 git clone https://github.com/containers/buildah ./src/github.com/containers/buildah
 cd ./src/github.com/containers/buildah
-git checkout ${TAG_NAME}
+git checkout ${TAG}
 make runc all SECURITYTAGS="apparmor seccomp"
 #whereis buildah
 # copy buildah
 #cp docs/cni-examples/*.conf /
 EOF
-#docker cp buildah:/buildah - | sudo tar -xvC ${TARGET}/bin/
+#docker cp buildah:/buildah - | sudo tar -xvC ${TARGET_BIN}
 #mkdir -p /etc/cni/net.d
-#docker cp buildah:/*.conf - | sudo tar -xvC ${TARGET}/etc/cni/net.d
+#docker cp buildah:/*.conf - | sudo tar -xvC ${TARGET_BASE}/etc/cni/net.d
 #sudo chmod 0644 /etc/cni/net.d/*.conf

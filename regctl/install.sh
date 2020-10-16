@@ -2,18 +2,16 @@
 
 set -o errexit
 
-clean() {
-    docker rm regctl
-}
+# shellcheck source=.scripts/source.sh
+source <(curl --silent --location --fail https://pkg.dille.io/.scripts/source.sh)
 
-trap clean EXIT
+check_docker
+unlock_sudo
 
-: "${TARGET:=/usr/local}"
-
-docker run -i --name regctl golang bash -xe <<EOF
+build_containerized golang <<EOF
 git clone https://github.com/regclient/regclient
 cd regclient
 go build -ldflags "-linkmode external -extldflags -static" -a -o regctl ./cmd/regctl/
 cp /go/bin/regctl /
 EOF
-docker cp regctl:/regctl - | sudo tar -xvC ${TARGET}/bin/
+extract_file_from_container regctl

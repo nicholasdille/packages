@@ -2,19 +2,22 @@
 
 set -o errexit
 
-clean() {
-    docker rm age
-}
+# shellcheck source=.scripts/source.sh
+source <(curl --silent --location --fail https://pkg.dille.io/.scripts/source.sh)
 
-trap clean EXIT
+check_docker
+unlock_sudo
 
-: "${TARGET:=/usr/local}"
+TAG=$(
+    github_get_tags filosottile/age | \
+        github_select_latest_tag
+)
 
-docker run -i --name age golang bash -xe <<EOF
-git clone https://filippo.io/age
+build_containerized golang <<EOF
+git clone https://github.com/FiloSottile/age
 cd age
+git checkout ${TAG}
 go build -o . filippo.io/age/cmd/...
 cp age age-keygen /
 EOF
-docker cp age:/age - | sudo tar -xvC ${TARGET}/bin/
-docker cp age:/age-keygen - | sudo tar -xvC ${TARGET}/bin/
+extract_file_from_container age age-keygen

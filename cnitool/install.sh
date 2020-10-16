@@ -2,17 +2,15 @@
 
 set -o errexit
 
-clean() {
-    docker rm cnitool
-}
+# shellcheck source=.scripts/source.sh
+source <(curl --silent --location --fail https://pkg.dille.io/.scripts/source.sh)
 
-trap clean EXIT
+check_docker
+unlock_sudo
 
-: "${TARGET:=/usr/local}"
-
-docker run -i --name cnitool golang bash -xe <<EOF
+build_containerized golang <<EOF
 go get github.com/containernetworking/cni
 go install github.com/containernetworking/cni/cnitool
 cp /go/bin/cnitool /
 EOF
-docker cp cnitool:/cnitool - | sudo tar -xvC ${TARGET}/bin/
+extract_file_from_container cnitool

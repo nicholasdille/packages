@@ -2,16 +2,14 @@
 
 set -o errexit
 
-clean() {
-    docker rm json-patch
-}
+# shellcheck source=.scripts/source.sh
+source <(curl --silent --location --fail https://pkg.dille.io/.scripts/source.sh)
 
-trap clean EXIT
+check_docker
+unlock_sudo
 
-: "${TARGET:=/usr/local}"
-
-docker run -i --name json-patch golang bash -xe <<EOF
+build_containerized golang <<EOF
 go get -u github.com/evanphx/json-patch/cmd/json-patch
 cp /go/bin/json-patch /
 EOF
-docker cp json-patch:/json-patch - | sudo tar -xvC ${TARGET}/bin/
+extract_file_from_container json-patch

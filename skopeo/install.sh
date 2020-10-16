@@ -2,18 +2,16 @@
 
 set -o errexit
 
-clean() {
-    docker rm skopeo
-}
+# shellcheck source=.scripts/source.sh
+source <(curl --silent --location --fail https://pkg.dille.io/.scripts/source.sh)
 
-trap clean EXIT
+check_docker
+unlock_sudo
 
-: "${TARGET:=/usr/local}"
-
-docker run -i --name skopeo golang bash -xe <<EOF
+build_containerized golang <<EOF
 git clone --depth 1 https://github.com/containers/skopeo
 cd skopeo
 make bin/skopeo DISABLE_CGO=1
 cp bin/skopeo /
 EOF
-docker cp skopeo:/skopeo - | sudo tar -xvC ${TARGET}/bin/
+extract_file_from_container skopeo

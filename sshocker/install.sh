@@ -2,16 +2,14 @@
 
 set -o errexit
 
-clean() {
-    docker rm sshocker
-}
+# shellcheck source=.scripts/source.sh
+source <(curl --silent --location --fail https://pkg.dille.io/.scripts/source.sh)
 
-trap clean EXIT
+check_docker
+unlock_sudo
 
-: "${TARGET:=/usr/local}"
-
-docker run -i --name sshocker golang bash -xe <<EOF
+build_containerized golang <<EOF
 go get github.com/AkihiroSuda/sshocker/cmd/sshocker
 cp /go/bin/sshocker /
 EOF
-docker cp sshocker:/sshocker - | sudo tar -xvC ${TARGET}/bin/
+extract_file_from_container sshocker
