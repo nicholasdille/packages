@@ -1,0 +1,5 @@
+name: go
+description: The Go programming language
+repo: golang/go
+tags:
+- go
