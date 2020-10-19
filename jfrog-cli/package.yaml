@@ -1,0 +1,5 @@
+name: jfrog-cli
+description: JFrog CLI is a client that provides a simple interface that automates access to the JFrog products
+repo: jfrog/jfrog-cli
+tags:
+- jfrog
