@@ -1,0 +1,9 @@
+name: azure-cli
+description: Azure Command-Line Interface
+repo: Azure/azure-cli
+links:
+- text: Homepage
+  url: https://docs.microsoft.com/cli/azure/
+tags:
+- azure
+- cloud
