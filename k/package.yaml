@@ -1,0 +1,9 @@
+name: k
+description: Experimental wrapper for kubectl
+repo: rothgar/k
+tags:
+- kubernetes
+- k8s
+- kubectl
+- namespace
+- context
