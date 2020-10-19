@@ -1,0 +1,5 @@
+name: hub
+description: A command-line tool that makes git easier to use with GitHub
+repo: github/hub
+tags:
+- github

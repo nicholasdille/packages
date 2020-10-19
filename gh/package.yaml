@@ -1,0 +1,5 @@
+name: gh
+description: GitHub’s official command line tool
+repo: cli/cli
+tags:
+- github
