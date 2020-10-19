@@ -2,6 +2,7 @@
 
 container_name=$(basename "$(mktemp --dry-run)")
 docker_clean() {
+    echo "Cleaning up temporary container..."
     docker ps --all --quiet --filter name="${container_name}" | xargs --no-run-if-empty docker rm
 }
 trap docker_clean EXIT
@@ -9,6 +10,10 @@ trap docker_clean EXIT
 function check_docker() {
     if ! type docker >/dev/null 2>&1; then
         echo "ERROR: Docker is required but was not found."
+        exit 1
+    fi
+    if ! docker version >/dev/null 2>&1; then
+        echo "ERROR: Docker daemon is not running"
         exit 1
     fi
 }
