@@ -1,0 +1,7 @@
+name: gotk
+description: Kubernetes toolkit for assembling CD pipelines the GitOps way
+repo: fluxcd/toolkit
+tags:
+- kubernetes
+- k8s
+- gitops
