@@ -1,0 +1,7 @@
+name: ocictl
+description: A tool to build OCI compliant images
+repo: ocibuilder/ocibuilder
+tags:
+- container
+- image
+- oci
