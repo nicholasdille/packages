@@ -1,10 +1,15 @@
 #!/bin/bash
 
-function github_get_releases() {
+function github_api() {
     local project=$1
+    local path=$2
 
     if test -z "${project}"; then
         echo "ERROR: Project not specified."
+        return 1
+    fi
+    if test -z "${path}"; then
+        echo "ERROR: Path not specified."
         return 1
     fi
 
@@ -14,10 +19,21 @@ function github_get_releases() {
         GITHUB_AUTH_PARAMETER=("--user" "${GITHUB_USER}:${GITHUB_TOKEN}")
     fi
 
-    >&2 echo "Fetching releases for ${project}..."
-    curl "https://api.github.com/repos/${project}/releases" \
+    curl "https://api.github.com/repos/${project}${path}" \
             "${GITHUB_AUTH_PARAMETER[@]}" \
             --silent
+}
+
+function github_get_releases() {
+    local project=$1
+
+    if test -z "${project}"; then
+        echo "ERROR: Project not specified."
+        return 1
+    fi
+
+    >&2 echo "Fetching releases for ${project}..."
+    github_api "${project}" "/releases"
 }
 
 function github_get_tags() {
@@ -28,16 +44,8 @@ function github_get_tags() {
         return 1
     fi
 
-    GITHUB_AUTH_PARAMETER=()
-    if test -n "${GITHUB_USER}" && test -n "${GITHUB_TOKEN}"; then
-        >&2 echo "Using authentication for GitHub"
-        GITHUB_AUTH_PARAMETER=("--user" "${GITHUB_USER}:${GITHUB_TOKEN}")
-    fi
-
     >&2 echo "Fetching tags for ${project}..."
-    curl "https://api.github.com/repos/${project}/git/matching-refs/tags" \
-            "${GITHUB_AUTH_PARAMETER[@]}" \
-            --silent
+    github_api "${project}" "/git/matching-refs/tags"
 }
 
 function github_find_latest_release() {
@@ -48,16 +56,8 @@ function github_find_latest_release() {
         return 1
     fi
 
-    GITHUB_AUTH_PARAMETER=()
-    if test -n "${GITHUB_USER}" && test -n "${GITHUB_TOKEN}"; then
-        >&2 echo "Using authentication for GitHub"
-        GITHUB_AUTH_PARAMETER=("--user" "${GITHUB_USER}:${GITHUB_TOKEN}")
-    fi
-
     >&2 echo "Fetching latest release for ${project}..."
-    curl "https://api.github.com/repos/${project}/releases/latest" \
-            "${GITHUB_AUTH_PARAMETER[@]}" \
-            --silent | \
+    github_api "${project}" "/releases/latest" | \
         tee >(cat | jq --raw-output '.tag_name' | xargs -I{} echo "Installing version <{}>" 1>&2)
 }
 
