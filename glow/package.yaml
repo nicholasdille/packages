@@ -1,0 +1,5 @@
+name: glow
+description: Render markdown on the CLI, with pizzazz!
+repo: charmbracelet/glow
+tags:
+- markdown
