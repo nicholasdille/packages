@@ -8,10 +8,6 @@ function github_api() {
         echo "ERROR: Project not specified."
         return 1
     fi
-    if test -z "${path}"; then
-        echo "ERROR: Path not specified."
-        return 1
-    fi
 
     GITHUB_AUTH_PARAMETER=()
     if test -n "${GITHUB_USER}" && test -n "${GITHUB_TOKEN}"; then
@@ -22,6 +18,19 @@ function github_api() {
     curl "https://api.github.com/repos/${project}${path}" \
             "${GITHUB_AUTH_PARAMETER[@]}" \
             --silent
+}
+
+function github_get_repo_description() {
+    local project=$1
+
+    if test -z "${project}"; then
+        echo "ERROR: Project not specified."
+        return 1
+    fi
+
+    >&2 echo "Fetching description for ${project}..."
+    github_api "${project}" "" | \
+        jq --raw-output '.description'
 }
 
 function github_get_releases() {
