@@ -1,0 +1,6 @@
+name: semver-tool
+description: semver bash implementation
+repo: fsaintjacques/semver-tool
+tags:
+- shell
+- semver
