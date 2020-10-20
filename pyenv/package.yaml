@@ -1,0 +1,11 @@
+name: pyenv
+description: A beautiful and useful low-latency prompt for your shell, written in go
+repo: pyenv/pyenv
+links:
+- text: pyenv-virtualenv
+  url: https://github.com/pyenv/pyenv-virtualenv
+tags:
+- python
+- version
+- manager
+- version manager
