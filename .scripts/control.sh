@@ -15,7 +15,7 @@ function require() {
         bash "$PWD/${package}/install.sh"
     else
         echo "### Installing from remote..."
-        curl --silent https://pkg.dille.io/${package}/install.sh | \
+        curl --silent "https://pkg.dille.io/${package}/install.sh" | \
             env --unset=SOURCE_LOCAL_FILES bash
     fi
     echo
