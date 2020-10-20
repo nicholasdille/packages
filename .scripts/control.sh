@@ -1,5 +1,20 @@
 #!/bin/bash
 
+function require() {
+    local package=$1
+
+    if test -z "${package}"; then
+        echo "ERROR: Package must be supplied."
+        exit 1
+    fi
+
+    echo
+    echo "### Installing dependencies..."
+    curl --silent https://pkg.dille.io/n/install.sh | \
+        env --ignore-environment bash
+    echo
+}
+
 function add_prefix() {
     local prefix=$1
 
