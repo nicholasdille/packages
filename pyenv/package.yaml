@@ -4,6 +4,8 @@ repo: pyenv/pyenv
 links:
 - text: pyenv-virtualenv
   url: https://github.com/pyenv/pyenv-virtualenv
+- text: Suggested build environment
+  url: https://github.com/pyenv/pyenv/wiki#suggested-build-environment
 tags:
 - python
 - version
