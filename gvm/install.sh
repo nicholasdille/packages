@@ -10,7 +10,8 @@ unlock_sudo
 git clone https://github.com/moovweb/gvm "${HOME}/.gvm"
 
 export DOCKER_BUILDKIT=1
-docker build --tag gvm 
+curl --silent https://pkg.dille.io/gvm/Dockerfile | \
+    docker build --tag gvm -
 
 echo
 echo "#############################################"
