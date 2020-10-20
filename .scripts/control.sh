@@ -9,8 +9,8 @@ function require() {
     fi
 
     echo
-    echo "### Installing dependencies..."
-    curl --silent https://pkg.dille.io/n/install.sh | \
+    echo "### Installing dependency <${package}>..."
+    curl --silent https://pkg.dille.io/${package}/install.sh | \
         env --ignore-environment bash
     echo
 }
