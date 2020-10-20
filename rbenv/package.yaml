@@ -1,0 +1,8 @@
+name: rbenv
+description: Groom your app’s Ruby environment
+repo: rbenv/rbenv
+tags:
+- ruby
+- version
+- manager
+- version manager
