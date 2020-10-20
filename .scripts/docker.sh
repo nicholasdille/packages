@@ -1,11 +1,11 @@
 #!/bin/bash
 
 container_name=$(basename "$(mktemp --dry-run)")
-docker_clean() {
-    echo "Cleaning up temporary container..."
+clean_docker() {
+    log INFO "Cleaning up temporary container..."
     docker ps --all --quiet --filter name="${container_name}" | xargs --no-run-if-empty docker rm
 }
-trap docker_clean EXIT
+PACKAGES_CLEANUP_FUNCTIONS+=("clean_docker")
 
 function check_docker() {
     if ! type docker >/dev/null 2>&1; then

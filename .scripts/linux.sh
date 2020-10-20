@@ -6,7 +6,7 @@ function target_requires_sudo() {
 
         # we are not root right now
         if test "$(id -u)" != "0"; then
-            >&2 echo "Target directory requires root access."
+            warning "Target directory requires root access."
             return 0
         fi
     fi
@@ -17,7 +17,7 @@ function target_requires_sudo() {
 
 function sudo_requires_password() {
     if ! sudo -n true 2>&1; then
-        >&2 echo "Sudo requires a password"
+        log VERBOSE "Sudo requires a password"
         return 0
     fi
     return 1
@@ -26,35 +26,51 @@ function sudo_requires_password() {
 function unlock_sudo() {
     if target_requires_sudo; then
         if sudo_requires_password; then
-            >&2 echo "Please enter your password to unlock sudo for the installation."
+            log INFO "Please enter your password to unlock sudo for the installation."
             sudo true
         else
-            >&2 echo "Sudo does not require a password (this time)."
+            log VERBOSE "Sudo does not require a password (this time)."
         fi
     fi
 }
 
 function download_file() {
+    if ! test -f "${PACKAGES_TEMP_DIR}/download_file.txt"; then
+        error "No download URL was provided."
+        exit 1
+    fi
+
     if ${CURL_DOWNLOAD_SILENT}; then
         CURL_ADDITIONAL_PARAMS="--silent"
     fi
 
-    >&2 echo "Downloading file..."
-    cat | \
-        xargs curl --location --fail ${CURL_ADDITIONAL_PARAMS}
+    log INFO "Downloading file..."
+    pushd "${PACKAGES_TEMP_DIR}" >/dev/null
+    cat "${PACKAGES_TEMP_DIR}/download_file.txt" | \
+        xargs curl --location --fail --remote-name --continue-at - ${CURL_ADDITIONAL_PARAMS}
+    popd
 }
 
 function untar_file() {
+    local file=$1
+    shift
+    local target=$1
+    shift
     local parameters=("$@")
+
+    if test -z "${target}"; then
+        target=${TARGET_BIN}
+    fi
 
     if ${TAR_VERBOSE}; then
         TAR_ADDITIONAL_PARAMS="-v"
     fi
 
-    >&2 echo "Unpacking asset to directory ${TARGET_BIN}..."
-    >&2 echo "  Including parameters <${parameters[*]}>"
-    cat | \
-        sudo tar -x -z ${TAR_ADDITIONAL_PARAMS} -C "${TARGET_BIN}" "${parameters[@]}"
+    log INFO "Unpacking asset to directory ${TARGET_BIN}..."
+    log VERBOSE "  Including parameters <${parameters[*]}>"
+    sudo tar -xzf "${PACKAGES_TEMP_DIR}/${file}" -C "${target}" \
+        ${TAR_ADDITIONAL_PARAMS} \
+        "${parameters[@]}"
 }
 
 function unxz_file() {

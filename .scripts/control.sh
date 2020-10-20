@@ -1,5 +1,27 @@
 #!/bin/bash
 
+#info "Creating temporary directory..."
+export PACKAGES_TEMP_DIR
+PACKAGES_TEMP_DIR=$(mktemp --directory --suffix -packages)
+chmod 0700 "${PACKAGES_TEMP_DIR}"
+
+export PACKAGES_CLEANUP_FUNCTIONS
+PACKAGES_CLEANUP_FUNCTIONS=()
+
+function clean_temp_dir() {
+    log INFO "Cleaning temporary directory"
+    rm -rf "${PACKAGES_TEMP_DIR}"
+    unset PACKAGES_TEMP_DIR
+}
+PACKAGES_CLEANUP_FUNCTIONS+=("clean_temp_dir")
+
+function clean() {
+    for FUNCTION in ${PACKAGES_CLEANUP_FUNCTIONS[*]}; do
+        "${FUNCTION}"
+    done
+}
+trap clean EXIT
+
 function add_prefix() {
     local prefix=$1
 

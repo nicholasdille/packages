@@ -3,21 +3,30 @@
 function github_api() {
     local project=$1
     local path=$2
+    local file=$3
 
     if test -z "${project}"; then
-        echo "ERROR: Project not specified."
+        error "Project not specified."
+        return 1
+    fi
+    if test -z "${file}"; then
+        error "Output file not specified."
         return 1
     fi
 
     GITHUB_AUTH_PARAMETER=()
     if test -n "${GITHUB_USER}" && test -n "${GITHUB_TOKEN}"; then
-        >&2 echo "Using authentication for GitHub"
+        log VERBOSE "Using authentication for GitHub"
         GITHUB_AUTH_PARAMETER=("--user" "${GITHUB_USER}:${GITHUB_TOKEN}")
+    else
+        warning "Not using authentication for GitHub!"
     fi
 
+    log VERBOSE "Calling GitHub API for project <${project}> on path <${path}>"
     curl "https://api.github.com/repos/${project}${path}" \
             "${GITHUB_AUTH_PARAMETER[@]}" \
-            --silent
+            --silent \
+        >"${file}"
 }
 
 function github_get_repo_description() {
@@ -37,41 +46,40 @@ function github_get_releases() {
     local project=$1
 
     if test -z "${project}"; then
-        echo "ERROR: Project not specified."
+        error "Project not specified."
         return 1
     fi
 
-    >&2 echo "Fetching releases for ${project}..."
-    github_api "${project}" "/releases"
-}
-
-function github_get_tags() {
-    local project=$1
-
-    if test -z "${project}"; then
-        echo "ERROR: Project not specified."
-        return 1
-    fi
-
-    >&2 echo "Fetching tags for ${project}..."
-    github_api "${project}" "/git/matching-refs/tags"
+    log VERBOSE "Fetching releases for ${project}..."
+    github_api "${project}" "/releases" "${PACKAGES_TEMP_DIR}/github_releases.json"
 }
 
 function github_find_latest_release() {
     local project=$1
 
     if test -z "${project}"; then
-        echo "ERROR: Project not specified."
+        error "Project not specified."
         return 1
     fi
 
-    >&2 echo "Fetching latest release for ${project}..."
-    github_api "${project}" "/releases/latest" | \
-        tee >(cat | jq --raw-output '.tag_name' | xargs -I{} echo "Installing version <{}>" 1>&2)
+    log VERBOSE "Fetching latest release for ${project}..."
+    github_api "${project}" "/releases/latest" "${PACKAGES_TEMP_DIR}/github_selected_release.json"
+    jq --raw-output '.tag_name' "${PACKAGES_TEMP_DIR}/github_selected_release.json" >"${PACKAGES_TEMP_DIR}/github_selected_release.txt"
+
+    export GITHUB_RELEASE_TAG
+    GITHUB_RELEASE_TAG=$(cat "${PACKAGES_TEMP_DIR}/github_selected_release.txt")
+    log INFO "Installing version <${GITHUB_RELEASE_TAG}>"
 }
 
 function github_resolve_assets() {
-    jq --raw-output --compact-output --monochrome-output '.assets[]'
+    log VERBOSE "Resolving assets..."
+    jq \
+        --raw-output \
+        --compact-output \
+        --monochrome-output \
+        '.assets[]' \
+        "${PACKAGES_TEMP_DIR}/github_selected_release.json" \
+        >"${PACKAGES_TEMP_DIR}/github_selected_release_assets.json"
 }
 
 function github_select_asset_by_name() {
@@ -82,48 +90,139 @@ function github_select_asset_by_name() {
         return 1
     fi
 
-    >&2 echo "Selecting asset by name <${asset_name}>..."
-    cat | \
-        jq --raw-output --compact-output --monochrome-output --arg asset_name "${asset_name}" 'select(.name == $asset_name)'
+    if ! test -f "${PACKAGES_TEMP_DIR}/github_selected_release_asset.json"; then
+        log VERBOSE "This is the first filter to run."
+        cp \
+            "${PACKAGES_TEMP_DIR}/github_selected_release_assets.json" \
+            "${PACKAGES_TEMP_DIR}/github_selected_release_asset.json"
+    fi
+
+    log VERBOSE "Selecting asset by suffix <${asset_name_suffix}>..."
+    mv \
+        "${PACKAGES_TEMP_DIR}/github_selected_release_asset.json" \
+        "${PACKAGES_TEMP_DIR}/github_selected_release_asset_last.json"
+    jq \
+        --raw-output \
+        --compact-output \
+        --monochrome-output \
+        --arg asset_name_suffix "${asset_name_suffix}" \
+        'select(.name == $asset_name)' \
+        "${PACKAGES_TEMP_DIR}/github_selected_release_asset_last.json" \
+        >"${PACKAGES_TEMP_DIR}/github_selected_release_asset.json"
+    rm "${PACKAGES_TEMP_DIR}/github_selected_release_asset_last.json"
 }
 
 function github_select_asset_by_suffix() {
     local asset_name_suffix=$1
 
     if test -z "${asset_name_suffix}"; then
-        echo "ERROR: Asset name suffix not specified."
+        error "Asset name suffix not specified."
         return 1
     fi
 
-    >&2 echo "Selecting asset by suffix <${asset_name_suffix}>..."
-    cat | \
-        jq --raw-output --compact-output --monochrome-output --arg asset_name_suffix "${asset_name_suffix}" 'select(.name | endswith($asset_name_suffix))'
+    if ! test -f "${PACKAGES_TEMP_DIR}/github_selected_release_asset.json"; then
+        log VERBOSE "This is the first filter to run."
+        cp \
+            "${PACKAGES_TEMP_DIR}/github_selected_release_assets.json" \
+            "${PACKAGES_TEMP_DIR}/github_selected_release_asset.json"
+    fi
+
+    log VERBOSE "Selecting asset by suffix <${asset_name_suffix}>..."
+    mv \
+        "${PACKAGES_TEMP_DIR}/github_selected_release_asset.json" \
+        "${PACKAGES_TEMP_DIR}/github_selected_release_asset_last.json"
+    jq \
+        --raw-output \
+        --compact-output \
+        --monochrome-output \
+        --arg asset_name_suffix "${asset_name_suffix}" \
+        'select(.name | endswith($asset_name_suffix))' \
+        "${PACKAGES_TEMP_DIR}/github_selected_release_asset_last.json" \
+        >"${PACKAGES_TEMP_DIR}/github_selected_release_asset.json"
+    rm "${PACKAGES_TEMP_DIR}/github_selected_release_asset_last.json"
 }
 
 function github_select_asset_by_prefix() {
     local asset_name_prefix=$1
 
     if test -z "${asset_name_prefix}"; then
-        echo "ERROR: Asset name prefix not specified."
+        error "Asset name prefix not specified."
         return 1
     fi
 
-    >&2 echo "Selecting asset by prefix <${asset_name_prefix}>..."
-    cat | \
-        jq --raw-output --compact-output --monochrome-output --arg asset_name_prefix "${asset_name_prefix}" 'select(.name | startswith($asset_name_prefix))'
+    if ! test -f "${PACKAGES_TEMP_DIR}/github_selected_release_asset.json"; then
+        log VERBOSE "This is the first filter to run."
+        cp \
+            "${PACKAGES_TEMP_DIR}/github_selected_release_assets.json" \
+            "${PACKAGES_TEMP_DIR}/github_selected_release_asset.json"
+    fi
+
+    log VERBOSE "Selecting asset by prefix <${asset_name_prefix}>..."
+    mv \
+        "${PACKAGES_TEMP_DIR}/github_selected_release_asset.json" \
+        "${PACKAGES_TEMP_DIR}/github_selected_release_asset_last.json"
+    jq \
+        --raw-output \
+        --compact-output \
+        --monochrome-output \
+        --arg asset_name_prefix "${asset_name_prefix}" \
+        'select(.name | startswith($asset_name_prefix))' \
+        "${PACKAGES_TEMP_DIR}/github_selected_release_asset_last.json" \
+        >"${PACKAGES_TEMP_DIR}/github_selected_release_asset.json"
+    rm "${PACKAGES_TEMP_DIR}/github_selected_release_asset_last.json"
 }
 
 function github_get_asset_download_url() {
-    >&2 echo "Fetching asset download URL..."
-    cat | \
-        jq --raw-output --compact-output --monochrome-output '.browser_download_url' | \
-        tee >(cat | xargs -I{} echo "Downloading from <{}>" 1>&2)
+    if ! test -f "${PACKAGES_TEMP_DIR}/github_selected_release_asset.json"; then
+        error "No asset was selected. Call <github_select_asset_by_{name,prefix,suffix}>."
+        exit 1
+    fi
+    log INFO "Fetching asset download URL..."
+    jq \
+        --raw-output \
+        --compact-output \
+        --monochrome-output \
+        '.browser_download_url' \
+        "${PACKAGES_TEMP_DIR}/github_selected_release_asset.json" \
+        >"${PACKAGES_TEMP_DIR}/github_selected_release_asset.txt"
+    log VERBOSE "Downloading from <$(cat "${PACKAGES_TEMP_DIR}/github_selected_release_asset.txt")>"
+}
+
+function github_download_file() {
+    if ! test -f "${PACKAGES_TEMP_DIR}/github_selected_release_asset.txt"; then
+        error "Download URL for release asset not found."
+        exit 1
+    fi
+
+    log VERBOSE "Preparing download of file from GitHub."
+    mv \
+        "${PACKAGES_TEMP_DIR}/github_selected_release_asset.txt" \
+        "${PACKAGES_TEMP_DIR}/download_file.txt"
+    download_file
+}
+
+function github_get_tags() {
+    local project=$1
+
+    if test -z "${project}"; then
+        echo "ERROR: Project not specified."
+        return 1
+    fi
+
+    log INFO "Fetching tags for ${project}..."
+    github_api "${project}" "/git/matching-refs/tags" "${PACKAGES_TEMP_DIR}/github_tags.json"
 }
 
 function github_select_latest_tag {
-    >&2 echo "Selecting latest tag..."
-    cat | \
-        jq --raw-output '.[].ref' | cut -d/ -f3 | sort -V | tail -n 1
+    log INFO "Selecting latest tag..."
+    jq \
+            --raw-output \
+            '.[].ref' \
+            "${PACKAGES_TEMP_DIR}/github_tags.json" | \
+        cut -d/ -f3 | \
+        sort -V | \
+        tail -n 1 \
+    >"${PACKAGES_TEMP_DIR}/github_selected_tag.txt"
 }
 
 function help_github_install() {
