@@ -9,10 +9,6 @@ unlock_sudo
 
 if ! test -d "${HOME}/.gvm"; then
     git clone https://github.com/moovweb/gvm "${HOME}/.gvm"
-else
-    pushd "${HOME}/.gvm"
-    git pull
-    popd
 fi
 
 export DOCKER_BUILDKIT=1
