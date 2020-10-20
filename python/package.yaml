@@ -1,0 +1,6 @@
+name: python
+description: The Python programming language
+repo: python/cpython
+tags:
+- python
+- py
