@@ -33,7 +33,7 @@ tools: .bin/jq .bin/yq .bin/shellcheck
 .bin/shellcheck: .bin
 	@\
 	curl --silent --location https://github.com/koalaman/shellcheck/releases/download/v0.7.1/shellcheck-v0.7.1.linux.x86_64.tar.xz | \
-		tar -xvJC .bin --wildcards --strip-components=1 */shellcheck; \
+		tar -xJC .bin --wildcards --strip-components=1 */shellcheck; \
 	chmod +x .bin/jq
 
 .PHONY:
