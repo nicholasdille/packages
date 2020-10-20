@@ -10,8 +10,14 @@ function require() {
 
     echo
     echo "### Installing dependency <${package}>..."
-    curl --silent https://pkg.dille.io/${package}/install.sh | \
-        env --ignore-environment bash
+    if test -d "$PWD/${package}"; then
+        echo "### Installing from local files..."
+        bash "$PWD/${package}/install.sh"
+    else
+        echo "### Installing from remote..."
+        curl --silent https://pkg.dille.io/${package}/install.sh | \
+            env --unset=SOURCE_LOCAL_FILES bash
+    fi
     echo
 }
 
