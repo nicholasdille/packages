@@ -7,7 +7,13 @@ source <(curl --silent --location --fail https://pkg.dille.io/.scripts/source.sh
 
 unlock_sudo
 
-git clone https://github.com/moovweb/gvm "${HOME}/.gvm"
+if ! test -d "${HOME}/.gvm"; then
+    git clone https://github.com/moovweb/gvm "${HOME}/.gvm"
+else
+    pushd "${HOME}/.gvm"
+    git pull
+    popd
+fi
 
 export DOCKER_BUILDKIT=1
 curl --silent https://pkg.dille.io/gvm/Dockerfile | \
