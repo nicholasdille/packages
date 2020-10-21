@@ -7,6 +7,7 @@ source <(curl --silent --location --fail https://pkg.dille.io/.scripts/source.sh
 
 unlock_sudo
 
+# shellcheck disable=SC2154
 docker create -i --name "${container_name}" ubuntu bash -xe
 
 github_find_latest_release jonas/tig | \

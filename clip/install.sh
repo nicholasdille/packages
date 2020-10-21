@@ -25,7 +25,7 @@ fi
 
 unlock_sudo
 
-${SUDO} mkdir --parents ${DOCKER_CLI_DIR}
+${SUDO} mkdir --parents "${DOCKER_CLI_DIR}"
 
 echo "https://github.com/lukaszlach/clip/raw/master/docker-clip" | \
     download_file | \
