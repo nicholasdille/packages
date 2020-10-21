@@ -21,7 +21,7 @@ if ! test -d "$(pyenv root)/plugins/pyenv-doctor"; then
 fi
 
 export DOCKER_BUILDKIT=1
-curl --silent https://pkg.dille.io/gvm/Dockerfile | \
+curl --silent https://pkg.dille.io/pyenv/Dockerfile | \
     docker build --tag pyenv -
 
 docker run -it --rm --name pyenv \
