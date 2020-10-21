@@ -11,6 +11,7 @@ show_help() {
     echo "       curl https://pkg.dille.io/pkg.sh | sh -s <command>"
     echo
     echo "Commands:"
+    echo "    cache, c      Cache packages.json"
     echo "    help, h       This message"
     echo "    install, i    Install a package"
     echo "    list, l       List available packages"
@@ -36,13 +37,22 @@ show_help_search() {
 }
 
 get_packages() {
-    if test -f packages.json; then
+    if test -f "${HOME}/.pkg/packages.json"; then
+        cat "${HOME}/.pkg/packages.json"
+    elif test -f packages.json; then
         cat packages.json
     else
-        curl --silent "https://api.github.com/repos/${MY_REPO}/releases/tags/${TAG}" | \
-            jq --raw-output '.assets[] | select(.name == "packages.json") | .browser_download_url' | \
-            xargs curl --silent --location
+        echo "ERROR: Unable to find packages.json. Run <pkg cache> first."
+        exit 1
     fi
+}
+
+cache() {
+    mkdir -p "${HOME}/.pkg"
+    echo "Using version ${TAG}."
+    curl --silent "https://api.github.com/repos/${MY_REPO}/releases/tags/${TAG}" | \
+        jq --raw-output '.assets[] | select(.name == "packages.json") | .browser_download_url' | \
+        xargs curl --silent --location --output "${HOME}/.pkg/packages.json"
 }
 
 install() {
@@ -172,6 +182,11 @@ main() {
             ;;
             --version|-v)
                 VERSION=$1   
+            ;;
+            cache|c)
+                prepare
+                cache "$@"
+                exit 0
             ;;
             install|i)
                 prepare
