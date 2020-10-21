@@ -2,12 +2,17 @@
 
 set -o errexit
 
-: "${TARGET:=/usr/local}"
+# shellcheck source=.scripts/source.sh
+source <(curl --silent --location --fail https://pkg.dille.io/.scripts/source.sh)
 
-curl --silent https://dl.k8s.io/release/stable.txt | \
-    xargs -I${SUDO} {} ${SUDO} curl --location --output ${TARGET}/bin/kubectl https://storage.googleapis.com/kubernetes-release/release/{}/bin/linux/amd64/kubectl
-${SUDO} chmod +x ${TARGET}/bin/kubectl
+unlock_sudo
 
-${SUDO} mkdir -p ${TARGET}/etc/bash_completion.d
-kubectl completion bash | ${SUDO} tee ${TARGET}/etc/bash_completion.d/kubectl.sh >/dev/null
-${SUDO} ln -sf ${TARGET}/etc/bash_completion.d/kubectl.sh /etc/bash_completion.d/
+echo "https://dl.k8s.io/release/stable.txt" | \
+    download_file | \
+    xargs -I{} echo "https://storage.googleapis.com/kubernetes-release/release/{}/bin/linux/amd64/kubectl" | \
+    download_file | \
+    store_file kubectl | \
+    make_executable
+
+kubectl completion bash | \
+    store_completion kubectl

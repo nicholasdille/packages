@@ -2,16 +2,22 @@
 
 set -o errexit
 
-: "${TARGET:=/usr/local}"
-ROOT=$(dirname "$(readlink -f "$0")")
+# shellcheck source=.scripts/source.sh
+source <(curl --silent --location --fail https://pkg.dille.io/.scripts/source.sh)
 
-curl --silent https://api.github.com/repos/justjanne/powerline-go/releases/latest | \
-    jq --raw-output '.assets[] | select(.name | endswith("-linux-amd64")) | .browser_download_url' | \
-    xargs ${SUDO} curl --location --fail --output ${TARGET}/bin/powerline-go
-${SUDO} chmod +x ${TARGET}/bin/powerline-go
+unlock_sudo
+
+github_install \
+    --repo justjanne/powerline-go \
+    --match suffix \
+    --asset -linux-amd64 \
+    --type binary \
+    --name powerline-go
 
 mkdir -p "${HOME}/.local/etc"
-cp "${ROOT}/theme.json" "${HOME}/.local/etc/powerline-go-theme.json"
+echo "https://pkg.dille.io/powerline-go/theme.json" | \
+    download_file | \
+    store_file powerline-go-theme.json "${HOME}/.local/etc"
 
 echo
 echo "############################################################"

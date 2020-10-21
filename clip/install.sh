@@ -2,8 +2,10 @@
 
 set -o errexit
 
-: "${TARGET:=/usr/local}"
-: "${DOCKER_CLI_DIR:=${TARGET}/lib/docker/cli-plugins}"
+# shellcheck source=.scripts/source.sh
+source <(curl --silent --location --fail https://pkg.dille.io/.scripts/source.sh)
+
+: "${DOCKER_CLI_DIR:=${TARGET_BASE}/lib/docker/cli-plugins}"
 
 REQUIRED_DOCKER_VERSION=19.03
 # Get smaller version of required and current version
@@ -21,7 +23,11 @@ if test "${DOCKER_VERSION}" != "${REQUIRED_DOCKER_VERSION}"; then
     exit 1
 fi
 
+unlock_sudo
+
 ${SUDO} mkdir --parents ${DOCKER_CLI_DIR}
 
-${SUDO} curl --location --fail --output ${DOCKER_CLI_DIR}/docker-clip https://github.com/lukaszlach/clip/raw/master/docker-clip
-${SUDO} chmod +x ${DOCKER_CLI_DIR}/docker-clip
+echo "https://github.com/lukaszlach/clip/raw/master/docker-clip" | \
+    download_file | \
+    store_file docker-clip "${DOCKER_CLI_DIR}" |
+    make_executable

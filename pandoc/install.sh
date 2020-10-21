@@ -2,9 +2,14 @@
 
 set -o errexit
 
-: "${TARGET:=/usr/local}"
+# shellcheck source=.scripts/source.sh
+source <(curl --silent --location --fail https://pkg.dille.io/.scripts/source.sh)
 
-curl --silent https://api.github.com/repos/jgm/pandoc/releases/latest | \
-    jq --raw-output '.assets[] | select(.name | endswith("-linux-amd64.tar.gz")) | .browser_download_url' | \
-    xargs curl --location --fail | \
-    ${SUDO} tar -xzC ${TARGET} --strip-components=1
+unlock_sudo
+
+github_find_latest_release jgm/pandoc | \
+    github_resolve_assets | \
+    github_select_asset_by_suffix -linux-amd64.tar.gz | \
+    github_get_asset_download_url | \
+    download_file | \
+    ${SUDO} tar -xzC "${TARGET_BASE}" --strip-components=1

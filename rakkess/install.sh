@@ -2,10 +2,15 @@
 
 set -o errexit
 
-: "${TARGET:=/usr/local}"
+# shellcheck source=.scripts/source.sh
+source <(curl --silent --location --fail https://pkg.dille.io/.scripts/source.sh)
 
-curl --silent https://api.github.com/repos/corneliusweig/rakkess/releases/latest | \
-    jq --raw-output '.assets[] | select(.name == "rakkess-amd64-linux.tar.gz") | .browser_download_url' | \
-    xargs curl --location --fail | \
-    ${SUDO} tar -xzC ${TARGET}/bin/ rakkess-amd64-linux
-${SUDO} mv ${TARGET}/bin/rakkess-amd64-linux ${TARGET}/bin/rakkess
+unlock_sudo
+
+github_install \
+    --repo corneliusweig/rakkess \
+    --match name \
+    --asset rakkess-amd64-linux.tar.gz \
+    --type tarball \
+    --include rakkess-amd64-linux
+rename_file rakkess-amd64-linux rakkess

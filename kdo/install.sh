@@ -2,18 +2,23 @@
 
 set -o errexit
 
-: "${TARGET:=/usr/local}"
+# shellcheck source=.scripts/source.sh
+source <(curl --silent --location --fail https://pkg.dille.io/.scripts/source.sh)
 
 if curl --silent --fail https://api.github.com/repos/stepro/kdo/releases/latest >/dev/null; then
     echo "ERROR: kdo has a stable release. Please update install.sh"
     exit 1
 fi
 
-curl --silent https://api.github.com/repos/stepro/kdo/releases | \
+unlock_sudo
+
+github_get_releases stepro/kdo | \
     jq --raw-output '.[].tag_name' | \
     sort --version-sort --reverse | \
     head -n 1 | \
     xargs -I{} curl --silent https://api.github.com/repos/stepro/kdo/releases/tags/{} | \
-    jq --raw-output '.assets[] | select(.name | endswith("-linux-amd64.tar.gz")) | .browser_download_url' | \
-    xargs curl --location --fail | \
-    ${SUDO} tar -xzC ${TARGET}/bin/
+    github_resolve_assets | \
+    github_select_asset_by_suffix -linux-amd64.tar.gz | \
+    github_get_asset_download_url | \
+    download_file | \
+    untar_file kdo

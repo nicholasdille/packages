@@ -2,17 +2,19 @@
 
 set -o errexit
 
+# shellcheck source=.scripts/source.sh
+source <(curl --silent --location --fail https://pkg.dille.io/.scripts/source.sh)
+
 clean() {
     rm -rf "${MKTEMP}"
 }
-
 trap clean EXIT
 
-: "${TARGET:=/usr/local}"
+unlock_sudo
 
 MKTEMP=$(mktemp --directory)
 git clone https://github.com/weaveworks/kubediff "${MKTEMP}"
 cd "${MKTEMP}"
-pip install .
-pip install -r requirements.txt
-${SUDO} cp kubediff "${TARGET}/bin/"
+${SUDO} pip install .
+${SUDO} pip install -r requirements.txt
+${SUDO} cp kubediff "${TARGET_BIN}"

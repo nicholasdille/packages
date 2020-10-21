@@ -2,12 +2,18 @@
 
 set -o errexit
 
-: "${TARGET:=/usr/local}"
+# shellcheck source=.scripts/source.sh
+source <(curl --silent --location --fail https://pkg.dille.io/.scripts/source.sh)
 
-curl --silent https://api.github.com/repos/kubernetes-sigs/kustomize/releases | \
-    jq --raw-output 'map(select(.tag_name | startswith("kustomize/"))) | first | .assets[] | select(.name | endswith("_linux_amd64.tar.gz")) | .browser_download_url' | \
-    xargs curl --location --fail | \
-    ${SUDO} tar -xzC ${TARGET}/bin/
+unlock_sudo
+
+github_get_releases kubernetes-sigs/kustomize | \
+    jq --raw-output 'map(select(.tag_name | startswith("kustomize/"))) | first' | \
+    github_resolve_assets | \
+    github_select_asset_by_suffix _linux_amd64.tar.gz | \
+    github_get_asset_download_url | \
+    download_file | \
+    untar_file kustomize
 
 echo "complete -C ${TARGET}/bin/kustomize kustomize" | \
     store_completion kustomize

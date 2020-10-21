@@ -2,13 +2,18 @@
 
 set -o errexit
 
-: "${TARGET:=/usr/local}"
+# shellcheck source=.scripts/source.sh
+source <(curl --silent --location --fail https://pkg.dille.io/.scripts/source.sh)
 
-curl --silent https://api.github.com/repos/kubernetes-sigs/krew/releases/latest | \
-    jq --raw-output '.assets[] | select(.name == "krew.tar.gz") | .browser_download_url' | \
-    xargs curl --location --fail | \
-    ${SUDO} tar -xzC ${TARGET}/bin/ ./krew-linux_amd64
-${SUDO} mv ${TARGET}/bin/krew-linux_amd64 ${TARGET}/bin/krew
+unlock_sudo
+
+github_find_latest_release kubernetes-sigs/krew | \
+    github_resolve_assets | \
+    github_select_asset_by_name krew.tar.gz | \
+    github_get_asset_download_url | \
+    download_file | \
+    untar_file ./krew-linux_amd64
+rename_file krew-linux_amd64 krew
 
 krew update
 if ! krew index list | grep --quiet kvaps; then
@@ -44,5 +49,4 @@ krew install \
     kvaps/use
 
 kubectl use -completion | \
-    ${SUDO} tee ${TARGET}/etc/bash_completion.d/kubectl-use.sh >/dev/null
-${SUDO} ln -sf ${TARGET}/etc/bash_completion.d/kubectl-use.sh /etc/bash_completion.d/
+    store_completion kubectl-use

@@ -2,8 +2,17 @@
 
 set -o errexit
 
-: "${TARGET:=/usr/local}"
+# shellcheck source=.scripts/source.sh
+source <(curl --silent --location --fail https://pkg.dille.io/.scripts/source.sh)
 
-curl --silent https://dl.k8s.io/release/stable.txt | \
-    xargs -I{} ${SUDO} curl --location --output ${TARGET}/bin/kubeadm https://storage.googleapis.com/kubernetes-release/release/{}/bin/linux/amd64/kubeadm
-${SUDO} chmod +x ${TARGET}/bin/kubeadm
+unlock_sudo
+
+echo "https://dl.k8s.io/release/stable.txt" | \
+    download_file | \
+    xargs -I{} echo "https://storage.googleapis.com/kubernetes-release/release/{}/bin/linux/amd64/kubeadm" | \
+    download_file | \
+    store_file kubeadm | \
+    make_executable
+
+kubeadm completion bash | \
+    store_completion kubeadm

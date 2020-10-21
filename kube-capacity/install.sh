@@ -2,9 +2,14 @@
 
 set -o errexit
 
-: "${TARGET:=/usr/local}"
+# shellcheck source=.scripts/source.sh
+source <(curl --silent --location --fail https://pkg.dille.io/.scripts/source.sh)
 
-curl --silent https://api.github.com/repos/robscott/kube-capacity/releases/latest | \
-    jq --raw-output '.assets[] | select(.name | endswith("_Linux_x86_64.tar.gz")) | .browser_download_url' | \
-    xargs curl --location --fail | \
-    ${SUDO} tar -xzC ${TARGET}/bin/ kube-capacity
+unlock_sudo
+
+github_install \
+    --repo robscott/kube-capacity \
+    --match suffix \
+    --asset _Linux_x86_64.tar.gz \
+    --type tarball \
+    --include kube-capacity

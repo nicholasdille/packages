@@ -2,14 +2,15 @@
 
 set -o errexit
 
-: "${TARGET:=/usr/local}"
+# shellcheck source=.scripts/source.sh
+source <(curl --silent --location --fail https://pkg.dille.io/.scripts/source.sh)
 
-curl --silent https://api.github.com/repos/ahmetb/kubectx/releases/latest | \
-    jq --raw-output '
-        .assets[]
-        | select(.name | startswith("kubectx"))
-        | select(.name | endswith("_linux_x86_64.tar.gz"))
-        | .browser_download_url
-        '| \
-    xargs curl --location --fail | \
-    ${SUDO} tar -xzC ${TARGET}/bin/ kubectx
+unlock_sudo
+
+github_find_latest_release ahmetb/kubectx | \
+    github_resolve_assets | \
+    github_select_asset_by_prefix kubectx | \
+    github_select_asset_by_suffix _linux_x86_64.tar.gz | \
+    github_get_asset_download_url | \
+    download_file | \
+    untar_file kubectx

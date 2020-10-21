@@ -2,23 +2,22 @@
 
 set -o errexit
 
-clean() {
-    docker rm tig
-}
+# shellcheck source=.scripts/source.sh
+source <(curl --silent --location --fail https://pkg.dille.io/.scripts/source.sh)
 
-trap clean EXIT
+unlock_sudo
 
-: "${TARGET:=/usr/local}"
+docker create -i --name "${container_name}" ubuntu bash -xe
 
-docker create -i --name tig ubuntu bash -xe
+github_find_latest_release jonas/tig | \
+    github_resolve_assets | \
+    github_select_asset_by_suffix .tar.gz | \
+    github_get_asset_download_url | \
+    download_file | \
+    gunzip_file | \
+    docker cp - "${container_name}:/"
 
-curl --silent https://api.github.com/repos/jonas/tig/releases/latest | \
-    jq --raw-output '.assets[] | select(.name | endswith(".tar.gz")) | .browser_download_url' | \
-    xargs curl --location --fail | \
-    gunzip | \
-    docker cp - tig:/
-
-docker start -i tig <<EOF
+docker start -i "${container_name}" <<EOF
 apt-get update
 apt-get -y install --no-install-recommends curl jq gcc ncurses-dev make
 cd tig-*
@@ -26,4 +25,4 @@ cd tig-*
 make prefix=/usr/local
 make install prefix=/usr/local
 EOF
-docker cp tig:/usr/local/bin/tig - | ${SUDO} tar -xvC ${TARGET}/bin/
+extract_file_from_container /usr/local/bin/tig
