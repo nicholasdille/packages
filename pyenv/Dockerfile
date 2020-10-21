@@ -2,8 +2,7 @@ FROM ubuntu:bionic
 
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update \
- && apt-get -y install --no-install-recommends \
-        make \
+ && apt-get -y install \
         build-essential \
         libssl-dev \
         zlib1g-dev \
@@ -14,10 +13,10 @@ RUN apt-get update \
         curl \
         llvm \
         libncurses5-dev \
+        libncursesw5-dev \
         xz-utils \
         tk-dev \
-        libxml2-dev \
-        libxmlsec1-dev \
         libffi-dev \
         liblzma-dev \
-        ca-certificates
+        python-openssl \
+        git

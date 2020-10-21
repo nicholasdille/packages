@@ -20,8 +20,16 @@ TAG=$(
 
 export PYENV_ROOT="${HOME}/.pyenv"
 export PATH="${PYENV_ROOT}/bin:${PATH}"
-docker run -it --rm --name pyenv --env PYENV --env HOME --env PATH --volume "${HOME}:${HOME}" --workdir "${HOME}" --user "$(id -u):$(id -g)" pyenv pyenv install "${TAG#v}"
-docker run -it --rm --name pyenv --env PYENV --env HOME --env PATH --volume "${HOME}:${HOME}" --workdir "${HOME}" --user "$(id -u):$(id -g)" pyenv pyenv rehash
+docker run -it --rm --name pyenv \
+    --env PYENV \
+    --env HOME \
+    --env PATH \
+    --volume "${HOME}:${HOME}" \
+    --workdir "${HOME}" \
+    --user "$(id -u):$(id -g)" \
+    pyenv \
+    pyenv install "${TAG#v}" --skip-existing
+pyenv rehash
 
 echo
 echo "#############################################"
