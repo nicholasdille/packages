@@ -12,6 +12,6 @@ RUN apt-get update \
         zlib1g-dev \
         libncurses5-dev \
         libffi-dev \
-        libgdbm6 \
+        libgdbm5 \
         libgdbm-dev \
         libdb-dev
