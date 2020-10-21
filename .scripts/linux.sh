@@ -1,6 +1,21 @@
 #!/bin/bash
 
+function check_target() {
+    >&2 echo "Checking existence of target directory <${TARGET_BASE}>"
+    if ! test -d "${TARGET_BASE}"; then
+        >&2 echo "ERROR: Target directory <${TARGET_BASE}> does not exist. Please create it first."
+        exit 1
+    fi
+}
+
+function create_target() {
+    ${SUDO} mkdir -p "${TARGET_BIN}"
+    ${SUDO} mkdir -p "${TARGET_COMPLETION}"
+}
+
 function target_requires_sudo() {
+    check_target
+
     # target directory is root-owned
     if test "$(stat "${TARGET_BASE}" -c '%u:%g')" == "0:0"; then
 
@@ -34,6 +49,8 @@ function unlock_sudo() {
             >&2 echo "Sudo does not require a password (this time)."
         fi
     fi
+
+    create_target
 }
 
 function download_file() {
@@ -153,5 +170,9 @@ function store_completion() {
 
     cat | \
         store_file "${filename}.sh" "${TARGET_COMPLETION}"
-    ${SUDO} ln -sf "${TARGET_COMPLETION}/${filename}.sh" /etc/bash_completion.d/
+    if test -n "${SUDO}"; then
+        ${SUDO} ln -sf "${TARGET_COMPLETION}/${filename}.sh" /etc/bash_completion.d/
+    else
+        >&2 echo "!!! Please make sure the completion if loaded from <${TARGET_COMPLETION}/${filename}.sh>"
+    fi
 }
