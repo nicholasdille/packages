@@ -2,11 +2,11 @@
 
 set -o errexit
 
-ROOT=$(dirname "$(readlink -f "$0")")
+# shellcheck source=.scripts/source.sh
+source <(curl --silent --location --fail https://pkg.dille.io/.scripts/source.sh)
 
-require python
+unlock_sudo
 
-pip install --user yamllint
+install_python_module yamllint
 
-mkdir "${HOME}/.config/yamllint/"
-cp "${ROOT}/yamllint.yaml" "${HOME}/.config/yamllint/config"
+curl --silent --output "${HOME}/.config/yamllint/config" https://pkg.dille.io/yamllint/yamllint.yaml

@@ -23,12 +23,12 @@ function target_requires_sudo() {
         if test "$(id -u)" != "0"; then
             >&2 echo "Target directory requires root access."
             export SUDO="sudo"
+            export NODE_PARAMS=("-g")
             return 0
         fi
     fi
 
     # otherwise no sudo is required
-    export SUDO=""
     return 1
 }
 
@@ -175,4 +175,14 @@ function store_completion() {
     else
         >&2 echo "!!! Please make sure the completion if loaded from <${TARGET_COMPLETION}/${filename}.sh>"
     fi
+}
+
+function install_node_module() {
+    require node
+    ${SUDO} npm install "${NODE_PARAMS[@]}" "$@"
+}
+
+function install_python_module() {
+    require python
+    ${SUDO} pip3 install --upgrade "$@"
 }

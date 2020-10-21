@@ -2,5 +2,10 @@
 
 set -o errexit
 
-pip install --upgrade sslyze
+# shellcheck source=.scripts/source.sh
+source <(curl --silent --location --fail https://pkg.dille.io/.scripts/source.sh)
+
+unlock_sudo
+
+install_python_module sslyze
 alias sslyze="python -m sslyze"

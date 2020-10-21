@@ -2,7 +2,12 @@
 
 set -o errexit
 
-pip3 install --upgrade termtosvg
+# shellcheck source=.scripts/source.sh
+source <(curl --silent --location --fail https://pkg.dille.io/.scripts/source.sh)
+
+unlock_sudo
+
+install_python_module termtosvg
 
 cat <<EOF
 Record: termtosvg -t progress_bar myfile.svg
