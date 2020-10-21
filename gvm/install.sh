@@ -23,3 +23,11 @@ echo "export GVM_ROOT=\${HOME}/.gvm"
 echo "source \$GVM_ROOT/scripts/gvm-default"
 echo "#############################################"
 echo
+
+echo
+echo "#################################################"
+echo "### For building from source, use the following:"
+echo "###"
+echo "docker run -it --rm --name gvm --env GVM_ROOT --env HOME --env PATH --volume ${HOME}:${HOME} --workdir ${HOME} --user $(id -u):$(id -g) gvm gvm"
+echo "#################################################"
+echo
