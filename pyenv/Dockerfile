@@ -19,4 +19,5 @@ RUN apt-get update \
         libffi-dev \
         liblzma-dev \
         python-openssl \
-        git
+        git \
+        libedit-dev
