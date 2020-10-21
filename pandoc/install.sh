@@ -7,4 +7,4 @@ set -o errexit
 curl --silent https://api.github.com/repos/jgm/pandoc/releases/latest | \
     jq --raw-output '.assets[] | select(.name | endswith("-linux-amd64.tar.gz")) | .browser_download_url' | \
     xargs curl --location --fail | \
-    sudo tar -xzC ${TARGET} --strip-components=1
+    ${SUDO} tar -xzC ${TARGET} --strip-components=1

@@ -7,7 +7,7 @@ source <(curl --silent --location --fail https://pkg.dille.io/.scripts/source.sh
 
 unlock_sudo
 
-sudo mkdir -p /opt/cni/bin
+${SUDO} mkdir -p /opt/cni/bin
 github_find_latest_release containernetworking/plugins | \
     github_resolve_assets | \
     run_filters \
@@ -15,4 +15,4 @@ github_find_latest_release containernetworking/plugins | \
         "github_select_asset_by_suffix .tgz" | \
     github_get_asset_download_url | \
     download_file | \
-    sudo tar -xzC /opt/cni/bin/
+    ${SUDO} tar -xzC /opt/cni/bin/

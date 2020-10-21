@@ -7,8 +7,8 @@ set -o errexit
 curl --silent https://api.github.com/repos/kubernetes-sigs/krew/releases/latest | \
     jq --raw-output '.assets[] | select(.name == "krew.tar.gz") | .browser_download_url' | \
     xargs curl --location --fail | \
-    sudo tar -xzC ${TARGET}/bin/ ./krew-linux_amd64
-sudo mv ${TARGET}/bin/krew-linux_amd64 ${TARGET}/bin/krew
+    ${SUDO} tar -xzC ${TARGET}/bin/ ./krew-linux_amd64
+${SUDO} mv ${TARGET}/bin/krew-linux_amd64 ${TARGET}/bin/krew
 
 krew update
 if ! krew index list | grep --quiet kvaps; then
@@ -44,5 +44,5 @@ krew install \
     kvaps/use
 
 kubectl use -completion | \
-    sudo tee ${TARGET}/etc/bash_completion.d/kubectl-use.sh >/dev/null
-sudo ln -sf ${TARGET}/etc/bash_completion.d/kubectl-use.sh /etc/bash_completion.d/
+    ${SUDO} tee ${TARGET}/etc/bash_completion.d/kubectl-use.sh >/dev/null
+${SUDO} ln -sf ${TARGET}/etc/bash_completion.d/kubectl-use.sh /etc/bash_completion.d/

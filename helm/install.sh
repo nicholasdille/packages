@@ -10,7 +10,7 @@ unlock_sudo
 curl --silent --location -o /dev/null -w "%{url_effective}" https://github.com/helm/helm/releases/latest | \
     grep -oE "[^/]+$" | \
     xargs -I{} curl --location --fail "https://get.helm.sh/helm-{}-linux-amd64.tar.gz" | \
-    sudo tar -xz --strip-components=1 -C "${TARGET_BIN}" linux-amd64/helm
+    ${SUDO} tar -xz --strip-components=1 -C "${TARGET_BIN}" linux-amd64/helm
 
 helm completion bash | \
     store_completion helm

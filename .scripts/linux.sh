@@ -7,11 +7,13 @@ function target_requires_sudo() {
         # we are not root right now
         if test "$(id -u)" != "0"; then
             >&2 echo "Target directory requires root access."
+            export SUDO="sudo"
             return 0
         fi
     fi
 
     # otherwise no sudo is required
+    export SUDO=""
     return 1
 }
 
@@ -54,7 +56,7 @@ function untar_file() {
     >&2 echo "Unpacking asset to directory ${TARGET_BIN}..."
     >&2 echo "  Including parameters <${parameters[*]}>"
     cat | \
-        sudo tar -x -z ${TAR_ADDITIONAL_PARAMS} -C "${TARGET_BIN}" "${parameters[@]}"
+        ${SUDO} tar -x -z ${TAR_ADDITIONAL_PARAMS} -C "${TARGET_BIN}" "${parameters[@]}"
 }
 
 function unxz_file() {
@@ -67,7 +69,7 @@ function unxz_file() {
     >&2 echo "Unpacking asset to directory ${TARGET_BIN}..."
     >&2 echo "  Including parameters <${parameters[*]}>"
     cat | \
-        sudo tar -x -J ${TAR_ADDITIONAL_PARAMS} -C "${TARGET_BIN}" "${parameters[@]}"
+        ${SUDO} tar -x -J ${TAR_ADDITIONAL_PARAMS} -C "${TARGET_BIN}" "${parameters[@]}"
 }
 
 function unzip_file {
@@ -80,7 +82,7 @@ function unzip_file {
         ZIP_ADDITIONAL_PARAMS="-v"
     fi
 
-    sudo unzip -o ${ZIP_ADDITIONAL_PARAMS} -d "${TARGET_BIN}" "${file}" "${filter[@]}"
+    ${SUDO} unzip -o ${ZIP_ADDITIONAL_PARAMS} -d "${TARGET_BIN}" "${file}" "${filter[@]}"
 }
 
 function gunzip_file() {
@@ -103,7 +105,7 @@ function store_file() {
 
     >&2 echo "Creating file ${dirname}/${filename}"
     cat | \
-        sudo tee "${dirname}/${filename}" >/dev/null
+        ${SUDO} tee "${dirname}/${filename}" >/dev/null
     echo "${dirname}/${filename}"
 }
 
@@ -113,13 +115,13 @@ function make_executable() {
     if test -z "${filename}"; then
         cat | while read -r filename2; do
             >&2 echo "Setting executable bits on ${filename2}"
-            sudo chmod +x "${filename2}"
+            ${SUDO} chmod +x "${filename2}"
         done
         return
     fi
 
     >&2 echo "Setting executable bits on ${filename}"
-    sudo chmod +x "${TARGET_BIN}/${filename}"
+    ${SUDO} chmod +x "${TARGET_BIN}/${filename}"
 }
 
 function rename_file() {
@@ -136,7 +138,7 @@ function rename_file() {
     fi
 
     >&2 echo "Renaming ${old_name} to ${new_name}..."
-    sudo mv "${TARGET_BIN}/${old_name}" "${TARGET_BIN}/${new_name}"
+    ${SUDO} mv "${TARGET_BIN}/${old_name}" "${TARGET_BIN}/${new_name}"
 }
 
 function store_completion() {
@@ -147,9 +149,9 @@ function store_completion() {
         return 1
     fi
 
-    sudo mkdir -p "${TARGET_COMPLETION}"
+    ${SUDO} mkdir -p "${TARGET_COMPLETION}"
 
     cat | \
         store_file "${filename}.sh" "${TARGET_COMPLETION}"
-    sudo ln -sf "${TARGET_COMPLETION}/${filename}.sh" /etc/bash_completion.d/
+    ${SUDO} ln -sf "${TARGET_COMPLETION}/${filename}.sh" /etc/bash_completion.d/
 }

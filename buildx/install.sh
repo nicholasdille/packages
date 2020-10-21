@@ -26,7 +26,7 @@ if test "${DOCKER_VERSION}" != "${REQUIRED_DOCKER_VERSION}"; then
     exit 1
 fi
 
-sudo mkdir --parents "${DOCKER_CLI_DIR}"
+${SUDO} mkdir --parents "${DOCKER_CLI_DIR}"
 
 github_find_latest_release docker/buildx | \
     github_resolve_assets | \

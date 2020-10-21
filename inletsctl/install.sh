@@ -11,4 +11,4 @@ github_find_latest_release inlets/inletsctl | \
     github_resolve_assets | \
     github_select_asset_by_name inletsctl.tgz | \
     download_file | \
-    sudo tar -xzC "${TARGET_BASE}" bin/inletsctl
+    ${SUDO} tar -xzC "${TARGET_BASE}" bin/inletsctl

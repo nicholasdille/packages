@@ -15,7 +15,7 @@ github_find_latest_release sharkdp/bat | \
     download_file \
     >"${filename}"
 
-sudo tar -xz -f "${filename}" -C "${TARGET_BIN}" --wildcards --strip-components=1 "*/bat"
-sudo tar -xz -f "${filename}" -C "${TARGET_BASE}/man/man1" --wildcards --strip-components=1 "*/bat.1"
+${SUDO} tar -xz -f "${filename}" -C "${TARGET_BIN}" --wildcards --strip-components=1 "*/bat"
+${SUDO} tar -xz -f "${filename}" -C "${TARGET_BASE}/man/man1" --wildcards --strip-components=1 "*/bat.1"
 
 rm "${filename}"

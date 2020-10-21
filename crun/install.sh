@@ -14,11 +14,11 @@ github_install \
     --type binary \
     --name crun
 
-sudo mkdir -p /etc/docker
+${SUDO} mkdir -p /etc/docker
 if ! test -f /etc/docker/daemon.json; then
-    echo "{}" | sudo tee /etc/docker/daemon.json >/dev/null
+    echo "{}" | ${SUDO} tee /etc/docker/daemon.json >/dev/null
 fi
 
-sudo mv /etc/docker/daemon.json /etc/docker/daemon.json.bak
+${SUDO} mv /etc/docker/daemon.json /etc/docker/daemon.json.bak
 jq --arg bin "${TARGET_BIN}" '. * {"runtimes": {"crun": {"path": ($bin + "/crun")}}}' /etc/docker/daemon.json.bak | \
-    sudo tee /etc/docker/daemon.json >/dev/null
+    ${SUDO} tee /etc/docker/daemon.json >/dev/null

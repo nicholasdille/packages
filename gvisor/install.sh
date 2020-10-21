@@ -12,4 +12,4 @@ echo "https://storage.googleapis.com/gvisor/releases/release/latest/runsc" | \
     store_file runsc | \
     make_executable
 
-sudo runsc install
+${SUDO} runsc install

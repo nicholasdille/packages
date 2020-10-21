@@ -14,7 +14,7 @@ github_install \
     --asset docker-compose-Linux-x86_64 \
     --type binary
 
-sudo mkdir -p "${TARGET}/etc/bash_completion.d"
+${SUDO} mkdir -p "${TARGET}/etc/bash_completion.d"
 github_find_latest_release docker/compose | \
     jq --raw-output '.tag_name' | \
     xargs -I{} curl --location --fail https://github.com/docker/compose/raw/{}/contrib/completion/bash/docker-compose | \

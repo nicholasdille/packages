@@ -9,4 +9,4 @@ unlock_sudo
 
 require n
 
-sudo n lts
+${SUDO} n lts

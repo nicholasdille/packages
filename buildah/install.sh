@@ -41,7 +41,7 @@ make runc all SECURITYTAGS="apparmor seccomp"
 # copy buildah
 #cp docs/cni-examples/*.conf /
 EOF
-#docker cp buildah:/buildah - | sudo tar -xvC ${TARGET_BIN}
+#docker cp buildah:/buildah - | ${SUDO} tar -xvC ${TARGET_BIN}
 #mkdir -p /etc/cni/net.d
-#docker cp buildah:/*.conf - | sudo tar -xvC ${TARGET_BASE}/etc/cni/net.d
-#sudo chmod 0644 /etc/cni/net.d/*.conf
+#docker cp buildah:/*.conf - | ${SUDO} tar -xvC ${TARGET_BASE}/etc/cni/net.d
+#${SUDO} chmod 0644 /etc/cni/net.d/*.conf

@@ -26,4 +26,4 @@ cd tig-*
 make prefix=/usr/local
 make install prefix=/usr/local
 EOF
-docker cp tig:/usr/local/bin/tig - | sudo tar -xvC ${TARGET}/bin/
+docker cp tig:/usr/local/bin/tig - | ${SUDO} tar -xvC ${TARGET}/bin/

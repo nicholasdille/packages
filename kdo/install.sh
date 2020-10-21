@@ -16,4 +16,4 @@ curl --silent https://api.github.com/repos/stepro/kdo/releases | \
     xargs -I{} curl --silent https://api.github.com/repos/stepro/kdo/releases/tags/{} | \
     jq --raw-output '.assets[] | select(.name | endswith("-linux-amd64.tar.gz")) | .browser_download_url' | \
     xargs curl --location --fail | \
-    sudo tar -xzC ${TARGET}/bin/
+    ${SUDO} tar -xzC ${TARGET}/bin/

@@ -15,9 +15,9 @@ github_find_latest_release rothgar/k | \
     download_file \
     >"${filename}"
 
-sudo tar -xz -f "${filename}" -C "${TARGET_BIN}" --strip-components=1 bin/k
+${SUDO} tar -xz -f "${filename}" -C "${TARGET_BIN}" --strip-components=1 bin/k
 
-sudo tar -xz -f "${filename}" -C "${TARGET_COMPLETION}" --strip-components=2 completions/bash/k
-sudo mv "${TARGET_COMPLETION}/k" "${TARGET_COMPLETION}/k.sh"
+${SUDO} tar -xz -f "${filename}" -C "${TARGET_COMPLETION}" --strip-components=2 completions/bash/k
+${SUDO} mv "${TARGET_COMPLETION}/k" "${TARGET_COMPLETION}/k.sh"
 
 rm "${filename}"

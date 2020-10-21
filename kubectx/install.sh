@@ -12,4 +12,4 @@ curl --silent https://api.github.com/repos/ahmetb/kubectx/releases/latest | \
         | .browser_download_url
         '| \
     xargs curl --location --fail | \
-    sudo tar -xzC ${TARGET}/bin/ kubectx
+    ${SUDO} tar -xzC ${TARGET}/bin/ kubectx

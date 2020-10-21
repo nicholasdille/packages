@@ -12,4 +12,4 @@ github_find_latest_release ocibuilder/ocibuilder | \
     github_select_asset_by_name ocictl-linux-amd64.tar.gz | \
     github_get_asset_download_url | \
     download_file | \
-    sudo tar -xzC "${TARGET_BIN}" --strip-components=2 ./ocictl/ocictl
+    ${SUDO} tar -xzC "${TARGET_BIN}" --strip-components=2 ./ocictl/ocictl

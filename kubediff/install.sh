@@ -15,4 +15,4 @@ git clone https://github.com/weaveworks/kubediff "${MKTEMP}"
 cd "${MKTEMP}"
 pip install .
 pip install -r requirements.txt
-sudo cp kubediff "${TARGET}/bin/"
+${SUDO} cp kubediff "${TARGET}/bin/"

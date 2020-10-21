@@ -21,7 +21,7 @@ if test "${DOCKER_VERSION}" != "${REQUIRED_DOCKER_VERSION}"; then
     exit 1
 fi
 
-sudo mkdir --parents ${DOCKER_CLI_DIR}
+${SUDO} mkdir --parents ${DOCKER_CLI_DIR}
 
-sudo curl --location --fail --output ${DOCKER_CLI_DIR}/docker-clip https://github.com/lukaszlach/clip/raw/master/docker-clip
-sudo chmod +x ${DOCKER_CLI_DIR}/docker-clip
+${SUDO} curl --location --fail --output ${DOCKER_CLI_DIR}/docker-clip https://github.com/lukaszlach/clip/raw/master/docker-clip
+${SUDO} chmod +x ${DOCKER_CLI_DIR}/docker-clip

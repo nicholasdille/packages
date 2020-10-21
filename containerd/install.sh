@@ -13,4 +13,4 @@ github_find_latest_release containerd/containerd | \
     github_select_asset_by_suffix -linux-amd64.tar.gz | \
     github_get_asset_download_url | \
     download_file | \
-    sudo tar -xzC "${TARGET_BASE}"
+    ${SUDO} tar -xzC "${TARGET_BASE}"

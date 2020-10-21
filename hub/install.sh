@@ -14,11 +14,11 @@ github_find_latest_release github/hub | \
             github_select_asset_by_prefix hub-linux-amd64- | \
             github_get_asset_download_url | \
             download_file | \
-            sudo tar -xzC ${TARGET_BASE} --wildcards --strip-components=1 */bin/hub
+            ${SUDO} tar -xzC ${TARGET_BASE} --wildcards --strip-components=1 */bin/hub
         " \
         "\
             github_select_asset_by_prefix hub-linux-amd64- | \
             github_get_asset_download_url | \
             download_file | \
-            sudo tar -xzC ${TARGET_COMPLETION} --wildcards --strip-components=2 */etc/hub.bash_completion.sh
+            ${SUDO} tar -xzC ${TARGET_COMPLETION} --wildcards --strip-components=2 */etc/hub.bash_completion.sh
         "

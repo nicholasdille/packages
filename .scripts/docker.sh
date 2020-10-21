@@ -37,7 +37,7 @@ function build_containerized() {
 
 function extract_file_from_container() {
     while test -n "$1"; do
-        docker cp "${container_name}:/$1" - | sudo tar -xvC "${TARGET_BIN}"
+        docker cp "${container_name}:/$1" - | ${SUDO} tar -xvC "${TARGET_BIN}"
         shift
     done
 }
