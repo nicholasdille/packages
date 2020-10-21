@@ -1,0 +1,8 @@
+name: ruby
+description: The Ruby Programming Language
+repo: ruby/ruby
+links:
+- text: Homepage
+  url: https://www.ruby-lang.org/
+tags:
+- ruby

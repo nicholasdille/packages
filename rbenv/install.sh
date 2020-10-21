@@ -27,6 +27,14 @@ echo "#############################################"
 echo "### Now add the following to your ~/.bashrc:"
 echo "###"
 echo "export PATH=\${HOME}/.rbenv/bin:\${PATH}"
-echo "\${HOME}/.rbenv/bin/rbenv init"
+echo "eval $(rbenv init -)"
 echo "#############################################"
+echo
+
+echo
+echo "#################################################"
+echo "### For building from source, use the following:"
+echo "###"
+echo "docker run -it --rm --name rbenv --env HOME --env PATH --volume ${HOME}:${HOME} --workdir ${HOME} --user $(id -u):$(id -g) rbenv rbenv"
+echo "#################################################"
 echo

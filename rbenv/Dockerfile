@@ -14,4 +14,6 @@ RUN apt-get update \
         libffi-dev \
         libgdbm5 \
         libgdbm-dev \
-        libdb-dev
+        libdb-dev \
+        curl \
+        ca-certificates
