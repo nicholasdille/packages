@@ -65,7 +65,7 @@ check-dirty:
 	fi; \
 	if test -n "$$(git log --pretty=oneline origin/master..HEAD)" >/dev/null; then \
 		echo "!!! You have unpushed commits."; \
-		git log --pretty=oneline origin/master..HEAD; \
+		git --no-pager log --pretty=oneline origin/master..HEAD; \
 		exit 1; \
 	fi
 
