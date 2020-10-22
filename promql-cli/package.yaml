@@ -1,0 +1,6 @@
+name: promql
+description: Prometheus Query CLI
+repo: nalbury/promql-cli
+tags:
+- prometheus
+- promql
