@@ -13,6 +13,7 @@ show_help() {
     echo "Commands:"
     echo "    cache, c      Cache packages.json"
     echo "    help, h       This message"
+    echo "    inspect       Inspect a package"
     echo "    install, i    Install a package"
     echo "    list, l       List available packages"
     echo "    search, s     Search packages (name, description and tags)"
@@ -53,6 +54,18 @@ cache() {
     curl --silent "https://api.github.com/repos/${MY_REPO}/releases/tags/${TAG}" | \
         jq --raw-output '.assets[] | select(.name == "packages.json") | .browser_download_url' | \
         xargs curl --silent --location --output "${HOME}/.pkg/packages.json"
+}
+
+inspect() {
+    package=$1
+
+    if test -z "${package}"; then
+        echo "ERROR: No package specified."
+        show_help_install
+        exit 1
+    fi
+
+    curl --silent "https://pkg.dille.io/${package}/package.yaml"
 }
 
 install() {
@@ -186,6 +199,11 @@ main() {
             cache|c)
                 prepare
                 cache "$@"
+                exit 0
+            ;;
+            inspect)
+                prepare
+                inspect "$@"
                 exit 0
             ;;
             install|i)
