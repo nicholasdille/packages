@@ -19,6 +19,15 @@ check-scripts: .bin/shellcheck
 	@\
 	.bin/shellcheck $(SCRIPTS)
 
+.PHONY:
+check-packages: packages.json
+	@\
+	bash pkg.sh cache; \
+	if diff "${HOME}/.pkg/packages.json" "packages.json" >/dev/null; then \
+		echo "!!! You must create a new release of packages.json !!!"; \
+		exit 1; \
+	fi
+
 packages.json: $(DEFINITIONS) tools
 	@\
 	(\
