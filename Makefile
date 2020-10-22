@@ -59,7 +59,11 @@ readme: check $(READMES)
 check-dirty:
 	@\
 	if test -n "$$(git status --short)"; then \
-		echo "ERROR: Working directory is dirty."; \
+		echo "!!! You have uncommitted work."; \
+		exit 1; \
+	fi; \
+	if test -n "$$(git log --pretty=oneline origin/master..HEAD)" >/dev/null; then \
+		echo "!!! You have unpushed commits."; \
 		exit 1; \
 	fi
 
