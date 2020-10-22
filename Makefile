@@ -24,10 +24,13 @@ packages.json: $(DEFINITIONS) tools
 	(\
 		echo "tools:"; \
 		find . -type f -name package.yaml | \
+			sort | \
 			while read FILE; do \
 				.bin/yq prefix $${FILE} '[+]'; \
 			done; \
-	) | .bin/yq --tojson read - >packages.json
+	) | \
+	.bin/yq --tojson read - | \
+	jq . >packages.json
 
 .PHONY:
 readme: check $(READMES)
