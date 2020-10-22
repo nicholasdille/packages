@@ -15,7 +15,7 @@ tidy: clean
 	rmdir .bin
 
 .PHONY:
-check: tools
+check-scripts: .bin/shellcheck
 	@\
 	.bin/shellcheck $(SCRIPTS)
 
