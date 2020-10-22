@@ -60,10 +60,12 @@ check-dirty:
 	@\
 	if test -n "$$(git status --short)"; then \
 		echo "!!! You have uncommitted work."; \
+		git status --short; \
 		exit 1; \
 	fi; \
 	if test -n "$$(git log --pretty=oneline origin/master..HEAD)" >/dev/null; then \
 		echo "!!! You have unpushed commits."; \
+		git log --pretty=oneline origin/master..HEAD; \
 		exit 1; \
 	fi
 
