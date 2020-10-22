@@ -1,0 +1,5 @@
+name: wslu
+description: A collection of utilities for Windows 10 Linux Subsystems
+repo: wslutilities/wslu
+tags:
+- wsl
