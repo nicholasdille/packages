@@ -1,0 +1,12 @@
+name: grafterm
+description: Metrics dashboards on terminal (a grafana inspired terminal version)
+repo: slok/grafterm
+links:
+- text: Creating dashboards
+  url: https://github.com/slok/grafterm/blob/master/docs/cfg.md
+tags:
+- metrics
+- dashboard
+- shell
+- grafana
+- terminal
