@@ -1,0 +1,7 @@
+name: youtube-dl
+description: Command-line program to download videos from YouTube.com and other video sites
+repo: ytdl-org/youtube-dl
+tags:
+- youtube
+- video
+- download
