@@ -23,9 +23,11 @@ check-scripts: .bin/shellcheck
 check-packages: packages.json
 	@\
 	bash pkg.sh cache; \
-	if diff "${HOME}/.pkg/packages.json" "packages.json" >/dev/null; then \
+	if ! diff "${HOME}/.pkg/packages.json" "packages.json" >/dev/null; then \
 		echo "!!! You must create a new release of packages.json !!!"; \
 		exit 1; \
+	else \
+		echo "Packages are up-to-date."; \
 	fi
 
 packages.json: $(DEFINITIONS) tools
