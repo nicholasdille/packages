@@ -44,7 +44,7 @@ packages.json: $(DEFINITIONS) tools
 	jq . >packages.json
 
 .PHONY:
-readme: check $(READMES)
+readme: check-scripts $(READMES)
 
 %/README.md: %/package.yaml
 	@\
