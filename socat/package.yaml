@@ -1,0 +1,10 @@
+name: socat
+description: ssh + reverse sshfs + port forwarder, in Docker-like CLI
+repo: repo.or.cz/socat.git
+links:
+- text: Homepage
+  url: http://www.dest-unreach.org/socat/
+- text: Repository
+  url: https://repo.or.cz/socat.git
+tags:
+- network
