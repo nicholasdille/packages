@@ -2,6 +2,4 @@ name: asciigraph
 description: Go package to make lightweight ASCII line graph ╭┈╯ in command line apps with no other dependencies
 repo: guptarohit/asciigraph
 tags:
-- container
-- oci
-- runtime
+- shell
