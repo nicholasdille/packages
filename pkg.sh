@@ -83,7 +83,7 @@ install() {
 list() {
     get_packages | \
         jq --raw-output '
-            .tools[] | 
+            .packages[] |
             "\(.name);\(.description)"
         ' | \
         uniq | \
@@ -132,7 +132,7 @@ search() {
         if ${SEARCH_NAME}; then
             echo "${PACKAGES}" | \
                 jq --raw-output --arg search "${SEARCH_TERM}" '
-                    .tools[] | 
+                    .packages[] |
                     select(.name | ascii_downcase | contains($search | ascii_downcase)) |
                     "\(.name);\(.description)"
                 '
@@ -140,15 +140,15 @@ search() {
         if ${SEARCH_DESC}; then
             echo "${PACKAGES}" | \
                 jq --raw-output --arg search "${SEARCH_TERM}" '
-                    .tools[] | 
-                    select(.description | ascii_downcase | contains($search | ascii_downcase)) | 
+                    .packages[] |
+                    select(.description | ascii_downcase | contains($search | ascii_downcase)) |
                     "\(.name);\(.description)"
                 '
         fi
         if ${SEARCH_TAGS}; then
             echo "${PACKAGES}" | \
                 jq --raw-output --arg search "${SEARCH_TERM}" '
-                    .tools[] | 
+                    .packages[] |
                     select(.tags[] | contains($search | ascii_downcase)) |
                     "\(.name);\(.description)"
                 '
@@ -161,7 +161,7 @@ search() {
 
 tags() {
     get_packages | \
-        jq --raw-output '.tools[].tags[]' | \
+        jq --raw-output '.packages[].tags[]' | \
         sort | \
         uniq
 }
@@ -194,7 +194,7 @@ main() {
                 show_help
             ;;
             --version|-v)
-                VERSION=$1   
+                VERSION=$1
             ;;
             cache|c)
                 prepare

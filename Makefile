@@ -33,7 +33,7 @@ check-packages: packages.json
 packages.json: $(DEFINITIONS) tools
 	@\
 	(\
-		echo "tools:"; \
+		echo "packages:"; \
 		find . -type f -name package.yaml | \
 			sort | \
 			while read FILE; do \
