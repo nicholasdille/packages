@@ -20,7 +20,7 @@ else
     source <(curl --silent --location --fail https://pkg.dille.io/.scripts/variables.sh)
 fi
 
-for file in control linux github docker; do
+for file in control linux github codeberg docker; do
     >&2 echo -n "Sourcing ${file}..."
     if ${SOURCE_LOCAL_FILES}; then
         >&2 echo " !!! FROM LOCAL FILE !!!"
