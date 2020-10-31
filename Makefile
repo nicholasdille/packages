@@ -54,6 +54,11 @@ readme: check-scripts $(READMES)
 				jq --raw-output '"# \(.name)\n\n\(.description)\n\n[Codeberg](https://codeberg.org/\(.repo))"' \
 				>"$@"; \
 		;; \
+		gitlab) \
+			./.bin/yq read --tojson $*/package.yaml | \
+				jq --raw-output '"# \(.name)\n\n\(.description)\n\n[Codeberg](https://gitlab.com/\(.repo))"' \
+				>"$@"; \
+		;; \
 		"") \
 			./.bin/yq read --tojson $*/package.yaml | \
 				jq --raw-output '"# \(.name)\n\n\(.description)\n\n[GitHub](https://github.com/\(.repo))"' \
