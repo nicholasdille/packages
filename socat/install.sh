@@ -28,4 +28,5 @@ extract_file_from_container socat
 
 # shellcheck disable=SC2154
 docker cp "${container_name}:/tmp/socat/doc/socat.1" - | \
+    tar -x --to-stdout | \
     sudo tee "${TARGET_BASE}/share/man/man1/socat.1" >/dev/null

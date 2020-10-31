@@ -20,5 +20,6 @@ extract_file_from_container oci-image-tool
 for MAN in oci-image-tool oci-image-tool-create oci-image-tool-unpack oci-image-tool-validate; do
     # shellcheck disable=SC2154
     docker cp "${container_name}:/go/src/github.com/opencontainers/image-tools/${MAN}.1" - | \
+        tar -x --to-stdout | \
         sudo tee "${TARGET_BASE}/share/man/man1/${MAN}.1" >/dev/null
 done
