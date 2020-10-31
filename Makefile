@@ -48,9 +48,22 @@ readme: check-scripts $(READMES)
 
 %/README.md: %/package.yaml
 	@\
-	./.bin/yq read --tojson $*/package.yaml | \
-		jq --raw-output '"# \(.name)\n\n\(.description)\n\n[GitHub](https://github.com/\(.repo))"' \
-		>"$@"; \
+	case "$$(./.bin/yq read $*/package.yaml type)" in \
+		codeberg) \
+			./.bin/yq read --tojson $*/package.yaml | \
+				jq --raw-output '"# \(.name)\n\n\(.description)\n\n[Codeberg](https://codeberg.org/\(.repo))"' \
+				>"$@"; \
+		;; \
+		"") \
+			./.bin/yq read --tojson $*/package.yaml | \
+				jq --raw-output '"# \(.name)\n\n\(.description)\n\n[GitHub](https://github.com/\(.repo))"' \
+				>"$@"; \
+		;; \
+		*) \
+			echo "!!! Unknown type in $* !!!"; \
+			exit 1; \
+		;; \
+	esac; \
 	./.bin/yq read --tojson $*/package.yaml | \
 		jq --raw-output 'select(.links != null) | .links[] | "\n[\(.text)](\(.url))"' \
 		>>"$@"
