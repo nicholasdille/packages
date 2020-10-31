@@ -1,5 +1,5 @@
 # youtube-dl
 
-Command-line program to download videos from YouTube.com and other video sites
+Download videos from youtube.com or other video platforms
 
-[GitHub](https://github.com/ytdl-org/youtube-dl)
+[Codeberg](https://codeberg.org/polarisfm/youtube-dl)
