@@ -28,9 +28,13 @@ ls -l
 cp youtube-dl youtube-dl.1 youtube-dl.bash-completion /
 EOF
 extract_file_from_container youtube-dl
+
+# shellcheck disable=SC2154
 docker cp "${container_name}:/youtube-dl.1" - | \
     tar -x --to-stdout | \
     sudo tee "${TARGET_BASE}/share/man/man1/youtube-dl.1" >/dev/null
+
+# shellcheck disable=SC2154
 docker cp "${container_name}:/youtube-dl.bash-completion" - | \
     tar -x --to-stdout | \
     store_completion youtube-dl
