@@ -18,6 +18,7 @@ show_help() {
     echo "    list, l       List available packages"
     echo "    search, s     Search packages (name, description and tags)"
     echo "    tags, t       Show tags"
+    echo "    version, v    Get installed version"
     echo
 }
 
@@ -37,10 +38,20 @@ show_help_search() {
     echo
 }
 
+show_help_version() {
+    echo
+    echo "Usage: sh ./pkg.sh version <package>"
+    echo "       ./pkg.sh version <package>"
+    echo "       curl https://pkg.dille.io/pkg.sh | sh -s version <package>"
+    echo
+}
+
 get_packages() {
     if test -f "${HOME}/.pkg/packages.json"; then
+        >&2 echo "Using cached packages.json from <${HOME}/.pkg/>. Please update regularly using <pkg cache>."
         cat "${HOME}/.pkg/packages.json"
     elif test -f packages.json; then
+        >&2 echo "Using local copy of packages.json in current directory. If you are not a contributor, please run <pkg cache>."
         cat packages.json
     else
         echo "ERROR: Unable to find packages.json. Run <pkg cache> first."
@@ -166,6 +177,55 @@ tags() {
         uniq
 }
 
+version() {
+    package=$1
+
+    if test -z "${package}"; then
+        echo "ERROR: No package specified."
+        show_help_version
+        exit 1
+    fi
+
+    package_json=$(
+        get_packages | \
+            jq --raw-output --arg package "${package}" '
+                .packages[] |
+                select(.name == $package)
+            '
+    )
+
+    version_command=$(
+        echo "${package_json}" | \
+            jq --raw-output '.version.command'
+    )
+    if test -z "${version_command}" || test "${version_command}" == "null"; then
+        >&2 echo "ERROR: No version command specified for package <${package}>."
+        return
+    fi
+
+    version_filter=$(
+        echo "${package_json}" | \
+            jq --raw-output '.version.filter'
+    )
+    if test -z "${version_filter}" || test "${version_filter}" == "null"; then
+        >&2 echo "ERROR: No version filter specified for package <${package}>."
+        return
+    fi
+
+    version_pattern=$(
+        echo "${package_json}" | \
+            jq --raw-output '.version.pattern'
+    )
+    if test -z "${version_pattern}" || test "${version_pattern}" == "null"; then
+        >&2 echo "ERROR: No version pattern specified for package <${package}>."
+        return
+    fi
+
+    ${version_command} 2>/dev/null | \
+        grep "${version_filter}" | \
+        sed -E "s/${version_pattern}/\1/"
+}
+
 prepare() {
     : "${VERSION:=latest}"
     if test -z "${TAG}"; then
@@ -224,6 +284,11 @@ main() {
             tags|t)
                 prepare
                 tags "$@"
+                exit 0
+            ;;
+            version|v)
+                prepare
+                version "$@"
                 exit 0
             ;;
         esac

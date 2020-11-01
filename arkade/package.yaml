@@ -1,6 +1,10 @@
 name: arkade
 description: Your one-stop CLI for Kubernetes
 repo: alexellis/arkade
+version:
+  command: arkade version
+  filter: Version
+  pattern: Version:\s(.+)
 tags:
 - kubernetes
 - k8s

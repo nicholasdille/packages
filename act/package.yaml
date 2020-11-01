@@ -1,6 +1,10 @@
 name: act
 description: Run your GitHub Actions locally
 repo: nektos/act
+version:
+  command: act --version
+  filter: act
+  pattern: ^act\sversion\s(.+)$
 tags:
 - pipeline
 - continuous

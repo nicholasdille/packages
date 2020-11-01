@@ -1,6 +1,10 @@
 name: argocd
 description: Declarative continuous deployment for Kubernetes
 repo: argoproj/argo-cd
+version:
+  command: argocd version
+  filter: argocd
+  pattern: ^argocd:\s(.+)\+.+$
 tags:
 - gitops
 - kubernetes

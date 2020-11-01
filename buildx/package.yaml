@@ -4,6 +4,10 @@ repo: docker/buildx
 links:
 - text: Docker CLI plugins proposal
   url: https://github.com/docker/cli/issues/1534
+version:
+  command: docker buildx version
+  filter: ^github
+  pattern: ^github.com\/docker\/buildx\s(.+)\s.+$
 tags:
 - docker
 - container

@@ -4,6 +4,10 @@ repo: moby/buildkit
 links:
 - text: Using BuildKit in Docker >=18.09
   url: https://docs.docker.com/develop/develop-images/build_enhancements/
+version:
+  command: buildkitd --version
+  filter: ^buildkit
+  pattern: ^buildkitd\sgithub.com\/moby\/buildkit\s(.+)\s.+$
 tags:
 - container
 - build
