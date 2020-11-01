@@ -1,4 +1,4 @@
-# flux2
+# flux
 
 Kubernetes toolkit for assembling CD pipelines the GitOps way
 
