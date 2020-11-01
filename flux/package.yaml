@@ -1,6 +1,6 @@
-name: gotk
+name: flux2
 description: Kubernetes toolkit for assembling CD pipelines the GitOps way
-repo: fluxcd/toolkit
+repo: fluxcd/flux2
 tags:
 - kubernetes
 - k8s

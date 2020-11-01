@@ -1,5 +1,5 @@
-# gotk
+# flux2
 
 Kubernetes toolkit for assembling CD pipelines the GitOps way
 
-[GitHub](https://github.com/fluxcd/toolkit)
+[GitHub](https://github.com/fluxcd/flux2)
