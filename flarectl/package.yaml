@@ -6,5 +6,7 @@ links:
   url: https://github.com/cloudflare/cloudflare-go/tree/master/cmd/flarectl
 - text: CloudFlare API
   url: https://api.cloudflare.com/
+version:
+  latest: v0.13.4 # renovate: datasource=github-releases depName=cloudflare/cloudflare-go
 tags:
 - dns

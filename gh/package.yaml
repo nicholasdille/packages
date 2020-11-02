@@ -1,5 +1,7 @@
 name: gh
 description: GitHub’s official command line tool
 repo: cli/cli
+version:
+  latest: v1.2.0 # renovate: datasource=github-releases depName=cli/cli
 tags:
 - github

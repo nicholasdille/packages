@@ -4,6 +4,8 @@ repo: slok/grafterm
 links:
 - text: Creating dashboards
   url: https://github.com/slok/grafterm/blob/master/docs/cfg.md
+version:
+  latest: v0.2.0 # renovate: datasource=github-releases depName=slok/grafterm
 tags:
 - metrics
 - dashboard

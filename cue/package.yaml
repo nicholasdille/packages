@@ -4,5 +4,7 @@ repo: cuelang/cue
 links:
 - text: Homepage
   url: https://cuelang.org/
+version:
+  latest: v0.2.2 # renovate: datasource=github-releases depName=cuelang/cue
 tags:
 - configuration

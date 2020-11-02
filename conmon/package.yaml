@@ -1,6 +1,8 @@
 name: conmon
 description: An OCI container runtime monitor
 repo: containers/conmon
+version:
+  latest: v2.0.21 # renovate: datasource=github-releases depName=containers/conmon
 tags:
 - container
 - runtime

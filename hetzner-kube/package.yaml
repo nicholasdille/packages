@@ -1,6 +1,8 @@
 name: hetzner-kube
 description: A CLI tool for provisioning kubernetes clusters on Hetzner Cloud
 repo: xetys/hetzner-kube
+version:
+  latest: 0.5.1 # renovate: datasource=github-releases depName=xetys/hetzner-kube
 tags:
 - kubernetes
 - k8s

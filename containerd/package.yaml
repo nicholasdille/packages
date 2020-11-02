@@ -4,6 +4,8 @@ repo: containerd/containerd
 links:
 - text: Homepage
   url: https://containerd.io/
+version:
+  latest: v1.2.14 # renovate: datasource=github-releases depName=containerd/containerd
 tags:
 - container
 - runtime

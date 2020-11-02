@@ -1,6 +1,8 @@
 name: img
 description: Standalone, daemon-less, unprivileged Dockerfile and OCI compatible container image builder
 repo: genuinetools/img
+version:
+  latest: v0.5.10 # renovate: datasource=github-releases depName=genuinetools/img
 tags:
 - docker
 - container

@@ -1,5 +1,7 @@
 name: bin
 description: Effortless binary manager
 repo: marcosnils/bin
+version:
+  latest: v0.2.1 # renovate: datasource=github-releases depName=marcosnils/bin
 tags:
 - shell

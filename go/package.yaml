@@ -1,5 +1,7 @@
 name: go
 description: The Go programming language
 repo: golang/go
+version:
+  latest: go1.15.3 # renovate: datasource=github-tags depName=golang/go
 tags:
 - go

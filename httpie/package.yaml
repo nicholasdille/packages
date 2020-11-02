@@ -4,6 +4,8 @@ repo: httpie/httpie
 links:
 - text: Homepage
   url: https://httpie.org/
+version:
+  latest: 2.3.0 # renovate: datasource=github-releases depName=httpie/httpie
 tags:
 - web
 - http

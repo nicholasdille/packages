@@ -4,6 +4,8 @@ repo: openfaas/faasd
 links:
 - text: Homepage
   url: https://openfaas.com/blog/introducing-faasd/
+version:
+  latest: 0.9.6 # renovate: datasource=github-releases depName=openfaas/faasd
 tags:
 - openfaas
 - function

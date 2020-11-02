@@ -4,6 +4,8 @@ repo: k14s/imgpkg
 links:
 - text: Homepage
   url: https://carvel.dev/
+version:
+  latest: v0.2.0 # renovate: datasource=github-releases depName=k14s/imgpkg
 tags:
 - docker
 - registry

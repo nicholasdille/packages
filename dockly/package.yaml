@@ -1,6 +1,8 @@
 name: dockly
 description: Immersive terminal interface for managing docker containers and services
 repo: lirantal/dockly
+version:
+  latest: v3.17.1 # renovate: datasource=github-releases depName=lirantal/dockly
 tags:
 - docker
 - container

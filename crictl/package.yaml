@@ -1,6 +1,8 @@
 name: crictl
 description: CLI and validation tools for Kubelet Container Runtime Interface (CRI)
 repo: kubernetes-sigs/cri-tools
+version:
+  latest: v1.19.0 # renovate: datasource=github-releases depName=kubernetes-sigs/cri-tools
 tags:
 - container
 - runtime

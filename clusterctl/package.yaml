@@ -4,6 +4,8 @@ repo: kubernetes-sigs/cluster-api
 links:
 - text: Homepage
   url: https://cluster-api.sigs.k8s.io/
+version:
+  latest: v0.3.10 # renovate: datasource=github-releases depName=kubernetes-sigs/cluster-api
 tags:
 - kubernetes
 - k8s

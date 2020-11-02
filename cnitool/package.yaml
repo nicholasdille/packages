@@ -4,6 +4,8 @@ repo: containernetworking/cni
 links:
 - text: Usage
   url: https://github.com/containernetworking/cni/tree/master/cnitool
+version:
+  latest: v0.8.0 # renovate: datasource=github-releases depName=containernetworking/cni
 tags:
 - kubernetes
 - k8s

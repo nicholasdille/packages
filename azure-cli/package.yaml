@@ -4,6 +4,8 @@ repo: Azure/azure-cli
 links:
 - text: Homepage
   url: https://docs.microsoft.com/cli/azure/
+version:
+  latest: azure-cli-2.13.0 # renovate: datasource=github-releases depName=Azure/azure-cli
 tags:
 - azure
 - cloud

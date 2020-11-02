@@ -5,6 +5,7 @@ links:
 - text: Docker CLI plugins proposal
   url: https://github.com/docker/cli/issues/1534
 version:
+  latest: v0.4.2 # renovate: datasource=github-releases depName=docker/buildx
   command: docker buildx version
   filter: ^github
   pattern: ^github.com\/docker\/buildx\s(.+)\s.+$

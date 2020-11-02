@@ -1,6 +1,8 @@
 name: eksctl
 description: The official CLI for Amazon EKS
 repo: weaveworks/eksctl
+version:
+  latest: 0.30.0 # renovate: datasource=github-releases depName=weaveworks/eksctl
 tags:
 - kubernetes
 - k8s

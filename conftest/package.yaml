@@ -4,6 +4,8 @@ repo: open-policy-agent/conftest
 links:
 - text: Homepage
   url: https://conftest.dev/
+version:
+  latest: v0.21.0 # renovate: datasource=github-releases depName=open-policy-agent/conftest
 tags:
 - validation
 - schema

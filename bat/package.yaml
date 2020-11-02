@@ -1,5 +1,7 @@
 name: bat
 description: A cat(1) clone with wings
 repo: sharkdp/bat
+version:
+  latest: v0.16.0 # renovate: datasource=github-releases depName=sharkdp/bat
 tags:
 - console

@@ -4,6 +4,8 @@ repo: aws/aws-cli
 links:
 - text: Homepage
   url: https://aws.amazon.com/cli/
+version:
+  latest: 1.18.169 # renovate: datasource=github-tags depName=aws/aws-cli
 tags:
 - aws
 - cloud

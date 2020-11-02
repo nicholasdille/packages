@@ -4,6 +4,8 @@ repo: rancher/k3d
 links:
 - text: Homepage
   url: https://k3d.io/
+version:
+  latest: v3.1.5 # renovate: datasource=github-releases depName=rancher/k3d
 tags:
 - kubernetes
 - k8s

@@ -1,5 +1,7 @@
 name: glow
 description: Render markdown on the CLI, with pizzazz!
 repo: charmbracelet/glow
+version:
+  latest: v1.1.0 # renovate: datasource=github-releases depName=charmbracelet/glow
 tags:
 - markdown

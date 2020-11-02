@@ -4,6 +4,8 @@ repo: openfaas/faas-cli
 links:
 - text: Homepage
   url: https://www.openfaas.com/
+version:
+  latest: 0.12.14 # renovate: datasource=github-releases depName=openfaas/faas-cli
 tags:
 - openfaas
 - function

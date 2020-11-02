@@ -1,5 +1,7 @@
 name: hub
 description: A command-line tool that makes git easier to use with GitHub
 repo: github/hub
+version:
+  latest: v2.14.2 # renovate: datasource=github-releases depName=github/hub
 tags:
 - github
