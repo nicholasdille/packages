@@ -12,7 +12,8 @@ if ! test -d "${HOME}/.gvm"; then
 fi
 
 export DOCKER_BUILDKIT=1
-curl --silent https://pkg.dille.io/gvm/Dockerfile | \
+curl --silent https://pkg.dille.io/pkg.sh | \
+    bash -s file gvm Dockerfile | \
     docker build --tag gvm -
 
 echo

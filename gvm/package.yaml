@@ -7,3 +7,5 @@ tags:
 - version
 - manager
 - version manager
+files:
+- Dockerfile

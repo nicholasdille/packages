@@ -9,4 +9,7 @@ unlock_sudo
 
 install_python_module yamllint
 
-curl --silent --output "${HOME}/.config/yamllint/config" https://pkg.dille.io/yamllint/yamllint.yaml
+mkdir -p "${HOME}/.config/yamllint"
+curl --silent https://pkg.dille.io/pkg.sh | \
+    bash -s file yamllint yamllint.yaml | \
+    store_file config "${HOME}/.config/yamllint"

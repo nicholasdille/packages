@@ -5,3 +5,5 @@ tags:
 - powerline
 - shell
 - prompt
+files:
+- theme.json

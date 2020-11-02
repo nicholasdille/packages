@@ -15,8 +15,8 @@ github_install \
     --name powerline-go
 
 mkdir -p "${HOME}/.local/etc"
-echo "https://pkg.dille.io/powerline-go/theme.json" | \
-    download_file | \
+curl --silent https://pkg.dille.io/pkg.sh | \
+    bash -s file powerline-go Dockerfile | \
     store_file powerline-go-theme.json "${HOME}/.local/etc"
 
 echo

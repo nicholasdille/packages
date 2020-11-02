@@ -6,3 +6,5 @@ tags:
 - linter
 - test
 - quality
+files:
+- Dockerfile

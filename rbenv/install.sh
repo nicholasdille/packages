@@ -19,7 +19,8 @@ fi
 curl --silent --location https://github.com/rbenv/rbenv-installer/raw/master/bin/rbenv-doctor | bash
 
 export DOCKER_BUILDKIT=1
-curl --silent https://pkg.dille.io/rbenv/Dockerfile | \
+curl --silent https://pkg.dille.io/pkg.sh | \
+    bash -s file rbenv Dockerfile | \
     docker build --tag rbenv -
 
 echo
