@@ -8,7 +8,7 @@
     ":semanticCommits",
     ":maintainLockFilesWeekly"
   ],
-  "baseBranches": ["main"],
+  "baseBranches": ["master"],
   "labels": ["renovate"],
   "major": {
     "labels": ["major", "renovate"]
