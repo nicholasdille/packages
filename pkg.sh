@@ -12,6 +12,7 @@ show_help() {
     echo
     echo "Commands:"
     echo "    cache, c      Cache packages.json"
+    echo "    file, f       Manage files for a package"
     echo "    help, h       This message"
     echo "    inspect       Inspect a package"
     echo "    install, i    Install a package"
@@ -27,6 +28,14 @@ show_help_install() {
     echo "Usage: sh ./pkg.sh install <package>"
     echo "       ./pkg.sh install <package>"
     echo "       curl https://pkg.dille.io/pkg.sh | sh -s install <package>"
+    echo
+}
+
+show_help_file() {
+    echo
+    echo "Usage: sh ./pkg.sh file <package> [<file>]"
+    echo "       ./pkg.sh file <package> [<file>]"
+    echo "       curl https://pkg.dille.io/pkg.sh | sh -s file <package> [<>]"
     echo
 }
 
@@ -65,6 +74,29 @@ handle_cache() {
     curl --silent "https://api.github.com/repos/${MY_REPO}/releases/tags/${TAG}" | \
         jq --raw-output '.assets[] | select(.name == "packages.json") | .browser_download_url' | \
         xargs curl --silent --location --output "${HOME}/.pkg/packages.json"
+}
+
+handle_file() {
+    package=$1
+
+    if test -z "${package}"; then
+        echo "ERROR: No package specified."
+        show_help_file
+        exit 1
+    fi
+
+    shift
+    file=$1
+    if test -z "${file}"; then
+        get_packages | \
+            jq --raw-output --arg package "${package}" '
+                .packages[] |
+                select(.name == $package) |
+                .files[]
+            '
+    else
+        curl --silent "https://pkg.dille.io/${package}/${file}"
+    fi
 }
 
 handle_inspect() {
@@ -259,6 +291,11 @@ main() {
             cache|c)
                 prepare
                 handle_cache "$@"
+                exit 0
+            ;;
+            file|f)
+                prepare
+                handle_file "$@"
                 exit 0
             ;;
             inspect)
