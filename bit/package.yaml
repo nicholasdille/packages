@@ -2,7 +2,7 @@ name: bit
 description: Bit is a modern Git CLI
 repo: chriswalz/bit
 version:
-  latest: v0.9.9 # renovate: datasource=github-releases depName=chriswalz/bit
+  latest: v0.9.10 # renovate: datasource=github-releases depName=chriswalz/bit
 tags:
 - pipeline
 - continuous
