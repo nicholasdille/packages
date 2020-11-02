@@ -59,7 +59,7 @@ get_packages() {
     fi
 }
 
-cache() {
+handle_cache() {
     mkdir -p "${HOME}/.pkg"
     echo "Using version ${TAG}."
     curl --silent "https://api.github.com/repos/${MY_REPO}/releases/tags/${TAG}" | \
@@ -67,7 +67,7 @@ cache() {
         xargs curl --silent --location --output "${HOME}/.pkg/packages.json"
 }
 
-inspect() {
+handle_inspect() {
     package=$1
 
     if test -z "${package}"; then
@@ -79,7 +79,7 @@ inspect() {
     curl --silent "https://pkg.dille.io/${package}/package.yaml"
 }
 
-install() {
+handle_install() {
     package=$1
 
     if test -z "${package}"; then
@@ -91,7 +91,7 @@ install() {
     curl --silent "https://pkg.dille.io/${package}/install.sh" | bash
 }
 
-list() {
+handle_list() {
     get_packages | \
         jq --raw-output '
             .packages[] |
@@ -102,7 +102,7 @@ list() {
         column -t -s ';'
 }
 
-search() {
+handle_search() {
     SEARCH_TERM=""
     SEARCH_NAME=false
     SEARCH_DESC=false
@@ -170,14 +170,14 @@ search() {
     column -t -s ';'
 }
 
-tags() {
+handle_tags() {
     get_packages | \
         jq --raw-output '.packages[].tags[]' | \
         sort | \
         uniq
 }
 
-version() {
+handle_version() {
     package=$1
 
     if test -z "${package}"; then
@@ -258,37 +258,37 @@ main() {
             ;;
             cache|c)
                 prepare
-                cache "$@"
+                handle_cache "$@"
                 exit 0
             ;;
             inspect)
                 prepare
-                inspect "$@"
+                handle_inspect "$@"
                 exit 0
             ;;
             install|i)
                 prepare
-                install "$@"
+                handle_install "$@"
                 exit 0
             ;;
             list|l)
                 prepare
-                list "$@"
+                handle_list "$@"
                 exit 0
             ;;
             search|s)
                 prepare
-                search "$@"
+                handle_search "$@"
                 exit 0
             ;;
             tags|t)
                 prepare
-                tags "$@"
+                handle_tags "$@"
                 exit 0
             ;;
             version|v)
                 prepare
-                version "$@"
+                handle_version "$@"
                 exit 0
             ;;
         esac
