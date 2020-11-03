@@ -8,6 +8,9 @@ links:
   url: https://github.com/pyenv/pyenv/wiki#suggested-build-environment
 version:
   latest: v1.2.21 # renovate: datasource=github-releases depName=pyenv/pyenv
+  command: pyenv --version
+  filter: ^pyenv
+  pattern: s/^pyenv\s(.+)$/v\1/
 tags:
 - python
 - version
