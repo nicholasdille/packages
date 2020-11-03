@@ -261,7 +261,7 @@ handle_version() {
 
     ${version_command} 2>/dev/null | \
         grep "${version_filter}" | \
-        sed -E "s/${version_pattern}/\1/"
+        sed -E "${version_pattern}"
 }
 
 prepare() {

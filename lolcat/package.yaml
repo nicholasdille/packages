@@ -5,6 +5,6 @@ version:
   latest: 100.0.1 # renovate: datasource=npm depName=lolcat
   command: lolcat --version
   filter: ^lolcat
-  pattern: ^lolcat\s(\S+)\s.+$
+  pattern: s/^lolcat\s(\S+)\s.+$/\1/
 tags:
 - shell

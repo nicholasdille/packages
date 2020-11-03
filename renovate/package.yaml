@@ -5,7 +5,7 @@ version:
   latest: 23.67.3 # renovate: datasource=github-releases depName=renovatebot/renovate
   command: renovate --version
   filter: ^[[:digit:]]+
-  pattern: ^(.+)$
+  pattern: s/^(.+)$/\1/
 tags:
 - docker
 - container

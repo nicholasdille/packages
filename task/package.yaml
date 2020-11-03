@@ -8,6 +8,6 @@ version:
   latest: v3.0.0 # renovate: datasource=github-releases depName=go-task/task
   command: task --version
   filter: ^task
-  pattern: ^Task\sversion:\s(.+)$
+  pattern: s/^Task\sversion:\s(.+)$/\1/
 tags:
 - make

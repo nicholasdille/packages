@@ -5,6 +5,6 @@ version:
   latest: 3.0.3 # renovate: datasource=github-releases depName=erkin/ponysay
   command: ponysay --version
   filter: ^ponysay
-  pattern: ^ponysay\s(.+)$
+  pattern: s/^ponysay\s(.+)$/\1/
 tags:
 - shell

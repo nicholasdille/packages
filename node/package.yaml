@@ -5,7 +5,7 @@ version:
   latest: v14.15.0 # renovate: datasource=github-releases depName=nodejs/node
   command: node --version
   filter: ^v
-  pattern: ^(.+)$
+  pattern: s/^(.+)$/\1/
 tags:
 - node
 - nodejs

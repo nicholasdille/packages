@@ -5,7 +5,7 @@ version:
   latest: v1.7.8 # renovate: datasource=github-releases depName=argoproj/argo-cd
   command: argocd version
   filter: argocd
-  pattern: ^argocd:\s(.+)\+.+$
+  pattern: s/^argocd:\s(.+)\+.+$/\1/
 tags:
 - gitops
 - kubernetes

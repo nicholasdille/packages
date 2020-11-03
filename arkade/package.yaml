@@ -5,7 +5,7 @@ version:
   latest: 0.6.17 # renovate: datasource=github-releases depName=alexellis/arkade
   command: arkade version
   filter: Version
-  pattern: Version:\s(.+)
+  pattern: s/Version:\s(.+)/\1/
 tags:
 - kubernetes
 - k8s

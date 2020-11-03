@@ -8,7 +8,7 @@ version:
   latest: v0.4.2 # renovate: datasource=github-releases depName=docker/buildx
   command: docker buildx version
   filter: ^github
-  pattern: ^github.com\/docker\/buildx\s(.+)\s.+$
+  pattern: s/^github.com\/docker\/buildx\s(.+)\s.+$/\1/
 tags:
 - docker
 - container
