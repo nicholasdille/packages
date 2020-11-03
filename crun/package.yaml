@@ -2,7 +2,7 @@ name: crun
 description: A fast and lightweight fully featured OCI runtime and C library for running containers 
 repo: containers/crun
 version:
-  latest: 0.15 # renovate: datasource=github-releases depName=containers/crun versioning=loose
+  latest: 0.15.1 # renovate: datasource=github-releases depName=containers/crun versioning=loose
 tags:
 - container
 - runtime
