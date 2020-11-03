@@ -7,3 +7,6 @@
 : "${CURL_DOWNLOAD_SILENT:=false}"
 : "${TAR_VERBOSE:=false}"
 : "${ZIP_VERBOSE:=false}"
+
+# shellcheck disable=SC2034
+PACKAGE="$(basename "${SCRIPT_BASE_DIR}")"

@@ -192,20 +192,44 @@ function install_ruby_module() {
     ${SUDO} "${HOME}"/.rbenv/versions/*/bin/gem install "$@"
 }
 
-function get_installed_version() {
+function get_package_definition() {
     local package=$1
+    : "${package:=${PACKAGE}}"
 
     if test -z "${package}"; then
         echo "ERROR: No package specified."
         exit 1
     fi
 
-    local PACKAGE_JSON=$(
-        curl --silent https://pkg.dille.io/${package}/package.yaml | \
-            yq --tojson read -
-    )
+    if test -f "${SCRIPT_BASE_DIR}/package.yaml"; then
+        >&2 echo "Using local package.yaml"
+        yq --tojson read "${SCRIPT_BASE_DIR}/package.yaml"
 
-    local version_command=$(
+    elif test -f "${HOME}/.pkg/packages.json"; then
+        >&2 echo "Using local packages.json"
+        jq '.packages[] | select(.name == "go")' packages.json
+
+    else
+        >&2 echo "Downloading package.yaml"
+        curl --silent "https://pkg.dille.io/${package}/package.yaml" | \
+            yq --tojson read -
+    fi
+}
+
+function get_installed_version() {
+    local package=$1
+    : "${package:=${PACKAGE}}"
+
+    if test -z "${package}"; then
+        echo "ERROR: No package specified."
+        exit 1
+    fi
+
+    local PACKAGE_JSON
+    PACKAGE_JSON=$(get_package_definition "${package}")
+
+    local version_command
+    version_command=$(
         echo "${PACKAGE_JSON}" | \
             jq --raw-output .version.command
     )
@@ -214,7 +238,8 @@ function get_installed_version() {
         return
     fi
 
-    local version_filter=$(
+    local version_filter
+    version_filter=$(
         echo "${PACKAGE_JSON}" | \
             jq --raw-output '.version.filter'
     )
@@ -223,7 +248,8 @@ function get_installed_version() {
         return
     fi
 
-    local version_pattern=$(
+    local version_pattern
+    version_pattern=$(
         echo "${PACKAGE_JSON}" | \
             jq --raw-output '.version.pattern'
     )
@@ -239,14 +265,16 @@ function get_installed_version() {
 
 function get_latest_version() {
     local package=$1
+    : "${package:=${PACKAGE}}"
 
     if test -z "${package}"; then
         echo "ERROR: No package specified."
         exit 1
     fi
 
-    local PACKAGE_JSON=$(
-        curl --silent https://pkg.dille.io/${package}/package.yaml | \
+    local PACKAGE_JSON
+    PACKAGE_JSON=$(
+        curl --silent "https://pkg.dille.io/${package}/package.yaml" | \
             yq --tojson read -
     )
 
@@ -256,6 +284,7 @@ function get_latest_version() {
 
 function latest_version_installed() {
     local package=$1
+    : "${package:=${PACKAGE}}"
 
     if test -z "${package}"; then
         echo "ERROR: No package specified."
@@ -264,9 +293,19 @@ function latest_version_installed() {
 
     local installed_version
     installed_version=$(get_installed_version "${package}")
+    if test -z "${installed_version}"; then
+        echo "ERROR: Unable to determine installed version."
+        return 1
+    fi
+    
     local latest_version
     latest_version=$(get_latest_version "${package}")
+    if test -z "${latest_version}"; then
+        echo "ERROR: Unable to determine latest version."
+        return 1
+    fi
 
+    >&2 echo "Comparing installed version ${installed_version} with latest version ${latest_version}..."
     if test "${installed_version}" == "${latest_version}"; then
         return 0
     else
@@ -276,6 +315,7 @@ function latest_version_installed() {
 
 function check_installed_version() {
     local package=$1
+    : "${package:=${PACKAGE}}"
 
     if test -z "${package}"; then
         echo "ERROR: No package specified."
@@ -286,4 +326,6 @@ function check_installed_version() {
         echo "Latest version of ${package} is already installed."
         exit
     fi
+
+    echo "Newer version of ${package} available!"
 }
