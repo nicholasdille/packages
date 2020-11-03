@@ -16,10 +16,11 @@ TAG=$(
 build_containerized python <<EOF
 apt-get update
 export DEBIAN_FRONTEND=noninteractive
-apt-get -y install texinfo
+apt-get -y install --no-install-recommends texinfo
 git clone https://github.com/erkin/ponysay
 cd ponysay
 git checkout ${TAG}
-./setup.py --freedom=partial install
+./setup.py --freedom=partial install --dest-dir=/opt/cowsay --prefix=${TARGET_BASE}
 EOF
-#extract_file_from_container ponysay
+docker cp "${container_name}:/opt/cowsay" - | \
+    ${SUDO} tar -xC / --strip-components=1
