@@ -16,9 +16,10 @@ TAG=$(
         github_select_latest_tag
 )
 
-export GVM_ROOT="${HOME}/.gvm"
-# shellcheck disable=SC1090
-source "$GVM_ROOT/scripts/gvm-default"
-gvm install "${TAG}" --binary
+${SUDO} bash -c "source /etc/profile.d/gvm.sh; gvm install \"${TAG}\" --binary"
 
-gvm list
+# shellcheck disable=SC2016
+curl --silent https://pkg.dille.io/pkg.sh | \
+    bash -s file go profile.d.go.sh | \
+    TARGET_BASE="${TARGET_BASE}" GO_VERSION="${TAG}" envsubst '${TARGET_BASE},${GO_VERSION}' | \
+    store_file go.sh /etc/profile.d

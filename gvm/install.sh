@@ -7,8 +7,8 @@ source <(curl --silent --location --fail https://pkg.dille.io/.scripts/source.sh
 
 unlock_sudo
 
-if ! test -d "${HOME}/.gvm"; then
-    git clone https://github.com/moovweb/gvm "${HOME}/.gvm"
+if ! test -d "${TARGET_BASE}/gvm"; then
+    ${SUDO} git clone https://github.com/moovweb/gvm "${TARGET_BASE}/gvm"
 fi
 
 export DOCKER_BUILDKIT=1
@@ -16,19 +16,16 @@ curl --silent https://pkg.dille.io/pkg.sh | \
     bash -s file gvm Dockerfile | \
     docker build --tag gvm -
 
-echo
-echo "#############################################"
-echo "### Now add the following to your ~/.bashrc:"
-echo "###"
-echo "export GVM_ROOT=\${HOME}/.gvm"
-echo "source \$GVM_ROOT/scripts/gvm-default"
-echo "#############################################"
-echo
+# shellcheck disable=SC2016
+curl --silent https://pkg.dille.io/pkg.sh | \
+    bash -s file gvm profile.d.gvm.sh | \
+    TARGET_BASE=${TARGET_BASE} envsubst '${TARGET_BASE}' | \
+    store_file gvm.sh /etc/profile.d
 
 echo
 echo "#################################################"
 echo "### For building from source, use the following:"
 echo "###"
-echo "docker run -it --rm --name gvm --env GVM_ROOT --env HOME --env PATH --volume ${HOME}:${HOME} --workdir ${HOME} --user $(id -u):$(id -g) gvm gvm"
+echo "docker run -it --rm --name gvm --env GVM_ROOT --env PATH --volume ${TARGET_BASE}/gvm:${TARGET_BASE}/gvm gvm gvm"
 echo "#################################################"
 echo

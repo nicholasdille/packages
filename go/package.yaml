@@ -5,6 +5,8 @@ version:
   latest: go1.15.3 # renovate: datasource=github-tags depName=golang/go versioning=regex:^go(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
   command: go version
   filter: ^go
-  pattern: s/^go\sversion\sgo(\S+)\s.+$/\1/
+  pattern: s/^go\sversion\s(\S+)\s.+$/\1/
 tags:
 - go
+files:
+- profile.d.go.sh

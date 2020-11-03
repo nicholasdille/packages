@@ -3,6 +3,9 @@ description: Go Version Manager
 repo: moovweb/gvm
 version:
   latest: 1.0.22 # renovate: datasource=github-releases depName=moovweb/gvm
+  command: gvm version
+  filter: ^Go\sVersion\sManager\s
+  pattern: s/^Go\sVersion\sManager\sv(\S+)\s.+$/\1/
 tags:
 - go
 - golang
@@ -11,3 +14,4 @@ tags:
 - version manager
 files:
 - Dockerfile
+- profile.d.gvm.sh
