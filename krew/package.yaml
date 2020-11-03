@@ -4,6 +4,8 @@ repo: kubernetes-sigs/krew
 links:
 - text: Homepage
   url: https://krew.sigs.k8s.io/
+version:
+  latest: v0.4.0 # renovate: datasource=github-releases depName=kubernetes-sigs/krew
 tags:
 - kubernetes
 - k8s

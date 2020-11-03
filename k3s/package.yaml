@@ -4,6 +4,8 @@ repo: rancher/k3s
 links:
 - text: Homepage
   url: https://k3s.io/
+version:
+  latest: v1.19.3+k3s2 # renovate: datasource=github-releases depName=rancher/k3s
 tags:
 - kubernetes
 - k8s

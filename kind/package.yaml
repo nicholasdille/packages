@@ -4,6 +4,8 @@ repo: kubernetes-sigs/kind
 links:
 - text: Homepage
   url: https://kind.sigs.k8s.io/
+version:
+  latest: v0.9.0 # renovate: datasource=github-releases depName=kubernetes-sigs/kind
 tags:
 - kubernetes
 - k8s

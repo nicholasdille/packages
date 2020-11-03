@@ -4,6 +4,8 @@ repo: k14s/kapp
 links:
 - text: Homepage
   url: https://carvel.dev/
+version:
+  latest: v0.34.0 # renovate: datasource=github-releases depName=k14s/kapp
 tags:
 - kubernetes
 - k8s

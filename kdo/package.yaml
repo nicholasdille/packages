@@ -1,6 +1,8 @@
 name: kdo
 description: Deployless Development on Kubernetes
 repo: stepro/kdo
+version:
+  latest: v0.6.1 # renovate: datasource=github-tags depName=stepro/kdo
 tags:
 - kubernetes
 - k8s
