@@ -31,11 +31,3 @@ curl --silent https://pkg.dille.io/pkg.sh | \
     bash -s file python profile.d.python.sh | \
     PYENV_ROOT=${PYENV_ROOT} PYTHON_VERSION=${TAG#v} envsubst '${TARGET_BASE},${PYTHON_VERSION}' | \
     store_file python.sh /etc/profile.d
-
-echo
-echo "#############################################"
-echo "### Now add the following to your ~/.bashrc:"
-echo "###"
-echo "export PATH=\${HOME}/.pyenv/versions/${TAG#v}/bin:\${PATH}"
-echo "#############################################"
-echo
