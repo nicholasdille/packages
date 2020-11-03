@@ -7,7 +7,7 @@ source <(curl --silent --location --fail https://pkg.dille.io/.scripts/source.sh
 
 unlock_sudo
 
-require pyenv
+require rbenv
 
 TAG=$(
     github_get_tags ruby/ruby | \
