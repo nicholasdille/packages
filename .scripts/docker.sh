@@ -2,7 +2,7 @@
 
 container_name=$(basename "$(mktemp --dry-run)")
 docker_clean() {
-    echo "Cleaning up temporary container..."
+    #echo "Cleaning up temporary container..."
     docker ps --all --quiet --filter name="${container_name}" | xargs --no-run-if-empty docker rm
 }
 trap docker_clean EXIT

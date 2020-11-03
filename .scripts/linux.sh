@@ -191,3 +191,99 @@ function install_ruby_module() {
     require ruby
     ${SUDO} "${HOME}"/.rbenv/versions/*/bin/gem install "$@"
 }
+
+function get_installed_version() {
+    local package=$1
+
+    if test -z "${package}"; then
+        echo "ERROR: No package specified."
+        exit 1
+    fi
+
+    local PACKAGE_JSON=$(
+        curl --silent https://pkg.dille.io/${package}/package.yaml | \
+            yq --tojson read -
+    )
+
+    local version_command=$(
+        echo "${PACKAGE_JSON}" | \
+            jq --raw-output .version.command
+    )
+    if test -z "${version_command}" || test "${version_command}" == "null"; then
+        >&2 echo "ERROR: No version command specified for package <${package}>."
+        return
+    fi
+
+    local version_filter=$(
+        echo "${PACKAGE_JSON}" | \
+            jq --raw-output '.version.filter'
+    )
+    if test -z "${version_filter}" || test "${version_filter}" == "null"; then
+        >&2 echo "ERROR: No version filter specified for package <${package}>."
+        return
+    fi
+
+    local version_pattern=$(
+        echo "${PACKAGE_JSON}" | \
+            jq --raw-output '.version.pattern'
+    )
+    if test -z "${version_pattern}" || test "${version_pattern}" == "null"; then
+        >&2 echo "ERROR: No version pattern specified for package <${package}>."
+        return
+    fi
+
+    ${version_command} 2>/dev/null | \
+        grep "${version_filter}" | \
+        sed -E "${version_pattern}"
+}
+
+function get_latest_version() {
+    local package=$1
+
+    if test -z "${package}"; then
+        echo "ERROR: No package specified."
+        exit 1
+    fi
+
+    local PACKAGE_JSON=$(
+        curl --silent https://pkg.dille.io/${package}/package.yaml | \
+            yq --tojson read -
+    )
+
+    echo "${PACKAGE_JSON}" | \
+        jq --raw-output '.version.latest'
+}
+
+function latest_version_installed() {
+    local package=$1
+
+    if test -z "${package}"; then
+        echo "ERROR: No package specified."
+        exit 1
+    fi
+
+    local installed_version
+    installed_version=$(get_installed_version "${package}")
+    local latest_version
+    latest_version=$(get_latest_version "${package}")
+
+    if test "${installed_version}" == "${latest_version}"; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+function check_installed_version() {
+    local package=$1
+
+    if test -z "${package}"; then
+        echo "ERROR: No package specified."
+        exit 1
+    fi
+
+    if latest_version_installed "${package}"; then
+        echo "Latest version of ${package} is already installed."
+        exit
+    fi
+}
