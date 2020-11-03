@@ -1,4 +1,4 @@
 #!/bin/sh
 
-export PATH="${TARGET_BASE}/rbenv/bin:${PATH}"
-#eval $(rbenv init -)
+export RBENV_ROOT="${TARGET_BASE}/rbenv"
+export PATH="${RBENV_ROOT}/shims:${RBENV_ROOT}/bin:${PATH}"

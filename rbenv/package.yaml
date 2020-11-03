@@ -3,6 +3,9 @@ description: Groom your app’s Ruby environment
 repo: rbenv/rbenv
 version:
   latest: v1.1.2 # renovate: datasource=github-releases depName=rbenv/rbenv
+  command: rbenv --version
+  filter: ^rbenv
+  pattern: s/^rbenv\s([^-]+)-.+$/v\1/
 tags:
 - ruby
 - version
@@ -10,3 +13,4 @@ tags:
 - version manager
 files:
 - Dockerfile
+- profile.d.rbenv.sh
