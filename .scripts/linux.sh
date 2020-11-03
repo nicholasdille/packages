@@ -186,3 +186,8 @@ function install_python_module() {
     require python
     ${SUDO} pip3 install --upgrade "$@"
 }
+
+function install_ruby_module() {
+    require ruby
+    ${SUDO} "${HOME}"/.rbenv/versions/*/bin/gem install "$@"
+}
