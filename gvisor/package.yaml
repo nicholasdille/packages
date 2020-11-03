@@ -2,7 +2,7 @@ name: gvisor
 description: Application Kernel for Containers
 repo: google/gvisor
 version:
-  latest: release-20201019.0 # renovate: datasource=github-tags depName=google/gvisor
+  latest: release-20201019.0 # renovate: datasource=github-tags depName=google/gvisor versioning=loose
 tags:
 - container
 - runtime
