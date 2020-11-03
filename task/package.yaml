@@ -1,0 +1,13 @@
+name: task
+description: A task runner / simpler Make alternative written in Go
+repo: go-task/task
+links:
+- text: Documentation
+  url: https://taskfile.dev/
+version:
+  latest: v3.0.0 # renovate: datasource=github-releases depName=go-task/task
+  command: task --version
+  filter: ^task
+  pattern: ^Task\sversion:\s(.+)$
+tags:
+- make
