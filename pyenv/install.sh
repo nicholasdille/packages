@@ -42,6 +42,6 @@ echo
 echo "#################################################"
 echo "### For building from source, use the following:"
 echo "###"
-echo "docker run -it --rm --name pyenv --env PYENV --env HOME --env PATH --volume ${HOME}:${HOME} --workdir ${HOME} --user $(id -u):$(id -g) pyenv pyenv"
+echo "docker run -it --rm --name pyenv --env PYENV --env HOME --env PATH --volume ${TARGET_BASE}/pyenv:${TARGET_BASE}/pyenv pyenv pyenv"
 echo "#################################################"
 echo
