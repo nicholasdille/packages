@@ -3,9 +3,14 @@ description: Fast and powerful SSL/TLS scanning library
 repo: nabla-c0d3/sslyze
 version:
   latest: 3.0.8 # renovate: datasource=github-releases depName=nabla-c0d3/sslyze
+  command: sslyze --version
+  filter: ^[[:digit:]]
+  pattern: s/^(.+)$/\1/
 tags:
 - ssl
 - tls
 - scan
 - test
 - quality
+files:
+- profile.d.sslyze.sh
