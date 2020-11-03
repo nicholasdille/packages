@@ -1,0 +1,7 @@
+name: mapscii
+description: MapSCII is a Braille & ASCII world map renderer for your console
+repo: rastapasta/mapscii
+version:
+  latest: v0.3.1 # renovate: datasource=github-releases depName=rastapasta/mapscii
+tags:
+- shell
