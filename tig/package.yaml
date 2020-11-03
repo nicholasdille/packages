@@ -2,7 +2,7 @@ name: tig
 description: Text-mode interface for git
 repo: jonas/tig
 version:
-  latest: tig-2.5.1 # renovate: datasource=github-releases depName=jonas/tig versioning=regex:^tig-(?<major>\d+)\\.(?<minor>\d+)\\.(?<patch>\d+)$
+  latest: tig-2.5.1 # renovate: datasource=github-releases depName=jonas/tig versioning=regex:^tig-(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
 tags:
 - git
 - ui
