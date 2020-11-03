@@ -18,3 +18,4 @@ tags:
 - version manager
 files:
 - Dockerfile
+- profile.d.pyenv.sh

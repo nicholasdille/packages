@@ -8,6 +8,7 @@ source <(curl --silent --location --fail https://pkg.dille.io/.scripts/source.sh
 unlock_sudo
 
 require pyenv
+# shellcheck disable=SC1091
 source /etc/profile.d/pyenv.sh
 
 TAG=$(
@@ -25,8 +26,9 @@ docker run --rm --name pyenv \
     --volume "${PYENV_ROOT}:${PYENV_ROOT}" \
     pyenv \
     pyenv install "${TAG#v}" --skip-existing
-${SUDO} ${PYENV_ROOT}/bin/pyenv rehash
+${SUDO} "${PYENV_ROOT}/bin/pyenv" rehash
 
+# shellcheck disable=SC2016
 curl --silent https://pkg.dille.io/pkg.sh | \
     bash -s file python profile.d.python.sh | \
     PYENV_ROOT=${PYENV_ROOT} PYTHON_VERSION=${TAG#v} envsubst '${TARGET_BASE},${PYTHON_VERSION}' | \

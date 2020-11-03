@@ -22,5 +22,6 @@ cd ponysay
 git checkout ${TAG}
 ./setup.py --freedom=partial install --dest-dir=/opt/cowsay --prefix=${TARGET_BASE}
 EOF
+# shellcheck disable=SC2154
 docker cp "${container_name}:/opt/cowsay" - | \
     ${SUDO} tar -xC / --strip-components=1
