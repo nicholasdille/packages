@@ -1,6 +1,8 @@
 name: vault
 description: A tool for secrets management, encryption as a service, and privileged access management
 repo: hashicorp/vault
+version:
+  latest: v1.5.5 # renovate: datasource=github-tags depName=hashicorp/vault
 tags:
 - security
 - secrets

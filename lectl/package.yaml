@@ -4,6 +4,8 @@ repo: sahsanu/lectl
 links:
 - text: Certificate search
   url: https://crt.sh
+version:
+  latest: v0.21 # renovate: datasource=github-releases depName=sahsanu/lectl
 tags:
 - letsencrypt
 - certificate

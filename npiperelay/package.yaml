@@ -1,6 +1,8 @@
 name: npiperelay
 description: npiperelay allows you to access Windows named pipes from WSL
 repo: NZSmartie/npiperelay
+version:
+  latest: v0.1 # renovate: datasource=github-releases depName=NZSmartie/npiperelay
 tags:
 - wsl
 - npipe

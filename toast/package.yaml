@@ -1,6 +1,8 @@
 name: toast
 description: Containerize your development and continuous integration environments
 repo: stepchowfun/toast
+version:
+  latest: v0.32.0 # renovate: datasource=github-releases depName=stepchowfun/toast
 tags:
 - pipeline
 - continuous

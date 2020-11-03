@@ -4,6 +4,8 @@ repo: opencontainers/umoci
 links:
 - text: Homepage
   url: https://umo.ci/
+version:
+  latest: v0.4.6 # renovate: datasource=github-releases depName=opencontainers/umoci
 tags:
 - container
 - image

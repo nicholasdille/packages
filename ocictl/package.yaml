@@ -1,6 +1,8 @@
 name: ocictl
 description: A tool to build OCI compliant images
 repo: ocibuilder/ocibuilder
+version:
+  latest: 0.1.1 # renovate: datasource=github-releases depName=ocibuilder/ocibuilder
 tags:
 - container
 - image

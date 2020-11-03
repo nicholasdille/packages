@@ -1,6 +1,8 @@
 name: "n"
 description: Node version management
 repo: tj/n
+version:
+  latest: v6.7.0 # renovate: datasource=github-releases depName=tj/n
 tags:
 - node
 - nodejs

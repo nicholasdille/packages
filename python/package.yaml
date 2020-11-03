@@ -1,6 +1,8 @@
 name: python
 description: The Python programming language
 repo: python/cpython
+version:
+  latest: v3.9.0 # renovate: datasource=github-tags depName=python/cpython
 tags:
 - python
 - py

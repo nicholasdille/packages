@@ -4,6 +4,8 @@ repo: deislabs/oras
 links:
 - text: OCI artifacts
   url: https://github.com/opencontainers/artifacts
+version:
+  latest: v0.8.1 # renovate: datasource=github-releases depName=deislabs/oras
 tags:
 - oci
 - registry

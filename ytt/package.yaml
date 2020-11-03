@@ -4,6 +4,8 @@ repo: k14s/ytt
 links:
 - text: Homepage
   url: https://carvel.dev/
+version:
+  latest: v0.30.0 # renovate: datasource=github-releases depName=k14s/ytt
 tags:
 - yaml
 - configuration

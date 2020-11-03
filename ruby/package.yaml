@@ -4,5 +4,7 @@ repo: ruby/ruby
 links:
 - text: Homepage
   url: https://www.ruby-lang.org/
+version:
+  latest: v2_7_2 # renovate: datasource=github-tags depName=ruby/ruby
 tags:
 - ruby

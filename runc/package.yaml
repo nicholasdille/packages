@@ -4,6 +4,8 @@ repo: opencontainers/runc
 links:
 - text: Runtime spec
   url: https://github.com/opencontainers/runtime-spec
+version:
+  latest: v1.0.0-rc92 # renovate: datasource=github-releases depName=opencontainers/runc
 tags:
 - container
 - oci

@@ -4,6 +4,8 @@ repo: linkchecker/linkchecker
 links:
 - text: Homepage
   url: https://linkchecker.github.io/linkchecker/
+version:
+  latest: v9.4.0 # renovate: datasource=github-releases depName=linkchecker/linkchecker
 tags:
 - web
 - html

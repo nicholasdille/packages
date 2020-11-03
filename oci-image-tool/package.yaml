@@ -1,6 +1,8 @@
 name: oci-image-tool
 description: OCI Image Tooling
 repo: opencontainers/image-tools
+version:
+  latest: v1.0.0-rc1 # renovate: datasource=github-releases depName=opencontainers/image-tools
 tags:
 - container
 - oci

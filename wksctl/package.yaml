@@ -1,6 +1,8 @@
 name: wksctl
 description: Open Source Weaveworks Kubernetes System
 repo: weaveworks/wksctl
+version:
+  latest: v0.9.0-alpha.4 # renovate: datasource=github-releases depName=weaveworks/wksctl
 tags:
 - kubernetes
 - k8s

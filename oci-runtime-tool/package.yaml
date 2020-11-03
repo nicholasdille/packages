@@ -1,6 +1,8 @@
 name: oci-runtime-tool
 description: OCI Runtime Tools
 repo: opencontainers/runtime-tools
+version:
+  latest: v0.9.0 # renovate: datasource=github-releases depName=opencontainers/runtime-tools
 tags:
 - container
 - oci

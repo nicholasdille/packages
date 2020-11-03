@@ -1,5 +1,7 @@
 name: wslu
 description: A collection of utilities for Windows 10 Linux Subsystems
 repo: wslutilities/wslu
+version:
+  latest: v3.2.1 # renovate: datasource=github-releases depName=wslutilities/wslu
 tags:
 - wsl

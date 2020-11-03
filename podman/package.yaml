@@ -1,5 +1,7 @@
 name: podman
 description: A tool for managing OCI containers and pods
 repo: containers/podman
+version:
+  latest: v2.1.1 # renovate: datasource=github-releases depName=containers/podman
 tags:
 - container

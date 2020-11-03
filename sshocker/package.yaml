@@ -1,6 +1,8 @@
 name: sshocker
 description: ssh + reverse sshfs + port forwarder, in Docker-like CLI
 repo: AkihiroSuda/sshocker
+version:
+  latest: v0.1.0 # renovate: datasource=github-releases depName=AkihiroSuda/sshocker
 tags:
 - docker
 - container

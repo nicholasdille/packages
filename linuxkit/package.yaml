@@ -1,6 +1,8 @@
 name: linuxkit
 description: A toolkit for building secure, portable and lean operating systems for containers
 repo: linuxkit/linuxkit
+version:
+  latest: v0.8 # renovate: datasource=github-releases depName=linuxkit/linuxkit
 tags:
 - container
 - moby

@@ -1,6 +1,8 @@
 name: rbenv
 description: Groom your app’s Ruby environment
 repo: rbenv/rbenv
+version:
+  latest: v1.1.2 # renovate: datasource=github-releases depName=rbenv/rbenv
 tags:
 - ruby
 - version

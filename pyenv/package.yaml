@@ -6,6 +6,8 @@ links:
   url: https://github.com/pyenv/pyenv-virtualenv
 - text: Suggested build environment
   url: https://github.com/pyenv/pyenv/wiki#suggested-build-environment
+version:
+  latest: v1.2.21 # renovate: datasource=github-releases depName=pyenv/pyenv
 tags:
 - python
 - version

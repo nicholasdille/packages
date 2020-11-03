@@ -1,6 +1,8 @@
 name: manifest-tool
 description: Manifest tool for manifest list object creation/query
 repo: estesp/manifest-tool
+version:
+  latest: v1.0.3 # renovate: datasource=github-releases depName=estesp/manifest-tool
 tags:
 - docker
 - container

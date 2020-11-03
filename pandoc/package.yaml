@@ -4,6 +4,8 @@ repo: jgm/pandoc
 links:
 - text: Homepage
   url: https://pandoc.org/
+version:
+  latest: 2.11.0.4 # renovate: datasource=github-releases depName=jgm/pandoc
 tags:
 - converter
 - markup

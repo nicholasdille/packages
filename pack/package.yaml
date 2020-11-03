@@ -4,5 +4,7 @@ repo: buildpacks/pack
 links:
 - text: Homepage
   url: https://buildpacks.io/
+version:
+  latest: v0.14.2 # renovate: datasource=github-releases depName=buildpacks/pack
 tags:
 - build

@@ -1,6 +1,8 @@
 name: lazygit
 description: Simple terminal UI for git commands
 repo: jesseduffield/lazygit
+version:
+  latest: v0.23.6 # renovate: datasource=github-releases depName=jesseduffield/lazygit
 tags:
 - git
 - ui

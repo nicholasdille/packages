@@ -1,6 +1,8 @@
 name: yamllint
 description: A linter for YAML files
 repo: adrienverge/yamllint
+version:
+  latest: v1.25.0 # renovate: datasource=github-releases depName=adrienverge/yamllint
 tags:
 - yaml
 - linter

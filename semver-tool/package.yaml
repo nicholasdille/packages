@@ -1,6 +1,8 @@
 name: semver-tool
 description: semver bash implementation
 repo: fsaintjacques/semver-tool
+version:
+  latest: 3.1.0 # renovate: datasource=github-tags depName=fsaintjacques/semver-tool
 tags:
 - shell
 - semver

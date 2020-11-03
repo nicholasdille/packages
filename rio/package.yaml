@@ -4,6 +4,8 @@ repo: rancher/rio
 links:
 - text: Homepage
   url: https://rio.io/
+version:
+  latest: v0.8.0 # renovate: datasource=github-releases depName=rancher/rio
 tags:
 - kubernetes
 - k8s
