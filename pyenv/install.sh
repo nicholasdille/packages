@@ -5,6 +5,7 @@ set -o errexit
 # shellcheck source=.scripts/source.sh
 source <(curl --silent --location --fail https://pkg.dille.io/.scripts/source.sh)
 
+check_installed_version
 check_docker
 unlock_sudo
 
@@ -22,7 +23,7 @@ fi
 
 export DOCKER_BUILDKIT=1
 curl --silent https://pkg.dille.io/pkg.sh | \
-    bash -s file pyenv Dockerfile | \
+    bash -s file "${PACKAGE}" Dockerfile | \
     docker build --tag pyenv -
 
 docker run --rm --name pyenv \
@@ -34,8 +35,8 @@ docker run --rm --name pyenv \
 
 # shellcheck disable=SC2016
 curl --silent https://pkg.dille.io/pkg.sh | \
-    bash -s file pyenv profile.d.pyenv.sh | \
-    TARGET_BASE=${TARGET_BASE} envsubst '${TARGET_BASE}' | \
+    bash -s file "${PACKAGE}" profile.d.pyenv.sh | \
+    TARGET_BASE="${TARGET_BASE}" envsubst '${TARGET_BASE}' | \
     store_file pyenv.sh /etc/profile.d
 
 echo

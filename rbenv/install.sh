@@ -5,6 +5,7 @@ set -o errexit
 # shellcheck source=.scripts/source.sh
 source <(curl --silent --location --fail https://pkg.dille.io/.scripts/source.sh)
 
+check_installed_version
 check_docker
 unlock_sudo
 
@@ -18,7 +19,7 @@ fi
 
 # shellcheck disable=SC2016
 curl --silent https://pkg.dille.io/pkg.sh | \
-    bash -s file rbenv profile.d.rbenv.sh | \
+    bash -s file "${PACKAGE}" profile.d.rbenv.sh | \
     TARGET_BASE=${TARGET_BASE} envsubst '${TARGET_BASE}' | \
     store_file rbenv.sh /etc/profile.d/
 
@@ -28,7 +29,7 @@ curl --silent --location https://github.com/rbenv/rbenv-installer/raw/master/bin
 
 export DOCKER_BUILDKIT=1
 curl --silent https://pkg.dille.io/pkg.sh | \
-    bash -s file rbenv Dockerfile | \
+    bash -s file "${PACKAGE}" Dockerfile | \
     docker build --tag rbenv -
 
 echo

@@ -5,6 +5,7 @@ set -o errexit
 # shellcheck source=.scripts/source.sh
 source <(curl --silent --location --fail https://pkg.dille.io/.scripts/source.sh)
 
+check_installed_version
 unlock_sudo
 
 if ! test -d "${TARGET_BASE}/gvm"; then
@@ -13,12 +14,12 @@ fi
 
 export DOCKER_BUILDKIT=1
 curl --silent https://pkg.dille.io/pkg.sh | \
-    bash -s file gvm Dockerfile | \
+    bash -s file "${PACKAGE}" Dockerfile | \
     docker build --tag gvm -
 
 # shellcheck disable=SC2016
 curl --silent https://pkg.dille.io/pkg.sh | \
-    bash -s file gvm profile.d.gvm.sh | \
+    bash -s file "${PACKAGE}" profile.d.gvm.sh | \
     TARGET_BASE=${TARGET_BASE} envsubst '${TARGET_BASE}' | \
     store_file gvm.sh /etc/profile.d
 

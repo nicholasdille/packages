@@ -4,7 +4,7 @@ repo: tj/n
 version:
   latest: v6.7.0 # renovate: datasource=github-releases depName=tj/n
   command: n --version
-  filter: ^[[:digit:]]+
+  filter: ^[[:digit:]]
   pattern: s/^(.+)$/v\1/
 tags:
 - node
