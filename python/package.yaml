@@ -9,5 +9,3 @@ version:
 tags:
 - python
 - py
-files:
-- profile.d.python.sh

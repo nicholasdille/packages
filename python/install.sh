@@ -26,10 +26,5 @@ docker run --rm --name pyenv \
     --volume "${PYENV_ROOT}:${PYENV_ROOT}" \
     pyenv \
     pyenv install "${TAG#v}" --skip-existing
-${SUDO} "${PYENV_ROOT}/bin/pyenv" rehash
-
-# shellcheck disable=SC2016
-curl --silent https://pkg.dille.io/pkg.sh | \
-    bash -s file python profile.d.python.sh | \
-    PYENV_ROOT=${PYENV_ROOT} PYTHON_VERSION=${TAG#v} envsubst '${TARGET_BASE},${PYTHON_VERSION}' | \
-    store_file python.sh /etc/profile.d
+${SUDO} bash -c "source /etc/profile.d/pyenv.sh; ${PYENV_ROOT}/bin/pyenv rehash"
+${SUDO} bash -c "source /etc/profile.d/pyenv.sh; ${PYENV_ROOT}/bin/pyenv global ${TAG#v}"
