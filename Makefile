@@ -30,6 +30,32 @@ check-packages: packages.json
 		echo "Packages are up-to-date."; \
 	fi
 
+.PHONY:
+check-renovate: packages.json
+	@\
+	PACKAGES=$$(\
+		cat packages.json | \
+			jq --raw-output '.packages[] | select(.version.latest == null) | .name' \
+	); \
+	if test -n "$${PACKAGES}"; then \
+		echo "The following packages are missing renovate:"; \
+		echo "$${PACKAGES}" | while read LINE; do echo "- [ ] $${LINE}"; done; \
+		false; \
+	fi
+
+.PHONY:
+check-version: packages.json
+	@\
+	PACKAGES=$$(\
+		cat packages.json | \
+			jq --raw-output '.packages[] | select(.version.command == null) | .name' \
+	); \
+	if test -n "$${PACKAGES}"; then \
+		echo "The following packages are missing the version extractor:"; \
+		echo "$${PACKAGES}" | while read LINE; do echo "- [ ] $${LINE}"; done; \
+		false; \
+	fi
+
 packages.json: $(DEFINITIONS) tools
 	@\
 	(\
