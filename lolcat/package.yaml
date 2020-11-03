@@ -1,0 +1,10 @@
+name: lolcat
+description: Rainbows and unicorns
+repo: busyloop/lolcat
+version:
+  latest: 100.0.1 # renovate: datasource=npm depName=lolcat
+  command: lolcat --version
+  filter: ^lolcat
+  pattern: ^lolcat\s(\S+)\s.+$
+tags:
+- shell
