@@ -9,18 +9,18 @@
     ":maintainLockFilesWeekly"
   ],
   "baseBranches": ["master"],
-  "labels": ["renovate"],
+  "labels": ["type/renovate"],
   "major": {
-    "labels": ["major", "renovate"]
+    "labels": ["bump/major", "type/renovate"]
   },
   "minor": {
-    "labels": ["minor", "renovate"]
+    "labels": ["bump/minor", "type/renovate"]
   },
   "patch": {
-    "labels": ["patch", "renovate"]
+    "labels": ["bump/patch", "type/renovate"]
   },
   "pin": {
-    "labels": ["pin", "renovate"]
+    "labels": ["bump/pin", "type/renovate"]
   },
   "pinDigests": false,
   "recreateClosed": "true",
