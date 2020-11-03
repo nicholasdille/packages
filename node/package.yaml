@@ -3,6 +3,9 @@ description: Node.js JavaScript runtime
 repo: nodejs/node
 version:
   latest: v14.15.0 # renovate: datasource=github-releases depName=nodejs/node
+  command: node --version
+  filter: ^v
+  pattern: ^(.+)$
 tags:
 - node
 - nodejs
