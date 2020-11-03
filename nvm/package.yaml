@@ -9,3 +9,5 @@ tags:
 - version
 - manager
 - version manager
+files:
+- profile.d.nvm.sh

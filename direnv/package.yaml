@@ -9,3 +9,5 @@ version:
 tags:
 - shell
 - configuration
+files:
+- profile.d.direnv.sh

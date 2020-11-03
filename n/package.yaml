@@ -3,9 +3,14 @@ description: Node version management
 repo: tj/n
 version:
   latest: v6.7.0 # renovate: datasource=github-releases depName=tj/n
+  command: n --version
+  filter: ^[[:digit:]]+
+  pattern: s/^(.+)$/v\1/
 tags:
 - node
 - nodejs
 - version
 - manager
 - version manager
+files:
+- profile.d.n.sh

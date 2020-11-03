@@ -8,6 +8,7 @@ source <(curl --silent --location --fail https://pkg.dille.io/.scripts/source.sh
 unlock_sudo
 
 require rbenv
+# shellcheck disable=SC1091
 source /etc/profile.d/rbenv.sh
 
 TAG=$(

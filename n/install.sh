@@ -17,10 +17,8 @@ echo "https://github.com/tj/n/raw/${TAG}/bin/n" | \
     store_file n | \
     make_executable
 
-echo
-echo "#############################################"
-echo "### Now add the following to your ~/.bashrc:"
-echo "###"
-echo "export N_PREFIX=\${HOME}/.n"
-echo "#############################################"
-echo
+# shellcheck disable=SC2016
+curl --silent https://pkg.dille.io/pkg.sh | \
+    bash -s file n profile.d.n.sh | \
+    TARGET_BASE="${TARGET_BASE}" envsubst '${TARGET_BASE}' | \
+    store_file n.sh /etc/profile.d

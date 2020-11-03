@@ -8,3 +8,5 @@ tags:
 - k8s
 - shell
 - prompt
+files:
+- profile.d.kube-ps1.sh

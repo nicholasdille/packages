@@ -12,16 +12,15 @@ TAG=$(
         jq --raw-output '.tag_name'
 )
 
-git clone https://github.com/nvm-sh/nvm "${HOME}/.nvm"
+if ! test -d "${TARGET_BASE}/nvm"; then
+    ${SUDO} git clone https://github.com/nvm-sh/nvm "${TARGET_BASE}/nvm"
+fi
 pushd "${HOME}/.nvm"
 git checkout "${TAG}"
 popd
 
-echo
-echo "#############################################"
-echo "### Now add the following to your ~/.bashrc:"
-echo "###"
-echo "export NVM_DIR=\${HOME}/.nvm"
-echo "source \${NVM_DIR}/nvm.sh"
-echo "#############################################"
-echo
+# shellcheck disable=SC2016
+curl --silent https://pkg.dille.io/pkg.sh | \
+    bash -s file nvm profile.d.nvm.sh | \
+    TARGET_BASE="${TARGET_BASE}" envsubst '${TARGET_BASE}' | \
+    store_file nvm.sh /etc/profile.d

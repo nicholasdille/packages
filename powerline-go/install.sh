@@ -16,16 +16,11 @@ github_install \
 
 mkdir -p "${HOME}/.local/etc"
 curl --silent https://pkg.dille.io/pkg.sh | \
-    bash -s file powerline-go Dockerfile | \
+    bash -s file powerline-go theme.json | \
     store_file powerline-go-theme.json "${HOME}/.local/etc"
 
-echo
-echo "############################################################"
-echo "### Now add something like the following to your ~/.bashrc:"
-echo "###"
-echo "function _update_ps1() {"
-echo "    PS1=\"\$(${TARGET}/bin/powerline-go -theme \${HOME}/.local/etc/powerline-go-theme.json -error \$? -modules exit,user,cwd,git,docker-context,kube,jobs -newline)\""
-echo "}"
-echo "PROMPT_COMMAND=\"_update_ps1; \$PROMPT_COMMAND\""
-echo "############################################################"
-echo
+# shellcheck disable=SC2016
+curl --silent https://pkg.dille.io/pkg.sh | \
+    bash -s file powerline-go profile.d.powerline-go.sh | \
+    TARGET_BIN="${TARGET_BIN}" envsubst '${TARGET_BIN}' | \
+    store_file powerline-go.sh /etc/profile.d

@@ -14,10 +14,6 @@ github_install \
     --asset direnv.linux-amd64 \
     --type binary
 
-echo
-echo "#############################################"
-echo "### Now add the following to your ~/.bashrc:"
-echo "###"
-echo "eval \$(direnv hook bash)"
-echo "#############################################"
-echo
+curl --silent https://pkg.dille.io/pkg.sh | \
+    bash -s file direnv profile.d.direnv.sh | \
+    store_file direnv.sh /etc/profile.d
