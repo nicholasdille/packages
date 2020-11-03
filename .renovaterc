@@ -34,9 +34,9 @@
     {
       "fileMatch": ["/package.yaml$"],
       "matchStrings": [
-        "\\s+latest:\\s(?<currentValue>.*)\\s+#\\srenovate:\\sdatasource=(?<datasource>.+?)\\sdepName=(?<depName>.+?)\\n"
+        "\\s+latest:\\s(?<currentValue>.*)\\s+#\\srenovate:\\sdatasource=(?<datasource>.+?)\\sdepName=(?<depName>.+?)(\\sversioning=(?<versioning>.+?))?\\s*\\n"
       ],
-      "versioningTemplate": "semver"
+      "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}"
     }
   ]
 }
