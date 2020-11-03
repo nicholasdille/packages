@@ -95,7 +95,13 @@ handle_file() {
                 .files[]
             '
     else
-        curl --silent "https://pkg.dille.io/${package}/${file}"
+        if test -f "${package}/${file}"; then
+            >&2 echo "Using local file"
+            cat "${package}/${file}"
+        else
+            >&2 echo "Downloading file"
+            curl --silent "https://pkg.dille.io/${package}/${file}"
+        fi
     fi
 }
 
