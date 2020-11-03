@@ -8,6 +8,7 @@ source <(curl --silent --location --fail https://pkg.dille.io/.scripts/source.sh
 unlock_sudo
 
 require pyenv
+source /etc/profile.d/pyenv.sh
 
 TAG=$(
     github_get_tags python/cpython | \
@@ -18,18 +19,18 @@ TAG=$(
         head -n 1
 )
 
-export PYENV_ROOT="${HOME}/.pyenv"
-export PATH="${PYENV_ROOT}/bin:${PATH}"
 docker run --rm --name pyenv \
-    --env PYENV \
-    --env HOME \
+    --env PYENV_ROOT \
     --env PATH \
-    --volume "${HOME}:${HOME}" \
-    --workdir "${HOME}" \
-    --user "$(id -u):$(id -g)" \
+    --volume "${PYENV_ROOT}:${PYENV_ROOT}" \
     pyenv \
     pyenv install "${TAG#v}" --skip-existing
-pyenv rehash
+${SUDO} ${PYENV_ROOT}/bin/pyenv rehash
+
+curl --silent https://pkg.dille.io/pkg.sh | \
+    bash -s file python profile.d.python.sh | \
+    PYENV_ROOT=${PYENV_ROOT} PYTHON_VERSION=${TAG#v} envsubst '${TARGET_BASE},${PYTHON_VERSION}' | \
+    store_file python.sh /etc/profile.d
 
 echo
 echo "#############################################"
