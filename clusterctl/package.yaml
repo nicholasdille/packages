@@ -6,6 +6,10 @@ links:
   url: https://cluster-api.sigs.k8s.io/
 version:
   latest: v0.3.10 # renovate: datasource=github-releases depName=kubernetes-sigs/cluster-api
+  command: clusterctl version --output yaml
+  filter: |
+    ^[[:space:]]*gitVersion:
+  pattern: s/^\s+gitVersion:\s(.+)$/\1/
 tags:
 - kubernetes
 - k8s

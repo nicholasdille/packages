@@ -6,6 +6,9 @@ links:
   url: https://aws.amazon.com/cli/
 version:
   latest: 1.18.170 # renovate: datasource=github-tags depName=aws/aws-cli
+  command: aws --version
+  filter: ^aws-cli
+  pattern: s/^aws-cli\/(\S+)\s.+$/\1/
 tags:
 - aws
 - cloud

@@ -3,6 +3,9 @@ description: Bit is a modern Git CLI
 repo: chriswalz/bit
 version:
   latest: v0.9.11 # renovate: datasource=github-releases depName=chriswalz/bit
+  command: bit --version
+  filter: ^bit
+  pattern: s/^bit\sversion\s(.+)$/v\1/
 tags:
 - pipeline
 - continuous

@@ -9,7 +9,7 @@ check_docker
 unlock_sudo
 
 build_containerized golang <<EOF
-go get github.com/containernetworking/cni
+go get github.com/containernetworking/cni/cnitool
 go install github.com/containernetworking/cni/cnitool
 cp /go/bin/cnitool /
 EOF

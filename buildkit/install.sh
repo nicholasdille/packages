@@ -5,6 +5,7 @@ set -o errexit
 # shellcheck source=.scripts/source.sh
 source <(curl --silent --location --fail https://pkg.dille.io/.scripts/source.sh)
 
+check_installed_version
 unlock_sudo
 
 github_get_releases moby/buildkit | \
@@ -17,6 +18,6 @@ github_get_releases moby/buildkit | \
 
 github_get_releases moby/buildkit | \
     jq --raw-output 'map(select(.tag_name | startswith("v"))) | .[0].tag_name' | \
-    xargs -I{} "${SUDO}" curl --location --fail https://raw.githubusercontent.com/moby/buildkit/{}/examples/buildctl-daemonless/buildctl-daemonless.sh | \
+    xargs -I{} curl --location --fail https://raw.githubusercontent.com/moby/buildkit/{}/examples/buildctl-daemonless/buildctl-daemonless.sh | \
     store_file buildctl-daemonless.sh | \
     make_executable

@@ -3,6 +3,10 @@ description: Some reference and example networking plugins
 repo: containernetworking/plugins
 version:
   latest: v0.8.7 # renovate: datasource=github-releases depName=containernetworking/plugins
+  command: |
+    /opt/cni/bin/loopback --version 2>&1
+  filter: ^CNI
+  pattern: s/^CNI\sloopback\splugin\s(.+)$/\1/
 tags:
 - kubernetes
 - k8s
