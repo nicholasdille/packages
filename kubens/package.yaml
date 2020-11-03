@@ -1,6 +1,8 @@
 name: kubens
 description: Faster way to switch between clusters and namespaces in kubectl
 repo: ahmetb/kubectx
+version:
+  latest: v0.9.1 # renovate: datasource=github-releases depName=ahmetb/kubectx
 tags:
 - kubernetes
 - k8s

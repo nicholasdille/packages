@@ -4,6 +4,8 @@ repo: kubernetes-sigs/kustomize
 links:
 - text: Homepage
   url: https://kustomize.io/
+version:
+  latest: kustomize/v3.8.6 # renovate: datasource=github-releases depName=kubernetes-sigs/kustomize
 tags:
 - kubernetes
 - k8s

@@ -1,6 +1,8 @@
 name: kubeletctl
 description: A client for kubelet
 repo: cyberark/kubeletctl
+version:
+  latest: v1.6 # renovate: datasource=github-releases depName=cyberark/kubeletctl
 tags:
 - kubernetes
 - k8s

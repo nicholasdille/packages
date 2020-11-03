@@ -1,6 +1,8 @@
 name: kubie
 description: A more powerful alternative to kubectx and kubens
 repo: sbstp/kubie
+version:
+  latest: v0.10.0 # renovate: datasource=github-releases depName=sbstp/kubie
 tags:
 - kubernetes
 - k8s
