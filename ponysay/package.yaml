@@ -1,0 +1,10 @@
+name: ponysay
+description: Pony rewrite of cowsay
+repo: erkin/ponysay
+version:
+  latest: 3.0.3 # renovate: datasource=github-releases depName=erkin/ponysay
+  command: ponysay --version
+  filter: ^ponysay
+  pattern: ^ponysay\s(.+)$
+tags:
+- shell
