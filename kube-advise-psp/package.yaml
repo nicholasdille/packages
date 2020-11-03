@@ -1,6 +1,8 @@
 name: kube-advise-psp
 description: Help building an adaptive and fine-grained pod security policy
 repo: sysdiglabs/kube-psp-advisor
+version:
+  latest: v2.0.0 # renovate: datasource=github-releases depName=sysdiglabs/kube-psp-advisor
 tags:
 - kubernetes
 - k8s

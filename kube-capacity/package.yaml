@@ -1,6 +1,8 @@
 name: kube-capacity
 description: A simple CLI that provides an overview of the resource requests, limits, and utilization in a Kubernetes cluster
 repo: robscott/kube-capacity
+version:
+  latest: 0.4.0 # renovate: datasource=github-releases depName=robscott/kube-capacity
 tags:
 - kubernetes
 - k8s
