@@ -25,7 +25,7 @@ curl --silent https://pkg.dille.io/pkg.sh | \
     bash -s file pyenv Dockerfile | \
     docker build --tag pyenv -
 
-docker run -it --rm --name pyenv \
+docker run --rm --name pyenv \
     --env PYENV \
     --env HOME \
     --env PATH \

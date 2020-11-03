@@ -20,7 +20,7 @@ TAG=$(
 
 export PYENV_ROOT="${HOME}/.pyenv"
 export PATH="${PYENV_ROOT}/bin:${PATH}"
-docker run -it --rm --name pyenv \
+docker run --rm --name pyenv \
     --env PYENV \
     --env HOME \
     --env PATH \

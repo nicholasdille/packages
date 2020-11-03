@@ -21,7 +21,7 @@ TAG=$(
 
 export PATH="${HOME}/.rbenv/bin:${PATH}"
 eval "$(rbenv init -)"
-docker run -it --rm --name rbenv \
+docker run --rm --name rbenv \
     --env HOME \
     --env PATH \
     --volume "${HOME}:${HOME}" \
