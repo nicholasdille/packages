@@ -1,0 +1,8 @@
+name: pockyt
+description: Automate & manage your Pocket.com collection
+repo: achembarpu/pockyt
+version:
+  latest: 1.4.2 # renovate: datasource=github-tags depName=achembarpu/pockyt
+tags:
+- bookmark
+- shell
