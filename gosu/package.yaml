@@ -2,6 +2,6 @@ name: gosu
 description: Simple Go-based setuid+setgid+setgroups+exec
 repo: tianon/gosu
 version:
-  latest: 1.12 # renovate: datasource=github-releases depName=tianon/gosu
+  latest: 1.12 # renovate: datasource=github-releases depName=tianon/gosu versioning=loose
 tags:
 - sudo

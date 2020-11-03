@@ -2,7 +2,7 @@ name: lazydocker
 description: The lazier way to manage everything docker
 repo: jesseduffield/lazydocker
 version:
-  latest: v0.9 # renovate: datasource=github-releases depName=jesseduffield/lazydocker
+  latest: v0.9 # renovate: datasource=github-releases depName=jesseduffield/lazydocker versioning=loose
 tags:
 - docker
 - ui

@@ -5,7 +5,7 @@ links:
 - text: Certificate search
   url: https://crt.sh
 version:
-  latest: v0.21 # renovate: datasource=github-releases depName=sahsanu/lectl
+  latest: v0.21 # renovate: datasource=github-releases depName=sahsanu/lectl versioning=loose
 tags:
 - letsencrypt
 - certificate

@@ -5,7 +5,7 @@ links:
 - text: Homepage
   url: https://pandoc.org/
 version:
-  latest: 2.11.0.4 # renovate: datasource=github-releases depName=jgm/pandoc
+  latest: 2.11.0.4 # renovate: datasource=github-releases depName=jgm/pandoc versioning=loose
 tags:
 - converter
 - markup
