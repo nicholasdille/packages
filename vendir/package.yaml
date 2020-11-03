@@ -5,6 +5,6 @@ links:
 - text: Homepage
   url: https://carvel.dev/
 version:
-  latest: v0.11.0 # renovate: datasource=github-releases depName=k14s/vendir  
+  latest: v0.11.0 # renovate: datasource=github-releases depName=k14s/vendir
 tags:
 - shell
