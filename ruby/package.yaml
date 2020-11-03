@@ -6,5 +6,8 @@ links:
   url: https://www.ruby-lang.org/
 version:
   latest: v2_7_2 # renovate: datasource=github-tags depName=ruby/ruby versioning=regex:^v(?<major>\d+)_(?<minor>\d+)_(?<patch>\d+)$
+  command: ruby --version
+  filter: ^ruby
+  pattern: s/^ruby\s(.+)p\d+\s.+$/\1/
 tags:
 - ruby
