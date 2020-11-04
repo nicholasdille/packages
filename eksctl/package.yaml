@@ -3,6 +3,9 @@ description: The official CLI for Amazon EKS
 repo: weaveworks/eksctl
 version:
   latest: 0.30.0 # renovate: datasource=github-releases depName=weaveworks/eksctl
+  command: eksctl version
+  filter: ^[[:digit:]]
+  pattern: s/^(.+)$/\1/
 tags:
 - kubernetes
 - k8s

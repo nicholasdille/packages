@@ -3,6 +3,9 @@ description: An alternative envsubst that allows for `${foo:-default}` expansion
 repo: stephenc/envsub
 version:
   latest: 0.1.1 # renovate: datasource=github-releases depName=stephenc/envsub
+  command: envsub --version
+  filter: ^[[:digit:]]
+  pattern: s/^(.+)$/\1/
 tags:
 - shell
 - substitution

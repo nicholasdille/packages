@@ -3,5 +3,8 @@ description: Simple Go-based setuid+setgid+setgroups+exec
 repo: tianon/gosu
 version:
   latest: 1.12 # renovate: datasource=github-releases depName=tianon/gosu versioning=loose
+  command: gosu --version
+  filter: ^[[:digit:]]
+  pattern: s/^(\S+)\s.+$/\1/
 tags:
 - sudo

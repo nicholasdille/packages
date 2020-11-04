@@ -6,6 +6,9 @@ links:
   url: https://openfaas.com/blog/introducing-faasd/
 version:
   latest: 0.9.6 # renovate: datasource=github-releases depName=openfaas/faasd
+  command: faasd version
+  filter: ^faasd
+  pattern: s/^faasd\sversion:\s(\S+)\s.+$/\1/
 tags:
 - openfaas
 - function

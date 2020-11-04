@@ -3,6 +3,9 @@ description: Kubernetes toolkit for assembling CD pipelines the GitOps way
 repo: fluxcd/flux2
 version:
   latest: v0.2.1 # renovate: datasource=github-releases depName=fluxcd/flux2
+  command: flux --version
+  filter: ^flux
+  pattern: s/^flux\sversion\s(.+)$/v\1/
 tags:
 - kubernetes
 - k8s

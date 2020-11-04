@@ -6,6 +6,9 @@ links:
   url: https://www.openfaas.com/
 version:
   latest: 0.12.14 # renovate: datasource=github-releases depName=openfaas/faas-cli
+  command: faas-cli version
+  filter: version
+  pattern: s/^\s+version:\s(.+)$/\1/
 tags:
 - openfaas
 - function

@@ -3,5 +3,8 @@ description: GitHub’s official command line tool
 repo: cli/cli
 version:
   latest: v1.2.0 # renovate: datasource=github-releases depName=cli/cli
+  command: gh --version
+  filter: ^gh
+  pattern: s/^gh\sversion\s(\S+)\s.+$/v\1/
 tags:
 - github

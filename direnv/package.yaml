@@ -6,6 +6,9 @@ links:
   url: https://direnv.net/
 version:
   latest: v2.23.1 # renovate: datasource=github-releases depName=direnv/direnv
+  command: direnv --version
+  filter: ^[[:digit:]]
+  pattern: s/^(.+)$/v\1/
 tags:
 - shell
 - configuration

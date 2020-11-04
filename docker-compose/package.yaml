@@ -6,6 +6,9 @@ links:
   url: https://compose-spec.io/
 version:
   latest: 1.27.4 # renovate: datasource=github-releases depName=docker/compose
+  command: docker-compose version
+  filter: ^docker-compose
+  pattern: s/^docker-compose\sversion\s([^,]+),.+$/\1/
 tags:
 - docker
 - container

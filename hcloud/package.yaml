@@ -3,6 +3,9 @@ description: A command-line interface for Hetzner Cloud
 repo: hetznercloud/cli
 version:
   latest: v1.20.0 # renovate: datasource=github-releases depName=hetznercloud/cli
+  command: hcloud version
+  filter: ^hcloud
+  pattern: s/^hcloud\s(.+)$/v\1/
 tags:
 - hetzner
 - cloud

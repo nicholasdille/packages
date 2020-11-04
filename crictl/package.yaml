@@ -3,6 +3,9 @@ description: CLI and validation tools for Kubelet Container Runtime Interface (C
 repo: kubernetes-sigs/cri-tools
 version:
   latest: v1.19.0 # renovate: datasource=github-releases depName=kubernetes-sigs/cri-tools
+  command: crictl --version
+  filter: ^crictl
+  pattern: s/^crictl\sversion\s(.+)$/\1/
 tags:
 - container
 - runtime

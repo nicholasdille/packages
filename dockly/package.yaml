@@ -3,6 +3,9 @@ description: Immersive terminal interface for managing docker containers and ser
 repo: lirantal/dockly
 version:
   latest: v3.17.1 # renovate: datasource=github-releases depName=lirantal/dockly
+  command: dockly --version
+  filter: ^dockly
+  pattern: s/^dockly\s(\S+)\s.+$/v\1/
 tags:
 - docker
 - container

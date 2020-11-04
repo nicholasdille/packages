@@ -3,6 +3,9 @@ description: A tool for exploring each layer in a docker image
 repo: wagoodman/dive
 version:
   latest: v0.9.2 # renovate: datasource=github-releases depName=wagoodman/dive
+  command: dive --version
+  filter: ^dive
+  pattern: s/^dive\s(.+)$/v\1/
 tags:
 - docker
 - container

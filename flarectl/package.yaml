@@ -8,5 +8,8 @@ links:
   url: https://api.cloudflare.com/
 version:
   latest: v0.13.4 # renovate: datasource=github-releases depName=cloudflare/cloudflare-go
+  command: flarectl --version
+  filter: ^flarectl
+  pattern: s/^flarectl\sversion\s(.+)$/\1/
 tags:
 - dns

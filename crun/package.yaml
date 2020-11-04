@@ -3,6 +3,9 @@ description: A fast and lightweight fully featured OCI runtime and C library for
 repo: containers/crun
 version:
   latest: 0.15.1 # renovate: datasource=github-releases depName=containers/crun versioning=loose
+  command: crun --version
+  filter: ^crun
+  pattern: s/^crun\sversion\s(.+)$/\1/
 tags:
 - container
 - runtime

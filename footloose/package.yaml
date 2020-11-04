@@ -3,6 +3,9 @@ description: Container Machines - Containers that look like Virtual Machines
 repo: weaveworks/footloose
 version:
   latest: 0.6.3 # renovate: datasource=github-releases depName=weaveworks/footloose
+  command: footloose version
+  filter: ^version
+  pattern: s/^version:\s(.+)$/\1/
 tags:
 - container
 - vm

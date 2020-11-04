@@ -6,5 +6,8 @@ links:
   url: https://cuelang.org/
 version:
   latest: v0.2.2 # renovate: datasource=github-releases depName=cuelang/cue
+  command: cue version
+  filter: ^cue
+  pattern: s/^cue\sversion\s(\S+)\s.+$/v\1/
 tags:
 - configuration

@@ -6,6 +6,10 @@ links:
   url: https://conftest.dev/
 version:
   latest: v0.21.0 # renovate: datasource=github-releases depName=open-policy-agent/conftest
+  command: conftest --version
+  filter: |
+    ^Version:
+  pattern: s/^Version:\s(.+)$/v\1/
 tags:
 - validation
 - schema

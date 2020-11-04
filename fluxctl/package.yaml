@@ -6,6 +6,9 @@ links:
   url: https://fluxcd.io/
 version:
   latest: 1.21.0 # renovate: datasource=github-releases depName=fluxcd/flux
+  command: fluxctl version
+  filter: ^[[:digit:]]
+  pattern: s/^(.+)$/\1/
 tags:
 - gitops
 - kubernetes
