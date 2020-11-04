@@ -6,6 +6,9 @@ links:
   url: https://umo.ci/
 version:
   latest: v0.4.6 # renovate: datasource=github-releases depName=opencontainers/umoci
+  command: umoci --version
+  filter: ^umoci
+  pattern: s/^umoci\sversion\s(.+)$/v\1/
 tags:
 - container
 - image

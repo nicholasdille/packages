@@ -3,6 +3,9 @@ description: Work with remote images registries - retrieving information, images
 repo: containers/skopeo
 version:
   latest: v1.2.0 # renovate: datasource=github-releases depName=containers/skopeo
+  command: skopeo --version
+  filter: ^skopeo
+  pattern: s/^skopeo\sversion\s(\S+)\s.+$/v\1/
 tags:
 - container
 - registry

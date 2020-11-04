@@ -3,6 +3,9 @@ description: Validate your Kubernetes configuration files, supports multiple Kub
 repo: instrumenta/kubeval
 version:
   latest: 0.15.0 # renovate: datasource=github-releases depName=instrumenta/kubeval
+  command: kubeval --version
+  filter: ^Version
+  pattern: s/^Version:\s(.+)$/\1/
 tags:
 - kubernetes
 - k8s

@@ -3,6 +3,9 @@ description: Review Access - kubectl plugin to show an access matrix for k8s ser
 repo: corneliusweig/rakkess
 version:
   latest: v0.4.5 # renovate: datasource=github-releases depName=corneliusweig/rakkess
+  command: rakkess version
+  filter: ^v
+  pattern: s/^(.+)$/\1/
 tags:
 - kubernetes
 - k8s

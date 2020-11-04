@@ -3,6 +3,9 @@ description: A tool for secrets management, encryption as a service, and privile
 repo: hashicorp/vault
 version:
   latest: v1.5.5 # renovate: datasource=github-tags depName=hashicorp/vault
+  command: vault --version
+  filter: ^Vault
+  pattern: s/^Vault\s(\S+)\s.+$/\1/
 tags:
 - security
 - secrets

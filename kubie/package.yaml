@@ -3,6 +3,9 @@ description: A more powerful alternative to kubectx and kubens
 repo: sbstp/kubie
 version:
   latest: v0.10.0 # renovate: datasource=github-releases depName=sbstp/kubie
+  command: kubie --version
+  filter: ^kubie
+  pattern: s/^kubie\s(.+)$/v\1/
 tags:
 - kubernetes
 - k8s

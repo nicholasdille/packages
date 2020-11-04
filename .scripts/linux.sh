@@ -189,7 +189,7 @@ function install_python_module() {
 
 function install_ruby_module() {
     require ruby
-    ${SUDO} "${HOME}"/.rbenv/versions/*/bin/gem install "$@"
+    ${SUDO} bash -c "source /etc/profile.d/rbenv.sh; gem install $@"
 }
 
 function get_package_definition() {

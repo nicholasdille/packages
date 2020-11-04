@@ -6,6 +6,9 @@ links:
   url: https://k3d.io/
 version:
   latest: v3.1.5 # renovate: datasource=github-releases depName=rancher/k3d
+  command: k3d version
+  filter: ^k3d
+  pattern: s/^k3d\sversion\s(.+)$/\1/
 tags:
 - kubernetes
 - k8s

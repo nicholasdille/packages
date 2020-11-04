@@ -3,5 +3,8 @@ description: A tool for managing OCI containers and pods
 repo: containers/podman
 version:
   latest: v2.1.1 # renovate: datasource=github-releases depName=containers/podman
+  command: podman --version
+  filter: ^podman
+  pattern: s/^podman\sversion\s(.+)$/v\1/
 tags:
 - container

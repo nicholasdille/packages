@@ -6,6 +6,9 @@ links:
   url: https://pandoc.org/
 version:
   latest: 2.11.1 # renovate: datasource=github-releases depName=jgm/pandoc versioning=loose
+  command: pandoc --version
+  filter: ^pandoc
+  pattern: s/^pandoc\s(.+)$/\1/
 tags:
 - converter
 - markup

@@ -3,6 +3,9 @@ description: Lab wraps Git or Hub, making it simple to clone, fork, and interact
 repo: zaquestion/lab
 version:
   latest: v0.17.2 # renovate: datasource=github-releases depName=zaquestion/lab
+  command: lab version
+  filter: ^lab
+  pattern: s/^lab\sversion\s(.+)$/v\1/
 tags:
 - gitlab
 - pipeline

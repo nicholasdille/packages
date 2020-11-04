@@ -3,6 +3,9 @@ description: YAML syntax highlighter to bring colours where only jq could
 repo: andreazorzetto/yh
 version:
   latest: v0.4.0 # renovate: datasource=github-releases depName=andreazorzetto/yh
+  command: yh version
+  filter: ^[[:digit:]]
+  pattern: s/^(.+)$/v\1/
 tags:
 - yaml
 - shell

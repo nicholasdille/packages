@@ -6,6 +6,9 @@ links:
   url: https://crt.sh
 version:
   latest: v0.21 # renovate: datasource=github-releases depName=sahsanu/lectl versioning=loose
+  command: lectl --version
+  filter: ^lectl
+  pattern: s/^lectl\s(\S+)\s.+$/v\1/
 tags:
 - letsencrypt
 - certificate

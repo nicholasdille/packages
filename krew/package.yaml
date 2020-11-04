@@ -6,6 +6,9 @@ links:
   url: https://krew.sigs.k8s.io/
 version:
   latest: v0.4.0 # renovate: datasource=github-releases depName=kubernetes-sigs/krew
+  command: krew version
+  filter: ^GitTag
+  pattern: s/^GitTag\s+(.+)$/\1/
 tags:
 - kubernetes
 - k8s

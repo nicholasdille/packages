@@ -3,6 +3,9 @@ description: A simple CLI that provides an overview of the resource requests, li
 repo: robscott/kube-capacity
 version:
   latest: 0.4.0 # renovate: datasource=github-releases depName=robscott/kube-capacity
+  command: kube-capacity version
+  filter: ^kube-capacity
+  pattern: s/^kube-capacity\sversion\s(.+)$/\1/
 tags:
 - kubernetes
 - k8s

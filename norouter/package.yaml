@@ -3,5 +3,8 @@ description: IP-over-Stdio. The easiest multi-host & multi-cloud networking ever
 repo: norouter/norouter
 version:
   latest: v0.4.0 # renovate: datasource=github-releases depName=norouter/norouter
+  command: norouter --version
+  filter: ^norouter
+  pattern: s/^norouter\sversion\s(.+)$/v\1/
 tags:
 - network

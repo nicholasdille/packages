@@ -3,6 +3,9 @@ description: A toolkit for building secure, portable and lean operating systems 
 repo: linuxkit/linuxkit
 version:
   latest: v0.8 # renovate: datasource=github-releases depName=linuxkit/linuxkit versioning=loose
+  command: linuxkit version
+  filter: ^linuxkit
+  pattern: s/^linuxkit\sversion\s(.+)$/\1/
 tags:
 - container
 - moby

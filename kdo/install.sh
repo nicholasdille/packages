@@ -10,6 +10,7 @@ if curl --silent --fail https://api.github.com/repos/stepro/kdo/releases/latest 
     exit 1
 fi
 
+check_installed_version
 unlock_sudo
 
 github_get_releases stepro/kdo | \

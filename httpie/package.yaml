@@ -6,6 +6,9 @@ links:
   url: https://httpie.org/
 version:
   latest: 2.3.0 # renovate: datasource=github-releases depName=httpie/httpie
+  command: http --version
+  filter: ^[[:digit:]]
+  pattern: s/^(.+)$/\1/
 tags:
 - web
 - http

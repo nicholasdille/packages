@@ -6,6 +6,9 @@ links:
   url: https://github.com/opencontainers/artifacts
 version:
   latest: v0.8.1 # renovate: datasource=github-releases depName=deislabs/oras
+  command: oras version
+  filter: ^Version
+  pattern: s/^Version:\s+(\S+)$/v\1/
 tags:
 - oci
 - registry

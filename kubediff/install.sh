@@ -10,6 +10,7 @@ clean() {
 }
 trap clean EXIT
 
+check_installed_version
 unlock_sudo
 require python
 

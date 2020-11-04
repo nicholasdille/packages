@@ -6,6 +6,9 @@ links:
   url: https://inlets.dev/
 version:
   latest: 0.6.4 # renovate: datasource=github-releases depName=inlets/inletsctl
+  command: inletsctl version
+  filter: ^Version
+  pattern: s/^Version:\s(.+)$/\1/
 tags:
 - kubernetes
 - k8s

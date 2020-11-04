@@ -3,6 +3,9 @@ description: Lightweight local container engine for container development
 repo: rancher/k3c
 version:
   latest: v0.2.1 # renovate: datasource=github-releases depName=rancher/k3c
+  command: k3c --version
+  filter: ^k3c
+  pattern: s/^k3c\sversion\s(\S+)\s.+$/\1/
 tags:
 - container
 - runtime

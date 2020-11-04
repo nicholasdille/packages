@@ -3,6 +3,9 @@ description: Kata Containers is an open source project and community working to 
 repo: kata-containers/runtime
 version:
   latest: 1.11.4 # renovate: datasource=github-releases depName=kata-containers/runtime
+  command: kata-runtime --version
+  filter: ^kata-runtime
+  pattern: s/^kata-runtime\s+:\s(.+)$/\1/
 tags:
 - container
 - runtime

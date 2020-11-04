@@ -6,6 +6,9 @@ links:
   url: https://carvel.dev/
 version:
   latest: v0.34.0 # renovate: datasource=github-releases depName=k14s/kapp
+  command: kapp --version
+  filter: ^kapp
+  pattern: s/^kapp\sversion\s(.+)$/v\1/
 tags:
 - kubernetes
 - k8s

@@ -6,6 +6,9 @@ links:
   url: https://carvel.dev/
 version:
   latest: v0.2.0 # renovate: datasource=github-releases depName=k14s/imgpkg
+  command: imgpkg version
+  filter: ^imgpkg
+  pattern: s/^imgpkg\sversion\s(.+)$/v\1/
 tags:
 - docker
 - registry

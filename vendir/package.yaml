@@ -6,5 +6,8 @@ links:
   url: https://carvel.dev/
 version:
   latest: v0.11.0 # renovate: datasource=github-releases depName=k14s/vendir
+  command: vendir --version
+  filter: ^vendir
+  pattern: s/^vendir\sversion\s(.+)$/v\1/
 tags:
 - shell

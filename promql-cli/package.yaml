@@ -3,6 +3,9 @@ description: Prometheus Query CLI
 repo: nalbury/promql-cli
 version:
   latest: v0.2.0 # renovate: datasource=github-releases depName=nalbury/promql-cli
+  command: promql --version
+  filter: ^promql
+  pattern: s/^promql\sversion\s(.+)$/\1/
 tags:
 - prometheus
 - promql

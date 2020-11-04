@@ -2,6 +2,10 @@ name: youtube-dl
 description: Download videos from youtube.com or other video platforms
 type: codeberg
 repo: polarisfm/youtube-dl
+version:
+  command: youtube-dl --version
+  filter: ^[[:digit:]]
+  pattern: s/^(.+)$/\1/
 tags:
 - youtube
 - video

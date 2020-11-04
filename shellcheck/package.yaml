@@ -3,6 +3,9 @@ description: A static analysis tool for shell scripts
 repo: koalaman/shellcheck
 version:
   latest: v0.7.1 # renovate: datasource=github-releases depName=koalaman/shellcheck
+  command: shellcheck --version
+  filter: ^version
+  pattern: s/^version:\s(.+)$/v\1/
 tags:
 - shell
 - quality

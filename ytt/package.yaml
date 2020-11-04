@@ -6,6 +6,9 @@ links:
   url: https://carvel.dev/
 version:
   latest: v0.30.0 # renovate: datasource=github-releases depName=k14s/ytt
+  command: ytt --version
+  filter: ^ytt
+  pattern: s/^ytt\sversion\s(.+)$/v\1/
 tags:
 - yaml
 - configuration

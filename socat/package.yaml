@@ -6,6 +6,10 @@ links:
   url: http://www.dest-unreach.org/socat/
 - text: Repository
   url: https://repo.or.cz/socat.git
+version:
+  command: socat -V
+  filter: ^socat[[:space:]]version
+  pattern: s/^socat\sversion\s(\S+)\s.+$/\1/
 tags:
 - network
 files:

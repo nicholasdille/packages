@@ -3,6 +3,9 @@ description: Containerize your development and continuous integration environmen
 repo: stepchowfun/toast
 version:
   latest: v0.32.0 # renovate: datasource=github-releases depName=stepchowfun/toast
+  command: toast --version
+  filter: ^Toast
+  pattern: s/^Toast\s(.+)$/v\1/
 tags:
 - pipeline
 - continuous

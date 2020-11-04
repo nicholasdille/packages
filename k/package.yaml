@@ -3,6 +3,9 @@ description: Experimental wrapper for kubectl
 repo: rothgar/k
 version:
   latest: 0.3.4 # renovate: datasource=github-releases depName=rothgar/k
+  command: k
+  filter: ^[[:space:]]*k[[:space:]]version
+  pattern: s/^\s+k\sversion:\s+(.+)$/\1/
 tags:
 - kubernetes
 - k8s

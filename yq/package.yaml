@@ -3,6 +3,9 @@ description: yq is a portable command-line YAML processor
 repo: mikefarah/yq
 version:
   latest: 3.4.1 # renovate: datasource=github-releases depName=mikefarah/yq
+  command: yq --version
+  filter: ^yq
+  pattern: s/^yq\sversion\s(.+)$/\1/
 tags:
 - yaml
 - query

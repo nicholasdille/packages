@@ -3,6 +3,9 @@ description: Text-mode interface for git
 repo: jonas/tig
 version:
   latest: tig-2.5.1 # renovate: datasource=github-releases depName=jonas/tig versioning=regex:^tig-(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
+  command: tig --version
+  filter: ^tig
+  pattern: s/^tig\sversion\s(.+)$/tig-\1/
 tags:
 - git
 - ui

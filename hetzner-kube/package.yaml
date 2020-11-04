@@ -3,6 +3,9 @@ description: A CLI tool for provisioning kubernetes clusters on Hetzner Cloud
 repo: xetys/hetzner-kube
 version:
   latest: 0.5.1 # renovate: datasource=github-releases depName=xetys/hetzner-kube
+  command: hetzner-kube version
+  filter: ^[[:digit:]]
+  pattern: s/^(.+)$/\1/
 tags:
 - kubernetes
 - k8s
