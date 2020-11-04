@@ -2,7 +2,7 @@ name: cheat
 description: cheat allows you to create and view interactive cheatsheets on the command-line
 repo: cheat/cheat
 version:
-  latest: 4.1.0 # renovate: datasource=github-releases depName=cheat/cheat
+  latest: 4.1.1 # renovate: datasource=github-releases depName=cheat/cheat
   command: cheat --version
   filter: ^[[:digit:]]
   pattern: s/^(.+)$/\1/
