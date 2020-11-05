@@ -2,28 +2,27 @@
   "extends": [
     "config:base",
     "docker:enableMajor",
+    "docker:pinDigests",
     ":disableRateLimiting",
     ":automergePr",
     ":automergeRequireAllStatusChecks",
-    ":semanticCommits"
+    ":automergePatch",
+    ":semanticCommits",
+    "schedule:daily"
   ],
-  "baseBranches": ["master"],
   "labels": ["type/renovate"],
   "major": {
-    "labels": ["bump/major", "type/renovate"]
+    "labels": ["bump/major"]
   },
   "minor": {
-    "labels": ["bump/minor", "type/renovate"]
+    "labels": ["bump/minor"]
   },
   "patch": {
-    "labels": ["bump/patch", "type/renovate"]
+    "labels": ["bump/patch"]
   },
   "pin": {
-    "labels": ["bump/pin", "type/renovate"]
+    "labels": ["bump/pin"]
   },
-  "pinDigests": false,
-  "recreateClosed": "true",
-  "separateMinorPatch": "true",
   "packageRules": [
     {
       "updateTypes": ["patch", "pin", "digest"],
