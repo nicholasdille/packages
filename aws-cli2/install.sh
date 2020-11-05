@@ -22,4 +22,4 @@ ${SUDO} "${tmpdir}/aws/install" \
     --update \
     --install-dir "${TARGET_BASE}/aws-cli" \
     --bin-dir "${TARGET_BIN}"
-#rm -rf "${tmpdir}"
+rm -rf "${tmpdir}"
