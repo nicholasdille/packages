@@ -23,6 +23,7 @@
   },
   "pinDigests": false,
   "recreateClosed": "true",
+  "separateMinorPatch": "true",
   "packageRules": [
     {
       "updateTypes": ["patch", "pin", "digest"],
