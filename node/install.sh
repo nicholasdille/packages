@@ -12,4 +12,4 @@ require n
 # shellcheck disable=SC1091
 source /etc/profile.d/n.sh
 
-${SUDO} -E n lts
+${SUDO} -E n latest
