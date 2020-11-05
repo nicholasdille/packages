@@ -1,6 +1,6 @@
-# aws-cli
+# aws-cli2
 
-Universal Command Line Interface for Amazon Web Services (version 1)
+Universal Command Line Interface for Amazon Web Services (version 2)
 
 [GitHub](https://github.com/aws/aws-cli)
 
