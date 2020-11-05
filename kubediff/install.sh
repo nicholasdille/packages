@@ -20,6 +20,7 @@ cd "${MKTEMP}"
 ${SUDO} pip3 install .
 ${SUDO} pip3 install -r requirements.txt
 
+# shellcheck disable=SC2002
 cat kubediff | \
     sed -E 's|(#!/usr/bin/env python)|\13|' | \
     store_file kubediff
