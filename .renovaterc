@@ -5,8 +5,7 @@
     ":disableRateLimiting",
     ":automergePr",
     ":automergeRequireAllStatusChecks",
-    ":semanticCommits",
-    ":maintainLockFilesWeekly"
+    ":semanticCommits"
   ],
   "baseBranches": ["master"],
   "labels": ["type/renovate"],
@@ -27,7 +26,8 @@
   "packageRules": [
     {
       "updateTypes": ["patch", "pin", "digest"],
-      "automerge": true
+      "automerge": true,
+      "requiredStatusChecks": null
     }
   ],
   "regexManagers": [
