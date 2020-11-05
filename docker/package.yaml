@@ -5,7 +5,7 @@ links:
 - text: Homepage
   url: https://www.docker.com/
 version:
-  latest: v19.03.13 # renovate: datasource=github-releases depName=docker/docker-ce versioning=loose
+  latest: v19.03.13-beta2 # renovate: datasource=github-releases depName=docker/docker-ce versioning=loose
   command: docker --version
   filter: ^Docker
   pattern: s/^Docker\sversion\s([^,]+),.+$/v\1/
