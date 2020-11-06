@@ -1,4 +1,4 @@
-FROM registry.fedoraproject.org/fedora:latest
+FROM registry.fedoraproject.org/fedora:latest@sha256:edd0366dd4164485d31bd05d06d3f4f549c4ef278e08141c2da65277dd10325c
 ENV GOPATH=/root/buildah
 
 RUN useradd build \
