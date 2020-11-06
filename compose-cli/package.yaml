@@ -2,7 +2,7 @@ name: compose-cli
 description: Easily run your Compose application to the cloud with compose-cli
 repo: docker/compose-cli
 version:
-  latest: v1.0.1 # renovate: datasource=github-releases depName=docker/compose-cli
+  latest: v1.0.2 # renovate: datasource=github-releases depName=docker/compose-cli
 tags:
 - docker
 - compose
