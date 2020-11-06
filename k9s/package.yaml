@@ -2,7 +2,7 @@ name: k9s
 description: Kubernetes CLI To Manage Your Clusters In Style
 repo: derailed/k9s
 version:
-  latest: v0.23.4 # renovate: datasource=github-releases depName=derailed/k9s
+  latest: v0.23.5 # renovate: datasource=github-releases depName=derailed/k9s
 tags:
 - kubernetes
 - k8s
