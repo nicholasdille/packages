@@ -5,7 +5,7 @@ links:
 - text: Homepage
   url: https://docs.microsoft.com/cli/azure/
 version:
-  latest: azure-cli-2.14.0 # renovate: datasource=github-releases depName=Azure/azure-cli versioning=regex:^azure-cli-(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
+  latest: azure-cli-2.14.1 # renovate: datasource=github-releases depName=Azure/azure-cli versioning=regex:^azure-cli-(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
   command: az version --output yaml
   filter: |
     ^azure-cli:
