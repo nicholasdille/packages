@@ -2,7 +2,7 @@ name: lazygit
 description: Simple terminal UI for git commands
 repo: jesseduffield/lazygit
 version:
-  latest: v0.23.6 # renovate: datasource=github-releases depName=jesseduffield/lazygit
+  latest: v0.23.7 # renovate: datasource=github-releases depName=jesseduffield/lazygit
   command: lazygit --version
   filter: version=
   pattern: s/^.+,\sversion=([^,]+),\s.+$/v\1/
