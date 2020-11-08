@@ -259,7 +259,7 @@ function get_installed_version() {
         return
     fi
 
-    ${version_command} 2>/dev/null | \
+    ${TARGET_BIN}/${version_command} 2>/dev/null | \
         grep "${version_filter}" | \
         sed -E "${version_pattern}"
 }
