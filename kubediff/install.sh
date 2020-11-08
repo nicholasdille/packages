@@ -5,18 +5,11 @@ set -o errexit
 # shellcheck source=.scripts/source.sh
 source <(curl --silent --location --fail https://pkg.dille.io/.scripts/source.sh)
 
-clean() {
-    rm -rf "${MKTEMP}"
-}
-trap clean EXIT
-
 check_installed_version
 unlock_sudo
 require python
 
-MKTEMP=$(mktemp --directory)
-git clone https://github.com/weaveworks/kubediff "${MKTEMP}"
-cd "${MKTEMP}"
+git clone https://github.com/weaveworks/kubediff "${temporary_directory}"
 ${SUDO} pip3 install .
 ${SUDO} pip3 install -r requirements.txt
 

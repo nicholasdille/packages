@@ -13,13 +13,11 @@ VERSION=$(
         jq --raw-output '.version.latest'
 )
 
-tmpdir=$(mktemp -d)
 echo "https://awscli.amazonaws.com/awscli-exe-linux-x86_64-${VERSION}.zip" | \
     download_file | \
-    store_file aws-cli.zip "${tmpdir}"
-unzip -o -d "${tmpdir}" "${tmpdir}/aws-cli.zip"
-${SUDO} "${tmpdir}/aws/install" \
+    store_file aws-cli.zip "${temporary_directory}"
+unzip -o -d "${temporary_directory}" "${temporary_directory}/aws-cli.zip"
+${SUDO} "${temporary_directory}/aws/install" \
     --update \
     --install-dir "${TARGET_BASE}/aws-cli" \
     --bin-dir "${TARGET_BIN}"
-rm -rf "${tmpdir}"

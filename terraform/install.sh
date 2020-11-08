@@ -13,10 +13,8 @@ TAG=$(
     jq --raw-output '.tag_name'
 )
 
-tmpdir=$(mktemp -d)
 echo "https://releases.hashicorp.com/terraform/${TAG#v}/terraform_${TAG#v}_linux_amd64.zip" | \
     download_file | \
-    store_file "terraform.zip" "${tmpdir}"
-unzip_file "${tmpdir}/terraform.zip"
-rm -f "${tmpdir}/terraform.zip"
-rmdir "${tmpdir}"
+    store_file "terraform.zip" "${temporary_directory}"
+unzip_file "${temporary_directory}/terraform.zip"
+${SUDO} mv terraform "${TARGET_BIN}"

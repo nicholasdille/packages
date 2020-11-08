@@ -13,12 +13,6 @@ TAG=$(
     jq --raw-output '.tag_name'
 )
 
-tmpdir=$(mktemp -d)
-
-git clone https://github.com/wslutilities/wslu "${tmpdir}"
-pushd "${tmpdir}"
+git clone https://github.com/wslutilities/wslu "${temporary_directory}"
 git checkout "${TAG}"
 ${SUDO} PREFIX=/usr/local make all install
-popd
-
-rm -rf "${tmpdir}"

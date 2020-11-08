@@ -10,3 +10,11 @@
 
 # shellcheck disable=SC2034
 PACKAGE="$(basename "${SCRIPT_BASE_DIR}")"
+
+cleanup_tasks=()
+function cleanup() {
+    for cleanup_task in ${cleanup_tasks[@]}; do
+        ${cleanup_task}
+    done
+}
+trap cleanup EXIT

@@ -1,5 +1,14 @@
 #!/bin/bash
 
+function remove_temporary_directory() {
+    if test -n "${temporary_directory}" && test -d "${temporary_directory}"; then
+        rm -rf "${temporary_directory:?}"
+    fi
+}
+temporary_directory=$(mktemp -d)
+cd "${temporary_directory}"
+cleanup_tasks+=("remove_temporary_directory")
+
 function check_target() {
     >&2 echo "Checking existence of target directory <${TARGET_BASE}>"
     if ! test -d "${TARGET_BASE}"; then
@@ -297,7 +306,7 @@ function latest_version_installed() {
         echo "ERROR: Unable to determine installed version."
         return 1
     fi
-    
+
     local latest_version
     latest_version=$(get_latest_version "${package}")
     if test -z "${latest_version}"; then

@@ -9,7 +9,7 @@ check_installed_version
 unlock_sudo
 
 # shellcheck disable=SC2154
-docker create -i --name "${container_name}" ubuntu bash -xe
+docker create -i --name "${container_name}" ubuntu:bionic bash -xe
 
 github_find_latest_release jonas/tig | \
     github_resolve_assets | \
