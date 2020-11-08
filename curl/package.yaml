@@ -42,10 +42,8 @@ install:
         docker build --tag curl -
 
     build_containerized curl <<"EOF"
-    cd /tmp
-    git clone https://github.com/curl/curl
-    cd curl
-    git checkout ${requested_version}
+    curl --silent --location "https://github.com/curl/curl/archive/${requested_version}.tar.gz" | \
+        tar -xz --strip-components=1
     autoreconf -fi
     ./configure --enable-static --disable-shared
     make curl_LDFLAGS=-all-static
