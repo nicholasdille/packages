@@ -8,3 +8,5 @@ version:
   pattern: s/^lolcat\s(\S+)\s.+$/\1/
 tags:
 - shell
+install: |
+  install_ruby_module lolcat

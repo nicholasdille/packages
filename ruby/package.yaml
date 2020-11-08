@@ -11,3 +11,18 @@ version:
   pattern: s/^ruby\s([^p]+)p.+$/\1/
 tags:
 - ruby
+install: |
+  require rbenv
+  source /etc/profile.d/rbenv.sh
+
+  VERSION=${latest_version#v}
+  VERSION=${VERSION//_/.}
+
+  docker run --rm --name rbenv \
+      --env RBENV_ROOT \
+      --env PATH \
+      --volume "${RBENV_ROOT}:${RBENV_ROOT}" \
+      rbenv \
+      rbenv install "${VERSION#v}" --skip-existing
+  ${SUDO} bash -c "source /etc/profile.d/rbenv.sh; rbenv rehash"
+  ${SUDO} bash -c "source /etc/profile.d/rbenv.sh; rbenv global ${TAG#v}"

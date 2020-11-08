@@ -15,3 +15,10 @@ tags:
 - oci
 - oras
 - artifact
+install: |
+  github_install \
+      --repo k14s/imgpkg \
+      --match suffix \
+      --asset -linux-amd64 \
+      --type binary \
+      --name imgpkg

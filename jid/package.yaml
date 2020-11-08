@@ -8,3 +8,10 @@ version:
   pattern: s/^jid\sversion\s(.+)$/\1/
 tags:
 - json
+install: |
+  github_install \
+      --repo simeji/jid \
+      --match name \
+      --asset jid_linux_amd64.zip \
+      --type zip \
+      --include jid

@@ -14,3 +14,10 @@ tags:
 - requests
 - limits
 - utilization
+install: |
+  github_install \
+      --repo robscott/kube-capacity \
+      --match suffix \
+      --asset _Linux_x86_64.tar.gz \
+      --type tarball \
+      --include kube-capacity

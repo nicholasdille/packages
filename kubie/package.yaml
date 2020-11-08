@@ -11,3 +11,13 @@ tags:
 - k8s
 - context
 - namespace
+install: |
+  github_install \
+      --repo sbstp/kubie \
+      --match name \
+      --asset kubie-linux-amd64 \
+      --type binary \
+      --name kubie
+
+  curl --location --fail "https://github.com/sbstp/kubie/raw/${latest_version}/completion/kubie.bash" | \
+      store_completion kubie

@@ -13,3 +13,13 @@ tags:
 - gitops
 - kubernetes
 - k8s
+install: |
+  github_install \
+      --repo fluxcd/flux \
+      --match name \
+      --asset fluxctl_linux_amd64 \
+      --type binary \
+      --name fluxctl
+
+  fluxctl completion bash | \
+      store_completion fluxctl

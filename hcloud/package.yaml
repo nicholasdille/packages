@@ -9,3 +9,13 @@ version:
 tags:
 - hetzner
 - cloud
+install: |
+  github_install \
+      --repo hetznercloud/cli \
+      --match name \
+      --asset hcloud-linux-amd64.tar.gz \
+      --type tarball \
+      --include hcloud
+
+  hcloud completion bash | \
+      store_completion hcloud

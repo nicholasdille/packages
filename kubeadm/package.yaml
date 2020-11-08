@@ -9,3 +9,13 @@ tags:
 - k8s
 - cluster
 - bootstrap
+install: |
+  echo "https://dl.k8s.io/release/stable.txt" | \
+      download_file | \
+      xargs -I{} echo "https://storage.googleapis.com/kubernetes-release/release/{}/bin/linux/amd64/kubeadm" | \
+      download_file | \
+      store_file kubeadm | \
+      make_executable
+
+  kubeadm completion bash | \
+      store_completion kubeadm

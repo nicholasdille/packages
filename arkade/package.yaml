@@ -9,3 +9,10 @@ version:
 tags:
 - kubernetes
 - k8s
+install: |
+  github_install \
+      --repo alexellis/arkade \
+      --match name \
+      --asset arkade \
+      --type binary \
+      --name arkade

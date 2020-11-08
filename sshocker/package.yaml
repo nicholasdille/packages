@@ -14,3 +14,10 @@ tags:
 - forward
 - volume
 - mount
+install: |
+  github_install \
+      --repo AkihiroSuda/sshocker \
+      --match name \
+      --asset sshocker-Linux-x86_64 \
+      --type binary \
+      --name sshocker

@@ -15,3 +15,13 @@ tags:
 - container
 - dind
 - docker
+install: |
+  github_install \
+      --repo rancher/k3d \
+      --match name \
+      --asset k3d-linux-amd64 \
+      --type binary \
+      --name k3d
+
+  k3d completion bash | \
+      store_completion k3d

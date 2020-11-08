@@ -12,3 +12,10 @@ tags:
 - systemd
 - ssh
 - linux
+install: |
+  github_install \
+      --repo weaveworks/footloose \
+      --match suffix \
+      --asset -linux-x86_64 \
+      --type binary \
+      --name footloose

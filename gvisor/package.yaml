@@ -10,3 +10,10 @@ tags:
 - container
 - runtime
 - security
+install: |
+  echo "https://storage.googleapis.com/gvisor/releases/release/latest/runsc" | \
+      download_file | \
+      store_file runsc | \
+      make_executable
+
+  ${SUDO} runsc install

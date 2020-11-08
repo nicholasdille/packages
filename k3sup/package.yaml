@@ -10,3 +10,10 @@ tags:
 - ssh
 - bootstrap
 - cluster
+install: |
+  github_install \
+      --repo alexellis/k3sup \
+      --match name \
+      --asset k3sup \
+      --type binary \
+      --name k3sup

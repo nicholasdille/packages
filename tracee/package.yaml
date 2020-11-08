@@ -8,3 +8,13 @@ tags:
 - ebpf
 - security
 - tracing
+install: |
+  ${SUDO} apt-get update
+  ${SUDO} apt-get -y install bpfcc-tools
+
+  github_install \
+      --repo aquasecurity/tracee \
+      --match name \
+      --asset tracee.tar.gz \
+      --type tarball \
+      --include tracee

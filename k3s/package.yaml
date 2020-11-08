@@ -12,3 +12,10 @@ version:
 tags:
 - kubernetes
 - k8s
+install: |
+  github_install \
+      --repo rancher/k3s \
+      --match name \
+      --asset k3s \
+      --type binary \
+      --name k3s

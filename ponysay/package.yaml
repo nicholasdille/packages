@@ -8,3 +8,16 @@ version:
   pattern: s/^ponysay\s(.+)$/\1/
 tags:
 - shell
+install: |
+  build_containerized python <<EOF
+  apt-get update
+  export DEBIAN_FRONTEND=noninteractive
+  apt-get -y install --no-install-recommends texinfo
+  git clone https://github.com/erkin/ponysay
+  cd ponysay
+  git checkout ${latest_version}
+  ./setup.py --freedom=partial install --dest-dir=/opt/cowsay --prefix=${TARGET_BASE}
+  EOF
+  # shellcheck disable=SC2154
+  docker cp "${container_name}:/opt/cowsay" - | \
+      ${SUDO} tar -xC / --strip-components=1

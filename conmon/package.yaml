@@ -9,6 +9,19 @@ version:
 tags:
 - container
 - runtime
+install: |
+  get_file conmon Dockerfile | \
+      docker build --tag conmon -
+
+  build_containerized conmon <<EOF
+  cd /tmp
+  git clone https://github.com/containers/conmon
+  cd conmon
+  git checkout "${latest_version}"
+  PREFIX=/usr/local make all
+  cp bin/conmon /
+  EOF
+  extract_file_from_container conmon
 files:
 - name: Dockerfile
   content: |

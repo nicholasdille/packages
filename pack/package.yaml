@@ -11,3 +11,10 @@ version:
   pattern: s/^([^+]+)\+.+$/v\1/
 tags:
 - build
+install: |
+  github_install \
+      --repo buildpacks/pack \
+      --match suffix \
+      --asset -linux.tgz \
+      --type tarball \
+      --include pack

@@ -8,3 +8,5 @@ tags:
 - record
 - cast
 - screen
+install: |
+  install_python_module termtosvg

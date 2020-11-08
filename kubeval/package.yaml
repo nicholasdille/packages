@@ -15,3 +15,10 @@ tags:
 - validate
 - test
 - quality
+install: |
+  github_install \
+      --repo instrumenta/kubeval \
+      --match name \
+      --asset kubeval-linux-amd64.tar.gz \
+      --type tarball \
+      --include kubeval

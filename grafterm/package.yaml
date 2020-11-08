@@ -15,3 +15,10 @@ tags:
 - shell
 - grafana
 - terminal
+install: |
+  github_install \
+      --repo slok/grafterm \
+      --match name \
+      --asset grafterm-linux-amd64 \
+      --type binary \
+      --name grafterm

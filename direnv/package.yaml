@@ -12,6 +12,16 @@ version:
 tags:
 - shell
 - configuration
+install: |
+  github_install \
+      --name direnv \
+      --repo direnv/direnv \
+      --match name \
+      --asset direnv.linux-amd64 \
+      --type binary
+
+  get_file direnv profile.d.direnv.sh | \
+      store_file direnv.sh /etc/profile.d
 files:
 - name: profile.d.direnv.sh
   content: |

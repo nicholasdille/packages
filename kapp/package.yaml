@@ -14,3 +14,10 @@ tags:
 - k8s
 - ui
 - package
+install: |
+  github_install \
+      --repo k14s/kapp \
+      --match suffix \
+      --asset -linux-amd64 \
+      --type binary \
+      --name kapp

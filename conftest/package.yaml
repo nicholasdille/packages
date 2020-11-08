@@ -17,3 +17,10 @@ tags:
 - test
 - query
 - rego
+install: |
+  github_install \
+      --repo open-policy-agent/conftest \
+      --match suffix \
+      --asset _Linux_x86_64.tar.gz \
+      --type tarball \
+      --include conftest

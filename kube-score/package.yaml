@@ -10,3 +10,10 @@ tags:
 - kubernetes
 - k8s
 - security
+install: |
+  github_install \
+      --repo zegl/kube-score \
+      --match suffix \
+      --asset _linux_amd64.tar.gz \
+      --type tarball \
+      --include kube-score

@@ -11,3 +11,10 @@ tags:
 - k8s
 - secrets
 - security
+install: |
+  github_install \
+      --repo bitnami-labs/sealed-secrets \
+      --match name \
+      --asset kubeseal-linux-amd64 \
+      --type binary \
+      --name kubeseal

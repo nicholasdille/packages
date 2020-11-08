@@ -8,3 +8,10 @@ version:
   pattern: s/^norouter\sversion\s(.+)$/v\1/
 tags:
 - network
+install: |
+  github_install \
+      --repo norouter/norouter \
+      --match name \
+      --asset norouter-Linux-x86_64 \
+      --type binary \
+      --name norouter

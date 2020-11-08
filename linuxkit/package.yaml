@@ -9,3 +9,10 @@ version:
 tags:
 - container
 - moby
+install: |
+  github_install \
+      --repo linuxkit/linuxkit \
+      --match name \
+      --asset linuxkit-linux-amd64 \
+      --type binary \
+      --name linuxkit

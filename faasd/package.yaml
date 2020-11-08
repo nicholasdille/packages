@@ -15,3 +15,10 @@ tags:
 - service
 - serverless
 - containerd
+install: |
+  github_install \
+      --repo openfaas/faasd \
+      --match name \
+      --asset faasd \
+      --type binary \
+      --name faasd

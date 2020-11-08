@@ -1,5 +1,5 @@
 name: crun
-description: A fast and lightweight fully featured OCI runtime and C library for running containers 
+description: A fast and lightweight fully featured OCI runtime and C library for running containers
 repo: containers/crun
 version:
   latest: 0.15.1 # renovate: datasource=github-releases depName=containers/crun versioning=loose
@@ -10,3 +10,19 @@ tags:
 - container
 - runtime
 - oci
+install: |
+  github_install \
+      --repo containers/crun \
+      --match suffix \
+      --asset -linux-amd64 \
+      --type binary \
+      --name crun
+
+  ${SUDO} mkdir -p /etc/docker
+  if ! test -f /etc/docker/daemon.json; then
+      echo "{}" | ${SUDO} tee /etc/docker/daemon.json >/dev/null
+  fi
+
+  ${SUDO} mv /etc/docker/daemon.json /etc/docker/daemon.json.bak
+  jq --arg bin "${TARGET_BIN}" '. * {"runtimes": {"crun": {"path": ($bin + "/crun")}}}' /etc/docker/daemon.json.bak | \
+      ${SUDO} tee /etc/docker/daemon.json >/dev/null

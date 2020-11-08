@@ -12,6 +12,17 @@ tags:
 - version
 - manager
 - version manager
+install: |
+  if ! test -d "${TARGET_BASE}/nvm"; then
+      ${SUDO} git clone https://github.com/nvm-sh/nvm "${TARGET_BASE}/nvm"
+  fi
+  pushd "${TARGET_BASE}/nvm"
+  git checkout "${latest_version}"
+  popd
+
+  get_file "${PACKAGE}" profile.d.nvm.sh | \
+      TARGET_BASE="${TARGET_BASE}" envsubst '${TARGET_BASE}' | \
+      store_file nvm.sh /etc/profile.d
 files:
 - name: profile.d.nvm.sh
   content: |

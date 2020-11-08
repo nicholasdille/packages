@@ -11,6 +11,12 @@ tags:
 - linter
 - test
 - quality
+install: |
+  install_python_module yamllint
+
+  mkdir -p "${HOME}/.config/yamllint"
+  get_file yamllint yamllint.yaml | \
+      store_file config "${HOME}/.config/yamllint"
 files:
 - name: yamllint.yaml
   content: |

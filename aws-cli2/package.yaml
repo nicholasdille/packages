@@ -12,3 +12,12 @@ version:
 tags:
 - aws
 - cloud
+install: |
+echo "https://awscli.amazonaws.com/awscli-exe-linux-x86_64-${latest_version}.zip" | \
+    download_file | \
+    store_file aws-cli.zip "${temporary_directory}"
+unzip -o -d "${temporary_directory}" "${temporary_directory}/aws-cli.zip"
+${SUDO} "${temporary_directory}/aws/install" \
+    --update \
+    --install-dir "${TARGET_BASE}/aws-cli" \
+    --bin-dir "${TARGET_BIN}"

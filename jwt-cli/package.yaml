@@ -8,3 +8,10 @@ version:
   pattern: s/^jwt\s(.+)$/\1/
 tags:
 - jwt
+install: |
+  github_install \
+      --repo mike-engel/jwt-cli \
+      --match suffix \
+      --asset -linux.tar.gz \
+      --type tarball \
+      --include jwt

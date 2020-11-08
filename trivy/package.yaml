@@ -12,3 +12,14 @@ tags:
 - scan
 - test
 - quality
+install: |
+  github_install \
+      --repo aquasecurity/trivy \
+      --match suffix \
+      --asset _Linux-64bit.tar.gz \
+      --type tarball \
+      --include trivy
+
+  if ! test -d "${HOME}/.cache/trivy"; then
+      trivy image --download-db-only
+  fi

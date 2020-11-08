@@ -13,3 +13,10 @@ tags:
 - registry
 - platform
 - architecture
+install: |
+  github_install \
+      --repo estesp/manifest-tool \
+      --match name \
+      --asset manifest-tool-linux-amd64 \
+      --type binary \
+      --name manifest-tool

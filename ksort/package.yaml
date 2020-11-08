@@ -6,3 +6,10 @@ version:
 tags:
 - kubernetes
 - k8s
+install: |
+  github_install \
+      --repo superbrothers/ksort \
+      --match name \
+      --asset ksort-linux-amd64.tar.gz \
+      --type tarball \
+      --include ksort

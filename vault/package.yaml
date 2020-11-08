@@ -9,3 +9,9 @@ version:
 tags:
 - security
 - secrets
+install: |
+  echo "https://releases.hashicorp.com/vault/${latest_version#v}/vault_${latest_version#v}_linux_amd64.zip" | \
+      download_file | \
+      store_file "vault.zip" "${temporary_directory}"
+  unzip_file "${temporary_directory}/vault.zip"
+  ${SUDO} mv vault "${TARGET_BIN}"

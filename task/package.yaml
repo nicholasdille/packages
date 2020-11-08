@@ -11,3 +11,10 @@ version:
   pattern: s/^Task\sversion:\s(.+)$/\1/
 tags:
 - make
+install: |
+  github_install \
+      --repo go-task/task \
+      --match name \
+      --asset task_linux_amd64.tar.gz \
+      --type tarball \
+      --include task

@@ -12,6 +12,12 @@ tags:
 - scan
 - test
 - quality
+install: |
+  install_python_module sslyze
+
+  get_file "${PACKAGE}" profile.d.sslyze.sh | \
+      TARGET_BASE=${TARGET_BASE} envsubst '${TARGET_BASE}' | \
+      store_file sslyze.sh /etc/profile.d/
 files:
 - name: profile.d.sslyze.sh
   content: |

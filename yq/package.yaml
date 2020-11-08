@@ -10,3 +10,10 @@ tags:
 - yaml
 - query
 - processor
+install: |
+  github_install \
+      --repo mikefarah/yq \
+      --match name \
+      --asset yq_linux_amd64 \
+      --type binary \
+      --name yq

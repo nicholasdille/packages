@@ -12,6 +12,15 @@ tags:
 - version
 - manager
 - version manager
+install: |
+  echo "https://github.com/tj/n/raw/${latest_version}/bin/n" | \
+      download_file | \
+      store_file n | \
+      make_executable
+
+  get_file "${PACKAGE}" profile.d.n.sh | \
+      TARGET_BASE="${TARGET_BASE}" envsubst '${TARGET_BASE}' | \
+      store_file n.sh /etc/profile.d
 files:
 - name: profile.d.n.sh
   content: |

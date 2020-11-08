@@ -11,3 +11,7 @@ tags:
 - nodejs
 - javascript
 - typescript
+install: |
+  require n
+  source /etc/profile.d/n.sh
+  ${SUDO} -E n latest

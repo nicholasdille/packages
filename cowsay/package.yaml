@@ -3,3 +3,5 @@ description: cowsay is a configurable talking cow
 repo: piuccio/cowsay
 tags:
 - shell
+install: |
+  install_node_module cowsay

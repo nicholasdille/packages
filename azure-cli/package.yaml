@@ -13,3 +13,5 @@ version:
 tags:
 - azure
 - cloud
+install: |
+  install_python_module azure-cli

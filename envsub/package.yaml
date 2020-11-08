@@ -11,3 +11,10 @@ tags:
 - substitution
 - expansion
 - variables
+install: |
+  github_install \
+      --repo stephenc/envsub \
+      --match name \
+      --asset envsub \
+      --type binary \
+      --name envsub

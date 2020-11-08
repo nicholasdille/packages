@@ -9,3 +9,10 @@ version:
 tags:
 - yaml
 - shell
+install: |
+  github_install \
+      --repo andreazorzetto/yh \
+      --match name \
+      --asset yh-linux-amd64.zip \
+      --type zip \
+      --include yh

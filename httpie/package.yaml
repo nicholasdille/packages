@@ -15,3 +15,5 @@ tags:
 - https
 - test
 - quality
+install: |
+  install_python_module httpie

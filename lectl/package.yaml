@@ -12,3 +12,7 @@ version:
 tags:
 - letsencrypt
 - certificate
+install: |
+  curl --location --fail "https://raw.githubusercontent.com/sahsanu/lectl/${latest_version}/lectl" | \
+      store_file lectl | \
+      make_executable

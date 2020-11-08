@@ -14,3 +14,10 @@ tags:
 - delivery
 - deployment
 - container
+install: |
+  github_install \
+      --repo chriswalz/bit \
+      --match suffix \
+      --asset _linux_amd64.tar.gz \
+      --type tarball \
+      --include bit

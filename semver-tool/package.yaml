@@ -9,3 +9,8 @@ version:
 tags:
 - shell
 - semver
+install: |
+  echo "https://github.com/fsaintjacques/semver-tool/raw/${latest_version}/src/semver" | \
+      download_file | \
+      store_file semver | \
+      make_executable

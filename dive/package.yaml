@@ -12,3 +12,10 @@ tags:
 - layers
 - images
 - quality
+install: |
+  github_install \
+      --repo wagoodman/dive \
+      --match suffix \
+      --asset _linux_amd64.tar.gz \
+      --type tarball \
+      --include dive

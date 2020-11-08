@@ -13,3 +13,11 @@ tags:
 - container
 - runtime
 - cri
+install: |
+  github_get_releases containerd/containerd | \
+      github_resolve_assets | \
+      github_select_asset_by_prefix containerd- | \
+      github_select_asset_by_suffix -linux-amd64.tar.gz | \
+      github_get_asset_download_url | \
+      download_file | \
+      ${SUDO} tar -xzC "${TARGET_BASE}"

@@ -1,6 +1,17 @@
 name: age
 description: A simple, modern and secure encryption tool (and Go library) with small explicit keys, no config options, and UNIX-style composability
 repo: FiloSottile/age
+version:
+  latest: v1.0.0-beta4 # renovate: datasource=github-tags depName=FiloSottile/age versioning=regex:^v(?<major>\d+?)\.(?<minor>\d+?)\.(?<patch>\d+?)(-(?<prerelease>.+?))?$
 tags:
 - encryption
 - security
+install: |
+  build_containerized golang <<EOF
+  git clone https://github.com/FiloSottile/age
+  cd age
+  git checkout ${latest_version}
+  go build -o . filippo.io/age/cmd/...
+  cp age age-keygen /
+  EOF
+  extract_file_from_container age age-keygen

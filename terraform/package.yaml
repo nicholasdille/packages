@@ -9,3 +9,9 @@ version:
 tags:
 - cloud
 - deployment
+install: |
+  echo "https://releases.hashicorp.com/terraform/${latest_version#v}/terraform_${latest_version#v}_linux_amd64.zip" | \
+      download_file | \
+      store_file "terraform.zip" "${temporary_directory}"
+  unzip_file "${temporary_directory}/terraform.zip"
+  ${SUDO} mv terraform "${TARGET_BIN}"

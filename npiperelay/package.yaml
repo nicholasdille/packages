@@ -7,3 +7,10 @@ tags:
 - wsl
 - npipe
 - pipe
+install: |
+  github_install \
+      --repo NZSmartie/npiperelay \
+      --match name \
+      --asset npiperelay.exe \
+      --type binary \
+      --name npiperelay.exe

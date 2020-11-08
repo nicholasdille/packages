@@ -10,3 +10,10 @@ tags:
 - kubernetes
 - k8s
 - kubelet
+install: |
+  github_install \
+      --repo cyberark/kubeletctl \
+      --match name \
+      --asset kubeletctl_linux_amd64 \
+      --type binary \
+      --name kubeletctl

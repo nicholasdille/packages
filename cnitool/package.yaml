@@ -12,3 +12,10 @@ tags:
 - network
 - plugin
 - cni
+install: |
+  build_containerized golang <<EOF
+  go get github.com/containernetworking/cni/cnitool
+  go install github.com/containernetworking/cni/cnitool
+  cp /go/bin/cnitool /
+  EOF
+  extract_file_from_container cnitool

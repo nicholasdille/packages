@@ -8,3 +8,12 @@ version:
   pattern: s/^podman\sversion\s(.+)$/v\1/
 tags:
 - container
+install: |
+  github_install \
+      --repo containers/podman \
+      --match name \
+      --asset podman-remote-static.tar.gz \
+      --type tarball \
+      --include podman-remote-static
+
+  rename_file podman-remote-static podman

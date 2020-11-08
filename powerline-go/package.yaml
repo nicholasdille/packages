@@ -7,6 +7,21 @@ tags:
 - powerline
 - shell
 - prompt
+install: |
+  github_install \
+      --repo justjanne/powerline-go \
+      --match suffix \
+      --asset -linux-amd64 \
+      --type binary \
+      --name powerline-go
+
+  mkdir -p "${HOME}/.local/etc"
+  get_file powerline-go theme.json | \
+      store_file powerline-go-theme.json "${HOME}/.local/etc"
+
+  get_file powerline-go profile.d.powerline-go.sh | \
+      TARGET_BIN="${TARGET_BIN}" envsubst '${TARGET_BIN}' | \
+      store_file powerline-go.sh /etc/profile.d
 files:
 - name: profile.d.powerline-go.sh
   content: |

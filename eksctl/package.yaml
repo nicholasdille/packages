@@ -14,3 +14,10 @@ tags:
 - cloud
 - cluster
 - bootstrap
+install: |
+  github_install \
+      --repo weaveworks/eksctl \
+      --match name \
+      --asset eksctl_Linux_amd64.tar.gz \
+      --type tarball \
+      --include eksctl

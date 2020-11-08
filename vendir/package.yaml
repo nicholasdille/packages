@@ -11,3 +11,10 @@ version:
   pattern: s/^vendir\sversion\s(.+)$/v\1/
 tags:
 - shell
+install: |
+  github_install \
+      --repo k14s/vendir \
+      --match suffix \
+      --asset -linux-amd64 \
+      --type binary \
+      --name vendir

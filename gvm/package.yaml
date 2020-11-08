@@ -12,6 +12,17 @@ tags:
 - version
 - manager
 - version manager
+install: |
+  if ! test -d "${TARGET_BASE}/gvm"; then
+      ${SUDO} git clone https://github.com/moovweb/gvm "${TARGET_BASE}/gvm"
+  fi
+
+  get_file "${PACKAGE}" Dockerfile | \
+      docker build --tag gvm -
+
+  get_file "${PACKAGE}" profile.d.gvm.sh | \
+      TARGET_BASE=${TARGET_BASE} envsubst '${TARGET_BASE}' | \
+      store_file gvm.sh /etc/profile.d
 files:
 - name: Dockerfile
   content: |

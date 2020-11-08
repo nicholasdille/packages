@@ -17,3 +17,13 @@ tags:
 - bootstrap
 - cluster
 - api
+install: |
+  github_install \
+      --name clusterctl \
+      --repo kubernetes-sigs/cluster-api \
+      --match name \
+      --asset clusterctl-linux-amd64 \
+      --type binary
+
+  clusterctl completion bash | \
+      store_completion clusterctl

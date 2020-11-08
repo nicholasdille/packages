@@ -14,3 +14,10 @@ tags:
 - function
 - service
 - serverless
+install: |
+  github_install \
+      --repo openfaas/faas-cli \
+      --match name \
+      --asset faas-cli \
+      --type binary \
+      --name faas-cli

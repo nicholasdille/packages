@@ -11,3 +11,5 @@ tags:
 - container
 - interface
 - ui
+install: |
+  install_node_module renovate

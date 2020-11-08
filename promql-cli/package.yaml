@@ -9,3 +9,13 @@ version:
 tags:
 - prometheus
 - promql
+install: |
+  build_containerized golang <<EOF
+  git clone https://github.com/nalbury/promql-cli
+  cd promql-cli
+  git checkout "${latest_version}"
+  go mod download
+  go build -o promql .
+  cp promql /
+  EOF
+  extract_file_from_container promql

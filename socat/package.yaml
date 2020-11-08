@@ -12,6 +12,27 @@ version:
   pattern: s/^socat\sversion\s(\S+)\s.+$/\1/
 tags:
 - network
+install: |
+  get_file socat Dockerfile | \
+      docker build --tag socat -
+
+  build_containerized socat <<"EOF"
+  cd /tmp
+  git clone https://repo.or.cz/socat.git
+  cd socat
+  TAG=$(git tag | grep -E "^tag-1\." | sort -V -r | head -n 1)
+  git checkout "${TAG}"
+  autoconf
+  ./configure
+  make
+  cp socat /
+  cp doc/socat.1 /
+  EOF
+  extract_file_from_container socat
+
+  docker cp "${container_name}:/tmp/socat/doc/socat.1" - | \
+      tar -x --to-stdout | \
+      sudo tee "${TARGET_BASE}/share/man/man1/socat.1" >/dev/null
 files:
 - name: Dockerfile
   content: |

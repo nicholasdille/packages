@@ -6,3 +6,5 @@ version:
 tags:
 - bookmark
 - shell
+install: |
+  install_python_module pockyt

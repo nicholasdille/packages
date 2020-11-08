@@ -8,3 +8,10 @@ version:
   pattern: s/^(\S+)\s.+$/\1/
 tags:
 - sudo
+install: |
+  github_install \
+      --repo tianon/gosu \
+      --match name \
+      --asset gosu-amd64 \
+      --type binary \
+      --name gosu

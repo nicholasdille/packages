@@ -5,3 +5,5 @@ version:
   latest: v0.3.1 # renovate: datasource=github-releases depName=rastapasta/mapscii
 tags:
 - shell
+install: |
+  install_node_module mapscii

@@ -12,3 +12,10 @@ version:
 tags:
 - container
 - oci
+install: |
+  github_install \
+      --repo opencontainers/runc \
+      --match name \
+      --asset runc.amd64 \
+      --type binary \
+      --name runc

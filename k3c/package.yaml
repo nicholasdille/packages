@@ -12,3 +12,10 @@ tags:
 - build
 - builder
 - image
+install: |
+  github_install \
+      --repo rancher/k3c \
+      --match name \
+      --asset k3c-linux-amd64 \
+      --type binary \
+      --name k3c

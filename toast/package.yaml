@@ -14,3 +14,10 @@ tags:
 - delivery
 - deployment
 - container
+install: |
+  github_install \
+      --repo stepchowfun/toast \
+      --match name \
+      --asset toast-x86_64-unknown-linux-gnu \
+      --type binary \
+      --name toast

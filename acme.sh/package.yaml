@@ -9,3 +9,5 @@ tags:
 - letsencrypt
 - ssl
 - tls
+install: |
+  curl https://get.acme.sh | sh

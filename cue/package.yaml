@@ -11,3 +11,14 @@ version:
   pattern: s/^cue\sversion\s(\S+)\s.+$/v\1/
 tags:
 - configuration
+install: |
+  github_install \
+      --name cue \
+      --repo cuelang/cue \
+      --match suffix \
+      --asset _Linux_x86_64.tar.gz \
+      --type tarball \
+      --include cue
+
+  cue completion bash | \
+      store_completion cue

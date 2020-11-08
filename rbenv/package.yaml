@@ -11,6 +11,26 @@ tags:
 - version
 - manager
 - version manager
+install: |
+  if ! test -d "${TARGET_BASE}/rbenv"; then
+      ${SUDO} git clone https://github.com/rbenv/rbenv "${TARGET_BASE}/rbenv"
+  fi
+  export PATH="${TARGET_BASE}/rbenv/shims:${TARGET_BASE}/rbenv/bin:${PATH}"
+  if ! test -d "${TARGET_BASE}/rbenv/plugins/ruby-build"; then
+      ${SUDO} git clone https://github.com/rbenv/ruby-build "${TARGET_BASE}/rbenv/plugins/ruby-build"
+  fi
+
+  # shellcheck disable=SC2016
+  get_file "${PACKAGE}" profile.d.rbenv.sh | \
+      TARGET_BASE=${TARGET_BASE} envsubst '${TARGET_BASE}' | \
+      store_file rbenv.sh /etc/profile.d/
+
+  # shellcheck disable=SC1091
+  source /etc/profile.d/rbenv.sh
+  curl --silent --location https://github.com/rbenv/rbenv-installer/raw/master/bin/rbenv-doctor | bash
+
+  get_file "${PACKAGE}" Dockerfile | \
+      docker build --tag rbenv -
 files:
 - name: Dockerfile
   content: |

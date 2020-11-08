@@ -3,3 +3,10 @@ description: Go package to make lightweight ASCII line graph ╭┈╯ in comman
 repo: guptarohit/asciigraph
 tags:
 - shell
+install: |
+  github_install \
+      --repo guptarohit/asciigraph \
+      --match suffix \
+      --asset _Linux_x86_64.tar.gz \
+      --type tarball \
+      --include asciigraph
