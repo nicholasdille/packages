@@ -2,7 +2,7 @@ name: age
 description: A simple, modern and secure encryption tool (and Go library) with small explicit keys, no config options, and UNIX-style composability
 repo: FiloSottile/age
 version:
-  latest: v1.0.0-beta4 # renovate: datasource=github-tags depName=FiloSottile/age versioning=regex:^v(?<major>\d+?)\.(?<minor>\d+?)\.(?<patch>\d+?)(-(?<prerelease>.+?))?$
+  latest: v1.0.0-beta5 # renovate: datasource=github-tags depName=FiloSottile/age versioning=regex:^v(?<major>\d+?)\.(?<minor>\d+?)\.(?<patch>\d+?)(-(?<prerelease>.+?))?$
 tags:
 - encryption
 - security
