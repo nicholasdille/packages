@@ -13,4 +13,7 @@ tags:
 - shell
 - configuration
 files:
-- profile.d.direnv.sh
+- name: profile.d.direnv.sh
+  content: |
+    #!/bin/bash
+    eval "$(direnv hook bash)"

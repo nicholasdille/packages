@@ -13,4 +13,7 @@ tags:
 - manager
 - version manager
 files:
-- profile.d.n.sh
+- name: profile.d.n.sh
+  content: |
+    #!/bin/bash
+    export N_PREFIX="${TARGET_BASE}"

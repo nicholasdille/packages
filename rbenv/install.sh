@@ -18,8 +18,7 @@ if ! test -d "${TARGET_BASE}/rbenv/plugins/ruby-build"; then
 fi
 
 # shellcheck disable=SC2016
-curl --silent https://pkg.dille.io/pkg.sh | \
-    bash -s file "${PACKAGE}" profile.d.rbenv.sh | \
+get_file "${PACKAGE}" profile.d.rbenv.sh | \
     TARGET_BASE=${TARGET_BASE} envsubst '${TARGET_BASE}' | \
     store_file rbenv.sh /etc/profile.d/
 
@@ -27,9 +26,7 @@ curl --silent https://pkg.dille.io/pkg.sh | \
 source /etc/profile.d/rbenv.sh
 curl --silent --location https://github.com/rbenv/rbenv-installer/raw/master/bin/rbenv-doctor | bash
 
-export DOCKER_BUILDKIT=1
-curl --silent https://pkg.dille.io/pkg.sh | \
-    bash -s file "${PACKAGE}" Dockerfile | \
+get_file "${PACKAGE}" Dockerfile | \
     docker build --tag rbenv -
 
 echo

@@ -13,4 +13,8 @@ tags:
 - manager
 - version manager
 files:
-- profile.d.nvm.sh
+- name: profile.d.nvm.sh
+  content: |
+    #!/bin/bash
+    export NVM_DIR="${TARGET_BASE}/nvm"
+    source "${NVM_DIR}/nvm.sh"

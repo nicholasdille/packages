@@ -9,9 +9,7 @@ check_installed_version
 check_docker
 unlock_sudo
 
-export DOCKER_BUILDKIT=1
-curl --silent https://pkg.dille.io/pkg.sh | \
-    bash -s file socat Dockerfile | \
+get_file socat Dockerfile | \
     docker build --tag socat -
 
 build_containerized socat <<"EOF"

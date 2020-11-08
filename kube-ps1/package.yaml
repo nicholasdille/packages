@@ -9,4 +9,8 @@ tags:
 - shell
 - prompt
 files:
-- profile.d.kube-ps1.sh
+- name: profile.d.kube-ps1.sh
+  content: |
+    #!/bin/bash
+    source /usr/local/bin/kube-ps1.sh
+    PS1='[\u@\h \W $(kube_ps1)]\$ '

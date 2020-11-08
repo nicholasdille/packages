@@ -12,4 +12,66 @@ tags:
 - test
 - quality
 files:
-- Dockerfile
+- name: yamllint.yaml
+  content: |
+    ---
+
+    yaml-files:
+      - '*.yaml'
+      - '*.yml'
+      - .yamllint
+
+    rules:
+      braces: enable
+      brackets: enable
+      colons:
+        level: warning
+        max-spaces-before: 0
+        max-spaces-after: 1
+      commas:
+        level: warning
+        max-spaces-before: 0
+        min-spaces-after: 1
+        max-spaces-after: 1
+      comments:
+        level: warning
+        require-starting-space: true
+        min-spaces-from-content: 2
+      comments-indentation:
+        level: warning
+      document-end: disable
+      document-start:
+        level: warning
+      empty-lines:
+        level: warning
+        max-start: 0
+        max-end: 1
+      empty-values:
+        level: warning
+        forbid-in-block-mappings: true
+        forbid-in-flow-mappings: true
+      hyphens:
+        level: warning
+        max-spaces-after: 1
+      indentation:
+        spaces: 2
+        indent-sequences: whatever
+      key-duplicates:
+        level: error
+      key-ordering: disable
+      line-length: disable
+      new-line-at-end-of-file:
+        level: warning
+      new-lines:
+        level: warning
+        type: unix
+      octal-values: disable
+      quoted-strings:
+        level: warning
+        quote-type: any
+        required: only-when-needed
+      trailing-spaces:
+        level: error
+      truthy:
+        level: warning
+        check-keys: false

@@ -18,6 +18,5 @@ cp kube-ps1.sh /
 EOF
 extract_file_from_container kube-ps1.sh
 
-curl --silent https://pkg.dille.io/pkg.sh | \
-    bash -s file kube-ps1 profile.d.kube-ps1.sh | \
+get_file kube-ps1 profile.d.kube-ps1.sh | \
     store_file kube-ps1.sh /etc/profile.d

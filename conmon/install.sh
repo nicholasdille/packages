@@ -14,8 +14,7 @@ TAG=$(
         jq --raw-output '.tag_name'
 )
 
-curl --silent https://pkg.dille.io/pkg.sh | \
-    bash -s file conmon Dockerfile | \
+get_file conmon Dockerfile | \
     docker build --tag conmon -
 
 build_containerized conmon <<EOF

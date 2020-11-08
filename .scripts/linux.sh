@@ -216,7 +216,7 @@ function get_package_definition() {
 
     elif test -f "${HOME}/.pkg/packages.json"; then
         >&2 echo "Using local packages.json"
-        jq '.packages[] | select(.name == "go")' packages.json
+        jq --arg package "${package}" '.packages[] | select(.name == $package)' packages.json
 
     else
         >&2 echo "Downloading package.yaml"
@@ -337,4 +337,27 @@ function check_installed_version() {
     fi
 
     echo "Newer version of ${package} available!"
+}
+
+function get_file() {
+    local package=$1
+    local file=$2
+
+    : "${package:=${PACKAGE}}"
+
+    if test -z "${package}"; then
+        echo "ERROR: No package specified."
+        exit 1
+    fi
+    if test -z "${file}"; then
+        echo "ERROR: No file specified."
+        exit 1
+    fi
+
+    get_package_definition "${package}" | \
+        jq \
+            --raw-output \
+            --arg package "${package}" \
+            --arg file "${file}" \
+            '.files[] | select(.name == $file) | .content'
 }

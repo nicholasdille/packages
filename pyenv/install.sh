@@ -22,8 +22,7 @@ if ! test -d "${PYENV_ROOT}/plugins/pyenv-doctor"; then
 fi
 
 export DOCKER_BUILDKIT=1
-curl --silent https://pkg.dille.io/pkg.sh | \
-    bash -s file "${PACKAGE}" Dockerfile | \
+get_file "${PACKAGE}" Dockerfile | \
     docker build --tag pyenv -
 
 docker run --rm --name pyenv \
@@ -33,9 +32,7 @@ docker run --rm --name pyenv \
     pyenv \
     pyenv doctor
 
-# shellcheck disable=SC2016
-curl --silent https://pkg.dille.io/pkg.sh | \
-    bash -s file "${PACKAGE}" profile.d.pyenv.sh | \
+get_file "${PACKAGE}" profile.d.pyenv.sh | \
     TARGET_BASE="${TARGET_BASE}" envsubst '${TARGET_BASE}' | \
     store_file pyenv.sh /etc/profile.d
 

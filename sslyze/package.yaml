@@ -13,4 +13,7 @@ tags:
 - test
 - quality
 files:
-- profile.d.sslyze.sh
+- name: profile.d.sslyze.sh
+  content: |
+    #!/bin/bash
+    alias sslyze="python3 -m sslyze"

@@ -9,4 +9,7 @@ version:
 tags:
 - go
 files:
-- profile.d.go.sh
+- name: profile.d.go.sh
+  content: |
+    #!/bin/bash
+    export PATH="${TARGET_BASE}/gvm/gos/${GO_VERSION}/bin:${PATH}"

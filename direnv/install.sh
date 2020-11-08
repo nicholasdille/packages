@@ -15,6 +15,5 @@ github_install \
     --asset direnv.linux-amd64 \
     --type binary
 
-curl --silent https://pkg.dille.io/pkg.sh | \
-    bash -s file direnv profile.d.direnv.sh | \
+get_file direnv profile.d.direnv.sh | \
     store_file direnv.sh /etc/profile.d

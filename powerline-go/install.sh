@@ -16,12 +16,9 @@ github_install \
     --name powerline-go
 
 mkdir -p "${HOME}/.local/etc"
-curl --silent https://pkg.dille.io/pkg.sh | \
-    bash -s file powerline-go theme.json | \
+get_file powerline-go theme.json | \
     store_file powerline-go-theme.json "${HOME}/.local/etc"
 
-# shellcheck disable=SC2016
-curl --silent https://pkg.dille.io/pkg.sh | \
-    bash -s file powerline-go profile.d.powerline-go.sh | \
+get_file powerline-go profile.d.powerline-go.sh | \
     TARGET_BIN="${TARGET_BIN}" envsubst '${TARGET_BIN}' | \
     store_file powerline-go.sh /etc/profile.d

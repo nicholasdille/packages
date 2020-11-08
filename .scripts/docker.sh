@@ -1,5 +1,7 @@
 #!/bin/bash
 
+export DOCKER_BUILDKIT=1
+
 container_name=$(basename "$(mktemp --dry-run)")
 remove_temporary_container() {
     echo "Cleaning up temporary container..."

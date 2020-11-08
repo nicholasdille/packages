@@ -19,7 +19,6 @@ echo "https://github.com/tj/n/raw/${TAG}/bin/n" | \
     make_executable
 
 # shellcheck disable=SC2016
-curl --silent https://pkg.dille.io/pkg.sh | \
-    bash -s file "${PACKAGE}" profile.d.n.sh | \
+get_file "${PACKAGE}" profile.d.n.sh | \
     TARGET_BASE="${TARGET_BASE}" envsubst '${TARGET_BASE}' | \
     store_file n.sh /etc/profile.d
