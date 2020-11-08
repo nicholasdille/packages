@@ -10,7 +10,7 @@ tags:
 - cloud
 - deployment
 install: |
-  echo "https://releases.hashicorp.com/terraform/${latest_version#v}/terraform_${latest_version#v}_linux_amd64.zip" | \
+  echo "https://releases.hashicorp.com/terraform/${requested_version#v}/terraform_${requested_version#v}_linux_amd64.zip" | \
       download_file | \
       store_file "terraform.zip" "${temporary_directory}"
   unzip_file "${temporary_directory}/terraform.zip"

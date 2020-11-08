@@ -15,7 +15,7 @@ install: |
   require rbenv
   source /etc/profile.d/rbenv.sh
 
-  VERSION=${latest_version#v}
+  VERSION=${requested_version#v}
   VERSION=${VERSION//_/.}
 
   docker run --rm --name rbenv \

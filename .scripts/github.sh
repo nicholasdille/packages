@@ -33,41 +33,23 @@ function github_get_repo_description() {
         jq --raw-output '.description'
 }
 
-function github_get_releases() {
+function github_get_release() {
     local project=$1
+    local version=$2
+    : "${version:=${requested_version}}"
 
     if test -z "${project}"; then
         echo "ERROR: Project not specified."
         return 1
     fi
 
-    >&2 echo "Fetching releases for ${project}..."
-    github_api "${project}" "/releases"
-}
-
-function github_get_tags() {
-    local project=$1
-
-    if test -z "${project}"; then
-        echo "ERROR: Project not specified."
+    if test -z "${version}"; then
+        echo "ERROR: Release not specified."
         return 1
     fi
 
-    >&2 echo "Fetching tags for ${project}..."
-    github_api "${project}" "/git/matching-refs/tags"
-}
-
-function github_find_latest_release() {
-    local project=$1
-
-    if test -z "${project}"; then
-        echo "ERROR: Project not specified."
-        return 1
-    fi
-
-    >&2 echo "Fetching latest release for ${project}..."
-    github_api "${project}" "/releases/latest" | \
-        tee >(cat | jq --raw-output '.tag_name' | xargs -I{} echo "Installing version <{}>" 1>&2)
+    >&2 echo "Fetching release ${version} for ${project}..."
+    github_api "${project}" "/releases/tags/${version}"
 }
 
 function github_resolve_assets() {
@@ -118,12 +100,6 @@ function github_get_asset_download_url() {
     cat | \
         jq --raw-output --compact-output --monochrome-output '.browser_download_url' | \
         tee >(cat | xargs -I{} echo "Downloading from <{}>" 1>&2)
-}
-
-function github_select_latest_tag {
-    >&2 echo "Selecting latest tag..."
-    cat | \
-        jq --raw-output '.[].ref' | cut -d/ -f3 | sort -V | tail -n 1
 }
 
 function help_github_install() {
@@ -219,7 +195,7 @@ function github_install() {
         ;;
     esac
 
-    github_find_latest_release "${repo}" | \
+    github_get_release "${repo}" "${requested_version}" | \
         github_resolve_assets | \
         case "${match}" in
             name)

@@ -9,7 +9,7 @@ version:
 tags:
 - console
 install: |
-  github_find_latest_release sharkdp/bat | \
+  github_get_release sharkdp/bat | \
       github_resolve_assets | \
       github_select_asset_by_suffix -x86_64-unknown-linux-gnu.tar.gz | \
       github_get_asset_download_url | \

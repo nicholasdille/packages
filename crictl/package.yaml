@@ -11,7 +11,7 @@ tags:
 - runtime
 - cri
 install: |
-  github_find_latest_release kubernetes-sigs/cri-tools | \
+  github_get_release kubernetes-sigs/cri-tools | \
       github_resolve_assets | \
       run_filters \
           "github_select_asset_by_prefix crictl-" \

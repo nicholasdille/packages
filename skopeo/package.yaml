@@ -14,7 +14,7 @@ install: |
   build_containerized golang <<EOF
   git clone https://github.com/containers/skopeo
   cd skopeo
-  git checkout ${latest_version}
+  git checkout ${requested_version}
   make bin/skopeo DISABLE_CGO=1
   cp bin/skopeo /
   EOF

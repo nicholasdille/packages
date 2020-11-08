@@ -17,9 +17,9 @@ install: |
   build_containerized golang <<EOF
   git clone https://github.com/cloudflare/cloudflare-go /go/src/github.com/cloudflare/cloudflare-go
   cd /go/src/github.com/cloudflare/cloudflare-go
-  git checkout ${latest_version}
+  git checkout ${requested_version}
   go mod download
-  go build -ldflags "-X main.version=${latest_version}" github.com/cloudflare/cloudflare-go/cmd/flarectl
+  go build -ldflags "-X main.version=${requested_version}" github.com/cloudflare/cloudflare-go/cmd/flarectl
   cp flarectl /
   EOF
   extract_file_from_container flarectl

@@ -13,7 +13,7 @@ tags:
 - validate
 - analysis
 install: |
-  github_find_latest_release koalaman/shellcheck | \
+  github_get_release koalaman/shellcheck | \
       github_resolve_assets | \
       github_select_asset_by_suffix .linux.x86_64.tar.xz | \
       github_get_asset_download_url | \

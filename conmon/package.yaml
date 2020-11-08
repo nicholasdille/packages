@@ -17,7 +17,7 @@ install: |
   cd /tmp
   git clone https://github.com/containers/conmon
   cd conmon
-  git checkout "${latest_version}"
+  git checkout "${requested_version}"
   PREFIX=/usr/local make all
   cp bin/conmon /
   EOF

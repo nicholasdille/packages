@@ -15,7 +15,7 @@ install: |
   apt-get -y install --no-install-recommends texinfo
   git clone https://github.com/erkin/ponysay
   cd ponysay
-  git checkout ${latest_version}
+  git checkout ${requested_version}
   ./setup.py --freedom=partial install --dest-dir=/opt/cowsay --prefix=${TARGET_BASE}
   EOF
   # shellcheck disable=SC2154

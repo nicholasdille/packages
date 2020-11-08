@@ -7,5 +7,5 @@ tags:
 - wsl
 install: |
   git clone https://github.com/wslutilities/wslu "${temporary_directory}"
-  git checkout "${latest_version}"
+  git checkout "${requested_version}"
   ${SUDO} PREFIX=/usr/local make all install

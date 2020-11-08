@@ -9,7 +9,7 @@ tags:
 - context
 - namespaces
 install: |
-  github_find_latest_release ahmetb/kubectx | \
+  github_get_release ahmetb/kubectx | \
       github_resolve_assets | \
       github_select_asset_by_prefix kubectx | \
       github_select_asset_by_suffix _linux_x86_64.tar.gz | \

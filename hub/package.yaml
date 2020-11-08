@@ -9,7 +9,7 @@ version:
 tags:
 - github
 install: |
-  github_find_latest_release github/hub | \
+  github_get_release github/hub | \
       github_resolve_assets | \
       run_tasks \
           "\

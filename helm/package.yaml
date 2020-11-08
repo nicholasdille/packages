@@ -20,7 +20,7 @@ tags:
 - expansion
 - configuration
 install: |
-  curl --location --fail "https://get.helm.sh/helm-${latest_version}-linux-amd64.tar.gz" | \
+  curl --location --fail "https://get.helm.sh/helm-${requested_version}-linux-amd64.tar.gz" | \
       ${SUDO} tar -xz --strip-components=1 -C "${TARGET_BIN}" linux-amd64/helm
 
   helm completion bash | \

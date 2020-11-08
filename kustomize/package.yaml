@@ -19,8 +19,7 @@ tags:
 - package
 - yaml
 install: |
-  github_get_releases kubernetes-sigs/kustomize | \
-      jq --raw-output 'map(select(.tag_name | startswith("kustomize/"))) | first' | \
+  github_get_release kubernetes-sigs/kustomize | \
       github_resolve_assets | \
       github_select_asset_by_suffix _linux_amd64.tar.gz | \
       github_get_asset_download_url | \

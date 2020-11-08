@@ -11,7 +11,7 @@ tags:
 - runtime
 - security
 install: |
-  github_find_latest_release kata-containers/runtime | \
+  github_get_release kata-containers/runtime | \
       github_resolve_assets | \
       github_select_asset_by_suffix -x86_64.tar.xz | \
       github_get_asset_download_url | \

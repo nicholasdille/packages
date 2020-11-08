@@ -38,7 +38,7 @@ install: |
 
   ${SUDO} mkdir --parents "${DOCKER_CLI_DIR}"
 
-  github_find_latest_release docker/buildx | \
+  github_get_release docker/buildx | \
       github_resolve_assets | \
       github_select_asset_by_suffix .linux-amd64 | \
       github_get_asset_download_url | \

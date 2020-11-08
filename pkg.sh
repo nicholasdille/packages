@@ -26,9 +26,9 @@ show_help() {
 
 show_help_install() {
     echo
-    echo "Usage: sh ./pkg.sh install <package>"
-    echo "       ./pkg.sh install <package>"
-    echo "       curl https://pkg.dille.io/pkg.sh | sh -s install <package>"
+    echo "Usage: sh ./pkg.sh install <package>[,<package>]"
+    echo "       ./pkg.sh install <package>[,<package>]"
+    echo "       curl https://pkg.dille.io/pkg.sh | sh -s install <package>[,<package>]"
     echo
 }
 
@@ -122,28 +122,43 @@ handle_inspect() {
 }
 
 handle_install() {
-    package=$1
-    if test -z "${package}"; then
+    if test "$#" -eq 0; then
         echo "ERROR: No package specified."
         show_help_install
         exit 1
     fi
 
-    working_directory="${PWD}"
+    for package_spec in "$@"; do
+        local package
+        package=$(echo ${package_spec} | cut -d@ -f1)
+        local requested_version
+        requested_version=$(echo ${package_spec} | cut -d@ -f2)
+        if test "${requested_version}" == "${package}"; then
+            unset requested_version
+        fi
+        echo "Got package=${package} version=${requested_version}."
 
-    if test -f "${working_directory}/.scripts/source.sh"; then
-        echo "LOCAL SOURCE"
-        source "${working_directory}/.scripts/source.sh"
-    else
-        source "${HOME}/.pkg/source.sh"
-    fi
+        working_directory="${PWD}"
 
-    check_installed_version "${package}"
-    check_docker
-    unlock_sudo
-    latest_version=$(get_latest_version "${package}")
+        if test -f "${working_directory}/.scripts/source.sh"; then
+            source "${working_directory}/.scripts/source.sh"
+        else
+            source "${HOME}/.pkg/source.sh"
+        fi
 
-    eval "$(get_install_script "${package}")"
+        check_installed_version "${package}"
+        check_docker
+        unlock_sudo
+
+        latest_version=$(get_latest_version "${package}")
+        if test -z "${requested_version}"; then
+            requested_version="${latest_version}"
+        fi
+
+        echo "Installing ${package} version ${requested_version}..."
+
+        eval "$(get_install_script "${package}")"
+    done
 }
 
 handle_list() {

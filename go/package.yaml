@@ -14,7 +14,7 @@ install: |
   ${SUDO} bash -c "source /etc/profile.d/gvm.sh; gvm install \"${TAG}\" --binary"
 
   get_file "${PACKAGE}" profile.d.go.sh | \
-      TARGET_BASE="${TARGET_BASE}" GO_VERSION="${latest_version}" envsubst '${TARGET_BASE},${GO_VERSION}' | \
+      TARGET_BASE="${TARGET_BASE}" GO_VERSION="${requested_version}" envsubst '${TARGET_BASE},${GO_VERSION}' | \
       store_file go.sh /etc/profile.d
 files:
 - name: profile.d.go.sh

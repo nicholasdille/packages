@@ -11,7 +11,7 @@ install: |
   build_containerized golang <<EOF
   git clone https://github.com/regclient/regclient
   cd regclient
-  git checkout ${latest_version}
+  git checkout ${requested_version}
   go build -ldflags "-linkmode external -extldflags -static" -a -o regctl ./cmd/regctl/
   cp regctl /
   EOF

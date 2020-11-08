@@ -17,7 +17,7 @@ install: |
       ${SUDO} git clone https://github.com/nvm-sh/nvm "${TARGET_BASE}/nvm"
   fi
   pushd "${TARGET_BASE}/nvm"
-  git checkout "${latest_version}"
+  git checkout "${requested_version}"
   popd
 
   get_file "${PACKAGE}" profile.d.nvm.sh | \

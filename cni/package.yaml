@@ -15,7 +15,7 @@ tags:
 - cni
 install: |
   ${SUDO} mkdir -p /opt/cni/bin
-  github_find_latest_release containernetworking/plugins | \
+  github_get_release containernetworking/plugins | \
       github_resolve_assets | \
       run_filters \
           "github_select_asset_by_prefix cni-plugins-linux-amd64" \

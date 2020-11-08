@@ -12,7 +12,7 @@ tags:
 install: |
   docker create -i --name "${container_name}" ubuntu:bionic bash -xe
 
-  github_find_latest_release jonas/tig | \
+  github_get_release jonas/tig}" | \
       github_resolve_assets | \
       github_select_asset_by_suffix .tar.gz | \
       github_get_asset_download_url | \

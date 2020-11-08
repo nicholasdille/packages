@@ -7,8 +7,7 @@ tags:
 - encryption
 - security
 install: |
-  github_get_releases containerssh/containerssh | \
-      jq '.[0]' | \
+  github_get_release containerssh/containerssh | \
       github_resolve_assets | \
       github_select_asset_by_suffix _linux_amd64.tar.gz | \
       github_get_asset_download_url | \

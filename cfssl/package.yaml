@@ -12,7 +12,7 @@ tags:
 - tls
 - pki
 install: |
-  github_find_latest_release cloudflare/cfssl | \
+  github_get_release cloudflare/cfssl | \
       github_resolve_assets | \
       github_select_asset_by_suffix _linux_amd64 | \
       run_tasks \

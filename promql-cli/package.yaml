@@ -13,7 +13,7 @@ install: |
   build_containerized golang <<EOF
   git clone https://github.com/nalbury/promql-cli
   cd promql-cli
-  git checkout "${latest_version}"
+  git checkout "${requested_version}"
   go mod download
   go build -o promql .
   cp promql /

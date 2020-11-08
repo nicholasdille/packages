@@ -22,7 +22,7 @@ install: |
       --type binary
 
   ${SUDO} mkdir -p "${TARGET}/etc/bash_completion.d"
-  github_find_latest_release docker/compose | \
+  github_get_release docker/compose | \
       jq --raw-output '.tag_name' | \
       xargs -I{} curl --location --fail https://github.com/docker/compose/raw/{}/contrib/completion/bash/docker-compose | \
       store_completion docker-compose

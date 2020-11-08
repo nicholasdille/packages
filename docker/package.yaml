@@ -17,14 +17,12 @@ tags:
 - runtime
 - image
 install: |
-  github_find_latest_release docker/docker-ce | \
+  github_get_release docker/docker-ce | \
       jq --raw-output '.name' | \
       xargs -I{} curl --location --fail https://download.docker.com/linux/static/stable/x86_64/docker-{}.tgz | \
       untar_file --strip-components=1
 
-  github_find_latest_release docker/docker-ce | \
-      jq --raw-output '.tag_name' | \
-      xargs -I{} curl --location --fail https://raw.githubusercontent.com/docker/cli/{}/contrib/completion/bash/docker | \
+  curl --location --fail "https://raw.githubusercontent.com/docker/cli/${requested_version}/contrib/completion/bash/docker" | \
       store_completion docker
 
   : "${DOCKER_CONFIG:=${HOME}/.docker}"

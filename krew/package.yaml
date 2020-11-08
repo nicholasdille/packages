@@ -14,7 +14,7 @@ tags:
 - k8s
 - plugins
 install: |
-  github_find_latest_release kubernetes-sigs/krew | \
+  github_get_release kubernetes-sigs/krew | \
       github_resolve_assets | \
       github_select_asset_by_name krew.tar.gz | \
       github_get_asset_download_url | \
