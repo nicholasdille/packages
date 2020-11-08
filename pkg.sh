@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 set -o errexit
 
@@ -130,9 +130,9 @@ handle_install() {
 
     for package_spec in "$@"; do
         local package
-        package=$(echo ${package_spec} | cut -d@ -f1)
+        package=$(echo "${package_spec}" | cut -d@ -f1)
         local requested_version
-        requested_version=$(echo ${package_spec} | cut -d@ -f2)
+        requested_version=$(echo "${package_spec}" | cut -d@ -f2)
         if test "${requested_version}" == "${package}"; then
             unset requested_version
         fi
@@ -140,11 +140,18 @@ handle_install() {
 
         working_directory="${PWD}"
 
-        if test -f "${working_directory}/.scripts/source.sh"; then
-            source "${working_directory}/.scripts/source.sh"
-        else
-            source "${HOME}/.pkg/source.sh"
-        fi
+        # shellcheck source=.scripts/variables.sh
+        source "${HOME}/.pkg/variables.sh"
+        # shellcheck source=.scripts/control.sh
+        source "${HOME}/.pkg/control.sh"
+        # shellcheck source=.scripts/linux.sh
+        source "${HOME}/.pkg/linux.sh"
+        # shellcheck source=.scripts/github.sh
+        source "${HOME}/.pkg/github.sh"
+        # shellcheck source=.scripts/codeberg.sh
+        source "${HOME}/.pkg/codeberg.sh"
+        # shellcheck source=.scripts/docker.sh
+        source "${HOME}/.pkg/docker.sh"
 
         check_installed_version "${package}"
         check_docker

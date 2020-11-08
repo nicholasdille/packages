@@ -6,6 +6,7 @@ function remove_temporary_directory() {
     fi
 }
 temporary_directory=$(mktemp -d)
+# shellcheck disable=SC2164
 cd "${temporary_directory}"
 cleanup_tasks+=("remove_temporary_directory")
 
@@ -208,7 +209,7 @@ function get_package_definition() {
         exit 1
     fi
 
-    >&2 echo $(pwd)
+    # shellcheck disable=SC2154
     if test -f "${working_directory}/${package}/package.yaml"; then
         >&2 echo "Using local package.yaml"
         yq --tojson read "${working_directory}/${package}/package.yaml"
@@ -259,6 +260,7 @@ function get_installed_version() {
         return
     fi
 
+    # shellcheck disable=SC2086
     ${TARGET_BIN}/${version_command} 2>/dev/null | \
         grep "${version_filter}" | \
         sed -E "${version_pattern}"

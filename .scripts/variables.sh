@@ -10,7 +10,7 @@
 
 cleanup_tasks=()
 function cleanup() {
-    for cleanup_task in ${cleanup_tasks[@]}; do
+    for cleanup_task in "${cleanup_tasks[@]}"; do
         ${cleanup_task}
     done
 }
