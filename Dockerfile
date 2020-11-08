@@ -13,6 +13,7 @@ RUN apt-get update \
         bash \
         curl \
         jq \
+        unzip \
         git \
         ca-certificates
 WORKDIR /tmp
