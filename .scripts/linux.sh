@@ -203,32 +203,24 @@ function install_ruby_module() {
 
 function get_package_definition() {
     local package=$1
-    : "${package:=${PACKAGE}}"
-
     if test -z "${package}"; then
         echo "ERROR: No package specified."
         exit 1
     fi
 
-    if test -f "${SCRIPT_BASE_DIR}/package.yaml"; then
+    >&2 echo $(pwd)
+    if test -f "${working_directory}/${package}/package.yaml"; then
         >&2 echo "Using local package.yaml"
-        yq --tojson read "${SCRIPT_BASE_DIR}/package.yaml"
-
-    elif test -f "${HOME}/.pkg/packages.json"; then
-        >&2 echo "Using local packages.json"
-        jq --arg package "${package}" '.packages[] | select(.name == $package)' packages.json
+        yq --tojson read "${working_directory}/${package}/package.yaml"
 
     else
-        >&2 echo "Downloading package.yaml"
-        curl --silent "https://pkg.dille.io/${package}/package.yaml" | \
-            yq --tojson read -
+        get_packages | \
+            jq --arg package "${package}" '.packages[] | select(.name == $package)'
     fi
 }
 
 function get_installed_version() {
     local package=$1
-    : "${package:=${PACKAGE}}"
-
     if test -z "${package}"; then
         echo "ERROR: No package specified."
         exit 1
@@ -243,7 +235,7 @@ function get_installed_version() {
             jq --raw-output .version.command
     )
     if test -z "${version_command}" || test "${version_command}" == "null"; then
-        >&2 echo "ERROR: No version command specified for package <${package}>."
+        >&2 echo "WARNING: No version command specified for package <${package}>."
         return
     fi
 
@@ -253,7 +245,7 @@ function get_installed_version() {
             jq --raw-output '.version.filter'
     )
     if test -z "${version_filter}" || test "${version_filter}" == "null"; then
-        >&2 echo "ERROR: No version filter specified for package <${package}>."
+        >&2 echo "WARNING: No version filter specified for package <${package}>."
         return
     fi
 
@@ -263,7 +255,7 @@ function get_installed_version() {
             jq --raw-output '.version.pattern'
     )
     if test -z "${version_pattern}" || test "${version_pattern}" == "null"; then
-        >&2 echo "ERROR: No version pattern specified for package <${package}>."
+        >&2 echo "WARNING: No version pattern specified for package <${package}>."
         return
     fi
 
@@ -274,18 +266,13 @@ function get_installed_version() {
 
 function get_latest_version() {
     local package=$1
-    : "${package:=${PACKAGE}}"
-
     if test -z "${package}"; then
         echo "ERROR: No package specified."
         exit 1
     fi
 
     local PACKAGE_JSON
-    PACKAGE_JSON=$(
-        curl --silent "https://pkg.dille.io/${package}/package.yaml" | \
-            yq --tojson read -
-    )
+    PACKAGE_JSON=$(get_package_definition "${package}")
 
     echo "${PACKAGE_JSON}" | \
         jq --raw-output '.version.latest'
@@ -293,8 +280,6 @@ function get_latest_version() {
 
 function latest_version_installed() {
     local package=$1
-    : "${package:=${PACKAGE}}"
-
     if test -z "${package}"; then
         echo "ERROR: No package specified."
         exit 1
@@ -303,14 +288,14 @@ function latest_version_installed() {
     local installed_version
     installed_version=$(get_installed_version "${package}")
     if test -z "${installed_version}"; then
-        echo "ERROR: Unable to determine installed version."
+        echo "WARNING: Unable to determine installed version."
         return 1
     fi
 
     local latest_version
     latest_version=$(get_latest_version "${package}")
     if test -z "${latest_version}"; then
-        echo "ERROR: Unable to determine latest version."
+        echo "WARNING: Unable to determine latest version."
         return 1
     fi
 
@@ -324,8 +309,6 @@ function latest_version_installed() {
 
 function check_installed_version() {
     local package=$1
-    : "${package:=${PACKAGE}}"
-
     if test -z "${package}"; then
         echo "ERROR: No package specified."
         exit 1
@@ -335,20 +318,16 @@ function check_installed_version() {
         echo "Latest version of ${package} is already installed."
         exit
     fi
-
-    echo "Newer version of ${package} available!"
 }
 
 function get_file() {
     local package=$1
-    local file=$2
-
-    : "${package:=${PACKAGE}}"
-
     if test -z "${package}"; then
         echo "ERROR: No package specified."
         exit 1
     fi
+
+    local file=$2
     if test -z "${file}"; then
         echo "ERROR: No file specified."
         exit 1
@@ -357,7 +336,19 @@ function get_file() {
     get_package_definition "${package}" | \
         jq \
             --raw-output \
-            --arg package "${package}" \
             --arg file "${file}" \
             '.files[] | select(.name == $file) | .content'
+}
+
+function get_install_script() {
+    local package=$1
+    if test -z "${package}"; then
+        echo "ERROR: No package specified."
+        exit 1
+    fi
+
+    get_package_definition "${package}" | \
+        jq \
+            --raw-output \
+            '.install'
 }

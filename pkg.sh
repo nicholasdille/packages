@@ -3,6 +3,7 @@
 set -o errexit
 
 MY_REPO=nicholasdille/packages
+MY_VERSION=master
 
 show_help() {
     echo
@@ -59,9 +60,11 @@ get_packages() {
     if test -f "${HOME}/.pkg/packages.json"; then
         >&2 echo "Using cached packages.json from <${HOME}/.pkg/>. Please update regularly using <pkg cache>."
         cat "${HOME}/.pkg/packages.json"
+
     elif test -f packages.json; then
         >&2 echo "Using local copy of packages.json in current directory. If you are not a contributor, please run <pkg cache>."
         cat packages.json
+
     else
         echo "ERROR: Unable to find packages.json. Run <pkg cache> first."
         exit 1
@@ -114,19 +117,33 @@ handle_inspect() {
         exit 1
     fi
 
-    curl --silent "https://pkg.dille.io/${package}/package.yaml"
+    get_packages | \
+        jq --arg package "${package}" '.packages[] | select(.name == $package)'
 }
 
 handle_install() {
     package=$1
-
     if test -z "${package}"; then
         echo "ERROR: No package specified."
         show_help_install
         exit 1
     fi
 
-    curl --silent "https://pkg.dille.io/${package}/install.sh" | bash
+    working_directory="${PWD}"
+
+    if test -f "${working_directory}/.scripts/source.sh"; then
+        echo "LOCAL SOURCE"
+        source "${working_directory}/.scripts/source.sh"
+    else
+        source "${HOME}/.pkg/source.sh"
+    fi
+
+    check_installed_version "${package}"
+    check_docker
+    unlock_sudo
+    latest_version=$(get_latest_version "${package}")
+
+    eval "$(get_install_script "${package}")"
 }
 
 handle_list() {
@@ -268,7 +285,7 @@ prepare() {
     : "${VERSION:=latest}"
     if test -z "${TAG}"; then
         TAG=$(
-                curl --silent https://api.github.com/repos/${MY_REPO}/releases | \
+                curl --silent "https://api.github.com/repos/${MY_REPO}/releases" | \
                     jq --raw-output 'map(select(.tag_name | startswith("packages/"))) | .[0].tag_name'
             )
     fi
@@ -276,6 +293,16 @@ prepare() {
         echo "ERROR: Failed to determine tag from version ${VERSION}."
         exit 1
     fi
+
+    mkdir -p "${HOME}/.pkg"
+    for lib in variables source codeberg control docker github linux; do
+        if ! test -f "${HOME}/.pkg/${lib}.sh"; then
+            curl "https://github.com/${MY_REPO}/raw/${MY_VERSION}/.scripts/${lib}.sh" \
+                --silent \
+                --location  \
+                >"${HOME}/.pkg/${lib}.sh"
+        fi
+    done
 }
 
 main() {
