@@ -325,6 +325,8 @@ prepare() {
                 >"${HOME}/.pkg/${lib}.sh"
         fi
     done
+
+    handle_cache
 }
 
 main() {
