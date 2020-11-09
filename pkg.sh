@@ -307,7 +307,7 @@ handle_version() {
 
 prepare() {
     mkdir -p "${HOME}/.pkg"
-    for lib in variables source codeberg control docker github linux; do
+    for lib in variables codeberg control docker github linux; do
         if ! test -f "${HOME}/.pkg/${lib}.sh"; then
             curl "https://github.com/${MY_REPO}/raw/${MY_VERSION}/.scripts/${lib}.sh" \
                 --silent \
