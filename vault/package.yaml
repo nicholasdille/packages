@@ -15,4 +15,3 @@ install:
         download_file | \
         store_file "vault.zip" "${temporary_directory}"
     unzip_file "${temporary_directory}/vault.zip"
-    ${SUDO} mv vault "${TARGET_BIN}"

@@ -15,4 +15,3 @@ install:
         download_file | \
         store_file "terraform.zip" "${temporary_directory}"
     unzip_file "${temporary_directory}/terraform.zip"
-    ${SUDO} mv terraform "${TARGET_BIN}"
