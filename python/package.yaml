@@ -22,4 +22,4 @@ install:
         pyenv \
         pyenv install "${requested_version#v}" --skip-existing
     ${SUDO} bash -c "source /etc/profile.d/pyenv.sh; ${PYENV_ROOT}/bin/pyenv rehash"
-    ${SUDO} bash -c "source /etc/profile.d/pyenv.sh; ${PYENV_ROOT}/bin/pyenv global ${TAG#v}"
+    ${SUDO} bash -c "source /etc/profile.d/pyenv.sh; ${PYENV_ROOT}/bin/pyenv global ${requested_version#v}"
