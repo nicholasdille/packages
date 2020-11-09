@@ -7,7 +7,9 @@ version:
   filter: ^[[:digit:]]
   pattern: s/^(.+)$/\1/
 tags:
-  - configuration
+  - slides
+  - pdf
+  - html
 install:
   script: |-
     install_node_module decktape
