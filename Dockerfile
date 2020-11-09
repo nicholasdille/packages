@@ -6,7 +6,7 @@ RUN apk add --update-cache \
         git
 WORKDIR /tmp
 
-FROM ubuntu:20.04 as ubuntu
+FROM ubuntu:20.04@sha256:1d7b639619bdca2d008eca2d5293e3c43ff84cbee597ff76de3b7a7de3e84956 as ubuntu
 RUN apt-get update \
  && apt-get -y install \
         bash \
