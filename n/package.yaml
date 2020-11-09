@@ -24,6 +24,6 @@ install:
         store_file n | \
         make_executable
 
-    get_file "${PACKAGE}" profile.d.n.sh | \
+    get_file n profile.d.n.sh | \
         TARGET_BASE="${TARGET_BASE}" envsubst '${TARGET_BASE}' | \
         store_file n.sh /etc/profile.d

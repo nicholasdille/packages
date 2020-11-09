@@ -62,7 +62,7 @@ install:
     fi
 
     export DOCKER_BUILDKIT=1
-    get_file "${PACKAGE}" Dockerfile | \
+    get_file pyenv Dockerfile | \
         docker build --tag pyenv -
 
     docker run --rm --name pyenv \
@@ -72,6 +72,6 @@ install:
         pyenv \
         pyenv doctor
 
-    get_file "${PACKAGE}" profile.d.pyenv.sh | \
+    get_file pyenv profile.d.pyenv.sh | \
         TARGET_BASE="${TARGET_BASE}" envsubst '${TARGET_BASE}' | \
         store_file pyenv.sh /etc/profile.d
