@@ -1,10 +1,16 @@
-FROM alpine:3.12@sha256:d7342993700f8cd7aba8496c2d0e57be0666e80b4c441925fc6f9361fa81d10e
+FROM alpine:3.12@sha256:d7342993700f8cd7aba8496c2d0e57be0666e80b4c441925fc6f9361fa81d10e as alpine
 RUN apk add --update-cache \
         curl \
         bash \
         jq \
-        git \
-        go
+        git
 WORKDIR /tmp
-COPY . .
-RUN for dir in $(find . -mindepth 1 -maxdepth 1 -type d); do bash ${dir}/install.sh; done
+
+FROM ubuntu:20.04 as ubuntu
+RUN apt-get update \
+ && apt-get -y install \
+        bash \
+        curl \
+        jq \
+        git
+WORKDIR /tmp
