@@ -2,6 +2,14 @@
 
 Installation script for tools I use regularly
 
+## Prerequisites
+
+Most functionality: bash, jq, curl
+
+`list` command: column
+
+Some packages: envsubst, unzip
+
 ## Usage
 
 Install the package manager:
