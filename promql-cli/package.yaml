@@ -7,15 +7,17 @@ version:
   filter: ^promql
   pattern: s/^promql\sversion\s(.+)$/\1/
 tags:
-- prometheus
-- promql
-install: |
-  build_containerized golang <<EOF
-  git clone https://github.com/nalbury/promql-cli
-  cd promql-cli
-  git checkout "${requested_version}"
-  go mod download
-  go build -o promql .
-  cp promql /
-  EOF
-  extract_file_from_container promql
+  - prometheus
+  - promql
+install:
+  docker: true
+  script: |-
+    build_containerized golang <<EOF
+    git clone https://github.com/nalbury/promql-cli
+    cd promql-cli
+    git checkout "${requested_version}"
+    go mod download
+    go build -o promql .
+    cp promql /
+    EOF
+    extract_file_from_container promql

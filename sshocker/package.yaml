@@ -7,17 +7,18 @@ version:
   filter: ^sshocker
   pattern: s/^sshocker\sversion\s(.+)$/v\1/
 tags:
-- docker
-- container
-- ssh
-- sshfs
-- forward
-- volume
-- mount
-install: |
-  github_install \
-      --repo AkihiroSuda/sshocker \
-      --match name \
-      --asset sshocker-Linux-x86_64 \
-      --type binary \
-      --name sshocker
+  - docker
+  - container
+  - ssh
+  - sshfs
+  - forward
+  - volume
+  - mount
+install:
+  script: |-
+    github_install \
+        --repo AkihiroSuda/sshocker \
+        --match name \
+        --asset sshocker-Linux-x86_64 \
+        --type binary \
+        --name sshocker

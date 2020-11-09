@@ -4,11 +4,13 @@ repo: krishicks/yaml-patch
 version:
   latest: v0.0.10 # renovate: datasource=github-releases depName=krishicks/yaml-patch
 tags:
-- yaml
-- patch
-install: |
-  build_containerized golang <<EOF
-  go get github.com/krishicks/yaml-patch/cmd/yaml-patch
-  cp /go/bin/yaml-patch /
-  EOF
-  extract_file_from_container yaml-patch
+  - yaml
+  - patch
+install:
+  docker: true
+  script: |-
+    build_containerized golang <<EOF
+    go get github.com/krishicks/yaml-patch/cmd/yaml-patch
+    cp /go/bin/yaml-patch /
+    EOF
+    extract_file_from_container yaml-patch

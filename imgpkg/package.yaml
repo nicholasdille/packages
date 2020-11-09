@@ -2,23 +2,24 @@ name: imgpkg
 description: Store application configuration files in Docker/OCI registries
 repo: k14s/imgpkg
 links:
-- text: Homepage
-  url: https://carvel.dev/
+  - text: Homepage
+    url: https://carvel.dev/
 version:
   latest: v0.2.0 # renovate: datasource=github-releases depName=k14s/imgpkg
   command: imgpkg version
   filter: ^imgpkg
   pattern: s/^imgpkg\sversion\s(.+)$/v\1/
 tags:
-- docker
-- registry
-- oci
-- oras
-- artifact
-install: |
-  github_install \
-      --repo k14s/imgpkg \
-      --match suffix \
-      --asset -linux-amd64 \
-      --type binary \
-      --name imgpkg
+  - docker
+  - registry
+  - oci
+  - oras
+  - artifact
+install:
+  script: |-
+    github_install \
+        --repo k14s/imgpkg \
+        --match suffix \
+        --asset -linux-amd64 \
+        --type binary \
+        --name imgpkg

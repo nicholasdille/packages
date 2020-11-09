@@ -2,18 +2,19 @@ name: kubectl
 description: The Kubernetes command-line tool
 repo: kubernetes/kubectl
 links:
-- text: Reference
-  url: https://kubernetes.io/docs/reference/kubectl/kubectl/
+  - text: Reference
+    url: https://kubernetes.io/docs/reference/kubectl/kubectl/
 tags:
-- kubernetes
-- k8s
-install: |
-  echo "https://dl.k8s.io/release/stable.txt" | \
-      download_file | \
-      xargs -I{} echo "https://storage.googleapis.com/kubernetes-release/release/{}/bin/linux/amd64/kubectl" | \
-      download_file | \
-      store_file kubectl | \
-      make_executable
+  - kubernetes
+  - k8s
+install:
+  script: |-
+    echo "https://dl.k8s.io/release/stable.txt" | \
+        download_file | \
+        xargs -I{} echo "https://storage.googleapis.com/kubernetes-release/release/{}/bin/linux/amd64/kubectl" | \
+        download_file | \
+        store_file kubectl | \
+        make_executable
 
-  kubectl completion bash | \
-      store_completion kubectl
+    kubectl completion bash | \
+        store_completion kubectl

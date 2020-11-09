@@ -2,19 +2,20 @@ name: pack
 description: CLI for building apps using Cloud Native Buildpacks
 repo: buildpacks/pack
 links:
-- text: Homepage
-  url: https://buildpacks.io/
+  - text: Homepage
+    url: https://buildpacks.io/
 version:
   latest: v0.14.2 # renovate: datasource=github-releases depName=buildpacks/pack
   command: pack --version
   filter: ^[[:digit:]]
   pattern: s/^([^+]+)\+.+$/v\1/
 tags:
-- build
-install: |
-  github_install \
-      --repo buildpacks/pack \
-      --match suffix \
-      --asset -linux.tgz \
-      --type tarball \
-      --include pack
+  - build
+install:
+  script: |-
+    github_install \
+        --repo buildpacks/pack \
+        --match suffix \
+        --asset -linux.tgz \
+        --type tarball \
+        --include pack

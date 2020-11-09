@@ -4,12 +4,13 @@ repo: FiloSottile/mkcert
 version:
   latest: v1.4.2 # renovate: datasource=github-releases depName=FiloSottile/mkcert
 tags:
-- certificate
-- security
-install: |
-  github_install \
-      --repo FiloSottile/mkcert \
-      --match suffix \
-      --asset -linux-amd64 \
-      --type binary \
-      --name mkcert
+  - certificate
+  - security
+install:
+  script: |-
+    github_install \
+        --repo FiloSottile/mkcert \
+        --match suffix \
+        --asset -linux-amd64 \
+        --type binary \
+        --name mkcert

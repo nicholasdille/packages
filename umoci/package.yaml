@@ -2,21 +2,22 @@ name: umoci
 description: umoci modifies Open Container images
 repo: opencontainers/umoci
 links:
-- text: Homepage
-  url: https://umo.ci/
+  - text: Homepage
+    url: https://umo.ci/
 version:
   latest: v0.4.6 # renovate: datasource=github-releases depName=opencontainers/umoci
   command: umoci --version
   filter: ^umoci
   pattern: s/^umoci\sversion\s(.+)$/v\1/
 tags:
-- container
-- image
-- oci
-install: |
-  github_install \
-      --repo opencontainers/umoci \
-      --match name \
-      --asset umoci.amd64 \
-      --type binary \
-      --name umoci
+  - container
+  - image
+  - oci
+install:
+  script: |-
+    github_install \
+        --repo opencontainers/umoci \
+        --match name \
+        --asset umoci.amd64 \
+        --type binary \
+        --name umoci

@@ -4,12 +4,13 @@ repo: ContainerSSH/ContainerSSH
 version:
   latest: 0.4.0-PR2 # renovate: datasource=github-releases depName=ContainerSSH/ContainerSSH
 tags:
-- encryption
-- security
-install: |
-  github_get_release containerssh/containerssh | \
-      github_resolve_assets | \
-      github_select_asset_by_suffix _linux_amd64.tar.gz | \
-      github_get_asset_download_url | \
-      download_file | \
-      untar_file containerssh containerssh-auditlog-decoder containerssh-testauthconfigserver
+  - encryption
+  - security
+install:
+  script: |-
+    github_get_release containerssh/containerssh | \
+        github_resolve_assets | \
+        github_select_asset_by_suffix _linux_amd64.tar.gz | \
+        github_get_asset_download_url | \
+        download_file | \
+        untar_file containerssh containerssh-auditlog-decoder containerssh-testauthconfigserver

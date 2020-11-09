@@ -7,12 +7,13 @@ version:
   filter: ^kdo
   pattern: s/^kdo\sversion\s(.+)$/v\1/
 tags:
-- kubernetes
-- k8s
-install: |
-  github_get_release stepro/kdo | \
-      github_resolve_assets | \
-      github_select_asset_by_suffix -linux-amd64.tar.gz | \
-      github_get_asset_download_url | \
-      download_file | \
-      untar_file kdo
+  - kubernetes
+  - k8s
+install:
+  script: |-
+    github_get_release stepro/kdo | \
+        github_resolve_assets | \
+        github_select_asset_by_suffix -linux-amd64.tar.gz | \
+        github_get_asset_download_url | \
+        download_file | \
+        untar_file kdo

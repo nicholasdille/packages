@@ -2,20 +2,21 @@ name: kubediff
 description: A tool for Kubernetes to show differences between running state and version controlled configuration
 repo: weaveworks/kubediff
 tags:
-- kubernetes
-- k8s
-- difference
-- state
-- configuration
-- manifest
-install: |
-  require python
+  - kubernetes
+  - k8s
+  - difference
+  - state
+  - configuration
+  - manifest
+install:
+  script: |-
+    require python
 
-  git clone https://github.com/weaveworks/kubediff "${temporary_directory}"
-  ${SUDO} pip3 install .
-  ${SUDO} pip3 install -r requirements.txt
+    git clone https://github.com/weaveworks/kubediff "${temporary_directory}"
+    ${SUDO} pip3 install .
+    ${SUDO} pip3 install -r requirements.txt
 
-  # shellcheck disable=SC2002
-  cat kubediff | \
-      sed -E 's|(#!/usr/bin/env python)|\13|' | \
-      store_file kubediff
+    # shellcheck disable=SC2002
+    cat kubediff | \
+        sed -E 's|(#!/usr/bin/env python)|\13|' | \
+        store_file kubediff

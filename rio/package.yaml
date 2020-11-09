@@ -2,21 +2,22 @@ name: rio
 description: Application Deployment Engine for Kubernetes
 repo: rancher/rio
 links:
-- text: Homepage
-  url: https://rio.io/
+  - text: Homepage
+    url: https://rio.io/
 version:
   latest: v0.8.0 # renovate: datasource=github-releases depName=rancher/rio
   command: rio --version
   filter: ^rio
   pattern: s/^rio\sversion\s(\S+)\s.+$/\1/
 tags:
-- kubernetes
-- k8s
-- paas
-install: |
-  github_install \
-      --repo rancher/rio \
-      --match name \
-      --asset rio-linux-amd64 \
-      --type binary \
-      --name rio
+  - kubernetes
+  - k8s
+  - paas
+install:
+  script: |-
+    github_install \
+        --repo rancher/rio \
+        --match name \
+        --asset rio-linux-amd64 \
+        --type binary \
+        --name rio

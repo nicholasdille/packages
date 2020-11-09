@@ -7,14 +7,15 @@ version:
   filter: ^kubeseal
   pattern: s/^kubeseal\sversion:\s(.+)\+.+$/\1/
 tags:
-- kubernetes
-- k8s
-- secrets
-- security
-install: |
-  github_install \
-      --repo bitnami-labs/sealed-secrets \
-      --match name \
-      --asset kubeseal-linux-amd64 \
-      --type binary \
-      --name kubeseal
+  - kubernetes
+  - k8s
+  - secrets
+  - security
+install:
+  script: |-
+    github_install \
+        --repo bitnami-labs/sealed-secrets \
+        --match name \
+        --asset kubeseal-linux-amd64 \
+        --type binary \
+        --name kubeseal

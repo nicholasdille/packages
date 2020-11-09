@@ -4,17 +4,18 @@ repo: aquasecurity/tracee
 version:
   latest: v0.2.1 # renovate: datasource=github-releases depName=aquasecurity/tracee
 tags:
-- container
-- ebpf
-- security
-- tracing
-install: |
-  ${SUDO} apt-get update
-  ${SUDO} apt-get -y install bpfcc-tools
+  - container
+  - ebpf
+  - security
+  - tracing
+install:
+  script: |-
+    ${SUDO} apt-get update
+    ${SUDO} apt-get -y install bpfcc-tools
 
-  github_install \
-      --repo aquasecurity/tracee \
-      --match name \
-      --asset tracee.tar.gz \
-      --type tarball \
-      --include tracee
+    github_install \
+        --repo aquasecurity/tracee \
+        --match name \
+        --asset tracee.tar.gz \
+        --type tarball \
+        --include tracee

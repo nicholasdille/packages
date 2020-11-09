@@ -4,16 +4,17 @@ repo: alexellis/k3sup
 version:
   latest: 0.9.11 # renovate: datasource=github-releases depName=alexellis/k3sup
 tags:
-- kubernetes
-- k8s
-- k3s
-- ssh
-- bootstrap
-- cluster
-install: |
-  github_install \
-      --repo alexellis/k3sup \
-      --match name \
-      --asset k3sup \
-      --type binary \
-      --name k3sup
+  - kubernetes
+  - k8s
+  - k3s
+  - ssh
+  - bootstrap
+  - cluster
+install:
+  script: |-
+    github_install \
+        --repo alexellis/k3sup \
+        --match name \
+        --asset k3sup \
+        --type binary \
+        --name k3sup

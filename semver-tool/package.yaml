@@ -7,10 +7,11 @@ version:
   filter: ^semver
   pattern: s/^semver:\s(.+)$/\1/
 tags:
-- shell
-- semver
-install: |
-  echo "https://github.com/fsaintjacques/semver-tool/raw/${requested_version}/src/semver" | \
-      download_file | \
-      store_file semver | \
-      make_executable
+  - shell
+  - semver
+install:
+  script: |-
+    echo "https://github.com/fsaintjacques/semver-tool/raw/${requested_version}/src/semver" | \
+        download_file | \
+        store_file semver | \
+        make_executable

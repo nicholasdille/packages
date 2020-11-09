@@ -10,10 +10,15 @@ tags:
 - yaml
 - query
 - processor
-install: |
-  github_install \
-      --repo mikefarah/yq \
-      --match name \
-      --asset yq_linux_amd64 \
-      --type binary \
-      --name yq
+install:
+  docker: false
+  script: |
+    github_install \
+        --repo mikefarah/yq \
+        --match name \
+        --asset yq_linux_amd64 \
+        --type binary \
+        --name yq
+
+    yq shell-completion | \
+        store_completion yq

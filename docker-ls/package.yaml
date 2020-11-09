@@ -11,17 +11,19 @@ tags:
 - container
 - registry
 - tags
-install: |
-  build_containerized golang <<EOF
-  go get -d github.com/mayflower/docker-ls/cli/...
-  go generate github.com/mayflower/docker-ls/lib/...
-  go install github.com/mayflower/docker-ls/cli/...
-  cp /go/bin/docker-ls /go/bin/docker-rm /
-  EOF
-  extract_file_from_container docker-ls docker-rm
+install:
+  docker: true
+  script: |
+    build_containerized golang <<EOF
+    go get -d github.com/mayflower/docker-ls/cli/...
+    go generate github.com/mayflower/docker-ls/lib/...
+    go install github.com/mayflower/docker-ls/cli/...
+    cp /go/bin/docker-ls /go/bin/docker-rm /
+    EOF
+    extract_file_from_container docker-ls docker-rm
 
-  docker-ls autocomplete bash | \
-      store_completion docker-ls
+    docker-ls autocomplete bash | \
+        store_completion docker-ls
 
-  docker-rm autocomplete bash | \
-      store_completion docker-rm
+    docker-rm autocomplete bash | \
+        store_completion docker-rm

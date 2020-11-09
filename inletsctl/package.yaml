@@ -2,20 +2,21 @@ name: inletsctl
 description: Cloud Native Tunnel for APIs
 repo: inlets/inlets
 links:
-- text: Homepage
-  url: https://inlets.dev/
+  - text: Homepage
+    url: https://inlets.dev/
 version:
   latest: 0.6.4 # renovate: datasource=github-releases depName=inlets/inletsctl
   command: inletsctl version
   filter: ^Version
   pattern: s/^Version:\s(.+)$/\1/
 tags:
-- kubernetes
-- k8s
-- tunnel
-install: |
-  github_get_release inlets/inletsctl | \
-      github_resolve_assets | \
-      github_select_asset_by_name inletsctl.tgz | \
-      download_file | \
-      ${SUDO} tar -xzC "${TARGET_BASE}" bin/inletsctl
+  - kubernetes
+  - k8s
+  - tunnel
+install:
+  script: |-
+    github_get_release inlets/inletsctl | \
+        github_resolve_assets | \
+        github_select_asset_by_name inletsctl.tgz | \
+        download_file | \
+        ${SUDO} tar -xzC "${TARGET_BASE}" bin/inletsctl

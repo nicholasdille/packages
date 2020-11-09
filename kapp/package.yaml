@@ -2,22 +2,23 @@ name: kapp
 description: kapp is a simple deployment tool focused on the concept of "Kubernetes application" — a set of resources with the same label
 repo: k14s/kapp
 links:
-- text: Homepage
-  url: https://carvel.dev/
+  - text: Homepage
+    url: https://carvel.dev/
 version:
   latest: v0.34.0 # renovate: datasource=github-releases depName=k14s/kapp
   command: kapp --version
   filter: ^kapp
   pattern: s/^kapp\sversion\s(.+)$/v\1/
 tags:
-- kubernetes
-- k8s
-- ui
-- package
-install: |
-  github_install \
-      --repo k14s/kapp \
-      --match suffix \
-      --asset -linux-amd64 \
-      --type binary \
-      --name kapp
+  - kubernetes
+  - k8s
+  - ui
+  - package
+install:
+  script: |-
+    github_install \
+        --repo k14s/kapp \
+        --match suffix \
+        --asset -linux-amd64 \
+        --type binary \
+        --name kapp

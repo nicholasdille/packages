@@ -7,11 +7,12 @@ version:
   filter: ^Terraform
   pattern: s/^Terraform\s(.+)$/\1/
 tags:
-- cloud
-- deployment
-install: |
-  echo "https://releases.hashicorp.com/terraform/${requested_version#v}/terraform_${requested_version#v}_linux_amd64.zip" | \
-      download_file | \
-      store_file "terraform.zip" "${temporary_directory}"
-  unzip_file "${temporary_directory}/terraform.zip"
-  ${SUDO} mv terraform "${TARGET_BIN}"
+  - cloud
+  - deployment
+install:
+  script: |-
+    echo "https://releases.hashicorp.com/terraform/${requested_version#v}/terraform_${requested_version#v}_linux_amd64.zip" | \
+        download_file | \
+        store_file "terraform.zip" "${temporary_directory}"
+    unzip_file "${temporary_directory}/terraform.zip"
+    ${SUDO} mv terraform "${TARGET_BIN}"

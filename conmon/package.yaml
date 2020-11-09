@@ -7,33 +7,35 @@ version:
   filter: ^conmon
   pattern: s/^conmon\sversion\s(.+)$/v\1/
 tags:
-- container
-- runtime
-install: |
-  get_file conmon Dockerfile | \
-      docker build --tag conmon -
-
-  build_containerized conmon <<EOF
-  cd /tmp
-  git clone https://github.com/containers/conmon
-  cd conmon
-  git checkout "${requested_version}"
-  PREFIX=/usr/local make all
-  cp bin/conmon /
-  EOF
-  extract_file_from_container conmon
+  - container
+  - runtime
 files:
-- name: Dockerfile
-  content: |
-    FROM ubuntu:20.04@sha256:1d7b639619bdca2d008eca2d5293e3c43ff84cbee597ff76de3b7a7de3e84956
-    ENV DEBIAN_FRONTEND=noninteractive
-    RUN apt-get update \
-    && apt-get -y install \
-            gcc \
-            git \
-            libc6-dev \
-            libglib2.0-dev \
-            pkg-config \
-            make \
-            runc \
-            curl
+  - name: Dockerfile
+    content: |
+      FROM ubuntu:20.04@sha256:1d7b639619bdca2d008eca2d5293e3c43ff84cbee597ff76de3b7a7de3e84956
+      ENV DEBIAN_FRONTEND=noninteractive
+      RUN apt-get update \
+      && apt-get -y install \
+              gcc \
+              git \
+              libc6-dev \
+              libglib2.0-dev \
+              pkg-config \
+              make \
+              runc \
+              curl
+install:
+  docker: true
+  script: |-
+    get_file conmon Dockerfile | \
+        docker build --tag conmon -
+
+    build_containerized conmon <<EOF
+    cd /tmp
+    git clone https://github.com/containers/conmon
+    cd conmon
+    git checkout "${requested_version}"
+    PREFIX=/usr/local make all
+    cp bin/conmon /
+    EOF
+    extract_file_from_container conmon

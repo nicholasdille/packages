@@ -2,45 +2,47 @@ name: socat
 description: ssh + reverse sshfs + port forwarder, in Docker-like CLI
 repo: repo.or.cz/socat.git
 links:
-- text: Homepage
-  url: http://www.dest-unreach.org/socat/
-- text: Repository
-  url: https://repo.or.cz/socat.git
+  - text: Homepage
+    url: http://www.dest-unreach.org/socat/
+  - text: Repository
+    url: https://repo.or.cz/socat.git
 version:
   command: socat -V
   filter: ^socat[[:space:]]version
   pattern: s/^socat\sversion\s(\S+)\s.+$/\1/
 tags:
-- network
-install: |
-  get_file socat Dockerfile | \
-      docker build --tag socat -
-
-  build_containerized socat <<"EOF"
-  cd /tmp
-  git clone https://repo.or.cz/socat.git
-  cd socat
-  TAG=$(git tag | grep -E "^tag-1\." | sort -V -r | head -n 1)
-  git checkout "${TAG}"
-  autoconf
-  ./configure
-  make
-  cp socat /
-  cp doc/socat.1 /
-  EOF
-  extract_file_from_container socat
-
-  docker cp "${container_name}:/tmp/socat/doc/socat.1" - | \
-      tar -x --to-stdout | \
-      sudo tee "${TARGET_BASE}/share/man/man1/socat.1" >/dev/null
+  - network
 files:
-- name: Dockerfile
-  content: |
-    FROM ubuntu:20.04@sha256:1d7b639619bdca2d008eca2d5293e3c43ff84cbee597ff76de3b7a7de3e84956
-    ENV DEBIAN_FRONTEND=noninteractive
-    RUN apt-get update \
-    && apt-get -y install \
-            autoconf \
-            build-essential \
-            yodl \
-            git
+  - name: Dockerfile
+    content: |
+      FROM ubuntu:20.04@sha256:1d7b639619bdca2d008eca2d5293e3c43ff84cbee597ff76de3b7a7de3e84956
+      ENV DEBIAN_FRONTEND=noninteractive
+      RUN apt-get update \
+      && apt-get -y install \
+              autoconf \
+              build-essential \
+              yodl \
+              git
+install:
+  docker: true
+  script: |-
+    get_file socat Dockerfile | \
+        docker build --tag socat -
+
+    build_containerized socat <<"EOF"
+    cd /tmp
+    git clone https://repo.or.cz/socat.git
+    cd socat
+    TAG=$(git tag | grep -E "^tag-1\." | sort -V -r | head -n 1)
+    git checkout "${TAG}"
+    autoconf
+    ./configure
+    make
+    cp socat /
+    cp doc/socat.1 /
+    EOF
+    extract_file_from_container socat
+
+    docker cp "${container_name}:/tmp/socat/doc/socat.1" - | \
+        tar -x --to-stdout | \
+        sudo tee "${TARGET_BASE}/share/man/man1/socat.1" >/dev/null

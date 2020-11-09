@@ -7,17 +7,18 @@ version:
   filter: act
   pattern: s/^act\sversion\s(.+)$/\1/
 tags:
-- pipeline
-- continuous
-- ci/cd
-- integration
-- delivery
-- deployment
-- container
-install: |
-  github_install \
-      --repo nektos/act \
-      --match suffix \
-      --asset _Linux_x86_64.tar.gz \
-      --type tarball \
-      --include act
+  - pipeline
+  - continuous
+  - ci/cd
+  - integration
+  - delivery
+  - deployment
+  - container
+install:
+  script: |-
+    github_install \
+        --repo nektos/act \
+        --match suffix \
+        --asset _Linux_x86_64.tar.gz \
+        --type tarball \
+        --include act

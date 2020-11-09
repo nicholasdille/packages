@@ -2,28 +2,29 @@ name: direnv
 description: Unclutter your .profile
 repo: direnv/direnv
 links:
-- text: Homepage
-  url: https://direnv.net/
+  - text: Homepage
+    url: https://direnv.net/
 version:
   latest: v2.23.1 # renovate: datasource=github-releases depName=direnv/direnv
   command: direnv --version
   filter: ^[[:digit:]]
   pattern: s/^(.+)$/v\1/
 tags:
-- shell
-- configuration
-install: |
-  github_install \
-      --name direnv \
-      --repo direnv/direnv \
-      --match name \
-      --asset direnv.linux-amd64 \
-      --type binary
-
-  get_file direnv profile.d.direnv.sh | \
-      store_file direnv.sh /etc/profile.d
+  - shell
+  - configuration
 files:
-- name: profile.d.direnv.sh
-  content: |
-    #!/bin/bash
-    eval "$(direnv hook bash)"
+  - name: profile.d.direnv.sh
+    content: |
+      #!/bin/bash
+      eval "$(direnv hook bash)"
+install:
+  script: |-
+    github_install \
+        --name direnv \
+        --repo direnv/direnv \
+        --match name \
+        --asset direnv.linux-amd64 \
+        --type binary
+
+    get_file direnv profile.d.direnv.sh | \
+        store_file direnv.sh /etc/profile.d

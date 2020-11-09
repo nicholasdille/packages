@@ -7,19 +7,20 @@ version:
   filter: ^Version
   pattern: s/^Version:\s(.+)$/v\1/
 tags:
-- container
-- security
-- scan
-- test
-- quality
-install: |
-  github_install \
-      --repo aquasecurity/trivy \
-      --match suffix \
-      --asset _Linux-64bit.tar.gz \
-      --type tarball \
-      --include trivy
+  - container
+  - security
+  - scan
+  - test
+  - quality
+install:
+  script: |-
+    github_install \
+        --repo aquasecurity/trivy \
+        --match suffix \
+        --asset _Linux-64bit.tar.gz \
+        --type tarball \
+        --include trivy
 
-  if ! test -d "${HOME}/.cache/trivy"; then
-      trivy image --download-db-only
-  fi
+    if ! test -d "${HOME}/.cache/trivy"; then
+        trivy image --download-db-only
+    fi

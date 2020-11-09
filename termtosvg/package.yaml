@@ -4,9 +4,9 @@ repo: nbedos/termtosvg
 version:
   latest: 1.1.0 # renovate: datasource=github-releases depName=nbedos/termtosvg
 tags:
-- shell
-- record
-- cast
-- screen
-install: |
-  install_python_module termtosvg
+  - shell
+  - record
+  - cast
+  - screen
+install:
+  script: install_python_module termtosvg

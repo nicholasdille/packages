@@ -2,22 +2,23 @@ name: aws-cli2
 description: Universal Command Line Interface for Amazon Web Services (version 2)
 repo: aws/aws-cli
 links:
-- text: Homepage
-  url: https://aws.amazon.com/cli/
+  - text: Homepage
+    url: https://aws.amazon.com/cli/
 version:
   latest: 2.0.62 # renovate: datasource=github-tags depName=aws/aws-cli versioning=regex:^(?<major>2?)\.(?<minor>\d+?)\.(?<patch>\d+?)(-(?<prerelease>.+?))?$
   command: aws --version
   filter: ^aws-cli
   pattern: s/^aws-cli\/(\S+)\s.+$/\1/
 tags:
-- aws
-- cloud
-install: |
-echo "https://awscli.amazonaws.com/awscli-exe-linux-x86_64-${requested_version}.zip" | \
-    download_file | \
-    store_file aws-cli.zip "${temporary_directory}"
-unzip -o -d "${temporary_directory}" "${temporary_directory}/aws-cli.zip"
-${SUDO} "${temporary_directory}/aws/install" \
-    --update \
-    --install-dir "${TARGET_BASE}/aws-cli" \
-    --bin-dir "${TARGET_BIN}"
+  - aws
+  - cloud
+install:
+  script: |-
+    echo "https://awscli.amazonaws.com/awscli-exe-linux-x86_64-${requested_version}.zip" | \
+        download_file | \
+        store_file aws-cli.zip "${temporary_directory}"
+    unzip -o -d "${temporary_directory}" "${temporary_directory}/aws-cli.zip"
+    ${SUDO} "${temporary_directory}/aws/install" \
+        --update \
+        --install-dir "${TARGET_BASE}/aws-cli" \
+        --bin-dir "${TARGET_BIN}"

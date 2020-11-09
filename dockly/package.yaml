@@ -7,9 +7,9 @@ version:
   filter: ^dockly
   pattern: s/^dockly\s(\S+)\s.+$/v\1/
 tags:
-- docker
-- container
-- interface
-- ui
-install: |
-  install_node_module dockly
+  - docker
+  - container
+  - interface
+  - ui
+install:
+  script: install_node_module dockly

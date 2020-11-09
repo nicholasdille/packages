@@ -2,20 +2,21 @@ name: k3s
 description: Lightweight Kubernetes
 repo: rancher/k3s
 links:
-- text: Homepage
-  url: https://k3s.io/
+  - text: Homepage
+    url: https://k3s.io/
 version:
   latest: v1.19.3+k3s2 # renovate: datasource=github-releases depName=rancher/k3s
   command: k3s --version
   filter: ^k3s
   pattern: s/^k3s\sversion\s(\S+)\s.+$/\1/
 tags:
-- kubernetes
-- k8s
-install: |
-  github_install \
-      --repo rancher/k3s \
-      --match name \
-      --asset k3s \
-      --type binary \
-      --name k3s
+  - kubernetes
+  - k8s
+install:
+  script: |-
+    github_install \
+        --repo rancher/k3s \
+        --match name \
+        --asset k3s \
+        --type binary \
+        --name k3s

@@ -2,11 +2,12 @@ name: asciigraph
 description: Go package to make lightweight ASCII line graph ╭┈╯ in command line apps with no other dependencies
 repo: guptarohit/asciigraph
 tags:
-- shell
-install: |
-  github_install \
-      --repo guptarohit/asciigraph \
-      --match suffix \
-      --asset _Linux_x86_64.tar.gz \
-      --type tarball \
-      --include asciigraph
+  - shell
+install:
+  script: |-
+    github_install \
+        --repo guptarohit/asciigraph \
+        --match suffix \
+        --asset _Linux_x86_64.tar.gz \
+        --type tarball \
+        --include asciigraph

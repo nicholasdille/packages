@@ -7,17 +7,18 @@ version:
   filter: ^v
   pattern: s/^(.+)$/\1/
 tags:
-- kubernetes
-- k8s
-- rbac
-- security
-- plugin
-- kubectl
-install: |
-  github_install \
-      --repo corneliusweig/rakkess \
-      --match name \
-      --asset rakkess-amd64-linux.tar.gz \
-      --type tarball \
-      --include rakkess-amd64-linux
-  rename_file rakkess-amd64-linux rakkess
+  - kubernetes
+  - k8s
+  - rbac
+  - security
+  - plugin
+  - kubectl
+install:
+  script: |-
+    github_install \
+        --repo corneliusweig/rakkess \
+        --match name \
+        --asset rakkess-amd64-linux.tar.gz \
+        --type tarball \
+        --include rakkess-amd64-linux
+    rename_file rakkess-amd64-linux rakkess

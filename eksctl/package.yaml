@@ -7,17 +7,18 @@ version:
   filter: ^[[:digit:]]
   pattern: s/^(.+)$/\1/
 tags:
-- kubernetes
-- k8s
-- eks
-- aws
-- cloud
-- cluster
-- bootstrap
-install: |
-  github_install \
-      --repo weaveworks/eksctl \
-      --match name \
-      --asset eksctl_Linux_amd64.tar.gz \
-      --type tarball \
-      --include eksctl
+  - kubernetes
+  - k8s
+  - eks
+  - aws
+  - cloud
+  - cluster
+  - bootstrap
+install:
+  script: |-
+    github_install \
+        --repo weaveworks/eksctl \
+        --match name \
+        --asset eksctl_Linux_amd64.tar.gz \
+        --type tarball \
+        --include eksctl

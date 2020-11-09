@@ -4,8 +4,10 @@ export DOCKER_BUILDKIT=1
 
 container_name=$(basename "$(mktemp --dry-run)")
 remove_temporary_container() {
-    echo "Cleaning up temporary container..."
-    docker ps --all --quiet --filter name="${container_name}" | xargs --no-run-if-empty docker rm
+    #echo "Cleaning up temporary container..."
+    if type docker >/dev/null 2>&1 && docker version >/dev/null 2>&1; then
+        docker ps --all --quiet --filter name="${container_name}" | xargs --no-run-if-empty docker rm
+    fi
 }
 cleanup_tasks+=("remove_temporary_container")
 

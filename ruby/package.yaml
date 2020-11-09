@@ -2,27 +2,29 @@ name: ruby
 description: The Ruby Programming Language
 repo: ruby/ruby
 links:
-- text: Homepage
-  url: https://www.ruby-lang.org/
+  - text: Homepage
+    url: https://www.ruby-lang.org/
 version:
   latest: v2_7_2 # renovate: datasource=github-tags depName=ruby/ruby versioning=regex:^v(?<major>\d+)_(?<minor>\d+)_(?<patch>\d+)$
   command: ruby --version
   filter: ^ruby
   pattern: s/^ruby\s([^p]+)p.+$/\1/
 tags:
-- ruby
-install: |
-  require rbenv
-  source /etc/profile.d/rbenv.sh
+  - ruby
+install:
+  docker: true
+  script: |-
+    require rbenv
+    source /etc/profile.d/rbenv.sh
 
-  VERSION=${requested_version#v}
-  VERSION=${VERSION//_/.}
+    VERSION=${requested_version#v}
+    VERSION=${VERSION//_/.}
 
-  docker run --rm --name rbenv \
-      --env RBENV_ROOT \
-      --env PATH \
-      --volume "${RBENV_ROOT}:${RBENV_ROOT}" \
-      rbenv \
-      rbenv install "${VERSION#v}" --skip-existing
-  ${SUDO} bash -c "source /etc/profile.d/rbenv.sh; rbenv rehash"
-  ${SUDO} bash -c "source /etc/profile.d/rbenv.sh; rbenv global ${TAG#v}"
+    docker run --rm --name rbenv \
+        --env RBENV_ROOT \
+        --env PATH \
+        --volume "${RBENV_ROOT}:${RBENV_ROOT}" \
+        rbenv \
+        rbenv install "${VERSION#v}" --skip-existing
+    ${SUDO} bash -c "source /etc/profile.d/rbenv.sh; rbenv rehash"
+    ${SUDO} bash -c "source /etc/profile.d/rbenv.sh; rbenv global ${TAG#v}"

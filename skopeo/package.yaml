@@ -7,15 +7,17 @@ version:
   filter: ^skopeo
   pattern: s/^skopeo\sversion\s(\S+)\s.+$/v\1/
 tags:
-- container
-- registry
-- image
-install: |
-  build_containerized golang <<EOF
-  git clone https://github.com/containers/skopeo
-  cd skopeo
-  git checkout ${requested_version}
-  make bin/skopeo DISABLE_CGO=1
-  cp bin/skopeo /
-  EOF
-  extract_file_from_container skopeo
+  - container
+  - registry
+  - image
+install:
+  docker: true
+  script: |-
+    build_containerized golang <<EOF
+    git clone https://github.com/containers/skopeo
+    cd skopeo
+    git checkout ${requested_version}
+    make bin/skopeo DISABLE_CGO=1
+    cp bin/skopeo /
+    EOF
+    extract_file_from_container skopeo

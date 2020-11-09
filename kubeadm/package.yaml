@@ -2,20 +2,21 @@ name: kubeadm
 description: Bootstrap a Kubernetes cluster
 repo: kubernetes/kubeadm
 links:
-- text: Documentation
-  url: https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/#installing-kubeadm-kubelet-and-kubectl
+  - text: Documentation
+    url: https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/#installing-kubeadm-kubelet-and-kubectl
 tags:
-- kubernetes
-- k8s
-- cluster
-- bootstrap
-install: |
-  echo "https://dl.k8s.io/release/stable.txt" | \
-      download_file | \
-      xargs -I{} echo "https://storage.googleapis.com/kubernetes-release/release/{}/bin/linux/amd64/kubeadm" | \
-      download_file | \
-      store_file kubeadm | \
-      make_executable
+  - kubernetes
+  - k8s
+  - cluster
+  - bootstrap
+install:
+  script: |-
+    echo "https://dl.k8s.io/release/stable.txt" | \
+        download_file | \
+        xargs -I{} echo "https://storage.googleapis.com/kubernetes-release/release/{}/bin/linux/amd64/kubeadm" | \
+        download_file | \
+        store_file kubeadm | \
+        make_executable
 
-  kubeadm completion bash | \
-      store_completion kubeadm
+    kubeadm completion bash | \
+        store_completion kubeadm

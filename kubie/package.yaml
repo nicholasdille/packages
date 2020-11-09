@@ -7,17 +7,18 @@ version:
   filter: ^kubie
   pattern: s/^kubie\s(.+)$/v\1/
 tags:
-- kubernetes
-- k8s
-- context
-- namespace
-install: |
-  github_install \
-      --repo sbstp/kubie \
-      --match name \
-      --asset kubie-linux-amd64 \
-      --type binary \
-      --name kubie
+  - kubernetes
+  - k8s
+  - context
+  - namespace
+install:
+  script: |-
+    github_install \
+        --repo sbstp/kubie \
+        --match name \
+        --asset kubie-linux-amd64 \
+        --type binary \
+        --name kubie
 
-  curl --location --fail "https://github.com/sbstp/kubie/raw/${requested_version}/completion/kubie.bash" | \
-      store_completion kubie
+    curl --location --fail "https://github.com/sbstp/kubie/raw/${requested_version}/completion/kubie.bash" | \
+        store_completion kubie

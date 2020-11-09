@@ -58,7 +58,6 @@ show_help_version() {
 
 get_packages() {
     if test -f "${HOME}/.pkg/packages.json"; then
-        >&2 echo "Using cached packages.json from <${HOME}/.pkg/>. Please update regularly using <pkg cache>."
         cat "${HOME}/.pkg/packages.json"
 
     elif test -f packages.json; then
@@ -66,7 +65,7 @@ get_packages() {
         cat packages.json
 
     else
-        echo "ERROR: Unable to find packages.json. Run <pkg cache> first."
+        >&2 echo "ERROR: Unable to find packages.json. Run <pkg cache> first."
         exit 1
     fi
 }
@@ -136,7 +135,6 @@ handle_install() {
         if test "${requested_version}" == "${package}"; then
             unset requested_version
         fi
-        echo "Got package=${package} version=${requested_version}."
 
         working_directory="${PWD}"
 
@@ -154,7 +152,9 @@ handle_install() {
         source "${HOME}/.pkg/docker.sh"
 
         check_installed_version "${package}"
-        check_docker
+        if package_needs_docker "${package}"; then
+            check_docker
+        fi
         unlock_sudo
 
         latest_version=$(get_latest_version "${package}")

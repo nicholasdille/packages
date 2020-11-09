@@ -7,20 +7,21 @@ version:
   filter: ^lab
   pattern: s/^lab\sversion\s(.+)$/v\1/
 tags:
-- gitlab
-- pipeline
-- continuous
-- ci/cd
-- integration
-- delivery
-- deployment
-install: |
-  github_install \
-      --repo zaquestion/lab \
-      --match suffix \
-      --asset _linux_amd64.tar.gz \
-      --type tarball \
-      --include lab
+  - gitlab
+  - pipeline
+  - continuous
+  - ci/cd
+  - integration
+  - delivery
+  - deployment
+install:
+  script: |-
+    github_install \
+        --repo zaquestion/lab \
+        --match suffix \
+        --asset _linux_amd64.tar.gz \
+        --type tarball \
+        --include lab
 
-  lab completion bash | \
-      store_completion lab
+    lab completion bash | \
+        store_completion lab

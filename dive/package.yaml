@@ -7,15 +7,16 @@ version:
   filter: ^dive
   pattern: s/^dive\s(.+)$/v\1/
 tags:
-- docker
-- container
-- layers
-- images
-- quality
-install: |
-  github_install \
-      --repo wagoodman/dive \
-      --match suffix \
-      --asset _linux_amd64.tar.gz \
-      --type tarball \
-      --include dive
+  - docker
+  - container
+  - layers
+  - images
+  - quality
+install:
+  script: |-
+    github_install \
+        --repo wagoodman/dive \
+        --match suffix \
+        --asset _linux_amd64.tar.gz \
+        --type tarball \
+        --include dive

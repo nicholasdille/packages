@@ -2,23 +2,24 @@ name: faasd
 description: faasd - Serverless for everyone else
 repo: openfaas/faasd
 links:
-- text: Homepage
-  url: https://openfaas.com/blog/introducing-faasd/
+  - text: Homepage
+    url: https://openfaas.com/blog/introducing-faasd/
 version:
   latest: 0.9.6 # renovate: datasource=github-releases depName=openfaas/faasd
   command: faasd version
   filter: ^faasd
   pattern: s/^faasd\sversion:\s(\S+)\s.+$/\1/
 tags:
-- openfaas
-- function
-- service
-- serverless
-- containerd
-install: |
-  github_install \
-      --repo openfaas/faasd \
-      --match name \
-      --asset faasd \
-      --type binary \
-      --name faasd
+  - openfaas
+  - function
+  - service
+  - serverless
+  - containerd
+install:
+  script: |-
+    github_install \
+        --repo openfaas/faasd \
+        --match name \
+        --asset faasd \
+        --type binary \
+        --name faasd

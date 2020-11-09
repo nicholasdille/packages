@@ -2,26 +2,28 @@ name: buildkit
 description: Concurrent, cache-efficient, and Dockerfile-agnostic builder toolkit
 repo: moby/buildkit
 links:
-- text: Using BuildKit in Docker >=18.09
-  url: https://docs.docker.com/develop/develop-images/build_enhancements/
+  - text: Using BuildKit in Docker >=18.09
+    url: https://docs.docker.com/develop/develop-images/build_enhancements/
 version:
   latest: v0.7.2 # renovate: datasource=github-releases depName=moby/buildkit
   command: buildkitd --version
   filter: ^buildkit
   pattern: s/^buildkitd\sgithub.com\/moby\/buildkit\s(.+)\s.+$/\1/
 tags:
-- container
-- build
-- builder
-- moby
-install: |
-  github_get_release moby/buildkit | \
-      github_resolve_assets | \
-      github_select_asset_by_suffix .linux-amd64.tar.gz | \
-      github_get_asset_download_url | \
-      download_file | \
-      ${SUDO} tar -xzC "${TARGET_BASE}"
+  - container
+  - build
+  - builder
+  - moby
+install:
+  docker: true
+  script: |-
+    github_get_release moby/buildkit | \
+        github_resolve_assets | \
+        github_select_asset_by_suffix .linux-amd64.tar.gz | \
+        github_get_asset_download_url | \
+        download_file | \
+        ${SUDO} tar -xzC "${TARGET_BASE}"
 
-  curl --location --fail "https://raw.githubusercontent.com/moby/buildkit/${requested_version}/examples/buildctl-daemonless/buildctl-daemonless.sh" | \
-      store_file buildctl-daemonless.sh | \
-      make_executable
+    curl --location --fail "https://raw.githubusercontent.com/moby/buildkit/${requested_version}/examples/buildctl-daemonless/buildctl-daemonless.sh" | \
+        store_file buildctl-daemonless.sh | \
+        make_executable

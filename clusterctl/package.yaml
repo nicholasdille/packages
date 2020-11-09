@@ -2,8 +2,8 @@ name: clusterctl
 description: The clusterctl CLI tool handles the lifecycle of a Cluster API management cluster
 repo: kubernetes-sigs/cluster-api
 links:
-- text: Homepage
-  url: https://cluster-api.sigs.k8s.io/
+  - text: Homepage
+    url: https://cluster-api.sigs.k8s.io/
 version:
   latest: v0.3.10 # renovate: datasource=github-releases depName=kubernetes-sigs/cluster-api
   command: clusterctl version --output yaml
@@ -11,19 +11,20 @@ version:
     ^[[:space:]]*gitVersion:
   pattern: s/^\s+gitVersion:\s(.+)$/\1/
 tags:
-- kubernetes
-- k8s
-- deployment
-- bootstrap
-- cluster
-- api
-install: |
-  github_install \
-      --name clusterctl \
-      --repo kubernetes-sigs/cluster-api \
-      --match name \
-      --asset clusterctl-linux-amd64 \
-      --type binary
+  - kubernetes
+  - k8s
+  - deployment
+  - bootstrap
+  - cluster
+  - api
+install:
+  script: |-
+    github_install \
+        --name clusterctl \
+        --repo kubernetes-sigs/cluster-api \
+        --match name \
+        --asset clusterctl-linux-amd64 \
+        --type binary
 
-  clusterctl completion bash | \
-      store_completion clusterctl
+    clusterctl completion bash | \
+        store_completion clusterctl

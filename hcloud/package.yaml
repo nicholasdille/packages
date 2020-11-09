@@ -7,15 +7,16 @@ version:
   filter: ^hcloud
   pattern: s/^hcloud\s(.+)$/v\1/
 tags:
-- hetzner
-- cloud
-install: |
-  github_install \
-      --repo hetznercloud/cli \
-      --match name \
-      --asset hcloud-linux-amd64.tar.gz \
-      --type tarball \
-      --include hcloud
+  - hetzner
+  - cloud
+install:
+  script: |-
+    github_install \
+        --repo hetznercloud/cli \
+        --match name \
+        --asset hcloud-linux-amd64.tar.gz \
+        --type tarball \
+        --include hcloud
 
-  hcloud completion bash | \
-      store_completion hcloud
+    hcloud completion bash | \
+        store_completion hcloud

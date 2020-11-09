@@ -2,23 +2,24 @@ name: grafterm
 description: Metrics dashboards on terminal (a grafana inspired terminal version)
 repo: slok/grafterm
 links:
-- text: Creating dashboards
-  url: https://github.com/slok/grafterm/blob/master/docs/cfg.md
+  - text: Creating dashboards
+    url: https://github.com/slok/grafterm/blob/master/docs/cfg.md
 version:
   latest: v0.2.0 # renovate: datasource=github-releases depName=slok/grafterm
   command: grafterm --version
   filter: ^v
   pattern: s/^(.+)$/\1/
 tags:
-- metrics
-- dashboard
-- shell
-- grafana
-- terminal
-install: |
-  github_install \
-      --repo slok/grafterm \
-      --match name \
-      --asset grafterm-linux-amd64 \
-      --type binary \
-      --name grafterm
+  - metrics
+  - dashboard
+  - shell
+  - grafana
+  - terminal
+install:
+  script: |-
+    github_install \
+        --repo slok/grafterm \
+        --match name \
+        --asset grafterm-linux-amd64 \
+        --type binary \
+        --name grafterm

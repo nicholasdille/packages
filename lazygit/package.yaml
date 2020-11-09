@@ -7,12 +7,13 @@ version:
   filter: version=
   pattern: s/^.+,\sversion=([^,]+),\s.+$/v\1/
 tags:
-- git
-- ui
-install: |
-  github_install \
-      --repo jesseduffield/lazygit \
-      --match suffix \
-      --asset _Linux_x86_64.tar.gz \
-      --type tarball \
-      --include lazygit
+  - git
+  - ui
+install:
+  script: |-
+    github_install \
+        --repo jesseduffield/lazygit \
+        --match suffix \
+        --asset _Linux_x86_64.tar.gz \
+        --type tarball \
+        --include lazygit

@@ -2,17 +2,18 @@ name: lectl
 description: Script to check issued certificates by Let's Encrypt on CTL (Certificate Transparency Log) using https://crt.sh
 repo: sahsanu/lectl
 links:
-- text: Certificate search
-  url: https://crt.sh
+  - text: Certificate search
+    url: https://crt.sh
 version:
   latest: v0.21 # renovate: datasource=github-releases depName=sahsanu/lectl versioning=loose
   command: lectl --version
   filter: ^lectl
   pattern: s/^lectl\s(\S+)\s.+$/v\1/
 tags:
-- letsencrypt
-- certificate
-install: |
-  curl --location --fail "https://raw.githubusercontent.com/sahsanu/lectl/${requested_version}/lectl" | \
-      store_file lectl | \
-      make_executable
+  - letsencrypt
+  - certificate
+install:
+  script: |-
+    curl --location --fail "https://raw.githubusercontent.com/sahsanu/lectl/${requested_version}/lectl" | \
+        store_file lectl | \
+        make_executable

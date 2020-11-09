@@ -2,23 +2,24 @@ name: cue
 description: Validate and define text-based and dynamic configuration
 repo: cuelang/cue
 links:
-- text: Homepage
-  url: https://cuelang.org/
+  - text: Homepage
+    url: https://cuelang.org/
 version:
   latest: v0.2.2 # renovate: datasource=github-releases depName=cuelang/cue
   command: cue version
   filter: ^cue
   pattern: s/^cue\sversion\s(\S+)\s.+$/v\1/
 tags:
-- configuration
-install: |
-  github_install \
-      --name cue \
-      --repo cuelang/cue \
-      --match suffix \
-      --asset _Linux_x86_64.tar.gz \
-      --type tarball \
-      --include cue
+  - configuration
+install:
+  script: |-
+    github_install \
+        --name cue \
+        --repo cuelang/cue \
+        --match suffix \
+        --asset _Linux_x86_64.tar.gz \
+        --type tarball \
+        --include cue
 
-  cue completion bash | \
-      store_completion cue
+    cue completion bash | \
+        store_completion cue

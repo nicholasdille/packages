@@ -4,13 +4,14 @@ repo: NZSmartie/npiperelay
 version:
   latest: v0.1 # renovate: datasource=github-releases depName=NZSmartie/npiperelay versioning=loose
 tags:
-- wsl
-- npipe
-- pipe
-install: |
-  github_install \
-      --repo NZSmartie/npiperelay \
-      --match name \
-      --asset npiperelay.exe \
-      --type binary \
-      --name npiperelay.exe
+  - wsl
+  - npipe
+  - pipe
+install:
+  script: |-
+    github_install \
+        --repo NZSmartie/npiperelay \
+        --match name \
+        --asset npiperelay.exe \
+        --type binary \
+        --name npiperelay.exe

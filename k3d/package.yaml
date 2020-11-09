@@ -2,26 +2,27 @@ name: k3d
 description: Little helper to run Rancher Lab's k3s in Docker
 repo: rancher/k3d
 links:
-- text: Homepage
-  url: https://k3d.io/
+  - text: Homepage
+    url: https://k3d.io/
 version:
   latest: v3.2.0 # renovate: datasource=github-releases depName=rancher/k3d
   command: k3d version
   filter: ^k3d
   pattern: s/^k3d\sversion\s(.+)$/\1/
 tags:
-- kubernetes
-- k8s
-- container
-- dind
-- docker
-install: |
-  github_install \
-      --repo rancher/k3d \
-      --match name \
-      --asset k3d-linux-amd64 \
-      --type binary \
-      --name k3d
+  - kubernetes
+  - k8s
+  - container
+  - dind
+  - docker
+install:
+  script: |-
+    github_install \
+        --repo rancher/k3d \
+        --match name \
+        --asset k3d-linux-amd64 \
+        --type binary \
+        --name k3d
 
-  k3d completion bash | \
-      store_completion k3d
+    k3d completion bash | \
+        store_completion k3d

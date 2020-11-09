@@ -7,18 +7,19 @@ version:
   filter: ^Version
   pattern: s/^Version:\s(.+)$/\1/
 tags:
-- kubernetes
-- k8s
-- manifest
-- yaml
-- configuration
-- validate
-- test
-- quality
-install: |
-  github_install \
-      --repo instrumenta/kubeval \
-      --match name \
-      --asset kubeval-linux-amd64.tar.gz \
-      --type tarball \
-      --include kubeval
+  - kubernetes
+  - k8s
+  - manifest
+  - yaml
+  - configuration
+  - validate
+  - test
+  - quality
+install:
+  script: |-
+    github_install \
+        --repo instrumenta/kubeval \
+        --match name \
+        --asset kubeval-linux-amd64.tar.gz \
+        --type tarball \
+        --include kubeval

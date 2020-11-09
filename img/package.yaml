@@ -7,15 +7,16 @@ version:
   filter: ^[[:space:]]version
   pattern: s/^\sversion\s+:\s(.+)$/\1/
 tags:
-- docker
-- container
-- build
-- builder
-- image
-install: |
-  github_install \
-      --repo genuinetools/img \
-      --match name \
-      --asset img-linux-amd64 \
-      --type binary \
-      --name img
+  - docker
+  - container
+  - build
+  - builder
+  - image
+install:
+  script: |-
+    github_install \
+        --repo genuinetools/img \
+        --match name \
+        --asset img-linux-amd64 \
+        --type binary \
+        --name img

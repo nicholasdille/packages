@@ -2,22 +2,23 @@ name: faas-cli
 description: Official CLI for OpenFaaS
 repo: openfaas/faas-cli
 links:
-- text: Homepage
-  url: https://www.openfaas.com/
+  - text: Homepage
+    url: https://www.openfaas.com/
 version:
   latest: 0.12.14 # renovate: datasource=github-releases depName=openfaas/faas-cli
   command: faas-cli version
   filter: version
   pattern: s/^\s+version:\s(.+)$/\1/
 tags:
-- openfaas
-- function
-- service
-- serverless
-install: |
-  github_install \
-      --repo openfaas/faas-cli \
-      --match name \
-      --asset faas-cli \
-      --type binary \
-      --name faas-cli
+  - openfaas
+  - function
+  - service
+  - serverless
+install:
+  script: |-
+    github_install \
+        --repo openfaas/faas-cli \
+        --match name \
+        --asset faas-cli \
+        --type binary \
+        --name faas-cli

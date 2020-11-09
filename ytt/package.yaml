@@ -2,23 +2,24 @@ name: ytt
 description: YAML templating tool that works on YAML structure instead of text
 repo: k14s/ytt
 links:
-- text: Homepage
-  url: https://carvel.dev/
+  - text: Homepage
+    url: https://carvel.dev/
 version:
   latest: v0.30.0 # renovate: datasource=github-releases depName=k14s/ytt
   command: ytt --version
   filter: ^ytt
   pattern: s/^ytt\sversion\s(.+)$/v\1/
 tags:
-- yaml
-- configuration
-- template
-- substitution
-- expansion
-install: |
-  github_install \
-      --repo k14s/ytt \
-      --match suffix \
-      --asset -linux-amd64 \
-      --type binary \
-      --name ytt
+  - yaml
+  - configuration
+  - template
+  - substitution
+  - expansion
+install:
+  script: |-
+    github_install \
+        --repo k14s/ytt \
+        --match suffix \
+        --asset -linux-amd64 \
+        --type binary \
+        --name ytt

@@ -2,29 +2,30 @@ name: kustomize
 description: Customization of kubernetes YAML configurations
 repo: kubernetes-sigs/kustomize
 links:
-- text: Homepage
-  url: https://kustomize.io/
+  - text: Homepage
+    url: https://kustomize.io/
 version:
   latest: kustomize/v3.8.6 # renovate: datasource=github-releases depName=kubernetes-sigs/kustomize versioning=regex:^kustomize\/v(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
   command: kustomize version
   filter: ^{Version
   pattern: s/^\{Version:(\S+)\s.+$/\1/
 tags:
-- kubernetes
-- k8s
-- template
-- configuration
-- substitution
-- expansion
-- package
-- yaml
-install: |
-  github_get_release kubernetes-sigs/kustomize | \
-      github_resolve_assets | \
-      github_select_asset_by_suffix _linux_amd64.tar.gz | \
-      github_get_asset_download_url | \
-      download_file | \
-      untar_file kustomize
+  - kubernetes
+  - k8s
+  - template
+  - configuration
+  - substitution
+  - expansion
+  - package
+  - yaml
+install:
+  script: |-
+    github_get_release kubernetes-sigs/kustomize | \
+        github_resolve_assets | \
+        github_select_asset_by_suffix _linux_amd64.tar.gz | \
+        github_get_asset_download_url | \
+        download_file | \
+        untar_file kustomize
 
-  echo "complete -C ${TARGET}/bin/kustomize kustomize" | \
-      store_completion kustomize
+    echo "complete -C ${TARGET}/bin/kustomize kustomize" | \
+        store_completion kustomize

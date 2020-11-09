@@ -4,21 +4,22 @@ repo: docker/compose-cli
 version:
   latest: v1.0.2 # renovate: datasource=github-releases depName=docker/compose-cli
 tags:
-- docker
-- compose
-- cli
-- plugin
-- ecs
-- azure
-- aws
-- aci
-- container
-install: |
-  ${SUDO} mv "${TARGET_BIN}/docker" "${TARGET_BIN}/com.docker.cli"
+  - docker
+  - compose
+  - cli
+  - plugin
+  - ecs
+  - azure
+  - aws
+  - aci
+  - container
+install:
+  script: |-
+    ${SUDO} mv "${TARGET_BIN}/docker" "${TARGET_BIN}/com.docker.cli"
 
-  github_get_release docker/compose-cli | \
-      github_resolve_assets | \
-      github_select_asset_by_name docker-linux-amd64.tar.gz | \
-      github_get_asset_download_url | \
-      download_file | \
-      untar_file --strip-components=1 docker/docker
+    github_get_release docker/compose-cli | \
+        github_resolve_assets | \
+        github_select_asset_by_name docker-linux-amd64.tar.gz | \
+        github_get_asset_download_url | \
+        download_file | \
+        untar_file --strip-components=1 docker/docker

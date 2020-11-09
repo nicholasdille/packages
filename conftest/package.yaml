@@ -2,8 +2,8 @@ name: conftest
 description: Write tests against structured configuration data using the Open Policy Agent Rego query language
 repo: open-policy-agent/conftest
 links:
-- text: Homepage
-  url: https://conftest.dev/
+  - text: Homepage
+    url: https://conftest.dev/
 version:
   latest: v0.21.0 # renovate: datasource=github-releases depName=open-policy-agent/conftest
   command: conftest --version
@@ -11,16 +11,17 @@ version:
     ^Version:
   pattern: s/^Version:\s(.+)$/v\1/
 tags:
-- validation
-- schema
-- configuration
-- test
-- query
-- rego
-install: |
-  github_install \
-      --repo open-policy-agent/conftest \
-      --match suffix \
-      --asset _Linux_x86_64.tar.gz \
-      --type tarball \
-      --include conftest
+  - validation
+  - schema
+  - configuration
+  - test
+  - query
+  - rego
+install:
+  script: |-
+    github_install \
+        --repo open-policy-agent/conftest \
+        --match suffix \
+        --asset _Linux_x86_64.tar.gz \
+        --type tarball \
+        --include conftest

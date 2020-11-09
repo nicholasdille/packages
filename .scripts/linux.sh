@@ -352,5 +352,30 @@ function get_install_script() {
     get_package_definition "${package}" | \
         jq \
             --raw-output \
-            '.install'
+            '.install.script'
+}
+
+function package_needs_docker() {
+    local package=$1
+    if test -z "${package}"; then
+        echo "ERROR: No package specified."
+        exit 1
+    fi
+
+    local needs_docker
+    needs_docker=$(
+        get_package_definition "${package}" | \
+            jq \
+                --raw-output \
+                '.install.docker'
+        )
+    
+    case "${needs_docker}" in
+        true|yes|1)
+            return 0
+        ;;
+        *)
+            return 1
+        ;;
+    esac
 }

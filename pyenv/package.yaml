@@ -2,74 +2,76 @@ name: pyenv
 description: A beautiful and useful low-latency prompt for your shell, written in go
 repo: pyenv/pyenv
 links:
-- text: pyenv-virtualenv
-  url: https://github.com/pyenv/pyenv-virtualenv
-- text: Suggested build environment
-  url: https://github.com/pyenv/pyenv/wiki#suggested-build-environment
+  - text: pyenv-virtualenv
+    url: https://github.com/pyenv/pyenv-virtualenv
+  - text: Suggested build environment
+    url: https://github.com/pyenv/pyenv/wiki#suggested-build-environment
 version:
   latest: v1.2.21 # renovate: datasource=github-releases depName=pyenv/pyenv
   command: pyenv --version
   filter: ^pyenv
   pattern: s/^pyenv\s(.+)$/v\1/
 tags:
-- python
-- version
-- manager
-- version manager
-install: |
-  if ! test -d "${TARGET_BASE}/pyenv"; then
-      ${SUDO} git clone https://github.com/pyenv/pyenv.git "${TARGET_BASE}/pyenv"
-  fi
-  export PYENV_ROOT="${TARGET_BASE}/pyenv"
-  export PATH="${PYENV_ROOT}/bin:${PATH}"
-  if ! test -d "${PYENV_ROOT}/plugins/pyenv-virtualenv"; then
-      ${SUDO} git clone https://github.com/pyenv/pyenv-virtualenv.git "${PYENV_ROOT}/plugins/pyenv-virtualenv"
-  fi
-  if ! test -d "${PYENV_ROOT}/plugins/pyenv-doctor"; then
-      ${SUDO} git clone https://github.com/pyenv/pyenv-doctor.git "${PYENV_ROOT}/plugins/pyenv-doctor"
-  fi
-
-  export DOCKER_BUILDKIT=1
-  get_file "${PACKAGE}" Dockerfile | \
-      docker build --tag pyenv -
-
-  docker run --rm --name pyenv \
-      --env PYENV \
-      --env PATH \
-      --volume "${TARGET_BASE}/pyenv:${TARGET_BASE}/pyenv" \
-      pyenv \
-      pyenv doctor
-
-  get_file "${PACKAGE}" profile.d.pyenv.sh | \
-      TARGET_BASE="${TARGET_BASE}" envsubst '${TARGET_BASE}' | \
-      store_file pyenv.sh /etc/profile.d
+  - python
+  - version
+  - manager
+  - version manager
 files:
-- name: Dockerfile
-  content: |
-    FROM ubuntu:20.04@sha256:1d7b639619bdca2d008eca2d5293e3c43ff84cbee597ff76de3b7a7de3e84956
-    ENV DEBIAN_FRONTEND=noninteractive
-    RUN apt-get update \
-    && apt-get -y install \
-            build-essential \
-            libssl-dev \
-            zlib1g-dev \
-            libbz2-dev \
-            libreadline-dev \
-            libsqlite3-dev \
-            wget \
-            curl \
-            llvm \
-            libncurses5-dev \
-            libncursesw5-dev \
-            xz-utils \
-            tk-dev \
-            libffi-dev \
-            liblzma-dev \
-            python-openssl \
-            git \
-            libedit-dev
-- name: profile.d.pyenv.sh
-  content: |
-    #!/bin/bash
+  - name: Dockerfile
+    content: |
+      FROM ubuntu:20.04@sha256:1d7b639619bdca2d008eca2d5293e3c43ff84cbee597ff76de3b7a7de3e84956
+      ENV DEBIAN_FRONTEND=noninteractive
+      RUN apt-get update \
+      && apt-get -y install \
+              build-essential \
+              libssl-dev \
+              zlib1g-dev \
+              libbz2-dev \
+              libreadline-dev \
+              libsqlite3-dev \
+              wget \
+              curl \
+              llvm \
+              libncurses5-dev \
+              libncursesw5-dev \
+              xz-utils \
+              tk-dev \
+              libffi-dev \
+              liblzma-dev \
+              python-openssl \
+              git \
+              libedit-dev
+  - name: profile.d.pyenv.sh
+    content: |
+      #!/bin/bash
+      export PYENV_ROOT="${TARGET_BASE}/pyenv"
+      export PATH="${PYENV_ROOT}/bin:${PATH}"
+install:
+  docker: true
+  script: |-
+    if ! test -d "${TARGET_BASE}/pyenv"; then
+        ${SUDO} git clone https://github.com/pyenv/pyenv.git "${TARGET_BASE}/pyenv"
+    fi
     export PYENV_ROOT="${TARGET_BASE}/pyenv"
     export PATH="${PYENV_ROOT}/bin:${PATH}"
+    if ! test -d "${PYENV_ROOT}/plugins/pyenv-virtualenv"; then
+        ${SUDO} git clone https://github.com/pyenv/pyenv-virtualenv.git "${PYENV_ROOT}/plugins/pyenv-virtualenv"
+    fi
+    if ! test -d "${PYENV_ROOT}/plugins/pyenv-doctor"; then
+        ${SUDO} git clone https://github.com/pyenv/pyenv-doctor.git "${PYENV_ROOT}/plugins/pyenv-doctor"
+    fi
+
+    export DOCKER_BUILDKIT=1
+    get_file "${PACKAGE}" Dockerfile | \
+        docker build --tag pyenv -
+
+    docker run --rm --name pyenv \
+        --env PYENV \
+        --env PATH \
+        --volume "${TARGET_BASE}/pyenv:${TARGET_BASE}/pyenv" \
+        pyenv \
+        pyenv doctor
+
+    get_file "${PACKAGE}" profile.d.pyenv.sh | \
+        TARGET_BASE="${TARGET_BASE}" envsubst '${TARGET_BASE}' | \
+        store_file pyenv.sh /etc/profile.d

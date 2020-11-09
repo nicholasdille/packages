@@ -2,18 +2,18 @@ name: httpie
 description: Modern, user-friendly command-line HTTP client for the API era
 repo: httpie/httpie
 links:
-- text: Homepage
-  url: https://httpie.org/
+  - text: Homepage
+    url: https://httpie.org/
 version:
   latest: 2.3.0 # renovate: datasource=github-releases depName=httpie/httpie
   command: http --version
   filter: ^[[:digit:]]
   pattern: s/^(.+)$/\1/
 tags:
-- web
-- http
-- https
-- test
-- quality
-install: |
-  install_python_module httpie
+  - web
+  - http
+  - https
+  - test
+  - quality
+install:
+  script: install_python_module httpie

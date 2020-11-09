@@ -4,13 +4,14 @@ repo: derailed/k9s
 version:
   latest: v0.23.9 # renovate: datasource=github-releases depName=derailed/k9s
 tags:
-- kubernetes
-- k8s
-- ui
-install: |
-  github_install \
-      --repo derailed/k9s \
-      --match name \
-      --asset k9s_Linux_x86_64.tar.gz \
-      --type tarball \
-      --include k9s
+  - kubernetes
+  - k8s
+  - ui
+install:
+  script: |-
+    github_install \
+        --repo derailed/k9s \
+        --match name \
+        --asset k9s_Linux_x86_64.tar.gz \
+        --type tarball \
+        --include k9s

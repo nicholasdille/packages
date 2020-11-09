@@ -2,8 +2,8 @@ name: azure-cli
 description: Azure Command-Line Interface
 repo: Azure/azure-cli
 links:
-- text: Homepage
-  url: https://docs.microsoft.com/cli/azure/
+  - text: Homepage
+    url: https://docs.microsoft.com/cli/azure/
 version:
   latest: azure-cli-2.14.1 # renovate: datasource=github-releases depName=Azure/azure-cli versioning=regex:^azure-cli-(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
   command: az version --output yaml
@@ -11,7 +11,7 @@ version:
     ^azure-cli:
   pattern: s/^(azure-cli):\s(.+)$/\1-\2/
 tags:
-- azure
-- cloud
-install: |
-  install_python_module azure-cli
+  - azure
+  - cloud
+install:
+  script: install_python_module azure-cli

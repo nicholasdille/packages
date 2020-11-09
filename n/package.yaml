@@ -7,22 +7,23 @@ version:
   filter: ^[[:digit:]]
   pattern: s/^(.+)$/v\1/
 tags:
-- node
-- nodejs
-- version
-- manager
-- version manager
-install: |
-  echo "https://github.com/tj/n/raw/${requested_version}/bin/n" | \
-      download_file | \
-      store_file n | \
-      make_executable
-
-  get_file "${PACKAGE}" profile.d.n.sh | \
-      TARGET_BASE="${TARGET_BASE}" envsubst '${TARGET_BASE}' | \
-      store_file n.sh /etc/profile.d
+  - node
+  - nodejs
+  - version
+  - manager
+  - version manager
 files:
-- name: profile.d.n.sh
-  content: |
-    #!/bin/bash
-    export N_PREFIX="${TARGET_BASE}"
+  - name: profile.d.n.sh
+    content: |
+      #!/bin/bash
+      export N_PREFIX="${TARGET_BASE}"
+install:
+  script: |-
+    echo "https://github.com/tj/n/raw/${requested_version}/bin/n" | \
+        download_file | \
+        store_file n | \
+        make_executable
+
+    get_file "${PACKAGE}" profile.d.n.sh | \
+        TARGET_BASE="${TARGET_BASE}" envsubst '${TARGET_BASE}' | \
+        store_file n.sh /etc/profile.d

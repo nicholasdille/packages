@@ -7,19 +7,20 @@ version:
   filter: ^[[:digit:]]
   pattern: s/^(.+)$/\1/
 tags:
-- ssl
-- tls
-- scan
-- test
-- quality
-install: |
-  install_python_module sslyze
-
-  get_file "${PACKAGE}" profile.d.sslyze.sh | \
-      TARGET_BASE=${TARGET_BASE} envsubst '${TARGET_BASE}' | \
-      store_file sslyze.sh /etc/profile.d/
+  - ssl
+  - tls
+  - scan
+  - test
+  - quality
 files:
-- name: profile.d.sslyze.sh
-  content: |
-    #!/bin/bash
-    alias sslyze="python3 -m sslyze"
+  - name: profile.d.sslyze.sh
+    content: |
+      #!/bin/bash
+      alias sslyze="python3 -m sslyze"
+install:
+  script: |-
+    install_python_module sslyze
+
+    get_file "${PACKAGE}" profile.d.sslyze.sh | \
+        TARGET_BASE=${TARGET_BASE} envsubst '${TARGET_BASE}' | \
+        store_file sslyze.sh /etc/profile.d/

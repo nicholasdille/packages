@@ -7,13 +7,14 @@ version:
   filter: ^podman
   pattern: s/^podman\sversion\s(.+)$/v\1/
 tags:
-- container
-install: |
-  github_install \
-      --repo containers/podman \
-      --match name \
-      --asset podman-remote-static.tar.gz \
-      --type tarball \
-      --include podman-remote-static
+  - container
+install:
+  script: |-
+    github_install \
+        --repo containers/podman \
+        --match name \
+        --asset podman-remote-static.tar.gz \
+        --type tarball \
+        --include podman-remote-static
 
-  rename_file podman-remote-static podman
+    rename_file podman-remote-static podman

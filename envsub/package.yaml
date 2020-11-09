@@ -7,14 +7,15 @@ version:
   filter: ^[[:digit:]]
   pattern: s/^(.+)$/\1/
 tags:
-- shell
-- substitution
-- expansion
-- variables
-install: |
-  github_install \
-      --repo stephenc/envsub \
-      --match name \
-      --asset envsub \
-      --type binary \
-      --name envsub
+  - shell
+  - substitution
+  - expansion
+  - variables
+install:
+  script: |-
+    github_install \
+        --repo stephenc/envsub \
+        --match name \
+        --asset envsub \
+        --type binary \
+        --name envsub

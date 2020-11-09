@@ -7,17 +7,18 @@ version:
   filter: ^Toast
   pattern: s/^Toast\s(.+)$/v\1/
 tags:
-- pipeline
-- continuous
-- ci/cd
-- integration
-- delivery
-- deployment
-- container
-install: |
-  github_install \
-      --repo stepchowfun/toast \
-      --match name \
-      --asset toast-x86_64-unknown-linux-gnu \
-      --type binary \
-      --name toast
+  - pipeline
+  - continuous
+  - ci/cd
+  - integration
+  - delivery
+  - deployment
+  - container
+install:
+  script: |-
+    github_install \
+        --repo stepchowfun/toast \
+        --match name \
+        --asset toast-x86_64-unknown-linux-gnu \
+        --type binary \
+        --name toast

@@ -7,25 +7,26 @@ version:
   filter: ^[[:digit:]]
   pattern: s/^(.+)$/v\1/
 tags:
-- node
-- nodejs
-- version
-- manager
-- version manager
-install: |
-  if ! test -d "${TARGET_BASE}/nvm"; then
-      ${SUDO} git clone https://github.com/nvm-sh/nvm "${TARGET_BASE}/nvm"
-  fi
-  pushd "${TARGET_BASE}/nvm"
-  git checkout "${requested_version}"
-  popd
-
-  get_file "${PACKAGE}" profile.d.nvm.sh | \
-      TARGET_BASE="${TARGET_BASE}" envsubst '${TARGET_BASE}' | \
-      store_file nvm.sh /etc/profile.d
+  - node
+  - nodejs
+  - version
+  - manager
+  - version manager
 files:
-- name: profile.d.nvm.sh
-  content: |
-    #!/bin/bash
-    export NVM_DIR="${TARGET_BASE}/nvm"
-    source "${NVM_DIR}/nvm.sh"
+  - name: profile.d.nvm.sh
+    content: |
+      #!/bin/bash
+      export NVM_DIR="${TARGET_BASE}/nvm"
+      source "${NVM_DIR}/nvm.sh"
+install:
+  script: |-
+    if ! test -d "${TARGET_BASE}/nvm"; then
+        ${SUDO} git clone https://github.com/nvm-sh/nvm "${TARGET_BASE}/nvm"
+    fi
+    pushd "${TARGET_BASE}/nvm"
+    git checkout "${requested_version}"
+    popd
+
+    get_file "${PACKAGE}" profile.d.nvm.sh | \
+        TARGET_BASE="${TARGET_BASE}" envsubst '${TARGET_BASE}' | \
+        store_file nvm.sh /etc/profile.d

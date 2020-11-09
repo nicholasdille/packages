@@ -4,12 +4,13 @@ repo: superbrothers/ksort
 version:
   latest: v0.4.1 # renovate: datasource=github-releases depName=superbrothers/ksort
 tags:
-- kubernetes
-- k8s
-install: |
-  github_install \
-      --repo superbrothers/ksort \
-      --match name \
-      --asset ksort-linux-amd64.tar.gz \
-      --type tarball \
-      --include ksort
+  - kubernetes
+  - k8s
+install:
+  script: |-
+    github_install \
+        --repo superbrothers/ksort \
+        --match name \
+        --asset ksort-linux-amd64.tar.gz \
+        --type tarball \
+        --include ksort

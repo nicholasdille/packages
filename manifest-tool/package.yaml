@@ -7,16 +7,17 @@ version:
   filter: ^manifest-tool
   pattern: s/^manifest-tool\sversion\s(\S+)\s.+$/v\1/
 tags:
-- docker
-- container
-- image
-- registry
-- platform
-- architecture
-install: |
-  github_install \
-      --repo estesp/manifest-tool \
-      --match name \
-      --asset manifest-tool-linux-amd64 \
-      --type binary \
-      --name manifest-tool
+  - docker
+  - container
+  - image
+  - registry
+  - platform
+  - architecture
+install:
+  script: |-
+    github_install \
+        --repo estesp/manifest-tool \
+        --match name \
+        --asset manifest-tool-linux-amd64 \
+        --type binary \
+        --name manifest-tool

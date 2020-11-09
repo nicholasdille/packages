@@ -7,15 +7,16 @@ version:
   filter: ^k3c
   pattern: s/^k3c\sversion\s(\S+)\s.+$/\1/
 tags:
-- container
-- runtime
-- build
-- builder
-- image
-install: |
-  github_install \
-      --repo rancher/k3c \
-      --match name \
-      --asset k3c-linux-amd64 \
-      --type binary \
-      --name k3c
+  - container
+  - runtime
+  - build
+  - builder
+  - image
+install:
+  script: |-
+    github_install \
+        --repo rancher/k3c \
+        --match name \
+        --asset k3c-linux-amd64 \
+        --type binary \
+        --name k3c

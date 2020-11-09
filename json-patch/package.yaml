@@ -4,11 +4,13 @@ repo: evanphx/json-patch
 version:
   latest: v5.0.0 # renovate: datasource=github-releases depName=evanphx/json-patch
 tags:
-- json
-- patch
-install: |
-  build_containerized golang <<EOF
-  go get -u github.com/evanphx/json-patch/cmd/json-patch
-  cp /go/bin/json-patch /
-  EOF
-  extract_file_from_container json-patch
+  - json
+  - patch
+install:
+  docker: true
+  script: |-
+    build_containerized golang <<EOF
+    go get -u github.com/evanphx/json-patch/cmd/json-patch
+    cp /go/bin/json-patch /
+    EOF
+    extract_file_from_container json-patch

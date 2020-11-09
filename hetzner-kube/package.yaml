@@ -7,19 +7,20 @@ version:
   filter: ^[[:digit:]]
   pattern: s/^(.+)$/\1/
 tags:
-- kubernetes
-- k8s
-- hetzner
-- cloud
-- cluster
-- bootstrap
-install: |
-  github_install \
-      --repo xetys/hetzner-kube \
-      --match suffix \
-      --asset -linux-amd64 \
-      --type binary \
-      --name hetzner-kube
+  - kubernetes
+  - k8s
+  - hetzner
+  - cloud
+  - cluster
+  - bootstrap
+install:
+  script: |-
+    github_install \
+        --repo xetys/hetzner-kube \
+        --match suffix \
+        --asset -linux-amd64 \
+        --type binary \
+        --name hetzner-kube
 
-  hetzner-kube completion bash | \
-      store_completion hetzner-kube
+    hetzner-kube completion bash | \
+        store_completion hetzner-kube

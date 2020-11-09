@@ -2,19 +2,20 @@ name: vendir
 description: Easy way to vendor portions of git repos, github releases, etc. declaratively
 repo: k14s/vendir
 links:
-- text: Homepage
-  url: https://carvel.dev/
+  - text: Homepage
+    url: https://carvel.dev/
 version:
   latest: v0.12.0 # renovate: datasource=github-releases depName=k14s/vendir
   command: vendir --version
   filter: ^vendir
   pattern: s/^vendir\sversion\s(.+)$/v\1/
 tags:
-- shell
-install: |
-  github_install \
-      --repo k14s/vendir \
-      --match suffix \
-      --asset -linux-amd64 \
-      --type binary \
-      --name vendir
+  - shell
+install:
+  script: |-
+    github_install \
+        --repo k14s/vendir \
+        --match suffix \
+        --asset -linux-amd64 \
+        --type binary \
+        --name vendir

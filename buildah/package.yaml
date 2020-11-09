@@ -4,83 +4,84 @@ repo: containers/buildah
 version:
   latest: v1.17.0 # renovate: datasource=github-releases depName=containers/buildah
 tags:
-- container
-- build
-- builder
-install: |
-  build_containerized golang:1.12 <<EOF
-  apt-get update
-  #apt-get -y install --no-install-recommends software-properties-common
-  #add-apt-repository -y ppa:alexlarsson/flatpak
-  #add-apt-repository -y ppa:gophers/archive
-  #add-apt-repository -y ppa:projectatomic/ppa
-  apt-get -y -qq update
-  apt-get -y install --no-install-recommends \
-      bats \
-      btrfs-tools \
-      libapparmor-dev \
-      libdevmapper-dev \
-      libglib2.0-dev \
-      libgpgme11-dev \
-      libseccomp-dev \
-      libselinux1-dev \
-      go-md2man
-  mkdir ~/buildah
-  cd ~/buildah
-  export GOPATH=$(pwd)
-  git clone https://github.com/containers/buildah ./src/github.com/containers/buildah
-  cd ./src/github.com/containers/buildah
-  git checkout ${requested_version}
-  make runc all SECURITYTAGS="apparmor seccomp"
-  #whereis buildah
-  # copy buildah
-  #cp docs/cni-examples/*.conf /
-  EOF
-  #docker cp buildah:/buildah - | ${SUDO} tar -xvC ${TARGET_BIN}
-  #mkdir -p /etc/cni/net.d
-  #docker cp buildah:/*.conf - | ${SUDO} tar -xvC ${TARGET_BASE}/etc/cni/net.d
-  #${SUDO} chmod 0644 /etc/cni/net.d/*.conf
+  - container
+  - build
+  - builder
 files:
-- name: Dockerfile
-  content: |
-    FROM registry.fedoraproject.org/fedora:latest@sha256:edd0366dd4164485d31bd05d06d3f4f549c4ef278e08141c2da65277dd10325c
-    ENV GOPATH=/root/buildah
+  - name: Dockerfile
+    content: |
+      FROM registry.fedoraproject.org/fedora:latest@sha256:edd0366dd4164485d31bd05d06d3f4f549c4ef278e08141c2da65277dd10325c
+      ENV GOPATH=/root/buildah
 
-    RUN useradd build \
-    && yum -y update \
-    && yum -y reinstall shadow-utils \
-    && yum -y install --enablerepo=updates-testing \
-        make \
-        golang \
+      RUN useradd build \
+      && yum -y update \
+      && yum -y reinstall shadow-utils \
+      && yum -y install --enablerepo=updates-testing \
+          make \
+          golang \
+          bats \
+          btrfs-progs-devel \
+          device-mapper-devel \
+          glib2-devel \
+          gpgme-devel \
+          libassuan-devel \
+          libseccomp-devel \
+          git \
+          bzip2 \
+          go-md2man \
+          runc \
+          fuse-overlayfs \
+          fuse3 \
+          containers-common
+
+      RUN mkdir /root/buildah \
+      && git clone https://github.com/containers/buildah /root/buildah/src/github.com/containers/buildah \
+      && cd /root/buildah/src/github.com/containers/buildah \
+      && export DISABLE_CGO=1 \
+      && make EXTRA_LDFLAGS='-w -extldflags "-static"' \
+      && make install
+
+      ADD https://raw.githubusercontent.com/containers/buildah/master/contrib/buildahimage/stable/containers.conf /etc/containers/
+
+      # Adjust storage.conf to enable Fuse storage.
+      RUN chmod 644 /etc/containers/containers.conf; sed -i -e 's|^#mount_program|mount_program|g' -e '/additionalimage.*/a "/var/lib/shared",' -e 's|^mountopt[[:space:]]*=.*$|mountopt = "nodev,fsync=0"|g' /etc/containers/storage.conf
+      RUN mkdir -p /var/lib/shared/overlay-images /var/lib/shared/overlay-layers; touch /var/lib/shared/overlay-images/images.lock; touch /var/lib/shared/overlay-layers/layers.lock
+
+      # Set an environment variable to default to chroot isolation for RUN
+      # instructions and "buildah run".
+      ENV BUILDAH_ISOLATION=chroot
+install:
+  docker: true
+  script: |-
+    build_containerized golang:1.12 <<EOF
+    apt-get update
+    #apt-get -y install --no-install-recommends software-properties-common
+    #add-apt-repository -y ppa:alexlarsson/flatpak
+    #add-apt-repository -y ppa:gophers/archive
+    #add-apt-repository -y ppa:projectatomic/ppa
+    apt-get -y -qq update
+    apt-get -y install --no-install-recommends \
         bats \
-        btrfs-progs-devel \
-        device-mapper-devel \
-        glib2-devel \
-        gpgme-devel \
-        libassuan-devel \
-        libseccomp-devel \
-        git \
-        bzip2 \
-        go-md2man \
-        runc \
-        fuse-overlayfs \
-        fuse3 \
-        containers-common
-
-    RUN mkdir /root/buildah \
-    && git clone https://github.com/containers/buildah /root/buildah/src/github.com/containers/buildah \
-    && cd /root/buildah/src/github.com/containers/buildah \
-    && export DISABLE_CGO=1 \
-    && make EXTRA_LDFLAGS='-w -extldflags "-static"' \
-    && make install
-
-    ADD https://raw.githubusercontent.com/containers/buildah/master/contrib/buildahimage/stable/containers.conf /etc/containers/
-
-    # Adjust storage.conf to enable Fuse storage.
-    RUN chmod 644 /etc/containers/containers.conf; sed -i -e 's|^#mount_program|mount_program|g' -e '/additionalimage.*/a "/var/lib/shared",' -e 's|^mountopt[[:space:]]*=.*$|mountopt = "nodev,fsync=0"|g' /etc/containers/storage.conf
-    RUN mkdir -p /var/lib/shared/overlay-images /var/lib/shared/overlay-layers; touch /var/lib/shared/overlay-images/images.lock; touch /var/lib/shared/overlay-layers/layers.lock
-
-    # Set an environment variable to default to chroot isolation for RUN
-    # instructions and "buildah run".
-    ENV BUILDAH_ISOLATION=chroot
-
+        btrfs-tools \
+        libapparmor-dev \
+        libdevmapper-dev \
+        libglib2.0-dev \
+        libgpgme11-dev \
+        libseccomp-dev \
+        libselinux1-dev \
+        go-md2man
+    mkdir ~/buildah
+    cd ~/buildah
+    export GOPATH=$(pwd)
+    git clone https://github.com/containers/buildah ./src/github.com/containers/buildah
+    cd ./src/github.com/containers/buildah
+    git checkout ${requested_version}
+    make runc all SECURITYTAGS="apparmor seccomp"
+    #whereis buildah
+    # copy buildah
+    #cp docs/cni-examples/*.conf /
+    EOF
+    #docker cp buildah:/buildah - | ${SUDO} tar -xvC ${TARGET_BIN}
+    #mkdir -p /etc/cni/net.d
+    #docker cp buildah:/*.conf - | ${SUDO} tar -xvC ${TARGET_BASE}/etc/cni/net.d
+    #${SUDO} chmod 0644 /etc/cni/net.d/*.conf

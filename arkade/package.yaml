@@ -7,12 +7,13 @@ version:
   filter: Version
   pattern: s/Version:\s(.+)/\1/
 tags:
-- kubernetes
-- k8s
-install: |
-  github_install \
-      --repo alexellis/arkade \
-      --match name \
-      --asset arkade \
-      --type binary \
-      --name arkade
+  - kubernetes
+  - k8s
+install:
+  script: |-
+    github_install \
+        --repo alexellis/arkade \
+        --match name \
+        --asset arkade \
+        --type binary \
+        --name arkade

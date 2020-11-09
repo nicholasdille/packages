@@ -7,17 +7,19 @@ version:
   filter: ^Python
   pattern: s/^Python\s(.+)$/v\1/
 tags:
-- python
-- py
-install: |
-  require pyenv
-  source /etc/profile.d/pyenv.sh
+  - python
+  - py
+install:
+  docker: true
+  script: |-
+    require pyenv
+    source /etc/profile.d/pyenv.sh
 
-  docker run --rm --name pyenv \
-      --env PYENV_ROOT \
-      --env PATH \
-      --volume "${PYENV_ROOT}:${PYENV_ROOT}" \
-      pyenv \
-      pyenv install "${requested_version#v}" --skip-existing
-  ${SUDO} bash -c "source /etc/profile.d/pyenv.sh; ${PYENV_ROOT}/bin/pyenv rehash"
-  ${SUDO} bash -c "source /etc/profile.d/pyenv.sh; ${PYENV_ROOT}/bin/pyenv global ${TAG#v}"
+    docker run --rm --name pyenv \
+        --env PYENV_ROOT \
+        --env PATH \
+        --volume "${PYENV_ROOT}:${PYENV_ROOT}" \
+        pyenv \
+        pyenv install "${requested_version#v}" --skip-existing
+    ${SUDO} bash -c "source /etc/profile.d/pyenv.sh; ${PYENV_ROOT}/bin/pyenv rehash"
+    ${SUDO} bash -c "source /etc/profile.d/pyenv.sh; ${PYENV_ROOT}/bin/pyenv global ${TAG#v}"

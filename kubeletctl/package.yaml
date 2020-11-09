@@ -7,13 +7,14 @@ version:
   filter: ^Version
   pattern: s/^Version:\s(.+)$/v\1/
 tags:
-- kubernetes
-- k8s
-- kubelet
-install: |
-  github_install \
-      --repo cyberark/kubeletctl \
-      --match name \
-      --asset kubeletctl_linux_amd64 \
-      --type binary \
-      --name kubeletctl
+  - kubernetes
+  - k8s
+  - kubelet
+install:
+  script: |-
+    github_install \
+        --repo cyberark/kubeletctl \
+        --match name \
+        --asset kubeletctl_linux_amd64 \
+        --type binary \
+        --name kubeletctl

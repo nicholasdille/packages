@@ -4,22 +4,24 @@ repo: opencontainers/runtime-tools
 version:
   latest: v0.9.0 # renovate: datasource=github-releases depName=opencontainers/runtime-tools
 tags:
-- container
-- oci
-- runtime
-install: |
-  build_containerized golang <<EOF
-  go get github.com/cpuguy83/go-md2man
-  go get -d github.com/opencontainers/runtime-tools/cmd/oci-runtime-tool
-  cd /go/src/github.com/opencontainers/runtime-tools/
-  make all man
-  cp oci-runtime-tool /
-  EOF
-  extract_file_from_container oci-runtime-tool
+  - container
+  - oci
+  - runtime
+install:
+  docker: true
+  script: |-
+    build_containerized golang <<EOF
+    go get github.com/cpuguy83/go-md2man
+    go get -d github.com/opencontainers/runtime-tools/cmd/oci-runtime-tool
+    cd /go/src/github.com/opencontainers/runtime-tools/
+    make all man
+    cp oci-runtime-tool /
+    EOF
+    extract_file_from_container oci-runtime-tool
 
-  for MAN in oci-runtime-tool oci-runtime-tool-generate oci-runtime-tool-validate; do
-      # shellcheck disable=SC2154
-      docker cp "${container_name}:/go/src/github.com/opencontainers/runtime-tools/${MAN}.1" - | \
-          tar -x --to-stdout | \
-          sudo tee "${TARGET_BASE}/share/man/man1/${MAN}.1" >/dev/null
-  done
+    for MAN in oci-runtime-tool oci-runtime-tool-generate oci-runtime-tool-validate; do
+        # shellcheck disable=SC2154
+        docker cp "${container_name}:/go/src/github.com/opencontainers/runtime-tools/${MAN}.1" - | \
+            tar -x --to-stdout | \
+            sudo tee "${TARGET_BASE}/share/man/man1/${MAN}.1" >/dev/null
+    done

@@ -7,11 +7,12 @@ version:
   filter: ^v
   pattern: s/^(.+)$/\1/
 tags:
-- node
-- nodejs
-- javascript
-- typescript
-install: |
-  require n
-  source /etc/profile.d/n.sh
-  ${SUDO} -E n latest
+  - node
+  - nodejs
+  - javascript
+  - typescript
+install:
+  script: |-
+    require n
+    source /etc/profile.d/n.sh
+    ${SUDO} -E n latest

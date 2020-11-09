@@ -2,12 +2,12 @@ name: acme.sh
 description: A pure Unix shell script implementing ACME client protocol
 repo: acmesh-official/acme.sh
 tags:
-- certificate
-- shell
-- acme
-- dns
-- letsencrypt
-- ssl
-- tls
-install: |
-  curl https://get.acme.sh | sh
+  - certificate
+  - shell
+  - acme
+  - dns
+  - letsencrypt
+  - ssl
+  - tls
+install:
+  script: curl https://get.acme.sh | sh

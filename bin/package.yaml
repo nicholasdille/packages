@@ -7,11 +7,12 @@ version:
   filter: ^bin version
   pattern: s/^bin\sversion\s(.+)$/v\1/
 tags:
-- shell
-install: |
-  github_install \
-      --repo marcosnils/bin \
-      --match suffix \
-      --asset _Linux_x86_64 \
-      --type binary \
-      --name bin
+  - shell
+install:
+  script: |-
+    github_install \
+        --repo marcosnils/bin \
+        --match suffix \
+        --asset _Linux_x86_64 \
+        --type binary \
+        --name bin

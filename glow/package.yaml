@@ -7,11 +7,12 @@ version:
   filter: ^glow
   pattern: s/^glow\sversion\s(\S+)\s.+$/v\1/
 tags:
-- markdown
-install: |
-  github_install \
-      --repo charmbracelet/glow \
-      --match suffix \
-      --asset _linux_x86_64.tar.gz \
-      --type tarball \
-      --include glow
+  - markdown
+install:
+  script: |-
+    github_install \
+        --repo charmbracelet/glow \
+        --match suffix \
+        --asset _linux_x86_64.tar.gz \
+        --type tarball \
+        --include glow

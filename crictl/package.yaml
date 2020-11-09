@@ -7,18 +7,19 @@ version:
   filter: ^crictl
   pattern: s/^crictl\sversion\s(.+)$/\1/
 tags:
-- container
-- runtime
-- cri
-install: |
-  github_get_release kubernetes-sigs/cri-tools | \
-      github_resolve_assets | \
-      run_filters \
-          "github_select_asset_by_prefix crictl-" \
-          "github_select_asset_by_suffix -linux-amd64.tar.gz" | \
-      github_get_asset_download_url | \
-      download_file | \
-      untar_file crictl
+  - container
+  - runtime
+  - cri
+install:
+  script: |-
+    github_get_release kubernetes-sigs/cri-tools | \
+        github_resolve_assets | \
+        run_filters \
+            "github_select_asset_by_prefix crictl-" \
+            "github_select_asset_by_suffix -linux-amd64.tar.gz" | \
+        github_get_asset_download_url | \
+        download_file | \
+        untar_file crictl
 
-  crictl completion bash | \
-      store_completion crictl
+    crictl completion bash | \
+        store_completion crictl

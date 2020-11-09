@@ -2,29 +2,30 @@ name: helm
 description: The Kubernetes Package Manager
 repo: helm/helm
 links:
-- text: Homepage
-  url: https://helm.sh/
-- text: Helm Hub
-  url: https://hub.helm.sh/
+  - text: Homepage
+    url: https://helm.sh/
+  - text: Helm Hub
+    url: https://hub.helm.sh/
 version:
   latest: v3.4.0 # renovate: datasource=github-releases depName=helm/helm
   command: helm version --template {{.Version}}
   filter: ^v
   pattern: s/^(.+)$/\1/
 tags:
-- kubernetes
-- k8s
-- package
-- template
-- substituton
-- expansion
-- configuration
-install: |
-  curl --location --fail "https://get.helm.sh/helm-${requested_version}-linux-amd64.tar.gz" | \
-      ${SUDO} tar -xz --strip-components=1 -C "${TARGET_BIN}" linux-amd64/helm
+  - kubernetes
+  - k8s
+  - package
+  - template
+  - substituton
+  - expansion
+  - configuration
+install:
+  script: |-
+    curl --location --fail "https://get.helm.sh/helm-${requested_version}-linux-amd64.tar.gz" | \
+        ${SUDO} tar -xz --strip-components=1 -C "${TARGET_BIN}" linux-amd64/helm
 
-  helm completion bash | \
-      store_completion helm
+    helm completion bash | \
+        store_completion helm
 
-  # https://github.com/databus23/helm-diff
-  helm plugin install https://github.com/databus23/helm-diff
+    # https://github.com/databus23/helm-diff
+    helm plugin install https://github.com/databus23/helm-diff

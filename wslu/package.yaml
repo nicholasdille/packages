@@ -4,8 +4,9 @@ repo: wslutilities/wslu
 version:
   latest: v3.2.1 # renovate: datasource=github-releases depName=wslutilities/wslu
 tags:
-- wsl
-install: |
-  git clone https://github.com/wslutilities/wslu "${temporary_directory}"
-  git checkout "${requested_version}"
-  ${SUDO} PREFIX=/usr/local make all install
+  - wsl
+install:
+  script: |-
+    git clone https://github.com/wslutilities/wslu "${temporary_directory}"
+    git checkout "${requested_version}"
+    ${SUDO} PREFIX=/usr/local make all install

@@ -2,20 +2,21 @@ name: pandoc
 description: Universal markup converter
 repo: jgm/pandoc
 links:
-- text: Homepage
-  url: https://pandoc.org/
+  - text: Homepage
+    url: https://pandoc.org/
 version:
   latest: 2.11.1.1 # renovate: datasource=github-releases depName=jgm/pandoc versioning=loose
   command: pandoc --version
   filter: ^pandoc
   pattern: s/^pandoc\s(.+)$/\1/
 tags:
-- converter
-- markup
-install: |
-  github_get_release jgm/pandoc | \
-      github_resolve_assets | \
-      github_select_asset_by_suffix -linux-amd64.tar.gz | \
-      github_get_asset_download_url | \
-      download_file | \
-      ${SUDO} tar -xzC "${TARGET_BASE}" --strip-components=1
+  - converter
+  - markup
+install:
+  script: |-
+    github_get_release jgm/pandoc | \
+        github_resolve_assets | \
+        github_select_asset_by_suffix -linux-amd64.tar.gz | \
+        github_get_asset_download_url | \
+        download_file | \
+        ${SUDO} tar -xzC "${TARGET_BASE}" --strip-components=1

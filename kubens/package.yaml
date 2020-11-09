@@ -4,15 +4,16 @@ repo: ahmetb/kubectx
 version:
   latest: v0.9.1 # renovate: datasource=github-releases depName=ahmetb/kubectx
 tags:
-- kubernetes
-- k8s
-- context
-- namespaces
-install: |
-  github_get_release ahmetb/kubectx | \
-      github_resolve_assets | \
-      github_select_asset_by_prefix kubens | \
-      github_select_asset_by_suffix _linux_x86_64.tar.gz | \
-      github_get_asset_download_url | \
-      download_file | \
-      untar_file kubens
+  - kubernetes
+  - k8s
+  - context
+  - namespaces
+install:
+  script: |-
+    github_get_release ahmetb/kubectx | \
+        github_resolve_assets | \
+        github_select_asset_by_prefix kubens | \
+        github_select_asset_by_suffix _linux_x86_64.tar.gz | \
+        github_get_asset_download_url | \
+        download_file | \
+        untar_file kubens

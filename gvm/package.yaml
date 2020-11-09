@@ -7,40 +7,41 @@ version:
   filter: ^Go\sVersion\sManager\s
   pattern: s/^Go\sVersion\sManager\sv(\S+)\s.+$/\1/
 tags:
-- go
-- golang
-- version
-- manager
-- version manager
-install: |
-  if ! test -d "${TARGET_BASE}/gvm"; then
-      ${SUDO} git clone https://github.com/moovweb/gvm "${TARGET_BASE}/gvm"
-  fi
-
-  get_file "${PACKAGE}" Dockerfile | \
-      docker build --tag gvm -
-
-  get_file "${PACKAGE}" profile.d.gvm.sh | \
-      TARGET_BASE=${TARGET_BASE} envsubst '${TARGET_BASE}' | \
-      store_file gvm.sh /etc/profile.d
+  - go
+  - golang
+  - version
+  - manager
+  - version manager
 files:
-- name: Dockerfile
-  content: |
-    FROM ubuntu:20.04@sha256:1d7b639619bdca2d008eca2d5293e3c43ff84cbee597ff76de3b7a7de3e84956
-    ENV DEBIAN_FRONTEND=noninteractive
-    RUN apt-get update \
-    && apt-get -y install \
-            curl \
-            git \
-            mercurial \
-            make \
-            binutils \
-            bison \
-            gcc \
-            build-essential
-- name: profile.d.gvm.sh
-  content: |
-    #!/bin/bash
-    export GVM_ROOT="${TARGET_BASE}/gvm"
-    source "${GVM_ROOT}/scripts/gvm-default"
+  - name: Dockerfile
+    content: |
+      FROM ubuntu:20.04@sha256:1d7b639619bdca2d008eca2d5293e3c43ff84cbee597ff76de3b7a7de3e84956
+      ENV DEBIAN_FRONTEND=noninteractive
+      RUN apt-get update \
+      && apt-get -y install \
+              curl \
+              git \
+              mercurial \
+              make \
+              binutils \
+              bison \
+              gcc \
+              build-essential
+  - name: profile.d.gvm.sh
+    content: |
+      #!/bin/bash
+      export GVM_ROOT="${TARGET_BASE}/gvm"
+      source "${GVM_ROOT}/scripts/gvm-default"
+install:
+  docker: true
+  script: |-
+    if ! test -d "${TARGET_BASE}/gvm"; then
+        ${SUDO} git clone https://github.com/moovweb/gvm "${TARGET_BASE}/gvm"
+    fi
 
+    get_file "${PACKAGE}" Dockerfile | \
+        docker build --tag gvm -
+
+    get_file "${PACKAGE}" profile.d.gvm.sh | \
+        TARGET_BASE=${TARGET_BASE} envsubst '${TARGET_BASE}' | \
+        store_file gvm.sh /etc/profile.d

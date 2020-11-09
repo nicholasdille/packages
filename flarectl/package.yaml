@@ -2,24 +2,26 @@ name: flarectl
 description: A CLI application for interacting with a Cloudflare account
 repo: cloudflare/cloudflare-go
 links:
-- text: Usage
-  url: https://github.com/cloudflare/cloudflare-go/tree/master/cmd/flarectl
-- text: CloudFlare API
-  url: https://api.cloudflare.com/
+  - text: Usage
+    url: https://github.com/cloudflare/cloudflare-go/tree/master/cmd/flarectl
+  - text: CloudFlare API
+    url: https://api.cloudflare.com/
 version:
   latest: v0.13.4 # renovate: datasource=github-releases depName=cloudflare/cloudflare-go
   command: flarectl --version
   filter: ^flarectl
   pattern: s/^flarectl\sversion\s(.+)$/\1/
 tags:
-- dns
-install: |
-  build_containerized golang <<EOF
-  git clone https://github.com/cloudflare/cloudflare-go /go/src/github.com/cloudflare/cloudflare-go
-  cd /go/src/github.com/cloudflare/cloudflare-go
-  git checkout ${requested_version}
-  go mod download
-  go build -ldflags "-X main.version=${requested_version}" github.com/cloudflare/cloudflare-go/cmd/flarectl
-  cp flarectl /
-  EOF
-  extract_file_from_container flarectl
+  - dns
+install:
+  docker: true
+  script: |-
+    build_containerized golang <<EOF
+    git clone https://github.com/cloudflare/cloudflare-go /go/src/github.com/cloudflare/cloudflare-go
+    cd /go/src/github.com/cloudflare/cloudflare-go
+    git checkout ${requested_version}
+    go mod download
+    go build -ldflags "-X main.version=${requested_version}" github.com/cloudflare/cloudflare-go/cmd/flarectl
+    cp flarectl /
+    EOF
+    extract_file_from_container flarectl

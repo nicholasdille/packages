@@ -2,24 +2,25 @@ name: fluxctl
 description: The GitOps Kubernetes operator
 repo: fluxcd/flux
 links:
-- text: Homepage
-  url: https://fluxcd.io/
+  - text: Homepage
+    url: https://fluxcd.io/
 version:
   latest: 1.21.0 # renovate: datasource=github-releases depName=fluxcd/flux
   command: fluxctl version
   filter: ^[[:digit:]]
   pattern: s/^(.+)$/\1/
 tags:
-- gitops
-- kubernetes
-- k8s
-install: |
-  github_install \
-      --repo fluxcd/flux \
-      --match name \
-      --asset fluxctl_linux_amd64 \
-      --type binary \
-      --name fluxctl
+  - gitops
+  - kubernetes
+  - k8s
+install:
+  script: |-
+    github_install \
+        --repo fluxcd/flux \
+        --match name \
+        --asset fluxctl_linux_amd64 \
+        --type binary \
+        --name fluxctl
 
-  fluxctl completion bash | \
-      store_completion fluxctl
+    fluxctl completion bash | \
+        store_completion fluxctl

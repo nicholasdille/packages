@@ -2,15 +2,15 @@ name: linkchecker
 description: Check websites for broken links
 repo: linkchecker/linkchecker
 links:
-- text: Homepage
-  url: https://linkchecker.github.io/linkchecker/
+  - text: Homepage
+    url: https://linkchecker.github.io/linkchecker/
 version:
   latest: v9.4.0 # renovate: datasource=github-releases depName=linkchecker/linkchecker
 tags:
-- web
-- html
-- link
-- test
-- quality
-install: |
-  install_python_module git+https://github.com/linkchecker/linkchecker.git
+  - web
+  - html
+  - link
+  - test
+  - quality
+install:
+  script: install_python_module git+https://github.com/linkchecker/linkchecker.git

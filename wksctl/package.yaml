@@ -7,14 +7,15 @@ version:
   filter: ^[[:digit:]]
   pattern: s/^(.+)$/v\1/
 tags:
-- kubernetes
-- k8s
-- cluster
-- bootstrap
-install: |
-  github_install \
-      --repo weaveworks/wksctl \
-      --match suffix \
-      --asset -linux-x86_64.tar.gz \
-      --type tarball \
-      --include wksctl
+  - kubernetes
+  - k8s
+  - cluster
+  - bootstrap
+install:
+  script: |-
+    github_install \
+        --repo weaveworks/wksctl \
+        --match suffix \
+        --asset -linux-x86_64.tar.gz \
+        --type tarball \
+        --include wksctl
