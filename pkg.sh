@@ -165,6 +165,8 @@ handle_install() {
         echo "Installing ${package} version ${requested_version}..."
 
         eval "$(get_install_script "${package}")"
+
+        echo "Finished installation of ${package} version ${requested_version}."
     done
 }
 
@@ -304,18 +306,6 @@ handle_version() {
 }
 
 prepare() {
-    : "${VERSION:=latest}"
-    if test -z "${TAG}"; then
-        TAG=$(
-                curl --silent "https://api.github.com/repos/${MY_REPO}/releases" | \
-                    jq --raw-output 'map(select(.tag_name | startswith("packages/"))) | .[0].tag_name'
-            )
-    fi
-    if test -z "${TAG}"; then
-        echo "ERROR: Failed to determine tag from version ${VERSION}."
-        exit 1
-    fi
-
     mkdir -p "${HOME}/.pkg"
     for lib in variables source codeberg control docker github linux; do
         if ! test -f "${HOME}/.pkg/${lib}.sh"; then
@@ -325,6 +315,20 @@ prepare() {
                 >"${HOME}/.pkg/${lib}.sh"
         fi
     done
+
+    : "${VERSION:=latest}"
+    if test -z "${TAG}"; then
+        # shellcheck source=.scripts/github.sh
+        source "${HOME}/.pkg/github.sh"
+        TAG=$(
+            github_get_releases "${MY_REPO}" | \
+                jq --raw-output 'map(select(.tag_name | startswith("packages/"))) | .[0].tag_name'
+        )
+    fi
+    if test -z "${TAG}"; then
+        echo "ERROR: Failed to determine tag from version ${VERSION}."
+        exit 1
+    fi
 }
 
 main() {

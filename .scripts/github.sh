@@ -33,6 +33,18 @@ function github_get_repo_description() {
         jq --raw-output '.description'
 }
 
+function github_get_releases() {
+    local project=$1
+
+    if test -z "${project}"; then
+        echo "ERROR: Project not specified."
+        return 1
+    fi
+
+    >&2 echo "Fetching releases for ${project}..."
+    github_api "${project}" "/releases"
+}
+
 function github_get_release() {
     local project=$1
     local version=$2
