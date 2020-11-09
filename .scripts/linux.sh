@@ -325,13 +325,13 @@ function check_installed_version() {
 function get_file() {
     local package=$1
     if test -z "${package}"; then
-        echo "ERROR: No package specified."
+        >&2 echo "ERROR: No package specified."
         exit 1
     fi
 
     local file=$2
     if test -z "${file}"; then
-        echo "ERROR: No file specified."
+        >&2 echo "ERROR: No file specified."
         exit 1
     fi
 
