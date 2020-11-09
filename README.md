@@ -2,13 +2,19 @@
 
 Installation script for tools I use regularly
 
-## Using the package manager
+## Usage
 
 Install the package manager:
 
 ```bash
 curl --silent https://pkg.dille.io/pkg.sh > sudo tee /usr/local/bin/pkg
 sudo chmod +x /usr/local/bin/pkg
+```
+
+Cache the package definition:
+
+```bash
+pkg cache
 ```
 
 List available packages:
@@ -30,29 +36,8 @@ Install a package:
 pkg install kind
 ```
 
-## Installing a package without the package manager
-
-Install a package, e.g. `kind`:
+Install a specific version of a package:
 
 ```bash
-curl --silent https://pkg.dille.io/kind/install.sh | bash
-```
-
-## Writing a new packages
-
-Installation scripts for new packages can be composed from the function library:
-
-```bash
-set -o errexit
-
-source <(curl --silent --location --fail https://pkg.dille.io/.scripts/source.sh)
-
-unlock_sudo
-
-github_install \
-    --repo nektos/act \
-    --match suffix \
-    --asset _Linux_x86_64.tar.gz \
-    --type tarball \
-    --include act
+pkg install kind@v0.9.0
 ```
