@@ -1,0 +1,13 @@
+name: decktape
+description: PDF exporter for HTML presentations
+repo: astefanutti/decktape
+version:
+  latest: 3.1.0 # renovate: datasource=github-releases depName=astefanutti/decktape
+  command: decktape version
+  filter: ^[[:digit:]]
+  pattern: s/^(.+)$/\1/
+tags:
+  - configuration
+install:
+  script: |-
+    install_node_module decktape
