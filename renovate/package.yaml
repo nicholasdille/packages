@@ -7,9 +7,8 @@ version:
   filter: ^[[:digit:]]+
   pattern: s/^(.+)$/\1/
 tags:
-  - docker
-  - container
-  - interface
-  - ui
+  - dependency
+  - security
+  - quality
 install:
   script: install_node_module renovate
