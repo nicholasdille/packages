@@ -1,0 +1,31 @@
+name: jabba
+description: (cross-platform) Java Version Manager
+repo: shyiko/jabba
+version:
+  latest: 0.11.2 # renovate: datasource=github-releases depName=shyiko/jabba
+  command: jabba --version
+  filter: ^[[:digit:]]
+  pattern: s/^(.+)$/\1/
+tags:
+  - java
+  - version
+  - manager
+  - version manager
+install:
+  docker: true
+  script: |-
+    github_install \
+        --repo shyiko/jabba \
+        --match suffix \
+        --asset -linux-amd64 \
+        --type binary \
+        --name jabba
+
+    get_file jabba profile.d.jabba.sh | \
+        TARGET_BASE=${TARGET_BASE} envsubst '${TARGET_BASE}' | \
+        store_file jabba.sh /etc/profile.d
+files:
+- name: profile.d.jabba.sh
+  content: |
+    #!/bin/bash
+    export JABBA_HOME="${TARGET_BASE}/jabba"
