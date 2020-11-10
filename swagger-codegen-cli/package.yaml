@@ -1,0 +1,25 @@
+name: swagger-codegen
+description: swagger-codegen contains a template-driven engine to generate documentation, API clients and server stubs in different languages by parsing your OpenAPI / Swagger definition
+repo: swagger-api/swagger-codegen
+links:
+- text: Homepage
+  url: http://swagger.io/
+version:
+  latest: v3.0.23 # renovate: datasource=github-releases depName=swagger-api/swagger-codegen
+  command: java -jar ${TARGET_BIN}/swagger-codegen-cli.jar version
+  filter: ^[[:digit:]]
+  pattern: s/^(.+)$/v\1/
+tags:
+  - java
+  - version
+  - manager
+  - version manager
+install:
+  docker: true
+  script: |-
+    require java
+    source /etc/profile.d/java.sh
+
+    echo "https://repo1.maven.org/maven2/io/swagger/codegen/v3/swagger-codegen-cli/${requested_version#v}/swagger-codegen-cli-${requested_version#v}.jar" | \
+        download_file | \
+        store_file swagger-codegen-cli.jar
