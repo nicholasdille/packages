@@ -1,0 +1,13 @@
+name: p
+description: P is for project. As in, "How the hell do I work on this project."
+repo: dropseed/p
+links:
+- text: Homepage
+  url: https://www.dropseed.io/p/
+version:
+  latest: v1.1.0 # renovate: datasource=github-tags depName=dropseed/p
+tags:
+  - bookmark
+  - shell
+install:
+  script: install_python_module p-cli
