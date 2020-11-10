@@ -42,6 +42,7 @@ install:
         node-shell \
         rbac-lookup \
         rbac-view \
+        reap \
         resource-capacity \
         score \
         sniff \
