@@ -1,6 +1,9 @@
 name: mkdocs
 description: Project documentation with Markdown
 repo: mkdocs/mkdocs
+links:
+- text: Homepage
+  url: https://www.mkdocs.org/
 version:
   latest: 1.1.2 # renovate: datasource=github-tags depName=mkdocs/mkdocs
 tags:
@@ -8,3 +11,4 @@ tags:
 install:
   script: |-
     install_python_module mkdocs
+    install_python_module mkdocs-material
