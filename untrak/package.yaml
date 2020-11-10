@@ -1,0 +1,20 @@
+name: untrak
+description: Find untracked resources in Kubernetes cluster, garbage collect them
+repo: yanc0/untrak
+links:
+- text: Homepage
+  url: https://aksctl.io/
+version:
+  latest: v0.1.1 # renovate: datasource=github-releases depName=yanc0/untrak
+tags:
+  - kubernetes
+  - k8s
+install:
+  docker: true
+  script: |-
+    github_install \
+        --repo yanc0/untrak \
+        --match prefix \
+        --asset untrak_linux_amd64_ \
+        --type binary \
+        --name untrak
