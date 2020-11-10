@@ -1,0 +1,18 @@
+name: kubeswitch
+description: visually select kubernetes context/namespace from tree
+repo: danielb42/kubeswitch
+version:
+  latest: v1.3.2 # renovate: datasource=github-releases depName=danielb42/kubeswitch
+tags:
+  - kubernetes
+  - k8s
+  - context
+  - namespaces
+install:
+  script: |-
+    github_install \
+        --repo danielb42/kubeswitch \
+        --match name \
+        --asset kubeswitch_linux_amd64.tar.gz \
+        --type tarball \
+        --include kubeswitch
