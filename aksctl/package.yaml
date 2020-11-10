@@ -1,0 +1,25 @@
+name: aksctl
+description: An easy to use CLI for AKS cluster
+repo: adfolks/aksctl
+links:
+- text: Homepage
+  url: https://aksctl.io/
+version:
+  latest: v0.2.0 # renovate: datasource=github-releases depName=adfolks/aksctl
+tags:
+  - kubernetes
+  - k8s
+  - aks
+  - azure
+  - cloud
+  - cluster
+  - bootstrap
+install:
+  docker: true
+  script: |-
+    github_install \
+        --repo adfolks/aksctl \
+        --match name \
+        --asset aksctl-linux-amd64.tar.gz \
+        --type tarball \
+        --include ./aksctl
