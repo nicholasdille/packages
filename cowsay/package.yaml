@@ -1,6 +1,8 @@
 name: cowsay
 description: cowsay is a configurable talking cow
 repo: piuccio/cowsay
+version:
+  latest: v1.4.0 # renovate: datasource=github-releases depName=piuccio/cowsay
 tags:
   - shell
 install:

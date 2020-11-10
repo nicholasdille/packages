@@ -1,6 +1,8 @@
 name: asciigraph
-description: Go package to make lightweight ASCII line graph ╭┈╯ in command line apps with no other dependencies
+description: Go package to make lightweight ASCII line graph in command line apps with no other dependencies
 repo: guptarohit/asciigraph
+version:
+  latest: v0.5.1 # renovate: datasource=github-releases depName=guptarohit/asciigraph
 tags:
   - shell
 install:

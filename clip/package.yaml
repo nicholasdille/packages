@@ -4,6 +4,8 @@ repo: lukaszlach/clip
 links:
   - text: Docker CLI plugins proposal
     url: https://github.com/docker/cli/issues/1534
+version:
+  latest: master # renovate: datasource=github-tags depName=lukaszlach/clip
 tags:
   - docker
   - plugins
@@ -29,7 +31,7 @@ install:
 
     ${SUDO} mkdir --parents "${DOCKER_CLI_DIR}"
 
-    echo "https://github.com/lukaszlach/clip/raw/master/docker-clip" | \
+    echo "https://github.com/lukaszlach/clip/raw/${requested_version}/docker-clip" | \
         download_file | \
         store_file docker-clip "${DOCKER_CLI_DIR}" |
         make_executable

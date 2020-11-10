@@ -1,6 +1,8 @@
 name: kubediff
 description: A tool for Kubernetes to show differences between running state and version controlled configuration
 repo: weaveworks/kubediff
+version:
+  latest: master # renovate: datasource=github-tags depName=weaveworks/kubediff
 tags:
   - kubernetes
   - k8s
@@ -13,6 +15,7 @@ install:
     require python
 
     git clone https://github.com/weaveworks/kubediff "${temporary_directory}"
+    git checkout ${requested_version}
     ${SUDO} pip3 install .
     ${SUDO} pip3 install -r requirements.txt
 
