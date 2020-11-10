@@ -1,0 +1,16 @@
+name: ansi
+description: ANSI escape codes in pure bash - change text color, position the cursor, much more
+repo: fidian/ansi
+version:
+  latest: 2.0.4 # renovate: datasource=github-tags depName=fidian/ansi
+tags:
+  - kubernetes
+  - k8s
+  - lint
+  - quality
+install:
+  script: |-
+    echo "https://raw.githubusercontent.com/fidian/ansi/${requested_version}/ansi" | \
+        download_file | \
+        store_file ansi | \
+        make_executable
