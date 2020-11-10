@@ -1,0 +1,20 @@
+name: docker-shell
+description: A simple interactive prompt for docker
+repo: Trendyol/docker-shell
+version:
+  latest: v1.3.1 # renovate: datasource=github-tags depName=Trendyol/docker-shell
+tags:
+  - docker
+  - container
+  - ui
+install:
+  docker: true
+  script: |-
+    build_containerized golang <<EOF
+    git clone https://github.com/Trendyol/docker-shell
+    cd docker-shell
+    git checkout ${requested_version}
+    go build -o docker-shell .
+    cp docker-shell /
+    EOF
+    extract_file_from_container docker-shell
