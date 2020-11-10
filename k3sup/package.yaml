@@ -3,6 +3,9 @@ description: bootstrap Kubernetes with k3s over SSH < 1 min
 repo: alexellis/k3sup
 version:
   latest: 0.9.11 # renovate: datasource=github-releases depName=alexellis/k3sup
+  command: k3sup version
+  filter: Version
+  pattern: s/^.*Version:\s(.+)$/\1/
 tags:
   - kubernetes
   - k8s
