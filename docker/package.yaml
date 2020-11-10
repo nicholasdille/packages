@@ -27,14 +27,21 @@ install:
     curl --location --fail "https://raw.githubusercontent.com/docker/cli/${requested_version}/contrib/completion/bash/docker" | \
         store_completion docker
 
-    : "${DOCKER_CONFIG:=${HOME}/.docker}"
-    if ! test -d "${DOCKER_CONFIG}"; then
-        mkdir --parents "${DOCKER_CONFIG}"
-    fi
+    get_file docker profile.d.docker.sh | \
+        store_file docker.sh /etc/profile.d
 
-    if ! test -f "${DOCKER_CONFIG}/config.json"; then
-        echo "{}" >"${DOCKER_CONFIG}/config.json"
+    ${SUDO} mkdir --parents "/etc/docker/"
+    if ! test -f "/etc/docker/daemon.json"; then
+        echo "{}" | \
+            ${SUDO} tee "/etc/docker/daemon.json" \
+            >/dev/null 2>&1
     fi
-
-    cp "${DOCKER_CONFIG}/config.json" "${DOCKER_CONFIG}/config.json.bak"
-    jq '. + {"features":{"buildkit":true}}' "${DOCKER_CONFIG}/config.json.bak" >"${DOCKER_CONFIG}/config.json"
+    ${SUDO} cp "/etc/docker/daemon.json" "/etc/docker/daemon.json.bak"
+    jq '. + {"features":{"buildkit":true}}' "/etc/docker/daemon.json.bak" \
+        ${SUDO} tee "/etc/docker/daemon.json" \
+        >/dev/null 2>&1
+files:
+- name: profile.d.docker.sh
+  content: |
+    #!/bin/bash
+    export DOCKER_BUILDKIT=1
