@@ -41,7 +41,7 @@ function github_rate_limit_ok() {
     
     >&2 echo "VERBOSE: GitHub rate limit ${GITHUB_RATE_REMAINING}/${GITHUB_RATE_LIMIT} remaining"
     if test "${GITHUB_RATE_REMAINING}" -eq 0; then
-        >&2 echo "WARNING: GitHub rate limit exceeded (resets as $(date -d @${GITHUB_RATE_RESET}))"
+        >&2 echo "WARNING: GitHub rate limit exceeded (resets as $(date -d "@${GITHUB_RATE_RESET}"))"
         return 1
     fi
 
