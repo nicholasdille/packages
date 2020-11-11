@@ -1,6 +1,20 @@
 #!/bin/bash
 
+GITHUB_AUTH_PARAMETER=()
+if test -n "${GITHUB_USER}" && test -n "${GITHUB_TOKEN}"; then
+    >&2 echo "Using authentication for GitHub"
+    GITHUB_AUTH_PARAMETER=("--user" "${GITHUB_USER}:${GITHUB_TOKEN}")
+fi
+
 function github_api() {
+    local path=$1
+
+    curl "https://api.github.com${path}" \
+            "${GITHUB_AUTH_PARAMETER[@]}" \
+            --silent
+}
+
+function github_api_repo() {
     local project=$1
     local path=$2
 
@@ -9,15 +23,36 @@ function github_api() {
         return 1
     fi
 
-    GITHUB_AUTH_PARAMETER=()
-    if test -n "${GITHUB_USER}" && test -n "${GITHUB_TOKEN}"; then
-        >&2 echo "Using authentication for GitHub"
-        GITHUB_AUTH_PARAMETER=("--user" "${GITHUB_USER}:${GITHUB_TOKEN}")
+    github_api "/repos/${project}${path}"
+}
+
+function github_rate_limit_ok() {
+    eval "$(
+        github_api /rate_limit | \
+        jq \
+            --raw-output '
+                "
+                export GITHUB_RATE_LIMIT=\(.rate.limit)\n
+                export GITHUB_RATE_REMAINING=\(.rate.remaining)\n
+                export GITHUB_RATE_RESET=\(.rate.reset)
+                "
+            '
+    )"
+    
+    >&2 echo "VERBOSE: GitHub rate limit ${GITHUB_RATE_REMAINING}/${GITHUB_RATE_LIMIT} remaining"
+    if test "${GITHUB_RATE_REMAINING}" -eq 0; then
+        >&2 echo "WARNING: GitHub rate limit exceeded (resets as $(date -d @${GITHUB_RATE_RESET}))"
+        return 1
     fi
 
-    curl "https://api.github.com/repos/${project}${path}" \
-            "${GITHUB_AUTH_PARAMETER[@]}" \
-            --silent
+    return 0
+}
+
+function github_check_rate_limit() {
+    if ! github_rate_limit_ok; then
+        >&2 echo "ERROR: GitHub rate limit exceeded"
+        exit 1
+    fi
 }
 
 function github_get_repo_description() {
@@ -29,7 +64,7 @@ function github_get_repo_description() {
     fi
 
     >&2 echo "Fetching description for ${project}..."
-    github_api "${project}" "" | \
+    github_api_repo "${project}" "" | \
         jq --raw-output '.description'
 }
 
@@ -42,7 +77,7 @@ function github_get_releases() {
     fi
 
     >&2 echo "Fetching releases for ${project}..."
-    github_api "${project}" "/releases"
+    github_api_repo "${project}" "/releases"
 }
 
 function github_get_release() {
@@ -61,7 +96,7 @@ function github_get_release() {
     fi
 
     >&2 echo "Fetching release ${version} for ${project}..."
-    github_api "${project}" "/releases/tags/${version}"
+    github_api_repo "${project}" "/releases/tags/${version}"
 }
 
 function github_resolve_assets() {
