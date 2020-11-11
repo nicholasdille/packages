@@ -5,7 +5,7 @@ links:
   - text: Homepage
     url: https://buildpacks.io/
 version:
-  latest: v0.14.2 # renovate: datasource=github-releases depName=buildpacks/pack
+  latest: v0.15.0 # renovate: datasource=github-releases depName=buildpacks/pack
   command: pack --version
   filter: ^[[:digit:]]
   pattern: s/^([^+]+)\+.+$/v\1/
