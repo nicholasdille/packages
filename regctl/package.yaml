@@ -10,11 +10,9 @@ tags:
 install:
   docker: true
   script: |-
-    build_containerized golang <<EOF
-    git clone https://github.com/regclient/regclient
-    cd regclient
-    git checkout ${requested_version}
-    go build -ldflags "-linkmode external -extldflags -static" -a -o regctl ./cmd/regctl/
-    cp regctl /
-    EOF
-    extract_file_from_container regctl
+    github_install \
+        --repo regclient/regclient \
+        --match name \
+        --asset regctl-linux-amd64 \
+        --type binary \
+        --name regctl

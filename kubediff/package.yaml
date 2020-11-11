@@ -14,8 +14,10 @@ install:
   script: |-
     require python
 
-    git clone https://github.com/weaveworks/kubediff "${temporary_directory}"
-    git checkout ${requested_version}
+    echo "https://github.com/weaveworks/kubediff/archive/master.tar.gz" | \
+        download_file | \
+        tar -xz
+    cd kubediff-${requested_version}
     ${SUDO} pip3 install .
     ${SUDO} pip3 install -r requirements.txt
 

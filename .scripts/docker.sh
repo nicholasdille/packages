@@ -35,8 +35,9 @@ function build_containerized() {
         command=("bash" "-xe")
     fi
 
+    # shellcheck disable=SC2154
     cat | \
-        docker run -i --name "${container_name}" "${image}" "${command[@]}"
+        docker run -i --name "${container_name}" --env requested_version="${requested_version}" "${image}" "${command[@]}"
 }
 
 function extract_file_from_container() {

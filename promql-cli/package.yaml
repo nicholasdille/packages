@@ -13,9 +13,9 @@ install:
   docker: true
   script: |-
     build_containerized golang <<EOF
-    git clone https://github.com/nalbury/promql-cli
-    cd promql-cli
-    git checkout "${requested_version}"
+    curl -sL "https://github.com/nalbury/promql-cli/archive/${requested_version}.tar.gz" | \
+        tar -xzC /tmp/promql-cli --strip-components=1
+    cd /tmp/promql-cli
     go mod download
     go build -o promql .
     cp promql /

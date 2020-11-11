@@ -21,6 +21,12 @@ install:
         --type gunzip \
         --name cheat
 
-    mkdir -p ~/.config/cheat/cheatsheets/personal
-    cheat --init > ~/.config/cheat/conf.yml
-    git clone https://github.com/cheat/cheatsheets ~/.config/cheat/cheatsheets/community
+    mkdir -p "${HOME}/.config/cheat/cheatsheets/personal"
+    cheat --init > "${HOME}/.config/cheat/conf.yml"
+    
+    if ! test -d "${HOME}/.config/cheat/cheatsheets/community"; then
+        git clone https://github.com/cheat/cheatsheets "${HOME}/.config/cheat/cheatsheets/community"
+    else
+        cd "${HOME}/.config/cheat/cheatsheets/community"
+        git pull
+    fi

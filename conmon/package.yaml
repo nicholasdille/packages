@@ -31,10 +31,8 @@ install:
         docker build --tag conmon -
 
     build_containerized conmon <<EOF
-    cd /tmp
-    git clone https://github.com/containers/conmon
-    cd conmon
-    git checkout "${requested_version}"
+    curl -sL https://github.com/containers/conmon/archive/${requested_version}.tar.gz | tar -xvzC /tmp
+    cd /tmp/conmon-${requested_version#v}
     PREFIX=/usr/local make all
     cp bin/conmon /
     EOF

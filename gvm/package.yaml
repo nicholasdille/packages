@@ -35,9 +35,10 @@ files:
 install:
   docker: true
   script: |-
-    if ! test -d "${TARGET_BASE}/gvm"; then
-        ${SUDO} git clone https://github.com/moovweb/gvm "${TARGET_BASE}/gvm"
-    fi
+    ${SUDO} mkdir -p "${TARGET_BASE}/gvm"
+    echo "https://github.com/moovweb/gvm/archive/${requested_version}.tar.gz" | \
+        download_file | \
+        ${SUDO} tar -xzC "${TARGET_BASE}/gvm" --strip-components=1
 
     get_file gvm Dockerfile | \
         docker build --tag gvm -

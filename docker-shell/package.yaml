@@ -11,9 +11,9 @@ install:
   docker: true
   script: |-
     build_containerized golang <<EOF
-    git clone https://github.com/Trendyol/docker-shell
-    cd docker-shell
-    git checkout ${requested_version}
+    curl -sL "https://github.com/Trendyol/docker-shell/archive/${requested_version}.tar.gz" | \
+        ${SUDO} tar -tvzC /tmp
+    cd "/tmp/docker-shell-${requested_version#v}"
     go build -o docker-shell .
     cp docker-shell /
     EOF

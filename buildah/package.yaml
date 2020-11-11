@@ -73,9 +73,10 @@ install:
     mkdir ~/buildah
     cd ~/buildah
     export GOPATH=$(pwd)
-    git clone https://github.com/containers/buildah ./src/github.com/containers/buildah
-    cd ./src/github.com/containers/buildah
-    git checkout ${requested_version}
+
+    curl -sL "https://github.com/containers/buildah/archive/${requested_version}.tar.gz" | \
+        tar -xzC ./src/github.com/containers/buildah --strip-components=1
+
     make runc all SECURITYTAGS="apparmor seccomp"
     #whereis buildah
     # copy buildah

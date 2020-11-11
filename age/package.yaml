@@ -10,9 +10,9 @@ install:
   docker: true
   script: |-
     build_containerized golang <<EOF
-    git clone https://github.com/FiloSottile/age
-    cd age
-    git checkout ${requested_version}
+    curl -sL "https://github.com/FiloSottile/age/archive/${requested_version}.tar.gz" | \
+        tar -xz /tmp/age --strip-components=1
+    cd /tmp/age
     go build -o . filippo.io/age/cmd/...
     cp age age-keygen /
     EOF

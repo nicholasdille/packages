@@ -16,12 +16,9 @@ tags:
 install:
   docker: true
   script: |-
-    build_containerized golang <<EOF
-    git clone https://github.com/cloudflare/cloudflare-go /go/src/github.com/cloudflare/cloudflare-go
-    cd /go/src/github.com/cloudflare/cloudflare-go
-    git checkout ${requested_version}
-    go mod download
-    go build -ldflags "-X main.version=${requested_version}" github.com/cloudflare/cloudflare-go/cmd/flarectl
-    cp flarectl /
-    EOF
-    extract_file_from_container flarectl
+    github_install \
+        --repo cloudflare/cloudflare-go \
+        --match suffix \
+        --asset _linux_amd64.tar.xz \
+        --type xz \
+        --include flarectl

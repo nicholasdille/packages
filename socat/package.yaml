@@ -7,6 +7,7 @@ links:
   - text: Repository
     url: https://repo.or.cz/socat.git
 version:
+  latest: 1.7.3.4
   command: socat -V
   filter: ^socat[[:space:]]version
   pattern: s/^socat\sversion\s(\S+)\s.+$/\1/
@@ -22,7 +23,8 @@ files:
               autoconf \
               build-essential \
               yodl \
-              git
+              git \
+              curl
 install:
   docker: true
   script: |-
@@ -30,11 +32,9 @@ install:
         docker build --tag socat -
 
     build_containerized socat <<"EOF"
-    cd /tmp
-    git clone https://repo.or.cz/socat.git
-    cd socat
-    TAG=$(git tag | grep -E "^tag-1\." | sort -V -r | head -n 1)
-    git checkout "${TAG}"
+    curl -sL "http://www.dest-unreach.org/socat/download/socat-${requested_version}.tar.gz" | \
+        tar -xzC /tmp
+    cd "/tmp/socat-${requested_version}"
     autoconf
     ./configure
     make
@@ -43,6 +43,6 @@ install:
     EOF
     extract_file_from_container socat
 
-    docker cp "${container_name}:/tmp/socat/doc/socat.1" - | \
+    docker cp "${container_name}:/socat.1" - | \
         tar -x --to-stdout | \
         sudo tee "${TARGET_BASE}/share/man/man1/socat.1" >/dev/null

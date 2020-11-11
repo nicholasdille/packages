@@ -20,12 +20,10 @@ files:
       source "${NVM_DIR}/nvm.sh"
 install:
   script: |-
-    if ! test -d "${TARGET_BASE}/nvm"; then
-        ${SUDO} git clone https://github.com/nvm-sh/nvm "${TARGET_BASE}/nvm"
-    fi
-    pushd "${TARGET_BASE}/nvm"
-    git checkout "${requested_version}"
-    popd
+    ${SUDO} mkdir -p "${TARGET_BASE}/nvm"
+    echo "https://github.com/nvm-sh/nvm/archive/${requested_version}.tar.gz" | \
+        download_file | \
+        ${SUDO} tar -xvzC "${TARGET_BASE}/nvm" --strip-components=1
 
     get_file nvm profile.d.nvm.sh | \
         TARGET_BASE="${TARGET_BASE}" envsubst '${TARGET_BASE}' | \
