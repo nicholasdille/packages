@@ -1,0 +1,21 @@
+name: jq
+description: Command-line JSON processor
+repo: stedolan/jq
+links:
+  - text: Homepage
+    url: http://stedolan.github.io/jq/
+version:
+  latest: jq-1.6 # renovate: datasource=github-releases depName=stedolan/jq versioning=regex:^jq-(?<major>\d+?)\.(?<minor>\d+?)(\.(?<patch>\d+?))?$
+  command: jq --version
+  filter: ^jq
+  pattern: s/^(.+)$/\1/
+tags:
+  - network
+install:
+  script: |-
+    github_install \
+        --repo stedolan/jq \
+        --match name \
+        --asset jq-linux64 \
+        --type binary \
+        --name jq
