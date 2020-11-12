@@ -2,7 +2,7 @@ name: wksctl
 description: Open Source Weaveworks Kubernetes System
 repo: weaveworks/wksctl
 version:
-  latest: v0.9.0-beta.1 # renovate: datasource=github-releases depName=weaveworks/wksctl
+  latest: v0.9.0-rc.1 # renovate: datasource=github-releases depName=weaveworks/wksctl
   command: wksctl version
   filter: ^[[:digit:]]
   pattern: s/^(.+)$/v\1/
