@@ -8,7 +8,7 @@ tags:
   - container
   - registry
 install:
-  docker: true
+  docker: false
   script: |-
     github_install \
         --repo regclient/regclient \
