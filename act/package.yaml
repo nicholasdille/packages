@@ -1,5 +1,5 @@
 name: act
-description: Run your GitHub Actions locally TEST2
+description: Run your GitHub Actions locally
 repo: nektos/act
 version:
   latest: v0.2.17 # renovate: datasource=github-releases depName=nektos/act
@@ -19,6 +19,6 @@ install:
     github_install \
         --repo nektos/act \
         --match suffix \
-        --asset _broken_Linux_x86_64.tar.gz \
+        --asset _Linux_x86_64.tar.gz \
         --type tarball \
         --include act
