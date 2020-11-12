@@ -12,15 +12,24 @@ show_help() {
     echo "       curl https://pkg.dille.io/pkg.sh | sh -s <command>"
     echo
     echo "Commands:"
-    echo "    cache, c      Cache packages.json"
-    echo "    file, f       Manage files for a package"
-    echo "    help, h       This message"
-    echo "    inspect       Inspect a package"
-    echo "    install, i    Install a package"
-    echo "    list, l       List available packages"
-    echo "    search, s     Search packages (name, description and tags)"
-    echo "    tags, t       Show tags"
-    echo "    version, v    Get installed version"
+    echo "    bootstrap, c   Bootstrap pkg.sh"
+    echo "    cache, c       Cache packages.json"
+    echo "    file, f        Manage files for a package"
+    echo "    help, h        This message"
+    echo "    inspect        Inspect a package"
+    echo "    install, i     Install a package"
+    echo "    list, l        List available packages"
+    echo "    search, s      Search packages (name, description and tags)"
+    echo "    tags, t        Show tags"
+    echo "    version, v     Get installed version"
+    echo
+}
+
+show_help_bootstrap() {
+    echo
+    echo "Usage: sh ./pkg.sh bootstrap [--prefix \${HOME}/.local] <string>"
+    echo "       ./pkg.sh bootstrap [--prefix \${HOME}/.local] <string>"
+    echo "       curl https://pkg.dille.io/pkg.sh | sh -s bootstrap [--prefix \${HOME}/.local] <string>"
     echo
 }
 
@@ -68,6 +77,33 @@ get_packages() {
         >&2 echo "ERROR: Unable to find packages.json. Run <pkg cache> first."
         exit 1
     fi
+}
+
+handle_bootstrap() {
+    PREFIX="${HOME}/.local"
+    while test "$#" -gt 0; do
+        param=$1
+        shift
+        case "${param}" in
+            --prefix)
+                PREFIX=$1
+            ;;
+            --help)
+                show_help_bootstrap
+                exit 0
+            ;;
+            *)
+                show_help_bootstrap
+                exit 1
+            ;;
+        esac
+        shift
+    done
+    
+    mkdir -p "${PREFIX}/bin"
+    curl --silent --location "https://raw.githubusercontent.com/${MY_REPO}/${MY_VERSION}/pkg.sh" \
+        >"${PREFIX}/bin/pkg"
+    chmod +x "${PREFIX}/bin/pkg"
 }
 
 handle_cache() {
@@ -350,6 +386,11 @@ main() {
             cache|c)
                 prepare
                 handle_cache "$@"
+                exit 0
+            ;;
+            bootstrap|b)
+                prepare
+                handle_bootstrap "$@"
                 exit 0
             ;;
             file|f)
