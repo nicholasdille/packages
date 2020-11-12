@@ -163,6 +163,10 @@ handle_install() {
         exit 1
     fi
 
+    if ! test -f "${HOME}/.pkg/packages.json"; then
+        handle_cache
+    fi
+
     for package_spec in "$@"; do
         local package
         package=$(echo "${package_spec}" | cut -d@ -f1)
