@@ -19,12 +19,22 @@ jobs:
 
       - name: Test package
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TARGET_BASE: /tmp
+          DOCKER_BUILDKIT: 1
         run: |
           if test "${GITHUB_EVENT_NAME}" == "pull_request"; then
               PR=$(echo "${GITHUB_REF}" | cut -d'/' -f3)
               echo "Running for PR #${PR}"
 
-              echo "Files:"
-              curl --silent --location --header 'Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' "https://api.github.com/repos/${GITHUB_REPOSITORY}/pulls/${PR}/files" | jq --raw-output '.[].filename'
+              FILES=$(curl --silent --location --header 'Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' "https://api.github.com/repos/${GITHUB_REPOSITORY}/pulls/${PR}/files" | jq --raw-output '.[].filename')
+              for FILE in ${FILES}; do
+                  PACKAGE=${FILE%/package.yaml}
+              
+                  echo "Testing package ${PACKAGE}"
+                  docker build --target ubuntu --tag test-package:ubuntu .
+                  docker run -d --name "${PACKAGE}" test-package:ubuntu bash -c 'sleep infinity'
+                  docker exec "${PACKAGE}" bash -c "curl -sL https://pkg.dille.io/pkg.sh | bash -s cache"
+                  docker exec "${PACKAGE}" bash -c "curl -sL https://pkg.dille.io/pkg.sh | bash -s install ${PACKAGE}"
+                  docker rm -f "${PACKAGE}"
+              done
           fi
