@@ -1,8 +1,12 @@
 on:
   pull_request:
+    branches:
+    - renovate/*
     types:
     - opened
     - reopened
+    - edited
+    - synchronize
 
 name: Test package
 
@@ -19,4 +23,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          printenv
+          if test "${GITHUB_EVENT_NAME}" == "pull_request"; then
+              PR=$(echo "${GITHUB_REF}" | cut -d'/' -f3)
+              echo "Running for PR #${PR}"
+
+              echo "Files:"
+              curl --silent --location --header 'Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' "https://api.github.com/repos/${GITHUB_REPOSITORY}/pulls/${PR}/files" | jq --raw-output '.[].filename'
+          fi
