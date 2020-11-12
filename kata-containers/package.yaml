@@ -2,7 +2,7 @@ name: kata-containers
 description: Kata Containers is an open source project and community working to build a standard implementation of lightweight Virtual Machines (VMs) that feel and perform like containers, but provide the workload isolation and security advantages of VMs
 repo: kata-containers/runtime
 version:
-  latest: 1.11.5 # renovate: datasource=github-releases depName=kata-containers/runtime
+  latest: 1.12.0 # renovate: datasource=github-releases depName=kata-containers/runtime
   command: kata-runtime --version
   filter: ^kata-runtime
   pattern: s/^kata-runtime\s+:\s(.+)$/\1/
