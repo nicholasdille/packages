@@ -37,7 +37,7 @@ install:
             >/dev/null 2>&1
     fi
     ${SUDO} cp "/etc/docker/daemon.json" "/etc/docker/daemon.json.bak"
-    jq '. + {"features":{"buildkit":true}}' "/etc/docker/daemon.json.bak" \
+    jq '. + {"features":{"buildkit":true}}' "/etc/docker/daemon.json.bak" | \
         ${SUDO} tee "/etc/docker/daemon.json" \
         >/dev/null 2>&1
 files:
