@@ -19,6 +19,6 @@ install:
     github_install \
         --repo nektos/act \
         --match suffix \
-        --asset _Linux_x86_64.tar.gz \
+        --asset _broken_Linux_x86_64.tar.gz \
         --type tarball \
         --include act

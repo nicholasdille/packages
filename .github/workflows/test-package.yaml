@@ -34,7 +34,8 @@ jobs:
                       PACKAGE=${FILE%/package.yaml}
                   
                       echo "Testing package ${PACKAGE}"
-                      docker run -d --name "${PACKAGE}" test-package:ubuntu bash -c 'sleep infinity'
+                      docker ps --filter name="${PACKAGE}" --all --quiet | xargs -r docker rm -f
+                      docker run -d --name "${PACKAGE}" test-package:ubuntu
                       docker exec "${PACKAGE}" bash -c "curl -sL https://pkg.dille.io/pkg.sh | bash -s cache"
                       docker exec "${PACKAGE}" bash -c "curl -sL https://pkg.dille.io/pkg.sh | bash -s install ${PACKAGE}"
                       docker rm -f "${PACKAGE}"
