@@ -9,17 +9,45 @@ version:
 tags:
   - python
   - py
+files:
+- name: Dockerfile
+  content: |
+      FROM ubuntu:20.04@sha256:1d7b639619bdca2d008eca2d5293e3c43ff84cbee597ff76de3b7a7de3e84956
+      ENV DEBIAN_FRONTEND=noninteractive
+      RUN apt-get update \
+       && apt-get -y install --no-install-recommends \
+              build-essential \
+              libreadline-gplv2-dev \
+              libncursesw5-dev \
+              libssl-dev \
+              libsqlite3-dev \
+              tk-dev \
+              libgdbm-dev \
+              libc6-dev \
+              libbz2-dev \
+              curl \
+              ca-certificates
+- name: profile.d.python.sh
+  content: |
+    #!/bin/bash
+    export PATH="${TARGET_BASE}/python/bin:${PATH}"
 install:
   docker: true
   script: |-
-    require pyenv
-    source /etc/profile.d/pyenv.sh
+    get_file python Dockerfile | \
+        docker build --tag build-python -
 
-    docker run --rm --name pyenv \
-        --env PYENV_ROOT \
-        --env PATH \
-        --volume "${PYENV_ROOT}:${PYENV_ROOT}" \
-        pyenv \
-        pyenv install "${requested_version#v}" --skip-existing
-    ${SUDO} bash -c "source /etc/profile.d/pyenv.sh; ${PYENV_ROOT}/bin/pyenv rehash"
-    ${SUDO} bash -c "source /etc/profile.d/pyenv.sh; ${PYENV_ROOT}/bin/pyenv global ${requested_version#v}"
+    build_containerized build-python <<EOF
+        curl --silent --location "https://github.com/python/cpython/archive/${requested_version}.tar.gz" | \
+            tar -xz --strip-components=1
+        ./configure --prefix="${TARGET_BASE}/python"
+        make
+        make install
+    EOF
+    ${SUDO} mkdir -p "${TARGET_BASE}/python"
+    docker cp "${container_name}:${TARGET_BASE}/python" - | \
+        ${SUDO} tar -xC "${TARGET_BASE}"
+
+    get_file go profile.d.python.sh | \
+        TARGET_BASE="${TARGET_BASE}" envsubst '${TARGET_BASE}' | \
+        store_file python.sh /etc/profile.d

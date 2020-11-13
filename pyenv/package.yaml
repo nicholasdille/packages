@@ -63,14 +63,13 @@ install:
         ${SUDO} git clone https://github.com/pyenv/pyenv-doctor.git "${PYENV_ROOT}/plugins/pyenv-doctor"
     fi
 
-    export DOCKER_BUILDKIT=1
     get_file pyenv Dockerfile | \
         docker build --tag pyenv -
 
     docker run --rm --name pyenv \
         --env PYENV_ROOT="${TARGET_BASE}/pyenv" \
         --env PATH="${PYENV_ROOT}/bin:${PATH}" \
-        --volume "${PYENV_ROOT}:${PYENV_ROOT}" \
+        --mount "type=bind,src=${PYENV_ROOT},dst=${PYENV_ROOT}" \
         pyenv \
         pyenv doctor
 
