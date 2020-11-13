@@ -15,6 +15,7 @@ RUN apt-get update \
         jq \
         unzip \
         git \
-        ca-certificates
+        ca-certificates \
+        gettext
 WORKDIR /tmp
 CMD sleep infinity
