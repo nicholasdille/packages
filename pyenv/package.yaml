@@ -68,8 +68,8 @@ install:
         docker build --tag pyenv -
 
     docker run --rm --name pyenv \
-        --env PYENV \
-        --env PATH \
+        --env PYENV_ROOT="${TARGET_BASE}/pyenv" \
+        --env PATH="${PYENV_ROOT}/bin:${PATH}" \
         --volume "${PYENV_ROOT}:${PYENV_ROOT}" \
         pyenv \
         pyenv doctor
