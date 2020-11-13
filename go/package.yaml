@@ -12,13 +12,13 @@ files:
   - name: profile.d.go.sh
     content: |
       #!/bin/bash
-      export PATH="${TARGET_BASE}/gvm/gos/${GO_VERSION}/bin:${PATH}"
+      export PATH="${TARGET_BASE}/go/bin:${PATH}"
 install:
   script: |-
-    require gvm
-
-    ${SUDO} bash -c "source /etc/profile.d/gvm.sh; gvm install \"${TAG}\" --binary"
+    echo "https://golang.org/dl/${requested_version}.linux-amd64.tar.gz" | \
+        download_file | \
+        ${SUDO} tar -xzC "${TARGET_BASE}"
 
     get_file go profile.d.go.sh | \
-        TARGET_BASE="${TARGET_BASE}" GO_VERSION="${requested_version}" envsubst '${TARGET_BASE},${GO_VERSION}' | \
+        TARGET_BASE="${TARGET_BASE}" envsubst '${TARGET_BASE}' | \
         store_file go.sh /etc/profile.d
