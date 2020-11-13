@@ -54,3 +54,5 @@ install:
     #docker cp "${container_name}:/jq.1" - | \
     #    tar -x --to-stdout | \
     #    sudo tee "${TARGET_BASE}/share/man/man1/jq.1" >/dev/null
+
+    docker image rm curl

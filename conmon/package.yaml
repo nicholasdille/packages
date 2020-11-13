@@ -37,3 +37,5 @@ install:
     cp bin/conmon /
     EOF
     extract_file_from_container conmon
+
+    docker image rm conmon
