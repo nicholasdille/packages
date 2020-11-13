@@ -2,7 +2,7 @@ name: jfrog-cli
 description: JFrog CLI is a client that provides a simple interface that automates access to the JFrog products
 repo: jfrog/jfrog-cli
 version:
-  latest: v1.40.1 # renovate: datasource=github-releases depName=jfrog/jfrog-cli
+  latest: v1.41.0 # renovate: datasource=github-releases depName=jfrog/jfrog-cli
   command: jfrog --version
   filter: ^jfrog
   pattern: s/^jfrog\sversion\s(.+)$/v\1/
