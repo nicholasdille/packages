@@ -1388,20 +1388,8 @@ handle_version() {
 }
 
 prepare() {
-    mkdir -p "${HOME}/.pkg"
-    for lib in variables codeberg control docker github linux; do
-        if ! test -f "${HOME}/.pkg/${lib}.sh"; then
-            curl "https://github.com/${MY_REPO}/raw/${MY_VERSION}/.scripts/${lib}.sh" \
-                --silent \
-                --location  \
-                >"${HOME}/.pkg/${lib}.sh"
-        fi
-    done
-
     : "${VERSION:=latest}"
     if test -z "${TAG}"; then
-        # shellcheck source=.scripts/github.sh
-        source "${HOME}/.pkg/github.sh"
         TAG=$(
             github_get_releases "${MY_REPO}" | \
                 jq --raw-output 'map(select(.tag_name | startswith("packages/"))) | .[0].tag_name'
