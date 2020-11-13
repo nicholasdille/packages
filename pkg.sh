@@ -222,12 +222,12 @@ function install_node_module() {
 
 function install_python_module() {
     require python
-    ${SUDO} pip3 install --upgrade "$@"
+    ${SUDO} bash --login -c "pip3 install --upgrade $*"
 }
 
 function install_ruby_module() {
     require ruby
-    ${SUDO} bash -c "source /etc/profile.d/rbenv.sh; gem install $*"
+    ${SUDO} bash --login -c "gem install $*"
 }
 
 function get_package_definition() {
