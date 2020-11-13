@@ -41,7 +41,7 @@ install:
         curl --silent --location "https://github.com/python/cpython/archive/${requested_version}.tar.gz" | \
             tar -xz --strip-components=1
         ./configure --prefix="${TARGET_BASE}/python"
-        make
+        make -j2
         make install
     EOF
     ${SUDO} mkdir -p "${TARGET_BASE}/python"
