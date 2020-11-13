@@ -6,4 +6,4 @@ version:
 tags:
   - shell
 install:
-  script: install_node_module mapscii
+  script: install_node_module mapscii@${requested_version}

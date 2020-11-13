@@ -9,4 +9,4 @@ tags:
   - cast
   - screen
 install:
-  script: install_python_module termtosvg
+  script: install_python_module termtosvg==${requested_version}

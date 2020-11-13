@@ -14,4 +14,4 @@ tags:
   - azure
   - cloud
 install:
-  script: install_python_module azure-cli
+  script: install_python_module azure-cli==${requested_version}

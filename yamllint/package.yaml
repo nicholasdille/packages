@@ -77,7 +77,7 @@ files:
           check-keys: false
 install:
   script: |-
-    install_python_module yamllint
+    install_python_module yamllint==${requested_version}
 
     mkdir -p "${HOME}/.config/yamllint"
     get_file yamllint yamllint.yaml | \

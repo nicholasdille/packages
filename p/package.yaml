@@ -10,4 +10,4 @@ tags:
   - bookmark
   - shell
 install:
-  script: install_python_module p-cli
+  script: install_python_module p-cli==${requested_version}

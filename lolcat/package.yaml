@@ -9,4 +9,4 @@ version:
 tags:
   - shell
 install:
-  script: install_ruby_module lolcat
+  script: install_ruby_module lolcat:${requested_version}

@@ -19,7 +19,7 @@ files:
       alias sslyze="python3 -m sslyze"
 install:
   script: |-
-    install_python_module sslyze
+    install_python_module sslyze==${requested_version}
 
     get_file sslyze profile.d.sslyze.sh | \
         TARGET_BASE=${TARGET_BASE} envsubst '${TARGET_BASE}' | \

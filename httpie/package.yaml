@@ -16,4 +16,4 @@ tags:
   - test
   - quality
 install:
-  script: install_python_module httpie
+  script: install_python_module httpie==${requested_version}

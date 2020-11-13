@@ -12,4 +12,4 @@ tags:
   - html
 install:
   script: |-
-    install_node_module decktape
+    install_node_module decktape@${requested_version}

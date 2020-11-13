@@ -12,4 +12,4 @@ tags:
   - interface
   - ui
 install:
-  script: install_node_module dockly
+  script: install_node_module dockly@${requested_version}

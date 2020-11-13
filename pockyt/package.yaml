@@ -7,4 +7,4 @@ tags:
   - bookmark
   - shell
 install:
-  script: install_python_module pockyt
+  script: install_python_module pockyt==${requested_version}

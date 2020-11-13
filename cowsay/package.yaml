@@ -6,4 +6,4 @@ version:
 tags:
   - shell
 install:
-  script: install_node_module cowsay
+  script: install_node_module cowsay@${requested_version}
