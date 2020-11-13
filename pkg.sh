@@ -1225,6 +1225,11 @@ handle_install() {
             unset requested_version
         fi
 
+        if test -z "$(get_packages | jq --raw-output --arg name "${package}" '.packages[] | select(.name == $name) | .name')"; then
+            echo "ERROR: Package ${package} not found"
+            exit 1
+        fi
+
         working_directory="${PWD}"
 
         temporary_directory=$(mktemp -d)
