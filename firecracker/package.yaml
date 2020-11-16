@@ -1,0 +1,25 @@
+name: firecracker
+description: Secure and fast microVMs for serverless computing
+repo: firecracker-microvm/firecracker
+links:
+  - text: Homepage
+    url: http://firecracker-microvm.io/
+version:
+  latest: v0.23.0 # renovate: datasource=github-releases depName=firecracker-microvm/firecracker
+  command: firecracker --version
+  filter: ^Firecracker
+  pattern: s/^Firecracker\s(.+)$/\1/
+tags:
+  - serverless
+  - virtual machine
+  - vm
+install:
+  script: |-
+    github_get_release firecracker-microvm/firecracker "${requested_version}" | \
+        github_resolve_assets | \
+        github_select_asset_by_prefix firecracker- | \
+        github_select_asset_by_suffix -x86_64 | \
+        github_get_asset_download_url | \
+        download_file | \
+        store_file firecracker | \
+        make_executable
