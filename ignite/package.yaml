@@ -1,0 +1,38 @@
+name: ignite
+description: Ignite a Firecracker microVM
+repo: weaveworks/ignite
+links:
+  - text: Documentation
+    url: https://ignite.readthedocs.org/
+version:
+  latest: v0.8.0 # renovate: datasource=github-releases depName=weaveworks/ignite
+  command: ignite version --output short
+  filter: ^v
+  pattern: s/^(.+)$/\1/
+tags:
+  - serverless
+  - virtual machine
+  - vm
+  - container
+  - gitops
+install:
+  script: |-
+    github_get_release weaveworks/ignite "${requested_version}" | \
+        github_resolve_assets | \
+        run_tasks \
+            "\
+                github_select_asset_by_prefix ignite- | \
+                github_select_asset_by_suffix -amd64 | \
+                github_get_asset_download_url | \
+                download_file | \
+                store_file ignite | \
+                make_executable \
+            " \
+            "\
+                github_select_asset_by_prefix ignited- | \
+                github_select_asset_by_suffix -amd64 | \
+                github_get_asset_download_url | \
+                download_file | \
+                store_file ignited | \
+                make_executable \
+            "
