@@ -164,6 +164,7 @@ function store_file() {
     echo "${dirname}/${filename}"
 }
 
+# shellcheck disable=SC2120
 function make_executable() {
     local filename=$1
 
