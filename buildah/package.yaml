@@ -2,7 +2,7 @@ name: buildah
 description: A tool that facilitates building OCI images
 repo: containers/buildah
 version:
-  latest: v1.17.0 # renovate: datasource=github-releases depName=containers/buildah
+  latest: v1.18.0 # renovate: datasource=github-releases depName=containers/buildah
 tags:
   - container
   - build
