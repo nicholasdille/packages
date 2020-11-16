@@ -1225,7 +1225,9 @@ handle_install() {
             unset requested_version
         fi
 
-        if test -z "$(get_packages | jq --raw-output --arg name "${package}" '.packages[] | select(.name == $name) | .name')"; then
+        local package_definition
+        package_definition=$(get_package_definition "${package}")
+        if test -z "${package_definition}"; then
             echo "ERROR: Package ${package} not found"
             exit 1
         fi
