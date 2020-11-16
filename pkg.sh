@@ -1216,6 +1216,8 @@ handle_install() {
         handle_cache
     fi
 
+    working_directory="${PWD}"
+
     for package_spec in "$@"; do
         local package
         package=$(echo "${package_spec}" | cut -d@ -f1)
@@ -1231,8 +1233,6 @@ handle_install() {
             echo "ERROR: Package ${package} not found"
             exit 1
         fi
-
-        working_directory="${PWD}"
 
         temporary_directory=$(mktemp -d)
         # shellcheck disable=SC2164
