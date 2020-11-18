@@ -12,18 +12,56 @@ tags:
   - security
 install:
   script: |-
-    github_get_release kata-containers/runtime | \
-        github_resolve_assets | \
-        github_select_asset_by_suffix -x86_64.tar.xz | \
-        github_get_asset_download_url | \
-        download_file | \
-        ${SUDO} tar -xJC "${TARGET_BASE}" --strip-components=3
+    docker run -i --name "${container_name}" \
+        --mount type=bind,src=/usr/local/bin,dst=/usr/local/bin \
+        --mount type=bind,src=/usr/libexec,dst=/usr/libexec \
+        --mount type=bind,src=/usr/share,dst=/usr/share \
+        --mount type=bind,src=/etc/kata-containers,dst=/etc/kata-containers \
+        --mount type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock \
+        golang:1.13.9 \
+        bash -xe <<EOF
+    #mkdir -p /go/src/github.com/kata-containers/runtime
+    #git clone https://github.com/kata-containers/runtime /go/src/github.com/kata-containers/runtime
+    #cd /go/src/github.com/kata-containers/runtime
+    #git checkout ${requested_version}
+    #make
+    #make install
+
+    #mkdir -p /go/src/github.com/kata-containers/proxy
+    #git clone https://github.com/kata-containers/proxy /go/src/github.com/kata-containers/proxy
+    #cd /go/src/github.com/kata-containers/proxy
+    #git checkout ${requested_version}
+    #make
+    #make install
+
+    #mkdir -p /go/src/github.com/kata-containers/shim
+    #git clone https://github.com/kata-containers/shim /go/src/github.com/kata-containers/shim
+    #cd /go/src/github.com/kata-containers/shim
+    #git checkout ${requested_version}
+    #make
+    #make install
+
+    mkdir -p /go/src/github.com/kata-containers/osbuilder
+    git clone https://github.com/kata-containers/osbuilder /go/src/github.com/kata-containers/osbuilder
+    export ROOTFS_DIR=/go/src/github.com/kata-containers/osbuilder/rootfs-builder/rootfs
+    cd /go/src/github.com/kata-containers/osbuilder/rootfs-builder
+    script -fec 'GOPATH=$GOPATH USE_DOCKER=true SECCOMP=no ./rootfs.sh ubuntu'
+
+    cd /go/src/github.com/kata-containers/osbuilder/image-builder
+    script -fec 'USE_DOCKER=true ./image_builder.sh ${ROOTFS_DIR}'
+
+    commit=$(git log --format=%h -1 HEAD)
+    date=$(date +%Y-%m-%d-%T.%N%z)
+    image="kata-containers-${date}-${commit}"
+    install -o root -g root -m 0640 -D kata-containers.img "/usr/share/kata-containers/${image}"
+    (cd /usr/share/kata-containers && ln -sf "$image" kata-containers.img)
+    EOF
+    #${SUDO} kata-runtime kata-check
 
     ${SUDO} mkdir -p /etc/docker
     if ! test -f /etc/docker/daemon.json; then
         echo "{}" | ${SUDO} tee /etc/docker/daemon.json >/dev/null
     fi
-
     ${SUDO} mv /etc/docker/daemon.json /etc/docker/daemon.json.bak
     jq --arg bin "${TARGET_BIN}" '. * {"runtimes": {"kata-runtime": {"path": ($bin + "/kata-runtime")}}}' /etc/docker/daemon.json.bak | \
         ${SUDO} tee /etc/docker/daemon.json >/dev/null
