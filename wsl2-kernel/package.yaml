@@ -36,6 +36,16 @@ install:
 
     get_file wsl2-kernel kvm-nested.conf | \
         store_file kvm-nested.conf /etc/modprobe.d
+
+    echo "##########################################################"
+    echo "###"
+    echo "### Install and run the kernel:"
+    echo "###   1. Copy ${TARGET_BASE}/src/WSL2-Linux-Kernel-${requested_version}/arch/x86/boot/bzImage over to Windows"
+    echo "###   2. Add 'kernel=<path/to/bzImage>' to .wslconfig"
+    echo "###   3. Add 'nestedVirtualization=true' to .wslconfig"
+    echo "###   4. Shutdown WSL2: wsl --shutdown"
+    echo "###"
+    echo "##########################################################"
 files:
   - name: Dockerfile
     content: |
