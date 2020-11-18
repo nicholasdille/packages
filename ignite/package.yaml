@@ -15,6 +15,7 @@ tags:
   - vm
   - container
   - gitops
+  - firecracker
 install:
   script: |-
     require wsl2-kernel

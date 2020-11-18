@@ -13,6 +13,7 @@ tags:
   - serverless
   - virtual machine
   - vm
+  - firecracker
 install:
   script: |-
     github_get_release firecracker-microvm/firecracker "${requested_version}" | \
