@@ -17,6 +17,19 @@ tags:
   - gitops
 install:
   script: |-
+    require wsl2-kernel
+    require cni
+
+    if ! cat /proc/config.gz | gunzip | grep --quiet CONFIG_KVM=y || ! cat /proc/config.gz | gunzip | grep --quiet CONFIG_KVM_INTEL=y; then
+        echo "ERROR: KVM is not configured in your kernel"
+        exit 1
+    fi
+
+    if ! cat /proc/config.gz | gunzip | grep --quiet CONFIG_DM_ZERO=y || ! cat /proc/config.gz | gunzip | grep --quiet CONFIG_DM_SNAPSHOT=y; then
+        echo "ERROR: Device mapper is not correctly configured in your kernel"
+        exit 1
+    fi
+
     github_get_release weaveworks/ignite "${requested_version}" | \
         github_resolve_assets | \
         run_tasks \
@@ -36,3 +49,6 @@ install:
                 store_file ignited | \
                 make_executable \
             "
+
+    ignite completion | \
+        store_completion ignite
