@@ -1,0 +1,68 @@
+name: kubefire
+description: KubeFire, creates and manages Kubernetes Clusters using Firecracker microVMs
+repo: innobead/kubefire
+version:
+  latest: v0.3.2 # renovate: datasource=github-releases depName=innobead/kubefire
+  command: kubefire version
+  filter: ^Version
+  pattern: s/^Version:\s(.+)$/\1/
+tags:
+  - kubernetes
+  - k8s
+  - cluster
+  - bootstrap
+  - firecracker
+files:
+- name: 00-kubefire.conflist
+  content: |
+    {
+      "cniVersion": "0.4.0",
+      "name": "kubefire-cni-bridge",
+      "plugins": [
+        {
+          "type": "bridge",
+          "bridge": "kubefire0",
+          "isGateway": true,
+          "isDefaultGateway": true,
+          "promiscMode": true,
+          "ipMasq": true,
+          "ipam": {
+            "type": "host-local-rev",
+            "subnet": "10.62.0.0/16"
+          }
+        },
+        {
+          "type": "portmap",
+          "capabilities": {
+            "portMappings": true
+          }
+        },
+        {
+          "type": "firewall"
+        }
+      ]
+    }
+install:
+  script: |-
+    require ignite
+    require runc
+    require containerd
+    require cni
+
+    github_install \
+        --repo innobead/kubefire \
+        --match name \
+        --asset kubefire-linux-amd64 \
+        --type binary \
+        --name kubefire
+
+    github_get_release innobead/kubefire | \
+        github_resolve_assets | \
+        github_select_asset_by_name host-local-rev-linux-amd64 | \
+        github_get_asset_download_url | \
+        download_file | \
+        ${SUDO} tar -xzC /opt/cni/bin/
+
+    ${SUDO} mkdir -p /etc/cni/net.d
+    get_file kubefire 00-kubefire.conflist | \
+        store_file 00-kubefire.conflist /etc/cni/net.d
