@@ -15,7 +15,7 @@ Some packages: envsubst, unzip
 Install the package manager:
 
 ```bash
-curl --silent https://pkg.dille.io/pkg.sh > sudo tee /usr/local/bin/pkg
+curl --silent https://pkg.dille.io/pkg.sh | sudo tee /usr/local/bin/pkg >/dev/null
 sudo chmod +x /usr/local/bin/pkg
 ```
 
