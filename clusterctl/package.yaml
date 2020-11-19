@@ -5,7 +5,7 @@ links:
   - text: Homepage
     url: https://cluster-api.sigs.k8s.io/
 version:
-  latest: v0.3.10 # renovate: datasource=github-releases depName=kubernetes-sigs/cluster-api
+  latest: v0.3.11 # renovate: datasource=github-releases depName=kubernetes-sigs/cluster-api
   command: clusterctl version --output yaml
   filter: |
     ^[[:space:]]*gitVersion:
