@@ -5,7 +5,7 @@ links:
 - text: Homepage
   url: https://aksctl.io/
 version:
-  latest: v0.1.1 # renovate: datasource=github-releases depName=yanc0/untrak
+  latest: v0.2.0 # renovate: datasource=github-releases depName=yanc0/untrak
 tags:
   - kubernetes
   - k8s
