@@ -398,7 +398,7 @@ function package_needs_docker() {
                 --raw-output \
                 '.install.docker'
         )
-    
+
     case "${needs_docker}" in
         true|yes|1)
             return 0
@@ -504,7 +504,7 @@ function github_rate_limit_ok() {
                 "
             '
     )"
-    
+
     >&2 echo "VERBOSE: GitHub rate limit ${GITHUB_RATE_REMAINING}/${GITHUB_RATE_LIMIT} remaining"
     if test "${GITHUB_RATE_REMAINING}" -eq 0; then
         >&2 echo "WARNING: GitHub rate limit exceeded (resets as $(date -d "@${GITHUB_RATE_RESET}"))"
@@ -687,10 +687,8 @@ function github_install() {
             test -n "${name}" || help_github_install 1
         ;;
         tarball|xz)
-            test -n "${include}" || help_github_install 1
         ;;
         zip)
-            test -n "${include}" || help_github_install 1
             tmpdir=$(mktemp -d)
             mkdir -p "${tmpdir}"
             >&2 echo "Using temporary directory <${tmpdir}>"
@@ -1149,7 +1147,7 @@ handle_bootstrap() {
         esac
         shift
     done
-    
+
     mkdir -p "${PREFIX}/bin"
     curl --silent --location "https://raw.githubusercontent.com/${MY_REPO}/${MY_VERSION}/pkg.sh" \
         >"${PREFIX}/bin/pkg"
