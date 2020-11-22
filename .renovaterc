@@ -9,18 +9,17 @@
     ":automergePatch",
     ":semanticCommits"
   ],
-  "labels": ["type/renovate"],
   "major": {
-    "labels": ["bump/major"]
+    "labels": ["type/renovate", "bump/major"]
   },
   "minor": {
-    "labels": ["bump/minor"]
+    "labels": ["type/renovate", "bump/minor"]
   },
   "patch": {
-    "labels": ["bump/patch"]
+    "labels": ["type/renovate", "bump/patch"]
   },
   "pin": {
-    "labels": ["bump/pin"]
+    "labels": ["type/renovate", "bump/pin"]
   },
   "packageRules": [
     {
