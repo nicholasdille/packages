@@ -1,0 +1,36 @@
+on:
+  schedule:
+  - cron: '5 0 * * *'
+
+name: Create release
+
+jobs:
+  build:
+    name: Create release
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Prepare release
+        run: |
+          RELEASE=false
+          BUMP=patch
+
+          TIMESTAMP=$(date +"%Y-%m-%dT00:00:00Z" -d "yesterday")
+          RENOVATE_PR_COUNT=$(curl -s "https://api.github.com/repos/nicholasdille/packages/issues?state=closed&since=${TIMESTAMP}&labels=type/renovate" | jq '.[].number' | wc -l)
+          if test "${RENOVATE_PR_COUNT}" -gt 0; then
+              RELEASE=true
+              BUMP=patch
+          fi
+
+          PACKAGE_ISSUE_COUNT=$(curl -s "https://api.github.com/repos/nicholasdille/packages/issues?state=closed&since=${TIMESTAMP}&labels=component/package" | jq '.[].number' | wc -l)
+          if test "${PACKAGE_ISSUE_COUNT}" -gt 0; then
+              RELEASE=true
+              BUMP=minor
+          fi
+
+          if ${RELEASE}; then
+              make bump-${BUMP}
+          fi
