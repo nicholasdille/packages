@@ -114,6 +114,11 @@ check-dirty:
 	fi
 
 .PHONY:
+next-%: .bin/semver
+	@\
+	.bin/semver bump $* $(VERSION)
+
+.PHONY:
 bump-%: check-dirty .bin/semver
 	@\
 	NEW_VERSION=$$(.bin/semver bump $* $(VERSION)); \
