@@ -1,0 +1,27 @@
+name: helmfile
+description: Deploy Kubernetes Helm Charts
+repo: roboll/helmfile
+version:
+  latest: v0.135.0 # renovate: datasource=github-releases depName=roboll/helmfile
+  command: helmfile --version
+  filter: ^helmfile
+  pattern: s/^helmfile\sversion\s(.+)$/\1/
+tags:
+  - kubernetes
+  - k8s
+  - package
+  - template
+  - substituton
+  - expansion
+  - configuration
+install:
+  script: |-
+    require helm
+    require kubectl
+
+    github_install \
+        --repo roboll/helmfile \
+        --match name \
+        --asset helmfile_linux_amd64 \
+        --type binary \
+        --name helmfile
