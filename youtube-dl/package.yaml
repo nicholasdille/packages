@@ -28,7 +28,7 @@ install:
 
     docker cp "${container_name}:/youtube-dl.1" - | \
         tar -x --to-stdout | \
-        sudo tee "${TARGET_BASE}/share/man/man1/youtube-dl.1" >/dev/null
+        ${SUDO} tee "${TARGET_BASE}/share/man/man1/youtube-dl.1" >/dev/null
 
     docker cp "${container_name}:/youtube-dl.bash-completion" - | \
         tar -x --to-stdout | \
