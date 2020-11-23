@@ -1,0 +1,29 @@
+name: fuse-overlayfs-crfs
+description: A fuse-overlayfs plugin for using CRFS for loading lower layers
+repo: giuseppe/crfs-plugin
+tags:
+  - container
+files:
+- name: Dockerfile
+  content: |
+    FROM ubuntu:20.04@sha256:1d7b639619bdca2d008eca2d5293e3c43ff84cbee597ff76de3b7a7de3e84956
+    ENV DEBIAN_FRONTEND=noninteractive
+    RUN apt-get update \
+     && apt-get -y install \
+            build-essential \
+            autoconf \
+            ca-certificates \
+            git \
+            make
+install:
+  script: |-
+    require fuse-overlayfs
+
+    get_file fuse-overlayfs-crfs Dockerfile | \
+        docker build --tag fuse-overlay-crfs -
+
+    build_containerized fuse-overlay-crfs <<EOF
+    git clone https://github.com/giuseppe/crfs-plugin
+    cd crfs-plugin
+    make
+    EOF
