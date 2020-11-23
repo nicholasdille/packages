@@ -21,11 +21,13 @@ tags:
   - configuration
 install:
   script: |-
+    require sops
+
     curl --location --fail "https://get.helm.sh/helm-${requested_version}-linux-amd64.tar.gz" | \
         ${SUDO} tar -xz --strip-components=1 -C "${TARGET_BIN}" linux-amd64/helm
 
     helm completion bash | \
         store_completion helm
 
-    # https://github.com/databus23/helm-diff
     helm plugin install https://github.com/databus23/helm-diff
+    SKIP_SOPS_INSTALL=true helm plugin install https://github.com/jkroepke/helm-secrets
