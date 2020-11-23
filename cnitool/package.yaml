@@ -16,8 +16,10 @@ install:
   docker: true
   script: |-
     build_containerized golang <<EOF
-    go get github.com/containernetworking/cni/cnitool
-    go install github.com/containernetworking/cni/cnitool
+    git clone https://github.com/containernetworking/cni /go/src/github.com/containernetworking/cni
+    cd /go/src/github.com/containernetworking/cni
+    git checkout ${requested_version}
+    CGO_ENABLED=0 go install -ldflags="-extldflags=-static" github.com/containernetworking/cni/cnitool
     cp /go/bin/cnitool /
     EOF
     extract_file_from_container cnitool
