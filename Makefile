@@ -164,5 +164,5 @@ tools: .bin/jq .bin/yq .bin/shellcheck .bin/semver
 .bin/semver: .bin
 	@\
 	echo "Installing semver version $(SEMVER_VERSION)..."; \
-	curl --silent --verbose --location --output $@ https://github.com/fsaintjacques/semver-tool/raw/$(SEMVER_VERSION)/src/semver; \
+	curl --silent --location --output $@ https://github.com/fsaintjacques/semver-tool/raw/$(SEMVER_VERSION)/src/semver; \
 	chmod +x $@
