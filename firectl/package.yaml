@@ -1,0 +1,22 @@
+name: firectl
+description: firectl is a command-line tool to run Firecracker microVMs
+repo: firecracker-microvm/firectl
+links:
+  - text: Homepage
+    url: http://firecracker-microvm.io/
+version:
+  latest: v0.1.0 # renovate: datasource=github-releases depName=firecracker-microvm/firectl
+  command: firectl --version
+  filter: ^[[:digit:]]
+  pattern: s/^(.+)$/v\1/
+tags:
+  - serverless
+  - virtual machine
+  - vm
+  - firecracker
+install:
+  script: |-
+    echo "https://firectl-release.s3.amazonaws.com/firectl-${requested_version}" | \
+        download_file | \
+        store_file firectl | \
+        make_executable
