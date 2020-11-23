@@ -1,0 +1,73 @@
+name: firecracker-containerd
+description: firecracker-containerd enables containerd to manage containers as Firecracker microVMs
+repo: firecracker-microvm/firecracker-containerd
+links:
+- text: Quickstart
+  url: https://github.com/firecracker-microvm/firecracker-containerd/blob/master/docs/quickstart.md
+tags:
+  - serverless
+  - virtual machine
+  - vm
+  - firecracker
+  - container
+  - runtime
+files:
+- name: etc.firecracker-containerd.config.toml
+  content: |
+    disabled_plugins = ["cri"]
+    root = "/var/lib/firecracker-containerd/containerd"
+    state = "/run/firecracker-containerd"
+    [grpc]
+      address = "/run/firecracker-containerd/containerd.sock"
+    [plugins]
+      [plugins.devmapper]
+        pool_name = "fc-dev-thinpool"
+        base_image_size = "10GB"
+        root_path = "/var/lib/firecracker-containerd/snapshotter/devmapper"
+
+    [debug]
+      level = "debug"
+- name: etc.containerd.firecracker-runtime.json
+  content: |
+    {
+      "firecracker_binary_path": "/usr/local/bin/firecracker",
+      "cpu_template": "T2",
+      "log_fifo": "fc-logs.fifo",
+      "log_levels": ["debug"],
+      "metrics_fifo": "fc-metrics.fifo",
+      "kernel_args": "console=ttyS0 noapic reboot=k panic=1 pci=off nomodules ro systemd.journald.forward_to_console systemd.unit=firecracker.target init=/sbin/overlay-init",
+      "default_network_interfaces": [{
+        "CNIConfig": {
+          "NetworkName": "fcnet",
+          "InterfaceName": "veth0"
+        }
+      }]
+    }
+install:
+  script: |-
+    require runc
+    require cni
+    require containerd
+    require firecracker
+
+    build_containerized golang <<EOF
+    git clone https://github.com/firecracker-microvm/firecracker-containerd.git
+    cd firecracker-containerd
+    (cd agent && make)
+    (cd runtime && make)
+    (cd firecracker-control/cmd/containerd && make)
+    cp agent/agent /
+    cp runtime/containerd-shim-aws-firecracker /
+    cp firecracker-control/cmd/containerd/firecracker-containerd /
+    cp firecracker-control/cmd/containerd/firecracker-ctr /
+    EOF
+    extract_file_from_container agent
+    extract_file_from_container containerd-shim-aws-firecracker
+    extract_file_from_container firecracker-containerd
+    extract_file_from_container firecracker-ctr
+
+    get_file firecracker-containerd etc.firecracker-containerd.config.toml | \
+        store_file config.toml /etc/firecracker-containerd
+
+    get_file firecracker-containerd etc.containerd.firecracker-runtime.json | \
+        store_file firecracker-runtime.json /etc/containerd
