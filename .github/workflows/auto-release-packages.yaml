@@ -19,12 +19,14 @@ jobs:
           RELEASE=false
           BUMP=patch
 
+          make .bin/jq .bin/semver
+
           TIMESTAMP="$(
               curl "https://api.github.com/repos/${GITHUB_REPOSITORY}/releases/latest" \
                     --silent \
                     --location \
                     --header 'Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' | \
-                  jq --raw-output .created_at
+                  ./.bin/jq --raw-output .created_at
           )"
 
           RENOVATE_PR_COUNT="$(
@@ -32,7 +34,7 @@ jobs:
                       --silent \
                       --location \
                       --header 'Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' | \
-                  jq '.[].number' | \
+                  ./.bin/jq '.[].number' | \
                   wc -l
           )"
           if test "${RENOVATE_PR_COUNT}" -gt 0; then
@@ -46,7 +48,7 @@ jobs:
                       --silent \
                       --location \
                       --header 'Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' | \
-                  jq '.[].number' | \
+                  ./.bin/jq '.[].number' | \
                   wc -l
           )"
           if test "${PACKAGE_ISSUE_COUNT}" -gt 0; then
@@ -62,7 +64,7 @@ jobs:
                         --silent \
                         --location \
                         --header 'Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' | \
-                      jq --raw-output .tag_name | \
+                      ./.bin/jq --raw-output .tag_name | \
                       cut -d/ -f2
               )"
               NEW_VERSION="packages/$(./.bin/semver bump "${BUMP}")"
