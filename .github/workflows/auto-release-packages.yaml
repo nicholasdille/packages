@@ -75,11 +75,6 @@ jobs:
               echo "::set-output name=tagname::${NEW_VERSION}"
           fi
 
-      - name: Dump steps context
-        env:
-          STEPS_CONTEXT: ${{ toJson(steps) }}
-        run: echo "$STEPS_CONTEXT"
-
       - name: Create tag
         uses: actions/github-script@v3
         if: steps.check-for-changes.outputs.release == 'true'
