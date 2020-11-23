@@ -75,14 +75,28 @@ jobs:
               echo "::set-output name=tagname::${NEW_VERSION}"
           fi
 
-      - name: Create tag
-        uses: actions/github-script@v3
+      - name: Create release
+        id: create_release
+        uses: actions/create-release@v1
         if: steps.check-for-changes.outputs.release == 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          script: |
-            github.git.createRef({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              ref: "refs/tags/${{steps.check-for-changes.outputs.tagname}}",
-              sha: context.sha
-            })
+          tag_name: ${{ steps.check-for-changes.outputs.tagname }}
+          release_name: Release ${{ steps.check-for-changes.outputs.tagname }}
+          body: |
+            ADD CHANGELOG HERE
+          draft: false
+          prerelease: false
+
+      - name: Upload release asset
+        id: upload-release-asset 
+        uses: actions/upload-release-asset@v1
+        if: steps.check-for-changes.outputs.release == 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./packages.json
+          asset_name: packages.json
+          asset_content_type: application/json
