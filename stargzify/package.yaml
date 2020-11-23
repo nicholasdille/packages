@@ -1,0 +1,14 @@
+name: stargzify
+description: Convert container image into stargz format
+repo: google/crfs
+tags:
+  - container
+  - registry
+install:
+  script: |-
+    build_containerized golang <<EOF
+    go get github.com/google/crfs
+    go install github.com/google/crfs/stargz/stargzify
+    cp /go/bin/stargzify /
+    EOF
+    extract_file_from_container stargzify
