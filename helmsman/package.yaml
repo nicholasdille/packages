@@ -1,0 +1,27 @@
+name: helmsman
+description: Helm Charts as Code
+repo: Praqma/helmsman
+version:
+  latest: v3.6.0 # renovate: datasource=github-releases depName=Praqma/helmsman
+  command: helmsman -v
+  filter: ^Helmsman
+  pattern: s/^Helmsman\sversion:\s(.+)$/\1/
+tags:
+  - kubernetes
+  - k8s
+  - package
+  - template
+  - substituton
+  - expansion
+  - configuration
+install:
+  script: |-
+    require helm
+    require kubectl
+
+    github_install \
+        --repo Praqma/helmsman \
+        --match suffix \
+        --asset _linux_amd64.tar.gz \
+        --type tarball \
+        --include helmsman
