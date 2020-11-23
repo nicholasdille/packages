@@ -1,0 +1,21 @@
+name: sops
+description: Simple and flexible tool for managing secrets
+repo: mozilla/sops
+version:
+  latest: v3.6.1 # renovate: datasource=github-releases depName=mozilla/sops
+  command: sops --version
+  filter: ^sops
+  pattern: s/^sops\s(\S+)\s.+$/v\1/
+tags:
+  - secrets
+  - security
+  - yaml
+  - json
+install:
+  script: |-
+    github_install \
+        --repo mozilla/sops \
+        --match suffix \
+        --asset .linux \
+        --type binary \
+        --name sops
