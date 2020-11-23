@@ -2,11 +2,11 @@ on:
   schedule:
   - cron: '*/15 * * * *'
 
-name: Create release
+name: Auto release packages
 
 jobs:
   build:
-    name: Create release
+    name: Auto release packages
     runs-on: ubuntu-latest
     steps:
 
@@ -18,15 +18,36 @@ jobs:
           RELEASE=false
           BUMP=patch
 
-          TIMESTAMP=$(date +"%Y-%m-%dT00:00:00Z" -d "yesterday")
-          RENOVATE_PR_COUNT=$(curl --silent --location --header 'Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' "https://api.github.com/repos/${GITHUB_REPOSITORY}/issues?state=closed&since=${TIMESTAMP}&labels=type/renovate" | jq '.[].number' | wc -l)
+          TIMESTAMP="$(
+              curl "https://api.github.com/repos/${GITHUB_REPOSITORY}/releases/latest" \
+                    --silent \
+                    --location \
+                    --header 'Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' | \
+                  jq --raw-output .created_at
+          )"
+
+          RENOVATE_PR_COUNT="$(
+              curl "https://api.github.com/repos/${GITHUB_REPOSITORY}/issues?state=closed&since=${TIMESTAMP}&labels=type/renovate" \
+                      --silent \
+                      --location \
+                      --header 'Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' | \
+                  jq '.[].number' | \
+                  wc -l
+          )"
           if test "${RENOVATE_PR_COUNT}" -gt 0; then
               echo "Found closed pull requests. Will release a patch (at least)."
               RELEASE=true
               BUMP=patch
           fi
 
-          PACKAGE_ISSUE_COUNT=$(curl --silent --location --header 'Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' "https://api.github.com/repos/${GITHUB_REPOSITORY}/issues?state=closed&since=${TIMESTAMP}&labels=component/package" | jq '.[].number' | wc -l)
+          PACKAGE_ISSUE_COUNT="$(
+              curl "https://api.github.com/repos/${GITHUB_REPOSITORY}/issues?state=closed&since=${TIMESTAMP}&labels=component/package" \
+                      --silent \
+                      --location \
+                      --header 'Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' | \
+                  jq '.[].number' | \
+                  wc -l
+          )"
           if test "${PACKAGE_ISSUE_COUNT}" -gt 0; then
               echo "Found closed issues. Will release a minor version."
               RELEASE=true
@@ -34,5 +55,5 @@ jobs:
           fi
 
           if ${RELEASE}; then
-              make bump-${BUMP}
+              make "bump-${BUMP}"
           fi

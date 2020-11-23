@@ -121,8 +121,9 @@ next-%: .bin/semver
 .PHONY:
 bump-%: check-dirty .bin/semver
 	@\
+	git --version; \
 	echo "Working on version $(VERSION)."; \
-	NEW_VERSION=$$(.bin/semver bump $* $(VERSION)); \
+	NEW_VERSION=$$(.bin/semver bump $* "$(VERSION)"); \
 	echo "Updating from $(VERSION) to $${NEW_VERSION}"; \
 	git tag --annotate --sign --message "Packages v$${NEW_VERSION}" packages/$${NEW_VERSION}; \
 	git push --tags
