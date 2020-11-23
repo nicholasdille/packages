@@ -1,6 +1,6 @@
 on:
   schedule:
-  - cron: '*/15 * * * *'
+  - cron: '5 0 * * *'
 
 name: Auto release packages
 
@@ -60,6 +60,8 @@ jobs:
 
           echo "::set-output name=release::${RELEASE}"
           if ${RELEASE}; then
+              make packages.json
+              
               echo "Release required (RELEASE=${RELEASE})"
               VERSION="$(
                   curl "https://api.github.com/repos/${GITHUB_REPOSITORY}/releases/latest" \
