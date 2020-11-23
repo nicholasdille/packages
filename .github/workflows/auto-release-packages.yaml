@@ -62,5 +62,5 @@ jobs:
                         --header 'Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' | \
                       jq --raw-output .tag_name
               )"
-              make "bump-${BUMP}" VERSION=$${VERSION}
+              make "bump-${BUMP}" VERSION=${VERSION}
           fi
