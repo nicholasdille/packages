@@ -59,6 +59,7 @@ jobs:
 
           echo "::set-output name=release::${RELEASE}"
           if ${RELEASE}; then
+              echo "Release required"
               VERSION="$(
                   curl "https://api.github.com/repos/${GITHUB_REPOSITORY}/releases/latest" \
                         --silent \
@@ -67,7 +68,9 @@ jobs:
                       ./.bin/jq --raw-output .tag_name | \
                       cut -d/ -f2
               )"
-              NEW_VERSION="packages/$(./.bin/semver bump "${BUMP}")"
+              echo "Version of last release is ${VERSION}."
+              NEW_VERSION="packages/$(./.bin/semver bump "${BUMP}" "${VERSION}")"
+              echo "Version of next release if ${NEW_VERSION}"
               echo "::set-output name=tagname::${NEW_VERSION}"
           fi
 
