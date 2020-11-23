@@ -1,0 +1,22 @@
+name: reg
+description: Docker registry v2 command line client and repo listing generator with security checks
+repo: genuinetools/reg
+links:
+  - text: Homepage
+    url: https://r.j3ss.co/
+version:
+  latest: v0.16.1 # renovate: datasource=github-releases depName=genuinetools/reg
+  command: reg version
+  filter: ^[[:space:]]*version
+  pattern: s/^\s+version\s+:\s(.+)$/\1/
+tags:
+  - container
+  - security
+install:
+  script: |-
+    github_install \
+        --repo genuinetools/reg \
+        --match name \
+        --asset reg-linux-amd64 \
+        --type binary \
+        --name reg
