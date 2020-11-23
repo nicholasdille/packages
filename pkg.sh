@@ -1155,6 +1155,18 @@ handle_bootstrap() {
 }
 
 handle_cache() {
+    : "${VERSION:=latest}"
+    if test -z "${TAG}"; then
+        TAG=$(
+            github_get_releases "${MY_REPO}" | \
+                jq --raw-output 'map(select(.tag_name | startswith("packages/"))) | .[0].tag_name'
+        )
+    fi
+    if test -z "${TAG}"; then
+        echo "ERROR: Failed to determine tag from version ${VERSION}."
+        exit 1
+    fi
+    
     mkdir -p "${HOME}/.pkg"
     echo "Using version ${TAG}."
     curl --silent "https://api.github.com/repos/${MY_REPO}/releases/tags/${TAG}" | \
@@ -1393,20 +1405,6 @@ handle_version() {
         sed -E "${version_pattern}"
 }
 
-prepare() {
-    : "${VERSION:=latest}"
-    if test -z "${TAG}"; then
-        TAG=$(
-            github_get_releases "${MY_REPO}" | \
-                jq --raw-output 'map(select(.tag_name | startswith("packages/"))) | .[0].tag_name'
-        )
-    fi
-    if test -z "${TAG}"; then
-        echo "ERROR: Failed to determine tag from version ${VERSION}."
-        exit 1
-    fi
-}
-
 main() {
     if test "$#" -eq 0; then
         show_help
@@ -1424,47 +1422,38 @@ main() {
                 VERSION=$1
             ;;
             cache|c)
-                prepare
                 handle_cache "$@"
                 exit 0
             ;;
             bootstrap|b)
-                prepare
                 handle_bootstrap "$@"
                 exit 0
             ;;
             file|f)
-                prepare
                 handle_file "$@"
                 exit 0
             ;;
             inspect)
-                prepare
                 handle_inspect "$@"
                 exit 0
             ;;
             install|i)
-                prepare
                 handle_install "$@"
                 exit 0
             ;;
             list|l)
-                prepare
                 handle_list "$@"
                 exit 0
             ;;
             search|s)
-                prepare
                 handle_search "$@"
                 exit 0
             ;;
             tags|t)
-                prepare
                 handle_tags "$@"
                 exit 0
             ;;
             version|v)
-                prepare
                 handle_version "$@"
                 exit 0
             ;;
