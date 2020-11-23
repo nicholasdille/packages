@@ -38,7 +38,7 @@
     {
       "fileMatch": ["^Makefile$"],
       "matchStrings": [
-        ".+_VERSION\\s:=\\s(?<currentValue>.*)\\s+#\\srenovate:\\sdatasource=(?<datasource>.+?)\\sdepName=(?<depName>.+?)(\\sversioning=(?<versioning>.+?))?\\s*\\n"
+        "#\\srenovate:\\sdatasource=(?<datasource>.+?)\\sdepName=(?<depName>.+?)(\\sversioning=(?<versioning>.+?))?\\s*\\n.+_VERSION\\s:=\\s(?<currentValue>.*)"
       ],
       "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}"
     }
