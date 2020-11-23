@@ -15,6 +15,8 @@ tags:
   - cri
 install:
   script: |-
+    require runc
+    
     github_get_release containerd/containerd | \
         github_resolve_assets | \
         github_select_asset_by_prefix containerd- | \

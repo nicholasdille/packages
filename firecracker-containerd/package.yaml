@@ -45,7 +45,6 @@ files:
     }
 install:
   script: |-
-    require runc
     require cni
     require containerd
     require firecracker
