@@ -1,0 +1,18 @@
+name: fuse-overlayfs
+description: FUSE implementation for overlayfs
+repo: containers/fuse-overlayfs
+version:
+  latest: v1.2.0 # renovate: datasource=github-releases depName=containers/fuse-overlayfs
+  command: fuse-overlay --version
+  filter: ^fuse-overlayfs
+  pattern: s/^fuse-overlayfs:\sversion\s(.+)$/v\1/
+tags:
+  - container
+install:
+  script: |-
+    github_install \
+        --repo containers/fuse-overlayfs \
+        --match name \
+        --asset fuse-overlayfs-x86_64 \
+        --type binary \
+        --name fuse-overlay
