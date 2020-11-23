@@ -60,7 +60,7 @@ jobs:
 
           echo "::set-output name=release::${RELEASE}"
           if ${RELEASE}; then
-              echo "Release required"
+              echo "Release required (RELEASE=${RELEASE})"
               VERSION="$(
                   curl "https://api.github.com/repos/${GITHUB_REPOSITORY}/releases/latest" \
                         --silent \
