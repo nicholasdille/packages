@@ -125,7 +125,6 @@ next-%: .bin/semver
 .PHONY:
 bump-%: check-dirty .bin/semver
 	@\
-	test -n "$(VERSION)" || export VERSION="$$(curl --silent --location "https://api.github.com/repos/${GITHUB_REPOSITORY}/releases/latest" | jq --raw-output .tag_name)"; \
 	echo "Working on version $(VERSION)."; \
 	NEW_VERSION=$$(.bin/semver bump $* "$(VERSION)"); \
 	echo "Updating from $(VERSION) to $${NEW_VERSION}"; \
