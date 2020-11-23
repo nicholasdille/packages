@@ -10,79 +10,67 @@ tags:
 files:
   - name: Dockerfile
     content: |
-      FROM registry.fedoraproject.org/fedora:latest@sha256:edd0366dd4164485d31bd05d06d3f4f549c4ef278e08141c2da65277dd10325c
-      ENV GOPATH=/root/buildah
-
-      RUN useradd build \
-      && yum -y update \
-      && yum -y reinstall shadow-utils \
-      && yum -y install --enablerepo=updates-testing \
-          make \
-          golang \
-          bats \
-          btrfs-progs-devel \
-          device-mapper-devel \
-          glib2-devel \
-          gpgme-devel \
-          libassuan-devel \
-          libseccomp-devel \
-          git \
-          bzip2 \
-          go-md2man \
-          runc \
-          fuse-overlayfs \
-          fuse3 \
-          containers-common
-
-      RUN mkdir /root/buildah \
-      && git clone https://github.com/containers/buildah /root/buildah/src/github.com/containers/buildah \
-      && cd /root/buildah/src/github.com/containers/buildah \
-      && export DISABLE_CGO=1 \
-      && make EXTRA_LDFLAGS='-w -extldflags "-static"' \
-      && make install
-
-      ADD https://raw.githubusercontent.com/containers/buildah/master/contrib/buildahimage/stable/containers.conf /etc/containers/
-
-      # Adjust storage.conf to enable Fuse storage.
-      RUN chmod 644 /etc/containers/containers.conf; sed -i -e 's|^#mount_program|mount_program|g' -e '/additionalimage.*/a "/var/lib/shared",' -e 's|^mountopt[[:space:]]*=.*$|mountopt = "nodev,fsync=0"|g' /etc/containers/storage.conf
-      RUN mkdir -p /var/lib/shared/overlay-images /var/lib/shared/overlay-layers; touch /var/lib/shared/overlay-images/images.lock; touch /var/lib/shared/overlay-layers/layers.lock
-
-      # Set an environment variable to default to chroot isolation for RUN
-      # instructions and "buildah run".
-      ENV BUILDAH_ISOLATION=chroot
+      FROM ubuntu:18.04
+      ENV DEBIAN_FRONTEND=noninteractive
+      RUN apt-get update \
+       && apt-get -y install --no-install-recommends \
+              software-properties-common \
+       && add-apt-repository -y ppa:alexlarsson/flatpak \
+       && add-apt-repository -y ppa:gophers/archive \
+       && add-apt-repository -y ppa:projectatomic/ppa \
+       && apt-get -y -qq update \
+       && apt-get -y install \
+              bats \
+              btrfs-tools \
+              git \
+              libapparmor-dev \
+              libdevmapper-dev \
+              libglib2.0-dev \
+              libgpgme11-dev \
+              libseccomp-dev \
+              libselinux1-dev \
+              skopeo-containers \
+              go-md2man \
+              curl \
+       && mkdir -p /usr/lib/go-1.13 \
+       && curl -sL https://golang.org/dl/go1.13.15.linux-amd64.tar.gz | \
+              tar -xzC /usr/lib/go-1.13 --strip-components=1
 install:
   docker: true
   script: |-
-    build_containerized golang:1.12 <<EOF
-    apt-get update
-    #apt-get -y install --no-install-recommends software-properties-common
-    #add-apt-repository -y ppa:alexlarsson/flatpak
-    #add-apt-repository -y ppa:gophers/archive
-    #add-apt-repository -y ppa:projectatomic/ppa
-    apt-get -y -qq update
-    apt-get -y install --no-install-recommends \
-        bats \
-        btrfs-tools \
-        libapparmor-dev \
-        libdevmapper-dev \
-        libglib2.0-dev \
-        libgpgme11-dev \
-        libseccomp-dev \
-        libselinux1-dev \
-        go-md2man
-    mkdir ~/buildah
-    cd ~/buildah
-    export GOPATH=$(pwd)
+    require runc
+    require cni
+    require cnitool
 
-    curl -sL "https://github.com/containers/buildah/archive/${requested_version}.tar.gz" | \
-        tar -xzC ./src/github.com/containers/buildah --strip-components=1
+    get_file buildah Dockerfile | \
+        docker build --tag buildah -
 
-    make runc all SECURITYTAGS="apparmor seccomp"
-    #whereis buildah
-    # copy buildah
-    #cp docs/cni-examples/*.conf /
+    build_containerized buildah <<EOF
+    echo "START"
+    export PATH="/usr/lib/go-1.13/bin:\${PATH}"
+
+    echo "Setting up go..."
+    mkdir "\${HOME}/buildah"
+    cd "\${HOME}/buildah"
+    export GOPATH="\${PWD}"
+
+    echo "Downloading sources..."
+    mkdir -p ./src/github.com/containers/buildah
+    git clone https://github.com/containers/buildah ./src/github.com/containers/buildah
+    cd ./src/github.com/containers/buildah
+    git checkout ${requested_version}
+
+    echo "Building..."
+    make all SECURITYTAGS="apparmor seccomp"
+    make install
+    
+    cp /usr/local/bin/buildah /
+    cp /usr/local/share/man/man1/buildah*.1 /
     EOF
-    #docker cp buildah:/buildah - | ${SUDO} tar -xvC ${TARGET_BIN}
-    #mkdir -p /etc/cni/net.d
-    #docker cp buildah:/*.conf - | ${SUDO} tar -xvC ${TARGET_BASE}/etc/cni/net.d
-    #${SUDO} chmod 0644 /etc/cni/net.d/*.conf
+
+    extract_file_from_container buildah
+    for MAN in buildah-add buildah-bud buildah-commit buildah-config buildah-containers buildah-copy buildah-from buildah-images buildah-info buildah-inspect buildah-login buildah-logout buildah-manifest-add buildah-manifest-annotate buildah-manifest-create buildah-manifest-inspect buildah-manifest-push buildah-manifest-remove buildah-manifest buildah-mount buildah-pull buildah-push buildah-rename buildah-rm buildah-rmi buildah-run buildah-tag buildah-umount buildah-unshare buildah-version buildah; do
+        docker cp "${container_name}:/${MAN}.1" - | \
+            tar -x --to-stdout | \
+            ${SUDO} tee "${TARGET_BASE}/share/man/man1/${MAN}.1" >/dev/null
+    done
