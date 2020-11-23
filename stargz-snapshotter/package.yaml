@@ -1,0 +1,19 @@
+name: stargz-snapshotter
+description: Fast docker image distribution plugin for containerd, based on CRFS/stargz
+repo: containerd/stargz-snapshotter
+tags:
+  - ssl
+  - tls
+  - scan
+  - test
+  - quality
+install:
+  script: |-
+    build_containerized golang <<EOF
+    git clone https://github.com/containerd/stargz-snapshotter
+    cd stargz-snapshotter
+    CGO_ENABLED=0 make GO_BUILD_FLAGS=-ldflags="-extldflags=-static"
+    cp out/* /
+    EOF
+    extract_file_from_container ctr-remote
+    extract_file_from_container containerd-stargz-grpc
