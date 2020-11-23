@@ -13,7 +13,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Auto release packages
+      - name: Check for changes
+        id: check-for-changes
         run: |
           RELEASE=false
           BUMP=patch
@@ -54,6 +55,7 @@ jobs:
               BUMP=minor
           fi
 
+          echo "::set-output name=release::${RELEASE}"
           if ${RELEASE}; then
               VERSION="$(
                   curl "https://api.github.com/repos/${GITHUB_REPOSITORY}/releases/latest" \
@@ -63,5 +65,18 @@ jobs:
                       jq --raw-output .tag_name | \
                       cut -d/ -f2
               )"
-              make "bump-${BUMP}" VERSION=${VERSION}
+              NEW_VERSION="packages/$(./.bin/semver bump "${BUMP}")"
+              echo "::set-output name=tagname::${NEW_VERSION}"
           fi
+
+      - name: Create tag
+        uses: actions/github-script@v3
+        if: steps.check-for-changes.release == "true"
+        with:
+          script: |
+            github.git.createRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: "refs/tags/${{steps.check-for-changes.tagname}}",
+              sha: context.sha
+            })
