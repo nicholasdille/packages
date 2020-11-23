@@ -88,6 +88,6 @@ jobs:
             github.git.createRef({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              ref: "refs/tags/${{steps.check-for-changes.tagname}}",
+              ref: "refs/tags/${{steps.check-for-changes.outputs.tagname}}",
               sha: context.sha
             })
