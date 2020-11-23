@@ -82,7 +82,7 @@ jobs:
 
       - name: Create tag
         uses: actions/github-script@v3
-        if: steps.check-for-changes.release == 'true'
+        if: steps.check-for-changes.outputs.release == 'true'
         with:
           script: |
             github.git.createRef({
