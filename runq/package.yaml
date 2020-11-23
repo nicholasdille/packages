@@ -1,0 +1,19 @@
+name: runq
+description: Run regular Docker images in KVM/Qemu
+repo: gotoz/runq
+tags:
+  - container
+  - virtual machine
+install:
+  script: |-
+    git clone --recurse-submodules https://github.com/gotoz/runq.git
+    cd runq
+
+    docker run --name "${container_name}" --interactive --mount "type=bind,src=${PWD},dst=/src" --workdir /src golang bash <<EOF
+    apt-get update
+    apt-get -y install --no-install-recommends \
+        libseccomp-dev
+    make all
+    EOF
+
+    make image
