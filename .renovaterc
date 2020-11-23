@@ -34,6 +34,13 @@
         "\\s+latest:\\s(?<currentValue>.*)\\s+#\\srenovate:\\sdatasource=(?<datasource>.+?)\\sdepName=(?<depName>.+?)(\\sversioning=(?<versioning>.+?))?\\s*\\n"
       ],
       "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}"
+    },
+    {
+      "fileMatch": ["^Makefile$"],
+      "matchStrings": [
+        ".+_VERSION\\s:=\\s(?<currentValue>.*)\\s+#\\srenovate:\\sdatasource=(?<datasource>.+?)\\sdepName=(?<depName>.+?)(\\sversioning=(?<versioning>.+?))?\\s*\\n"
+      ],
+      "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}"
     }
   ]
 }
