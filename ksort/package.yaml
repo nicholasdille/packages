@@ -12,5 +12,5 @@ install:
         --repo superbrothers/ksort \
         --match name \
         --asset ksort-linux-amd64.tar.gz \
-        --type tarball \
+        --type zip \
         --include ksort
