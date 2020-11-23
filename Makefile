@@ -1,7 +1,11 @@
-DEFINITIONS := $(shell find . -type f -name package.yaml)
-READMES     := $(DEFINITIONS:package.yaml=README.md)
-SCRIPTS     := $(shell find . -type f -name \*.sh | sort)
-VERSION     := $(shell git tag | grep "packages/" | cut -d/ -f2 | sort -V -r | head -n 1)
+DEFINITIONS        := $(shell find . -type f -name package.yaml)
+READMES            := $(DEFINITIONS:package.yaml=README.md)
+SCRIPTS            := $(shell find . -type f -name \*.sh | sort)
+VERSION            := $(shell git tag | grep "packages/" | cut -d/ -f2 | sort -V -r | head -n 1)
+YQ_VERSION         := 3.4.0 # renovate: datasource=github-releases depName=mikefarah/yq
+JQ_VERSION         := jq-1.6 # renovate: datasource=github-releases depName=stedolan/jq versioning=regex:^jq-(?<major>\d+?)\.(?<minor>\d+?)(\.(?<patch>\d+?))?$
+SHELLCHECK_VERSION := v0.7.1 # renovate: datasource=github-releases depName=koalaman/shellcheck
+SEMVER_VERSION     := 3.0.0 # renovate: datasource=github-tags depName=fsaintjacques/semver-tool
 
 .PHONY:
 clean:
@@ -121,7 +125,7 @@ next-%: .bin/semver
 .PHONY:
 bump-%: check-dirty .bin/semver
 	@\
-	git --version; \
+	test -n "$(VERSION)" || export VERSION="$$(curl --silent --location "https://api.github.com/repos/${GITHUB_REPOSITORY}/releases/latest" | jq --raw-output .tag_name)"; \
 	echo "Working on version $(VERSION)."; \
 	NEW_VERSION=$$(.bin/semver bump $* "$(VERSION)"); \
 	echo "Updating from $(VERSION) to $${NEW_VERSION}"; \
@@ -137,21 +141,21 @@ tools: .bin/jq .bin/yq .bin/shellcheck .bin/semver
 
 .bin/yq: .bin
 	@\
-	curl --silent --location --output $@ https://github.com/mikefarah/yq/releases/download/3.4.0/yq_linux_amd64; \
+	curl --silent --location --output $@ https://github.com/mikefarah/yq/releases/download/$${YQ_VERSION}/yq_linux_amd64; \
 	chmod +x $@
 
 .bin/jq: .bin
 	@\
-	curl --silent --location --output $@ https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64; \
+	curl --silent --location --output $@ https://github.com/stedolan/jq/releases/download/$${JQ_VERSION}/jq-linux64; \
 	chmod +x $@
 
 .bin/shellcheck: .bin
 	@\
-	curl --silent --location https://github.com/koalaman/shellcheck/releases/download/v0.7.1/shellcheck-v0.7.1.linux.x86_64.tar.xz | \
+	curl --silent --location https://github.com/koalaman/shellcheck/releases/download/$${SHELLCHECK_VERSION}/shellcheck-v0.7.1.linux.x86_64.tar.xz | \
 		tar -xJC .bin --wildcards --strip-components=1 */shellcheck; \
 	chmod +x $@
 
 .bin/semver: .bin
 	@\
-	curl --silent --location --output $@ https://github.com/fsaintjacques/semver-tool/raw/3.0.0/src/semver; \
+	curl --silent --location --output $@ https://github.com/fsaintjacques/semver-tool/raw/$${SEMVER_VERSION}/src/semver; \
 	chmod +x $@
