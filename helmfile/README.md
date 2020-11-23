@@ -1,5 +1,5 @@
-# helmsman
+# helmfile
 
-Helm Charts as Code
+Deploy Kubernetes Helm Charts
 
-[GitHub](https://github.com/Praqma/helmsman)
+[GitHub](https://github.com/roboll/helmfile)
