@@ -19,14 +19,14 @@ jobs:
           BUMP=patch
 
           TIMESTAMP=$(date +"%Y-%m-%dT00:00:00Z" -d "yesterday")
-          RENOVATE_PR_COUNT=$(curl -s "https://api.github.com/repos/nicholasdille/packages/issues?state=closed&since=${TIMESTAMP}&labels=type/renovate" | jq '.[].number' | wc -l)
+          RENOVATE_PR_COUNT=$(curl --silent --location --header 'Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' "https://api.github.com/repos/${GITHUB_REPOSITORY}/issues?state=closed&since=${TIMESTAMP}&labels=type/renovate" | jq '.[].number' | wc -l)
           if test "${RENOVATE_PR_COUNT}" -gt 0; then
               echo "Found closed pull requests. Will release a patch (at least)."
               RELEASE=true
               BUMP=patch
           fi
 
-          PACKAGE_ISSUE_COUNT=$(curl -s "https://api.github.com/repos/nicholasdille/packages/issues?state=closed&since=${TIMESTAMP}&labels=component/package" | jq '.[].number' | wc -l)
+          PACKAGE_ISSUE_COUNT=$(curl --silent --location --header 'Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' "https://api.github.com/repos/${GITHUB_REPOSITORY}/issues?state=closed&since=${TIMESTAMP}&labels=component/package" | jq '.[].number' | wc -l)
           if test "${PACKAGE_ISSUE_COUNT}" -gt 0; then
               echo "Found closed issues. Will release a minor version."
               RELEASE=true
