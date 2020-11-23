@@ -3,8 +3,6 @@ on:
     types:
     - opened
     - reopened
-    - edited
-    - synchronize
 
 name: Test package
 
