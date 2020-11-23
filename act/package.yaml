@@ -5,7 +5,7 @@ version:
   latest: v0.2.17 # renovate: datasource=github-releases depName=nektos/act
   command: act --version
   filter: act
-  pattern: s/^act\sversion\s(.+)$/\1/
+  pattern: s/^act\sversion\s(.+)$/v\1/
 tags:
   - pipeline
   - continuous
