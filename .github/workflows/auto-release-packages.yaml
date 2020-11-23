@@ -28,6 +28,7 @@ jobs:
                     --header 'Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' | \
                   ./.bin/jq --raw-output .created_at
           )"
+          echo "Timestamp of latest release is ${TIMESTAMP}."
 
           RENOVATE_PR_COUNT="$(
               curl "https://api.github.com/repos/${GITHUB_REPOSITORY}/issues?state=closed&since=${TIMESTAMP}&labels=type/renovate" \
