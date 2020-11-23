@@ -1,0 +1,22 @@
+name: dockle
+description: Container Image Linter for Security, Helping build the Best-Practice Docker Image, Easy to start
+repo: goodwithtech/dockle
+links:
+  - text: Homepage
+    url: https://containers.goodwith.tech/
+version:
+  latest: v0.3.1 # renovate: datasource=github-releases depName=goodwithtech/dockle
+  command: dockle --version
+  filter: ^dockle
+  pattern: s/^dockle\sversion\s(.+)$/v\1/
+tags:
+  - container
+  - security
+install:
+  script: |-
+    github_install \
+        --repo goodwithtech/dockle \
+        --match suffix \
+        --asset _Linux-64bit.tar.gz \
+        --type tarball \
+        --include dockle
