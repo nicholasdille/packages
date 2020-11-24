@@ -1,0 +1,26 @@
+name: kompose
+description: Go from Docker Compose to Kubernetes
+repo: kubernetes/kompose
+links:
+  - text: Homepage
+    url: http://kompose.io/
+version:
+  latest: v1.22.0 # renovate: datasource=github-releases depName=kubernetes/kompose
+  command: kompose version
+  filter: ^[[:digit:]]
+  pattern: s/^(\S+)\s(.+)$/v\1/
+tags:
+  - kubernetes
+  - k8s
+  - compose
+install:
+  script: |-
+    github_install \
+        --repo kubernetes/kompose \
+        --match name \
+        --asset kompose-linux-amd64 \
+        --type binary \
+        --name kompose
+
+    kompose completion bash | \
+        store_completion kompose
