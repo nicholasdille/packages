@@ -1,0 +1,21 @@
+name: kuttle
+description: Kubernetes wrapper for sshuttle
+repo: kayrus/kuttle
+links:
+  - text: Homepage
+    url: https://kustomize.io/
+version:
+  latest: kustomize/v3.8.7 # renovate: datasource=github-releases depName=kayrus/kuttle
+  #command: kustomize version
+  #filter: ^{Version
+  #pattern: s/^\{Version:(\S+)\s.+$/\1/
+tags:
+  - TODO
+install:
+  script: |-
+    require sshuttle
+
+    echo "https://github.com/kayrus/kuttle/raw/master/kuttle" | \
+        download_file | \
+        store_file kuttle | \
+        make_executable
