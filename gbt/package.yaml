@@ -1,0 +1,23 @@
+name: gbt
+description: Highly configurable prompt builder for Bash, ZSH and PowerShell written in Go
+repo: jtyr/gbt
+version:
+  latest: v2.0.0 # renovate: datasource=github-releases depName=jtyr/gbt
+  #command: lectl --version
+  #filter: ^lectl
+  #pattern: s/^lectl\s(\S+)\s.+$/v\1/
+tags:
+  - powerline
+  - shell
+  - prompt
+install:
+  script: |-
+    build_containerized golang <<EOF
+    go get github.com/jtyr/gbt/cmd/gbt
+    cd /go/src/github.com/jtyr/gbt
+    git checkout ${requested_version}
+    BUILD=\$(git rev-parse --short HEAD)
+    CGO_ENABLED=0 go install -ldflags="-extldflags=-static -X main.version=${requested_version} -X main.build=\${BUILD}" github.com/jtyr/gbt/cmd/gbt
+    cp /go/bin/gbt /
+    EOF
+    extract_file_from_container gbt
