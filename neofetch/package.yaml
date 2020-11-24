@@ -1,0 +1,26 @@
+name: neofetch
+description: A command-line system information tool written in bash
+repo: dylanaraps/neofetch
+version:
+  latest: 7.1.0
+  command: neofetch --version
+  filter: ^Neofetch
+  pattern: s/^Neofetch\s(.+)$/\1/
+tags:
+  - shell
+  - terminal
+install:
+  script: |-
+    build_containerized ubuntu:focal <<EOF
+    apt-get update
+    apt-get -y install \
+        curl \
+        ca-certificates \
+        make
+    curl -sL "https://github.com/dylanaraps/neofetch/archive/${requested_version}.tar.gz" | \
+        tar -xz
+    cd neofetch-${requested_version}
+    make PREFIX=/usr/local install
+    cp /usr/local/bin/neofetch /
+    EOF
+    extract_file_from_container neofetch
