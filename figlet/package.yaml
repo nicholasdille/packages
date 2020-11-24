@@ -16,7 +16,7 @@ install:
   script: |-
     build_containerized ubuntu:focal <<EOF
     apt-get update
-    apt-get -y install \
+    apt-get -y install --no-install-recommends \
         curl \
         build-essential \
         make
@@ -26,6 +26,22 @@ install:
         tar -xz
 
     cd figlet-${requested_version}
-    make figlet
+    make figlet LDFLAGS=-static
     make install
+    cp /usr/local/bin/{figlet,chkfont,figlist,showfigfonts} /
+    cp /usr/local/share/man/man6/{figlet,chkfont,figlist,showfigfonts}.6 /
     EOF
+
+    for BINARY in figlet chkfont figlist showfigfonts; do
+        extract_file_from_container "${BINARY}"
+    done
+
+    ${SUDO} mkdir -p "${TARGET_BASE}/share/man/man6"
+    for MAN in figlet chkfont figlist showfigfonts; do
+        docker cp "${container_name}:/${MAN}.6" - | \
+            tar -x --to-stdout | \
+            ${SUDO} tee "${TARGET_BASE}/share/man/man6/${MAN}.6" >/dev/null
+    done
+
+    docker cp "${container_name}:/usr/local/share/figlet" - | \
+        ${SUDO} tar -xC "${TARGET_BASE}/share"
