@@ -3,10 +3,14 @@ description: (UNMAINTAINED) Record terminal sessions as SVG animations
 repo: nbedos/termtosvg
 version:
   latest: 1.1.0 # renovate: datasource=github-releases depName=nbedos/termtosvg
+  command: pip3 list
+  filter: termtosvg
+  pattern: s/^termtosvg\s+(.+)$/\1/
 tags:
   - shell
   - record
   - cast
   - screen
 install:
-  script: install_python_module termtosvg==${requested_version}
+  script: |
+    install_python_module termtosvg==${requested_version}

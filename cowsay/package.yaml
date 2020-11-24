@@ -3,6 +3,9 @@ description: cowsay is a configurable talking cow
 repo: piuccio/cowsay
 version:
   latest: v1.4.0 # renovate: datasource=github-releases depName=piuccio/cowsay
+  command: npm info cowsay version
+  filter: ^[[:digit:]]
+  pattern: s/^(.+)$/v\1/
 tags:
   - shell
 install:
