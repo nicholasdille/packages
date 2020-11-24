@@ -1,0 +1,18 @@
+name: gtop
+description: System monitoring dashboard for terminal
+repo: aksakalli/gtop
+version:
+  latest: v1.0.2 # renovate: datasource=github-releases depName=aksakalli/gtop
+  command: npm info gtop version
+  filter: ^[[:digit:]]
+  pattern: s/^(.+)$/v\1/
+tags:
+  - terminal
+  - shell
+  - monitor
+  - dashboard
+install:
+  script: |-
+    require node
+
+    install_node_module gtop@${requested_version}
