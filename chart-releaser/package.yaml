@@ -1,0 +1,26 @@
+name: cfssl
+description: Hosting Helm Charts via GitHub Pages and Releases
+repo: helm/chart-releaser
+version:
+  latest: v1.1.1 # renovate: datasource=github-releases depName=helm/chart-releaser
+  command: cr version
+  filter: ^Version
+  pattern: s/^Version:\s+(.+)$/\1/
+tags:
+  - kubernetes
+  - k8s
+  - package
+  - template
+  - substituton
+  - expansion
+  - configuration
+  - github
+  - pages
+install:
+  script: |-
+    github_install \
+        --repo helm/chart-releaser \
+        --match suffix \
+        --asset _linux_amd64.tar.gz \
+        --type tarball \
+        --include cr
