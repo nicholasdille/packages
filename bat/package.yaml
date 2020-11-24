@@ -18,4 +18,6 @@ install:
         >"${temporary_directory}/bat.tar.gz"
 
     ${SUDO} tar -xz -f "${temporary_directory}/bat.tar.gz" -C "${TARGET_BIN}" --wildcards --strip-components=1 "*/bat"
+
+    mkdir -p "${TARGET_BASE}/man/man1"
     ${SUDO} tar -xz -f "${temporary_directory}/bat.tar.gz" -C "${TARGET_BASE}/man/man1" --wildcards --strip-components=1 "*/bat.1"
