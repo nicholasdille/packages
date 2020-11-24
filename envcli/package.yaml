@@ -1,0 +1,17 @@
+name: envcli
+description: Don't install Node, Go, ... locally - use containers you define within your project. If you have a new machine / other contributors you just have to install docker and envcli to get started
+repo: EnvCLI/EnvCLI
+version:
+  latest: v0.7.0 # renovate: datasource=github-releases depName=EnvCLI/EnvCLI
+  command: envcli --version
+  filter: ^EnvCLI
+  pattern: s/^EnvCLI\sversion\s(.+)$/v\1/
+tags:
+  - container
+  - development
+install:
+  script: |-
+    echo "https://dl.bintray.com/envcli/golang/envcli/${requested_version}/linux_amd64" | \
+        download_file | \
+        store_file envcli | \
+        make_executable
