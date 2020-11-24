@@ -1,0 +1,31 @@
+name: figlet
+description: FIGlet is a program for making large letters out of ordinary text
+repo: cmatsuoka/figlet
+links:
+- text: Homepage
+  url: http://www.figlet.org/
+version:
+  latest: 2.2.5 # renovate: datasource=github-tags depName=cmatsuoka/figlet
+  command: figlet -v
+  filter: ^Internet
+  pattern: s/^Internet:\s\S+\sVersion:\s([,]+),(.+)$/\1/
+tags:
+  - shell
+  - terminal
+install:
+  script: |-
+    build_containerized ubuntu:focal <<EOF
+    apt-get update
+    apt-get -y install \
+        curl \
+        build-essential \
+        make
+
+    cd /tmp
+    curl -sL ftp://ftp.figlet.org/pub/figlet/program/unix/figlet-${requested_version}.tar.gz | \
+        tar -xz
+
+    cd figlet-${requested_version}
+    make figlet
+    make install
+    EOF
