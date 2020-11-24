@@ -31,3 +31,4 @@ install:
 
     helm plugin install https://github.com/databus23/helm-diff
     SKIP_SOPS_INSTALL=true helm plugin install https://github.com/jkroepke/helm-secrets
+    helm plugin install https://github.com/ContainerSolutions/helm-monitor
