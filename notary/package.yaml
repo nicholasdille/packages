@@ -1,0 +1,19 @@
+name: notary
+description: Notary is a project that allows anyone to have trust over arbitrary collections of data
+repo: theupdateframework/notary
+version:
+  latest: v0.6.1 # renovate: datasource=github-releases depName=theupdateframework/notary
+  command: notary version
+  filter: ^[[:space:]]Version
+  pattern: s/^\sVersion:\s+(\S+)$/v\1/
+tags:
+  - container
+  - security
+install:
+  script: |-
+    github_install \
+        --repo theupdateframework/notary \
+        --match name \
+        --asset notary-Linux-amd64 \
+        --type binary \
+        --name notary
