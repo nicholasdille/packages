@@ -7,7 +7,9 @@ version:
   #filter: ^sshocker
   #pattern: s/^sshocker\sversion\s(.+)$/v\1/
 tags:
-  - TODO
+  - k8s
+  - kubernetes
+  - network
 install:
   script: |-
     install_python_module sshuttle==${requested_version}

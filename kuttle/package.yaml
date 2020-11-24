@@ -10,7 +10,9 @@ version:
   #filter: ^{Version
   #pattern: s/^\{Version:(\S+)\s.+$/\1/
 tags:
-  - TODO
+  - k8s
+  - kubernetes
+  - network
 install:
   script: |-
     require sshuttle
