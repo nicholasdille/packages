@@ -1,0 +1,20 @@
+name: fontawesome
+description: The iconic SVG, font, and CSS toolkit
+repo: FortAwesome/Font-Awesome
+links:
+- text: Homepage
+  url: https://fontawesome.com/
+version:
+  latest: 5.15.1 # renovate: datasource=github-releases depName=FortAwesome/Font-Awesome
+tags:
+  - font
+  - powerline
+install:
+  script: |-
+    curl -sLO "https://github.com/FortAwesome/Font-Awesome/releases/download/${requested_version}/fontawesome-free-${requested_version}-desktop.zip"
+    unzip fontawesome-free-${requested_version}-desktop.zip
+    ls -l fontawesome-free-${requested_version}-desktop/otfs
+
+    ${SUDO} mkdir -p "${TARGET_BASE}/share/fonts/fontawesome"
+    ${SUDO} cp fontawesome-free-${requested_version}-desktop/otfs/*.otf "${TARGET_BASE}/share/fonts/fontawesome"
+    ${SUDO} fc-cache -f -v
