@@ -35,6 +35,7 @@ install:
         debug \
         doctor \
         exec-as \
+        fleet \
         get-all \
         images \
         neat \
