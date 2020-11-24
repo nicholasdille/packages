@@ -1,0 +1,13 @@
+name: sshuttle
+description: Transparent proxy server that works as a poor man's VPN. Forwards over ssh. Doesn't require admin. Works with Linux and MacOS. Supports DNS tunneling
+repo: sshuttle/sshuttle
+version:
+  latest: v1.0.4 # renovate: datasource=github-tags depName=sshuttle/sshuttle
+  #command: sshocker --version
+  #filter: ^sshocker
+  #pattern: s/^sshocker\sversion\s(.+)$/v\1/
+tags:
+  - TODO
+install:
+  script: |-
+    install_python_module sshuttle==${requested_version}
