@@ -3,9 +3,9 @@ description: The next gen ls command
 repo: Peltoche/lsd
 version:
   latest: 0.18.0 # renovate: datasource=github-releases depName=Peltoche/lsd
-  #command: manifest-tool --version
-  #filter: ^manifest-tool
-  #pattern: s/^manifest-tool\sversion\s(\S+)\s.+$/v\1/
+  command: lsd --version
+  filter: ^lsd
+  pattern: s/^lsd\s(.+)$/\1/
 tags:
   - shell
   - terminal
