@@ -13,4 +13,5 @@ tags:
   - test
   - quality
 install:
-  script: install_python_module git+https://github.com/linkchecker/linkchecker.git
+  script: |
+    install_python_module git+https://github.com/linkchecker/linkchecker.git
