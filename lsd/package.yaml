@@ -1,0 +1,20 @@
+name: lsd
+description: The next gen ls command
+repo: Peltoche/lsd
+version:
+  latest: 0.18.0 # renovate: datasource=github-releases depName=Peltoche/lsd
+  #command: manifest-tool --version
+  #filter: ^manifest-tool
+  #pattern: s/^manifest-tool\sversion\s(\S+)\s.+$/v\1/
+tags:
+  - shell
+  - terminal
+install:
+  script: |-
+    echo "https://github.com/Peltoche/lsd/releases/download/${requested_version}/lsd-${requested_version}-x86_64-unknown-linux-gnu.tar.gz" | \
+        download_file | \
+        tar -xz --strip-components=1
+
+    ${SUDO} cp lsd "${TARGET_BIN}"
+    cat autocomplete/lsd.bash-completion | \
+        store_completion lsd
