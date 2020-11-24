@@ -1,0 +1,22 @@
+name: kmon
+description: Linux Kernel Manager and Activity Monitor
+repo: orhun/kmon
+version:
+  latest: v1.5.1 # renovate: datasource=github-releases depName=orhun/kmon
+  command: kmon --version
+  filter: ^kmon
+  pattern: s/^kmon\s(.+)$/v\1/
+tags:
+  - shell
+  - terminal
+  - monitor
+  - performance
+install:
+  script: |-
+    echo "https://github.com/orhun/kmon/releases/download/${requested_version}/kmon-${requested_version#v}.tar.gz" | \
+        download_file | \
+        tar -xz
+
+    ${SUDO} cp kmon "${TARGET_BIN}"
+    ${SUDO} mkdir -p "${TARGET_BASE}/share/man/man8"
+    ${SUDO} cp man/kmon.8 "${TARGET_BASE}/share/man/man8"
