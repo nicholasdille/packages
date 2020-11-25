@@ -2,7 +2,7 @@ name: envsub
 description: An alternative envsubst that allows for `${foo:-default}` expansion too
 repo: stephenc/envsub
 version:
-  latest: 0.1.1 # renovate: datasource=github-releases depName=stephenc/envsub
+  latest: 0.1.3 # renovate: datasource=github-releases depName=stephenc/envsub
   command: envsub --version
   filter: ^[[:digit:]]
   pattern: s/^(.+)$/\1/
