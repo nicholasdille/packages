@@ -2,7 +2,7 @@ name: fuse-overlayfs
 description: FUSE implementation for overlayfs
 repo: containers/fuse-overlayfs
 version:
-  latest: v1.2.0 # renovate: datasource=github-releases depName=containers/fuse-overlayfs
+  latest: v1.3.0 # renovate: datasource=github-releases depName=containers/fuse-overlayfs
   command: fuse-overlay --version
   filter: ^fuse-overlayfs
   pattern: s/^fuse-overlayfs:\sversion\s(.+)$/v\1/
