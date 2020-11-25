@@ -1,0 +1,18 @@
+name: sockguard
+description: A proxy for docker.sock that enforces access control and isolated privileges
+repo: buildkite/sockguard
+tags:
+  - container
+  - security
+  - proxy
+install:
+  docker: true
+  script: |-
+    build_containerized golang <<"EOF"
+    git clone https://github.com/buildkite/sockguard /go/src/github.com/buildkite/sockguard
+    cd /go/src/github.com/buildkite/sockguard
+    export GO111MODULE=on
+    CGO_ENABLED=0 go install -ldflags="-extldflags=-static" github.com/buildkite/sockguard/cmd/sockguard
+    cp /go/bin/sockguard /
+    EOF
+    extract_file_from_container sockguard
