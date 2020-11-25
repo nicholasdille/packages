@@ -10,6 +10,7 @@ tags:
   - shell
   - terminal
 install:
+  dockedr: true
   script: |-
     build_containerized ubuntu:focal <<EOF
     apt-get update

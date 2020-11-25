@@ -11,6 +11,7 @@ tags:
   - shell
   - prompt
 install:
+  docker: true
   script: |-
     build_containerized golang <<EOF
     go get github.com/jtyr/gbt/cmd/gbt

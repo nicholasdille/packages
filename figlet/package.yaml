@@ -13,6 +13,7 @@ tags:
   - shell
   - terminal
 install:
+  docker: true
   script: |-
     build_containerized ubuntu:focal <<EOF
     apt-get update

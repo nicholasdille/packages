@@ -6,6 +6,7 @@ tags:
   - runtime
   - registry
 install:
+  docker: true
   script: |-
     build_containerized golang <<EOF
     git clone https://github.com/containerd/stargz-snapshotter

@@ -5,6 +5,7 @@ tags:
   - container
   - registry
 install:
+  docker: true
   script: |-
     build_containerized golang <<EOF
     go get github.com/google/crfs

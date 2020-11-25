@@ -44,6 +44,7 @@ files:
       }]
     }
 install:
+  docker: true
   script: |-
     require cni
     require containerd

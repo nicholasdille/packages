@@ -37,6 +37,7 @@ files:
             nghttp2 \
             openssl-libs-static
 install:
+  docker: true
   script: |-
     get_file curl Dockerfile | \
         docker build --tag curl -

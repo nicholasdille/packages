@@ -16,6 +16,7 @@ files:
             git \
             make
 install:
+  docker: true
   script: |-
     require fuse-overlayfs
 
