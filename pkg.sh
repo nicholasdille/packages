@@ -1258,15 +1258,26 @@ handle_install() {
         unlock_sudo
 
         latest_version=$(get_latest_version "${package}")
+        if test "${latest_version}" == "null"; then
+            latest_version=""
+        fi
         if test -z "${requested_version}"; then
             requested_version="${latest_version}"
         fi
 
-        echo "Installing ${package} version ${requested_version}..."
+        install_script="$(get_install_script "${package}")"
+        if test -z "${requested_version}"; then
+            if echo "${install_script}" | grep requested_version; then
+                echo "ERROR: Requested package version is empty but install script uses it."
+                exit 1
+            fi
+        fi
 
-        eval "$(get_install_script "${package}")"
+        echo "Installing ${package} version ${requested_version:-UNKNOWN}..."
 
-        echo "Finished installation of ${package} version ${requested_version}."
+        eval "${install_script}"
+
+        echo "Finished installation of ${package} version ${requested_version:-UNKNOWN}."
     done
 }
 
