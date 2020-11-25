@@ -2,7 +2,7 @@ name: bat
 description: A cat(1) clone with wings
 repo: sharkdp/bat
 version:
-  latest: v0.17.0 # renovate: datasource=github-releases depName=sharkdp/bat
+  latest: v0.17.1 # renovate: datasource=github-releases depName=sharkdp/bat
   command: bat --version
   filter: ^bat
   pattern: s/^bat\s(.+)$/v\1/
