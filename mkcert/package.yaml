@@ -2,7 +2,7 @@ name: mkcert
 description: A simple zero-config tool to make locally trusted development certificates with any names you'd like
 repo: FiloSottile/mkcert
 version:
-  latest: v1.4.2 # renovate: datasource=github-releases depName=FiloSottile/mkcert
+  latest: v1.4.3 # renovate: datasource=github-releases depName=FiloSottile/mkcert
 tags:
   - certificate
   - security
