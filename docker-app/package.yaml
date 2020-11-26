@@ -1,0 +1,22 @@
+name: docker-app
+description: Make your Docker Compose applications reusable, and share them on Docker Hub
+repo: docker/app
+version:
+  latest: v0.9.1-beta3 # renovate: datasource=github-releases depName=docker/app
+  command: docker app --version
+  filter: ^Version
+  pattern: s/^Version:\s+(.+)$/\1/
+tags:
+  - cnab
+install:
+  script: |
+    : "${DOCKER_CLI_DIR:=${TARGET_BASE}/lib/docker/cli-plugins}"
+    ${SUDO} mkdir --parents "${DOCKER_CLI_DIR}" 
+
+    github_install \
+        --repo docker/app \
+        --match name \
+        --asset docker-app-linux.tar.gz \
+        --type tarball \
+        --name docker-app-plugin-linux
+    ${SUDO} mv "${TARGET_BIN}/docker-app-plugin-linux" "${DOCKER_CLI_DIR}/docker-app"

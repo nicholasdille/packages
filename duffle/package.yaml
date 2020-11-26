@@ -1,0 +1,23 @@
+name: duffle
+description: CNAB installer
+repo: cnabio/duffle
+links:
+- text: CNAB
+  url: https://cnab.io/
+- text: Homepage
+  url: https://duffle.sh/
+version:
+  latest: 0.3.5-beta.1 # renovate: datasource=github-releases depName=cnabio/duffle
+  command: duffle version
+  filter: ^[[:digit:]]
+  pattern: s/^(.+)$/\1/
+tags:
+  - cnab
+install:
+  script: |
+    github_install \
+        --repo cnabio/duffle \
+        --match name \
+        --asset duffle-linux-amd64 \
+        --type binary \
+        --name duffle
