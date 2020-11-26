@@ -1266,7 +1266,9 @@ handle_install() {
         cd "${temporary_directory}"
         cleanup_tasks+=("remove_temporary_directory")
 
-        if ! ${force_install}; then
+        if ${force_install}; then
+            echo "WARNING: This is a forced installation."
+        else
             check_installed_version "${package}" "${requested_version}"
         fi
 
