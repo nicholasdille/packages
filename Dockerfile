@@ -7,7 +7,7 @@ RUN apk add --update-cache \
 WORKDIR /tmp
 CMD while true; do sleep 10; done
 
-FROM ubuntu:20.10@sha256:c41e8d2a4ca9cddb4398bf08c99548b9c20d238f575870ae4d3216bc55ef3ca7 as ubuntu
+FROM ubuntu:21.04@sha256:eb9086d472747453ad2d5cfa10f80986d9b0afb9ae9c4256fe2887b029566d06 as ubuntu
 RUN apt-get update \
  && apt-get -y install --no-install-recommends \
         bash \
