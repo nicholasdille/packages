@@ -290,9 +290,9 @@ function get_installed_version() {
     fi
 
     # shellcheck disable=SC2086
-    ${TARGET_BIN}/${version_command} 2>/dev/null | \
-        grep "${version_filter}" | \
-        sed -E "${version_pattern}"
+    eval "${version_command} 2>/dev/null | \
+        grep \"${version_filter}\" | \
+        sed -E \"${version_pattern}\""
 }
 
 function get_latest_version() {

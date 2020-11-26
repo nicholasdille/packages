@@ -2,10 +2,10 @@ name: java
 description: (cross-platform) Java Version Manager
 repo: shyiko/jabba
 version:
-  #latest: 0.11.2 # renovate: datasource=github-releases depName=shyiko/jabba
-  command: java -version 2>&1
+  latest: 1.15.0-1
+  command: ${TARGET_BASE}/jabba/jdk/default/bin/java --show-version
   filter: ^openjdk
-  pattern: s/^openjdk\sversion\s\"([^\"]+)\".+$/\1/
+  pattern: s/^openjdk\s(\S+)\s.+/\1/;s/^([^.]+)\.[^.]+\.([^.]+)$/1.\1.0-\2/
 tags:
   - java
   - version
