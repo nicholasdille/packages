@@ -138,31 +138,31 @@ bump-%: check-dirty .bin/semver
 .PHONY:
 tools: .bin/jq .bin/yq .bin/shellcheck .bin/semver
 
-.bin:
-	@\
-	mkdir -p .bin
-
-.bin/yq: .bin
+.bin/yq:
 	@\
 	echo "Installing yq version $(YQ_VERSION)..."; \
+	mkdir -p .bin
 	curl --silent --location --output $@ https://github.com/mikefarah/yq/releases/download/$(YQ_VERSION)/yq_linux_amd64; \
 	chmod +x $@
 
-.bin/jq: .bin
+.bin/jq:
 	@\
 	echo "Install jq version $(JQ_VERSION)..."; \
+	mkdir -p .bin
 	curl --silent --location --output $@ https://github.com/stedolan/jq/releases/download/$(JQ_VERSION)/jq-linux64; \
 	chmod +x $@
 
-.bin/shellcheck: .bin
+.bin/shellcheck:
 	@\
 	echo "Install shellcheck version $(SHELLCHECK_VERSION)..."; \
+	mkdir -p .bin
 	curl --silent --location https://github.com/koalaman/shellcheck/releases/download/$(SHELLCHECK_VERSION)/shellcheck-v0.7.1.linux.x86_64.tar.xz | \
 		tar -xJC .bin --wildcards --strip-components=1 */shellcheck; \
 	chmod +x $@
 
-.bin/semver: .bin
+.bin/semver:
 	@\
 	echo "Installing semver version $(SEMVER_VERSION)..."; \
+	mkdir -p .bin
 	curl --silent --location --output $@ https://github.com/fsaintjacques/semver-tool/raw/$(SEMVER_VERSION)/src/semver; \
 	chmod +x $@
