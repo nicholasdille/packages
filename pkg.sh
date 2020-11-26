@@ -309,12 +309,13 @@ function get_latest_version() {
         jq --raw-output '.version.latest'
 }
 
-function latest_version_installed() {
+function requested_version_installed() {
     local package=$1
     if test -z "${package}"; then
         echo "ERROR: No package specified."
         exit 1
     fi
+    local requested_version=$2
 
     local installed_version
     installed_version=$(get_installed_version "${package}")
@@ -323,15 +324,16 @@ function latest_version_installed() {
         return 1
     fi
 
-    local latest_version
-    latest_version=$(get_latest_version "${package}")
-    if test -z "${latest_version}"; then
-        echo "WARNING: Unable to determine latest version."
-        return 1
+    if test -z "${requested_version}"; then
+        requested_version=$(get_latest_version "${package}")
+        if test -z "${requested_version}"; then
+            echo "WARNING: Unable to determine latest version."
+            return 1
+        fi
     fi
 
-    >&2 echo "Comparing installed version ${installed_version} with latest version ${latest_version}..."
-    if test "${installed_version}" == "${latest_version}"; then
+    >&2 echo "Comparing installed version ${installed_version} with version ${requested_version}..."
+    if test "${installed_version}" == "${requested_version}"; then
         return 0
     else
         return 1
@@ -344,8 +346,9 @@ function check_installed_version() {
         echo "ERROR: No package specified."
         exit 1
     fi
+    local requested_version=$2
 
-    if latest_version_installed "${package}"; then
+    if requested_version_installed "${package}" "${requested_version}"; then
         echo "Latest version of ${package} is already installed."
         exit
     fi
@@ -1250,7 +1253,7 @@ handle_install() {
         cd "${temporary_directory}"
         cleanup_tasks+=("remove_temporary_directory")
 
-        check_installed_version "${package}"
+        check_installed_version "${package}" "${requested_version}"
         if package_needs_docker "${package}"; then
             check_docker
             cleanup_tasks+=("remove_temporary_container")
