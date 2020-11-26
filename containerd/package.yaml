@@ -5,7 +5,7 @@ links:
   - text: Homepage
     url: https://containerd.io/
 version:
-  latest: v1.4.1 # renovate: datasource=github-releases depName=containerd/containerd
+  latest: v1.4.2 # renovate: datasource=github-releases depName=containerd/containerd
   command: containerd --version
   filter: ^containerd
   pattern: s/^containerd\sgithub.com\/containerd\/containerd\s(\S+)\s.+$/\1/
