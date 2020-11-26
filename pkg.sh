@@ -1220,6 +1220,19 @@ handle_inspect() {
 }
 
 handle_install() {
+    local force_install=false
+    while test "$#" -gt 0; do
+        case "$1" in
+            --force|-f)
+                force_install=true
+                ;;
+            *)
+                break
+                ;;
+        esac
+        shift
+    done
+
     if test "$#" -eq 0; then
         echo "ERROR: No package specified."
         show_help_install
@@ -1253,7 +1266,10 @@ handle_install() {
         cd "${temporary_directory}"
         cleanup_tasks+=("remove_temporary_directory")
 
-        check_installed_version "${package}" "${requested_version}"
+        if ! ${force_install}; then
+            check_installed_version "${package}" "${requested_version}"
+        fi
+
         if package_needs_docker "${package}"; then
             check_docker
             cleanup_tasks+=("remove_temporary_container")
