@@ -51,3 +51,9 @@ Install a specific version of a package:
 ```bash
 pkg install kind@v0.9.0
 ```
+
+Install a package that is already installed:
+
+```bash
+pkg install --force kind
+```
