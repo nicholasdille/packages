@@ -12,7 +12,6 @@ tags:
   - manager
   - version manager
 install:
-  docker: true
   script: |-
     require jabba
     source /etc/profile.d/jabba.sh

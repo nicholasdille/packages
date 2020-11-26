@@ -12,7 +12,6 @@ tags:
   - manager
   - version manager
 install:
-  docker: true
   script: |-
     github_install \
         --repo shyiko/jabba \

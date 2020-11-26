@@ -8,6 +8,8 @@ Most functionality: bash, jq, curl
 
 `list` command: column
 
+Several packages require Docker to compile the binaries from source
+
 Some packages: envsubst, unzip
 
 ## Usage
