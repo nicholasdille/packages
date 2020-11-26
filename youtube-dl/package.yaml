@@ -16,7 +16,9 @@ install:
   script: |-
     build_containerized python <<EOF
     apt-get update
-    apt-get -y install zip pandoc
+    apt-get -y install \
+        zip \
+        pandoc
     curl -sL "https://codeberg.org/polarisfm/youtube-dl/archive/${requested_version}.tar.gz" | \
         tar -xzC /tmp/youtube-dl --strip-components=1
     cd /tmp/youtube-dl

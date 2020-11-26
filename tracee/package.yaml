@@ -11,7 +11,8 @@ tags:
 install:
   script: |-
     ${SUDO} apt-get update
-    ${SUDO} apt-get -y install bpfcc-tools
+    ${SUDO} apt-get -y install \
+        bpfcc-tools
 
     github_install \
         --repo aquasecurity/tracee \

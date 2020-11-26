@@ -23,7 +23,12 @@ install:
 
     docker start -i "${container_name}" <<EOF
     apt-get update
-    apt-get -y install --no-install-recommends curl jq gcc ncurses-dev make
+    apt-get -y install --no-install-recommends \
+        curl \
+        jq \
+        gcc \
+        ncurses-dev \
+        make
     cd tig-*
     ./configure
     make prefix=/usr/local
