@@ -15,7 +15,6 @@ tags:
   - builder
   - moby
 install:
-  docker: true
   script: |-
     github_get_release moby/buildkit | \
         github_resolve_assets | \

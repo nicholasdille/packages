@@ -15,7 +15,6 @@ tags:
   - manager
   - version manager
 install:
-  docker: true
   script: |-
     require java
     source /etc/profile.d/java.sh

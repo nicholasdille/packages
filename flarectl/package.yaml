@@ -14,7 +14,6 @@ version:
 tags:
   - dns
 install:
-  docker: true
   script: |-
     github_install \
         --repo cloudflare/cloudflare-go \

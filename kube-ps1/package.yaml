@@ -15,7 +15,6 @@ files:
       source /usr/local/bin/kube-ps1.sh
       PS1='[\u@\h \W $(kube_ps1)]\$ '
 install:
-  docker: true
   script: |-
     echo "https://github.com/jonmosco/kube-ps1/archive/${requested_version}.tar.gz" | \
         download_file | \

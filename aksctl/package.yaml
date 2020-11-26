@@ -15,7 +15,6 @@ tags:
   - cluster
   - bootstrap
 install:
-  docker: true
   script: |-
     github_install \
         --repo adfolks/aksctl \

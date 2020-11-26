@@ -10,7 +10,6 @@ tags:
   - kubernetes
   - k8s
 install:
-  docker: true
   script: |-
     github_install \
         --repo yanc0/untrak \
