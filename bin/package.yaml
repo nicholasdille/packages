@@ -2,7 +2,7 @@ name: bin
 description: Effortless binary manager
 repo: marcosnils/bin
 version:
-  latest: v0.2.1 # renovate: datasource=github-releases depName=marcosnils/bin
+  latest: v0.2.3 # renovate: datasource=github-releases depName=marcosnils/bin
   command: bin --version
   filter: ^bin version
   pattern: s/^bin\sversion\s(.+)$/v\1/
