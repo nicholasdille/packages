@@ -2,7 +2,7 @@ name: nvm
 description: Node Version Manager - POSIX-compliant bash script to manage multiple active node.js versions
 repo: nvm-sh/nvm
 version:
-  latest: v0.37.1 # renovate: datasource=github-releases depName=nvm-sh/nvm
+  latest: v0.37.2 # renovate: datasource=github-releases depName=nvm-sh/nvm
   command: nvm --version
   filter: ^[[:digit:]]
   pattern: s/^(.+)$/v\1/
