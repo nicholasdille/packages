@@ -2,7 +2,7 @@ name: renovate
 description: Universal dependency update tool that fits into your workflows
 repo: renovatebot/renovate
 version:
-  latest: 23.89.1 # renovate: datasource=github-releases depName=renovatebot/renovate
+  latest: 23.89.2 # renovate: datasource=github-releases depName=renovatebot/renovate
   command: renovate --version
   filter: ^[[:digit:]]+
   pattern: s/^(.+)$/\1/
