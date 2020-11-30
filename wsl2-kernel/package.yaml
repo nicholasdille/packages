@@ -27,12 +27,15 @@ install:
     get_file wsl2-kernel Dockerfile | \
         docker build --tag wsl2-kernel -
 
-    docker run -it --rm \
+    docker run --interactive --rm \
         --mount "type=bind,src=${TARGET_BASE}/src,dst=${TARGET_BASE}/src" \
         --mount type=bind,src=/lib/modules,dst=/lib/modules \
         --workdir "${TARGET_BASE}/src/WSL2-Linux-Kernel-${requested_version}" \
         wsl2-kernel \
-        bash -c "make -j 4 && make modules_install"
+        bash <<EOF
+    make -j 4
+    make modules_install
+    EOF
 
     get_file wsl2-kernel kvm-nested.conf | \
         store_file kvm-nested.conf /etc/modprobe.d
