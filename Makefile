@@ -1,7 +1,8 @@
 DEFINITIONS        := $(shell find . -type f -name package.yaml)
 READMES            := $(DEFINITIONS:package.yaml=README.md)
 SCRIPTS            := $(shell find . -type f -name \*.sh | sort)
-VERSION            := $(shell git tag | grep "packages/" | cut -d/ -f2 | sort -V -r | head -n 1)
+PACKAGES_VERSION   := $(shell git tag | grep "packages/" | cut -d/ -f2 | sort -V -r | head -n 1)
+CLI_VERSION        := $(shell git tag | grep "cli/" | cut -d/ -f2 | sort -V -r | head -n 1)
 # renovate: datasource=github-releases depName=mikefarah/yq
 YQ_VERSION         := 3.4.0
 # renovate: datasource=github-releases depName=stedolan/jq versioning=regex:^jq-(?<major>\d+?)\.(?<minor>\d+?)(\.(?<patch>\d+?))?$
@@ -122,17 +123,31 @@ check-dirty:
 	fi
 
 .PHONY:
-next-%: .bin/semver
+next-packages-%: .bin/semver
 	@\
-	.bin/semver bump $* $(VERSION)
+	.bin/semver bump $* $(PACKAGES_VERSION)
 
 .PHONY:
-bump-%: check-dirty .bin/semver
+bump-packages-%: check-dirty .bin/semver
 	@\
-	echo "Working on version $(VERSION)."; \
-	NEW_VERSION=$$(.bin/semver bump $* "$(VERSION)"); \
-	echo "Updating from $(VERSION) to $${NEW_VERSION}"; \
+	echo "Working on packages version $(PACKAGES_VERSION)."; \
+	NEW_VERSION=$$(.bin/semver bump $* "$(PACKAGES_VERSION)"); \
+	echo "Updating packages from $(PACKAGES_VERSION) to $${NEW_VERSION}"; \
 	git tag --annotate --sign --message "Packages v$${NEW_VERSION}" packages/$${NEW_VERSION}; \
+	git push --tags
+
+.PHONY:
+next-cli-%: .bin/semver
+	@\
+	.bin/semver bump $* $(CLI_VERSION)
+
+.PHONY:
+bump-cli-%: check-dirty .bin/semver
+	@\
+	echo "Working on CLI version $(CLI_VERSION)."; \
+	NEW_VERSION=$$(.bin/semver bump $* "$(CLI_VERSION)"); \
+	echo "Updating CLI from $(CLI_VERSION) to $${NEW_VERSION}"; \
+	git tag --annotate --sign --message "CLI v$${NEW_VERSION}" cli/$${NEW_VERSION}; \
 	git push --tags
 
 .PHONY:
