@@ -10,10 +10,11 @@ install:
   docker: true
   script: |-
     build_containerized golang <<EOF
+    mkdir -p /tmp/age
     curl -sL "https://github.com/FiloSottile/age/archive/${requested_version}.tar.gz" | \
-        tar -xz /tmp/age --strip-components=1
+        tar -xzC /tmp/age --strip-components=1
     cd /tmp/age
-    go build -o . filippo.io/age/cmd/...
+    CGO_ENABLED=0 go build -ldflags="-extldflags=-static" -o . filippo.io/age/cmd/...
     cp age age-keygen /
     EOF
     extract_file_from_container age age-keygen
