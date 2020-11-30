@@ -1,0 +1,20 @@
+name: kubectl-ssh-proxy
+description: Faster way to switch between clusters and namespaces in kubectl
+repo: little-angry-clouds/kubectl-ssh-proxy
+version:
+  latest: 0.0.2 # renovate: datasource=github-releases depName=little-angry-clouds/kubectl-ssh-proxy
+tags:
+  - kubernetes
+  - k8s
+  - network
+  - security
+install:
+  script: |-
+    github_get_release little-angry-clouds/kubectl-ssh-proxy | \
+        github_resolve_assets | \
+        github_select_asset_by_name kubectl-ssh-proxy-linux-amd64.tar.gz | \
+        github_get_asset_download_url | \
+        download_file | \
+        untar_file --strip-components=1
+    ${SUDO} mv ${TARGET_BIN}/kubectl-ssh_proxy-linux-amd64 ${TARGET_BIN}/kubectl-ssh_proxy
+    ${SUDO} mv ${TARGET_BIN}/kube-ssh-proxy-ssh-bin-linux-amd64 ${TARGET_BIN}/kube-ssh-proxy-ssh-bin
