@@ -1,0 +1,18 @@
+name: gitui
+description: Blazing fast terminal-ui for git written in rust
+repo: extrawurst/gitui
+version:
+  latest: v0.10.1 # renovate: datasource=github-releases depName=extrawurst/gitui
+  command: gitui --version
+  filter: ^gitui
+  pattern: s/^gitui\s(.+)$/v\1/
+tags:
+  - git
+install:
+  script: |-
+    github_install \
+        --repo extrawurst/gitui \
+        --match name \
+        --asset gitui-linux-musl.tar.gz \
+        --type tarball \
+        --include ./gitui
