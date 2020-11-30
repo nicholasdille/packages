@@ -1243,6 +1243,7 @@ handle_install() {
             echo "ERROR: File does not exist."
             exit 1
         fi
+        # shellcheck disable=SC2046
         set -- $(cat "${file}") "$@"
     fi
 
