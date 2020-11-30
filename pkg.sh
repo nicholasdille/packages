@@ -1261,23 +1261,6 @@ handle_install() {
             exit 1
         fi
 
-        temporary_directory=$(mktemp -d)
-        # shellcheck disable=SC2164
-        cd "${temporary_directory}"
-        cleanup_tasks+=("remove_temporary_directory")
-
-        if ${force_install}; then
-            echo "WARNING: This is a forced installation."
-        else
-            check_installed_version "${package}" "${requested_version}"
-        fi
-
-        if package_needs_docker "${package}"; then
-            check_docker
-            cleanup_tasks+=("remove_temporary_container")
-        fi
-        unlock_sudo
-
         latest_version=$(get_latest_version "${package}")
         if test "${latest_version}" == "null"; then
             latest_version=""
@@ -1285,6 +1268,26 @@ handle_install() {
         if test -z "${requested_version}"; then
             requested_version="${latest_version}"
         fi
+
+        if ${force_install}; then
+            echo "WARNING: This is a forced installation."
+        else
+            if requested_version_installed "${package}" "${requested_version}"; then
+                echo "Requested version ${requested_version} of ${package} is already installed."
+                continue
+            fi
+        fi
+
+        temporary_directory=$(mktemp -d)
+        # shellcheck disable=SC2164
+        cd "${temporary_directory}"
+        cleanup_tasks+=("remove_temporary_directory")
+
+        if package_needs_docker "${package}"; then
+            check_docker
+            cleanup_tasks+=("remove_temporary_container")
+        fi
+        unlock_sudo
 
         install_script="$(get_install_script "${package}")"
         if test -z "${requested_version}"; then
