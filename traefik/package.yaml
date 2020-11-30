@@ -1,0 +1,25 @@
+name: traefik
+description: The Cloud Native Application Proxy
+repo: traefik/traefik
+links:
+- text: Homepage
+  url: https://traefik.io/
+version:
+  latest: v2.3.4 # renovate: datasource=github-releases depName=traefik/traefik
+  command: traefik version
+  filter: ^Version
+  pattern: s/^Version:\s+(.+)$/v\1/
+tags:
+  - container
+  - kubernetes
+  - k8s
+  - network
+  - security
+install:
+  script: |-
+    github_install \
+        --repo traefik/traefik \
+        --match suffix \
+        --asset _linux_amd64.tar.gz \
+        --type tarball \
+        --include traefik
