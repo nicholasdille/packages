@@ -1221,10 +1221,15 @@ handle_inspect() {
 
 handle_install() {
     local force_install=false
+    local file=""
     while test "$#" -gt 0; do
         case "$1" in
             --force|-f)
                 force_install=true
+                ;;
+            --file)
+                shift
+                file=$1
                 ;;
             *)
                 break
@@ -1232,6 +1237,17 @@ handle_install() {
         esac
         shift
     done
+
+    if test -n "${file}"; then
+        if ! test -s "${file}"; then
+            echo "ERROR: File does not exist."
+            exit 1
+        fi
+        echo "$@"
+        set -- "$(cat ${file})" "$@"
+        echo "$@"
+        exit 0
+    fi
 
     if test "$#" -eq 0; then
         echo "ERROR: No package specified."
