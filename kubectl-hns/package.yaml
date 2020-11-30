@@ -1,0 +1,20 @@
+name: kubectl-hns
+description: A working place for multi-tenancy related proposals and prototypes
+repo: kubernetes-sigs/multi-tenancy
+version:
+  latest: hnc-v0.6.0 # renovate: datasource=github-releases depName=kubernetes-sigs/multi-tenancy versioning=regex:^hnc-v(?<major>\d+?)\.(?<minor>\d+?)\.(?<patch>\d+?)$
+  command: kubectl-hns --version
+  filter: ^kubectl-hns
+  pattern: s/^kubectl-hns\sversion\s(.+)$/hnc-\1/
+tags:
+  - kubernetes
+  - k8s
+  - security
+install:
+  script: |-
+    github_install \
+        --repo kubernetes-sigs/multi-tenancy \
+        --match name \
+        --asset kubectl-hns_linux_amd64 \
+        --type binary \
+        --name kubectl-hns
