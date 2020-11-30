@@ -17,51 +17,51 @@ Some packages: envsubst, unzip
 Install the package manager:
 
 ```bash
-curl --silent https://pkg.dille.io/pkg.sh | sudo tee /usr/local/bin/pkg >/dev/null
+curl --silent https://pkg.dille.io/pkgctl.sh | sudo tee /usr/local/bin/pkgctl >/dev/null
 sudo chmod +x /usr/local/bin/pkg
 ```
 
 Cache the package definition:
 
 ```bash
-pkg cache
+pkgctl cache
 ```
 
 List available packages:
 
 ```bash
-pkg list
+pkgctl list
 ```
 
 Search packages:
 
 ```bash
-pkg search docker
-pkg search --tags docker
+pkgctl search docker
+pkgctl search --tags docker
 ```
 
 Install a package:
 
 ```bash
-pkg install kind
+pkgctl install kind
 ```
 
 Install a specific version of a package:
 
 ```bash
-pkg install kind@v0.9.0
+pkgctl install kind@v0.9.0
 ```
 
 Install a package that is already installed:
 
 ```bash
-pkg install --force kind
+pkgctl install --force kind
 ```
 
 Install multiple packages:
 
 ```bash
-pkg install kind kubectl
+pkgctl install kind kubectl
 ```
 
 Install multiple packages from a file:
@@ -70,5 +70,5 @@ Install multiple packages from a file:
 $ cat packages.txt
 kind
 kubectl
-$ pkg install --file packages.txt
+$ pkgctl install --file packages.txt
 ```

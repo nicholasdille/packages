@@ -422,7 +422,7 @@ function require() {
 
     echo
     echo "### Installing dependency <${package}>..."
-    curl --silent "https://pkg.dille.io/pkg.sh" | \
+    curl --silent "https://pkg.dille.io/pkgctl.sh" | \
         bash -s install "${package}"
     echo
 }
@@ -1058,12 +1058,12 @@ function codeberg_install() {
 
 show_help() {
     echo
-    echo "Usage: sh ./pkg.sh <command>"
-    echo "       ./pkg.sh <command>"
-    echo "       curl https://pkg.dille.io/pkg.sh | sh -s <command>"
+    echo "Usage: sh ./pkgctl.sh <command>"
+    echo "       ./pkgctl.sh <command>"
+    echo "       curl https://pkg.dille.io/pkgctl.sh | sh -s <command>"
     echo
     echo "Commands:"
-    echo "    bootstrap, c   Bootstrap pkg.sh"
+    echo "    bootstrap, c   Bootstrap pkgctl.sh"
     echo "    cache, c       Cache packages.json"
     echo "    file, f        Manage files for a package"
     echo "    help, h        This message"
@@ -1078,41 +1078,41 @@ show_help() {
 
 show_help_bootstrap() {
     echo
-    echo "Usage: sh ./pkg.sh bootstrap [--prefix \${HOME}/.local] <string>"
-    echo "       ./pkg.sh bootstrap [--prefix \${HOME}/.local] <string>"
-    echo "       curl https://pkg.dille.io/pkg.sh | sh -s bootstrap [--prefix \${HOME}/.local] <string>"
+    echo "Usage: sh ./pkgctl.sh bootstrap [--prefix \${HOME}/.local] <string>"
+    echo "       ./pkgctl.sh bootstrap [--prefix \${HOME}/.local] <string>"
+    echo "       curl https://pkg.dille.io/pkgctl.sh | sh -s bootstrap [--prefix \${HOME}/.local] <string>"
     echo
 }
 
 show_help_install() {
     echo
-    echo "Usage: sh ./pkg.sh install <package>[,<package>]"
-    echo "       ./pkg.sh install <package>[,<package>]"
-    echo "       curl https://pkg.dille.io/pkg.sh | sh -s install <package>[,<package>]"
+    echo "Usage: sh ./pkgctl.sh install <package>[,<package>]"
+    echo "       ./pkgctl.sh install <package>[,<package>]"
+    echo "       curl https://pkg.dille.io/pkgctl.sh | sh -s install <package>[,<package>]"
     echo
 }
 
 show_help_file() {
     echo
-    echo "Usage: sh ./pkg.sh file <package> [<file>]"
-    echo "       ./pkg.sh file <package> [<file>]"
-    echo "       curl https://pkg.dille.io/pkg.sh | sh -s file <package> [<>]"
+    echo "Usage: sh ./pkgctl.sh file <package> [<file>]"
+    echo "       ./pkgctl.sh file <package> [<file>]"
+    echo "       curl https://pkg.dille.io/pkgctl.sh | sh -s file <package> [<>]"
     echo
 }
 
 show_help_search() {
     echo
-    echo "Usage: sh ./pkg.sh search <string>"
-    echo "       ./pkg.sh search <string>"
-    echo "       curl https://pkg.dille.io/pkg.sh | sh -s search <string>"
+    echo "Usage: sh ./pkgctl.sh search <string>"
+    echo "       ./pkgctl.sh search <string>"
+    echo "       curl https://pkg.dille.io/pkgctl.sh | sh -s search <string>"
     echo
 }
 
 show_help_version() {
     echo
-    echo "Usage: sh ./pkg.sh version <package>"
-    echo "       ./pkg.sh version <package>"
-    echo "       curl https://pkg.dille.io/pkg.sh | sh -s version <package>"
+    echo "Usage: sh ./pkgctl.sh version <package>"
+    echo "       ./pkgctl.sh version <package>"
+    echo "       curl https://pkg.dille.io/pkgctl.sh | sh -s version <package>"
     echo
 }
 
@@ -1152,7 +1152,7 @@ handle_bootstrap() {
     done
 
     mkdir -p "${PREFIX}/bin"
-    curl --silent --location "https://raw.githubusercontent.com/${MY_REPO}/${MY_VERSION}/pkg.sh" \
+    curl --silent --location "https://raw.githubusercontent.com/${MY_REPO}/${MY_VERSION}/pkgctl.sh" \
         >"${PREFIX}/bin/pkg"
     chmod +x "${PREFIX}/bin/pkg"
 }
@@ -1512,15 +1512,15 @@ main() {
 
 case "$0" in
     -bash)
-        # Was started using "source pkg.sh"
+        # Was started using "source pkgctl.sh"
         echo "ERROR: Do not source this script."
     ;;
     bash)
-        # Was started using "bash pkg.sh"
+        # Was started using "bash pkgctl.sh"
         main "$@"
     ;;
     *)
-        # Was started using "./pkg.sh"
+        # Was started using "./pkgctl.sh"
         main "$@"
     ;;
 esac
