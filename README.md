@@ -57,3 +57,18 @@ Install a package that is already installed:
 ```bash
 pkg install --force kind
 ```
+
+Install multiple packages:
+
+```bash
+pkg install kind kubectl
+```
+
+Install multiple packages from a file:
+
+```bash
+$ cat packages.txt
+kind
+kubectl
+$ pkg install --file packages.txt
+```

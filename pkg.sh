@@ -1169,7 +1169,7 @@ handle_cache() {
         echo "ERROR: Failed to determine tag from version ${VERSION}."
         exit 1
     fi
-    
+
     mkdir -p "${HOME}/.pkg"
     echo "Using version ${TAG}."
     curl --silent "https://api.github.com/repos/${MY_REPO}/releases/tags/${TAG}" | \
@@ -1243,10 +1243,7 @@ handle_install() {
             echo "ERROR: File does not exist."
             exit 1
         fi
-        echo "$@"
-        set -- "$(cat ${file})" "$@"
-        echo "$@"
-        exit 0
+        set -- $(cat "${file}") "$@"
     fi
 
     if test "$#" -eq 0; then
