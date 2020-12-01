@@ -15,11 +15,17 @@ tags:
   - container
 install:
   script: |-
-    ${SUDO} mv "${TARGET_BIN}/docker" "${TARGET_BIN}/com.docker.cli"
+    ${SUDO} ln -sf "${TARGET_BIN}/docker" "${TARGET_BIN}/com.docker.cli"
 
     github_get_release docker/compose-cli | \
         github_resolve_assets | \
         github_select_asset_by_name docker-linux-amd64.tar.gz | \
         github_get_asset_download_url | \
         download_file | \
-        untar_file --strip-components=1 docker/docker
+        TARGET_BIN="${temporary_directory}" untar_file --strip-components=1 docker/docker
+    ${SUDO} mv docker "${TARGET_BIN}/compose-cli"
+
+    echo "########################################"
+    echo "### While in beta, this is installed in"
+    echo "###   ${TARGET_BIN}/compose-cli"
+    echo "########################################"
