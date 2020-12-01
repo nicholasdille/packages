@@ -17,7 +17,7 @@ install:
     apt-get -y install --no-install-recommends \
         texinfo
 
-    curl -sL https://github.com/erkin/ponysay/archive/${requested_version}.tar.gz | \
+    curl --silent --location https://github.com/erkin/ponysay/archive/${requested_version}.tar.gz | \
         tar -xzC /tmp/ponysay --strip-components=1
     cd /tmp/ponysay
     

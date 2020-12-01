@@ -11,7 +11,7 @@ install:
   script: |-
     build_containerized golang <<EOF
     mkdir -p /tmp/age
-    curl -sL "https://github.com/FiloSottile/age/archive/${requested_version}.tar.gz" | \
+    curl --silent --location "https://github.com/FiloSottile/age/archive/${requested_version}.tar.gz" | \
         tar -xzC /tmp/age --strip-components=1
     cd /tmp/age
     CGO_ENABLED=0 go build -ldflags="-extldflags=-static" -o . filippo.io/age/cmd/...

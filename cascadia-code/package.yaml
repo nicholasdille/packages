@@ -8,7 +8,7 @@ tags:
   - powerline
 install:
   script: |-
-    curl -sLO "https://github.com/microsoft/cascadia-code/releases/download/${requested_version}/CascadiaCode-${requested_version#v}.zip"
+    curl --silent --location --remote-name "https://github.com/microsoft/cascadia-code/releases/download/${requested_version}/CascadiaCode-${requested_version#v}.zip"
     unzip CascadiaCode-${requested_version#v}.zip
 
     ${SUDO} mkdir -p "${TARGET_BASE}/share/fonts/cascadia-code"

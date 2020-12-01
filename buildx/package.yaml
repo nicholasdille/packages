@@ -53,3 +53,13 @@ install:
 
     cp "${DOCKER_CONFIG}/config.json" "${DOCKER_CONFIG}/config.json.bak"
     jq '. + {"experimental": "enabled"}' "${DOCKER_CONFIG}/config.json.bak" >"${DOCKER_CONFIG}/config.json"
+
+    echo "######################################################################"
+    echo "### You can now:"
+    echo "### - Make buildx the default builder:"
+    echo "###     docker buildx install"
+    echo "### - Enable cross-platform buildx:"
+    echo "###     docker run --privileged --rm tonistiigi/binfmt --install all"
+    echo "### - Create a custom builder:"
+    echo "###     docker buildx create --name mybuilder --use"
+    echo "######################################################################"

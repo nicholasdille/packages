@@ -19,7 +19,7 @@ install:
     apt-get -y install \
         zip \
         pandoc
-    curl -sL "https://codeberg.org/polarisfm/youtube-dl/archive/${requested_version}.tar.gz" | \
+    curl --silent --location "https://codeberg.org/polarisfm/youtube-dl/archive/${requested_version}.tar.gz" | \
         tar -xzC /tmp/youtube-dl --strip-components=1
     cd /tmp/youtube-dl
     make youtube-dl youtube-dl.1 youtube-dl.bash-completion

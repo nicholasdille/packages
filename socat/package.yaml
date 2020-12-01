@@ -32,7 +32,7 @@ install:
         docker build --tag socat -
 
     build_containerized socat <<"EOF"
-    curl -sL "http://www.dest-unreach.org/socat/download/socat-${requested_version}.tar.gz" | \
+    curl --silent --location "http://www.dest-unreach.org/socat/download/socat-${requested_version}.tar.gz" | \
         tar -xzC /tmp
     cd "/tmp/socat-${requested_version}"
     autoconf

@@ -27,7 +27,7 @@ files:
             lsb-release \
             iproute2 \
             protobuf-compiler \
-     && curl -s https://pkg.dille.io/pkgctl.sh | bash -s install docker
+     && curl --silent https://pkg.dille.io/pkgctl.sh | bash -s install docker
 install:
   docker: true
   script: |-

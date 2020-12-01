@@ -14,7 +14,7 @@ install:
   docker: true
   script: |-
     build_containerized golang <<EOF
-    curl -sL "https://github.com/containers/skopeo/archive/${requested_version}.tar.gz" | \
+    curl --silent --location "https://github.com/containers/skopeo/archive/${requested_version}.tar.gz" | \
         tar xzC /tmp/skopeo
     cd /tmp/skopeo
     make bin/skopeo DISABLE_CGO=1

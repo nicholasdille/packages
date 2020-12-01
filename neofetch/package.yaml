@@ -18,7 +18,7 @@ install:
         curl \
         ca-certificates \
         make
-    curl -sL "https://github.com/dylanaraps/neofetch/archive/${requested_version}.tar.gz" | \
+    curl --silent --location "https://github.com/dylanaraps/neofetch/archive/${requested_version}.tar.gz" | \
         tar -xz
     cd neofetch-${requested_version}
     make PREFIX=/usr/local install

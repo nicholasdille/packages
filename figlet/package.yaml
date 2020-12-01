@@ -23,7 +23,7 @@ install:
         make
 
     cd /tmp
-    curl -sL ftp://ftp.figlet.org/pub/figlet/program/unix/figlet-${requested_version}.tar.gz | \
+    curl --silent --location ftp://ftp.figlet.org/pub/figlet/program/unix/figlet-${requested_version}.tar.gz | \
         tar -xz
 
     cd figlet-${requested_version}
