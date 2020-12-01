@@ -2,7 +2,7 @@ name: acme.sh
 description: A pure Unix shell script implementing ACME client protocol
 repo: acmesh-official/acme.sh
 version:
-  latest: 2.8.7 # renovate: datasource=github-releases depName=acmesh-official/acme.sh
+  latest: 2.8.8 # renovate: datasource=github-releases depName=acmesh-official/acme.sh
 tags:
   - certificate
   - shell
