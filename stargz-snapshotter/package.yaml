@@ -19,3 +19,18 @@ install:
     EOF
     extract_file_from_container ctr-remote
     extract_file_from_container containerd-stargz-grpc
+
+    echo "##################################################################################"
+    echo "### You can now integrate targz into containerd:"
+    echo "### 1. Run containerd-stargz-grpc:"
+    echo "###      containerd-stargz-grpc"
+    echo "### 2. Configure containerd by merging the following:"
+    echo "###      version = 2"
+    echo "###      [proxy_plugins]"
+    echo "###        [proxy_plugins.stargz]"
+    echo "###          type = \"snapshot\""
+    echo "###          address = \"/run/containerd-stargz-grpc/containerd-stargz-grpc.sock\""
+    echo "###      [plugins.\"io.containerd.grpc.v1.cri\".containerd]"
+    echo "###        snapshotter = \"stargz\""
+    echo "###        disable_snapshot_annotations = false"
+    echo "##################################################################################"

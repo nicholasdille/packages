@@ -24,3 +24,9 @@ install:
         github_get_asset_download_url | \
         download_file | \
         ${SUDO} tar -xzC "${TARGET_BASE}"
+
+    ${SUDO} mkdir -p /etc/containerd
+    if ! test -s /etc/containerd/config.toml; then
+        ${TARGET_BIN}/containerd config default | \
+            ${SUDO} tee /etc/containerd/config.toml >/dev/null
+    fi
