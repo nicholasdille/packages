@@ -473,9 +473,9 @@ function github_api() {
     local path=$1
 
     GITHUB_AUTH_PARAMETER=()
-    if test -n "${GITHUB_USER}" && test -n "${GITHUB_TOKEN}"; then
+    if test -n "${GITHUB_TOKEN}"; then
         >&2 echo "Using authentication for GitHub"
-        GITHUB_AUTH_PARAMETER=("--user" "${GITHUB_USER}:${GITHUB_TOKEN}")
+        GITHUB_AUTH_PARAMETER=("--header" "Authorization: token ${GITHUB_TOKEN}")
     fi
 
     curl "https://api.github.com${path}" \
