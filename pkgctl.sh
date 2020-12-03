@@ -1056,7 +1056,7 @@ function codeberg_install() {
     esac
 }
 
-show_help() {
+function show_help() {
     echo
     echo "Usage: sh ./pkgctl.sh <command>"
     echo "       ./pkgctl.sh <command>"
@@ -1076,7 +1076,7 @@ show_help() {
     echo
 }
 
-show_help_bootstrap() {
+function show_help_bootstrap() {
     echo
     echo "Usage: sh ./pkgctl.sh bootstrap [--prefix \${HOME}/.local] <string>"
     echo "       ./pkgctl.sh bootstrap [--prefix \${HOME}/.local] <string>"
@@ -1084,7 +1084,7 @@ show_help_bootstrap() {
     echo
 }
 
-show_help_install() {
+function show_help_install() {
     echo
     echo "Usage: sh ./pkgctl.sh install <package>[,<package>]"
     echo "       ./pkgctl.sh install <package>[,<package>]"
@@ -1092,7 +1092,7 @@ show_help_install() {
     echo
 }
 
-show_help_file() {
+function show_help_file() {
     echo
     echo "Usage: sh ./pkgctl.sh file <package> [<file>]"
     echo "       ./pkgctl.sh file <package> [<file>]"
@@ -1100,7 +1100,7 @@ show_help_file() {
     echo
 }
 
-show_help_search() {
+function show_help_search() {
     echo
     echo "Usage: sh ./pkgctl.sh search <string>"
     echo "       ./pkgctl.sh search <string>"
@@ -1108,7 +1108,7 @@ show_help_search() {
     echo
 }
 
-show_help_version() {
+function show_help_version() {
     echo
     echo "Usage: sh ./pkgctl.sh version <package>"
     echo "       ./pkgctl.sh version <package>"
@@ -1116,7 +1116,7 @@ show_help_version() {
     echo
 }
 
-get_packages() {
+function get_packages() {
     if test -f "${HOME}/.pkg/packages.json"; then
         cat "${HOME}/.pkg/packages.json"
 
@@ -1130,7 +1130,7 @@ get_packages() {
     fi
 }
 
-handle_bootstrap() {
+function handle_bootstrap() {
     PREFIX="${HOME}/.local"
     while test "$#" -gt 0; do
         param=$1
@@ -1157,7 +1157,7 @@ handle_bootstrap() {
     chmod +x "${PREFIX}/bin/pkg"
 }
 
-handle_cache() {
+function handle_cache() {
     : "${VERSION:=latest}"
     if test -z "${TAG}"; then
         TAG=$(
@@ -1177,7 +1177,7 @@ handle_cache() {
         xargs curl --silent --location --output "${HOME}/.pkg/packages.json"
 }
 
-handle_file() {
+function handle_file() {
     package=$1
 
     if test -z "${package}"; then
@@ -1206,7 +1206,7 @@ handle_file() {
     fi
 }
 
-handle_inspect() {
+function handle_inspect() {
     package=$1
 
     if test -z "${package}"; then
@@ -1219,7 +1219,7 @@ handle_inspect() {
         jq --arg package "${package}" '.packages[] | select(.name == $package)'
 }
 
-handle_install() {
+function handle_install() {
     local force_install=false
     local file=""
     while test "$#" -gt 0; do
@@ -1319,7 +1319,7 @@ handle_install() {
     done
 }
 
-handle_list() {
+function handle_list() {
     get_packages | \
         jq --raw-output '
             .packages[] |
@@ -1330,7 +1330,7 @@ handle_list() {
         column -t -s ';'
 }
 
-handle_search() {
+function handle_search() {
     SEARCH_TERM=""
     SEARCH_NAME=false
     SEARCH_DESC=false
@@ -1398,14 +1398,14 @@ handle_search() {
     column -t -s ';'
 }
 
-handle_tags() {
+function handle_tags() {
     get_packages | \
         jq --raw-output '.packages[].tags[]' | \
         sort | \
         uniq
 }
 
-handle_version() {
+function handle_version() {
     package=$1
 
     if test -z "${package}"; then
@@ -1454,7 +1454,7 @@ handle_version() {
         sed -E "${version_pattern}"
 }
 
-main() {
+function main() {
     if test "$#" -eq 0; then
         show_help
         exit 0
