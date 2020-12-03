@@ -18,7 +18,7 @@ Install the package manager:
 
 ```bash
 curl --silent https://pkg.dille.io/pkgctl.sh | sudo tee /usr/local/bin/pkgctl >/dev/null
-sudo chmod +x /usr/local/bin/pkg
+sudo chmod +x /usr/local/bin/pkgctl
 ```
 
 Cache the package definition:
