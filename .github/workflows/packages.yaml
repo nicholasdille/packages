@@ -18,6 +18,45 @@ jobs:
         run: |
           make tools packages.json
 
+      - name: Create changelog
+        run: |
+          function github_api() {
+              local path=$1
+
+              if test -z "${GITHUB_TOKEN}"; then
+                  echo "ERROR: Missing GitHub token"
+                  exit 1
+              fi
+
+              curl "https://api.github.com${path}" \
+                      --header "Authorization: token ${GITHUB_TOKEN}" \
+                      --silent
+          }
+
+          TIMESTAMP=$(
+              github_api "/repos/nicholasdille/packages/releases" | \
+                  jq 'map(select(.tag_name | startswith("packages/"))) | first' | \
+                  jq --raw-output '.published_at'
+          )
+          if test -z "${TIMESTAMP}"; then
+              echo "ERROR: Unable to determine timestamp"
+              exit 1
+          fi
+
+          (
+              echo "# Changelog"
+              echo
+              echo "## Packages updated:"
+              echo
+              github_api "/search/issues?sort=updated&order=desc&q=repo:nicholasdille/packages+type:pr+label:type/renovate+is:merged+merged:>${TIMESTAMP}" | \
+                  jq --raw-output '.items[] | "- \(.title) (#\(.number))"'
+              echo
+              echo "## Packages added/fixed:"
+              echo
+              github_api "/search/issues?sort=updated&order=desc&q=repo:nicholasdille/packages+type:issue+label:component/package+is:closed+closed:>${TIMESTAMP}" | \
+                  jq --raw-output '.items[] | "- \(.title) (#\(.number))"'
+          ) >CHANGELOG.md
+
       - name: Create release
         id: create_release
         uses: actions/create-release@v1
@@ -26,8 +65,7 @@ jobs:
         with:
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
-          body: |
-            ADD CHANGELOG HERE
+          body_path: ./CHANGELOG.md
           draft: false
           prerelease: false
 
