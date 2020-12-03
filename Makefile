@@ -26,7 +26,7 @@ tidy: clean
 .PHONY:
 check-scripts: .bin/shellcheck
 	@\
-	.bin/shellcheck $(SCRIPTS)
+	./.bin/shellcheck $(SCRIPTS)
 
 .PHONY:
 check-packages: packages.json
@@ -44,7 +44,7 @@ check-renovate: packages.json
 	@\
 	PACKAGES=$$(\
 		cat packages.json | \
-			jq --raw-output '.packages[] | select(.version.latest == null) | .name' \
+			./.bin/jq --raw-output '.packages[] | select(.version.latest == null) | .name' \
 	); \
 	if test -n "$${PACKAGES}"; then \
 		echo "The following packages are missing renovate:"; \
@@ -57,7 +57,7 @@ check-version: packages.json
 	@\
 	PACKAGES=$$(\
 		cat packages.json | \
-			jq --raw-output '.packages[] | select(.version.command == null) | .name' \
+			./.bin/jq --raw-output '.packages[] | select(.version.command == null) | .name' \
 	); \
 	if test -n "$${PACKAGES}"; then \
 		echo "The following packages are missing the version extractor:"; \
@@ -72,11 +72,11 @@ packages.json: $(DEFINITIONS) tools
 		find . -type f -name package.yaml | \
 			sort | \
 			while read FILE; do \
-				.bin/yq prefix $${FILE} '[+]'; \
+				./.bin/yq prefix $${FILE} '[+]'; \
 			done; \
 	) | \
-	.bin/yq --tojson read - | \
-	jq . >packages.json
+	./.bin/yq --tojson read - | \
+	./.bin/jq . >packages.json
 
 .PHONY:
 readme: check-scripts $(READMES)
@@ -86,17 +86,17 @@ readme: check-scripts $(READMES)
 	case "$$(./.bin/yq read $*/package.yaml type)" in \
 		codeberg) \
 			./.bin/yq read --tojson $*/package.yaml | \
-				jq --raw-output '"# \(.name)\n\n\(.description)\n\n[Codeberg](https://codeberg.org/\(.repo))"' \
+				./.bin/jq --raw-output '"# \(.name)\n\n\(.description)\n\n[Codeberg](https://codeberg.org/\(.repo))"' \
 				>"$@"; \
 		;; \
 		gitlab) \
 			./.bin/yq read --tojson $*/package.yaml | \
-				jq --raw-output '"# \(.name)\n\n\(.description)\n\n[Codeberg](https://gitlab.com/\(.repo))"' \
+				./.bin/jq --raw-output '"# \(.name)\n\n\(.description)\n\n[Codeberg](https://gitlab.com/\(.repo))"' \
 				>"$@"; \
 		;; \
 		"") \
 			./.bin/yq read --tojson $*/package.yaml | \
-				jq --raw-output '"# \(.name)\n\n\(.description)\n\n[GitHub](https://github.com/\(.repo))"' \
+				./.bin/jq --raw-output '"# \(.name)\n\n\(.description)\n\n[GitHub](https://github.com/\(.repo))"' \
 				>"$@"; \
 		;; \
 		*) \
@@ -105,7 +105,7 @@ readme: check-scripts $(READMES)
 		;; \
 	esac; \
 	./.bin/yq read --tojson $*/package.yaml | \
-		jq --raw-output 'select(.links != null) | .links[] | "\n[\(.text)](\(.url))"' \
+		./.bin/jq --raw-output 'select(.links != null) | .links[] | "\n[\(.text)](\(.url))"' \
 		>>"$@"
 
 .PHONY:
@@ -131,7 +131,7 @@ next-packages-%: .bin/semver
 bump-packages-%: check-dirty .bin/semver
 	@\
 	echo "Working on packages version $(PACKAGES_VERSION)."; \
-	NEW_VERSION=$$(.bin/semver bump $* "$(PACKAGES_VERSION)"); \
+	NEW_VERSION=$$(./.bin/semver bump $* "$(PACKAGES_VERSION)"); \
 	echo "Updating packages from $(PACKAGES_VERSION) to $${NEW_VERSION}"; \
 	git tag --annotate --sign --message "Packages v$${NEW_VERSION}" packages/$${NEW_VERSION}; \
 	git push --tags
@@ -139,13 +139,13 @@ bump-packages-%: check-dirty .bin/semver
 .PHONY:
 next-cli-%: .bin/semver
 	@\
-	.bin/semver bump $* $(CLI_VERSION)
+	./.bin/semver bump $* $(CLI_VERSION)
 
 .PHONY:
 bump-cli-%: check-dirty .bin/semver
 	@\
 	echo "Working on CLI version $(CLI_VERSION)."; \
-	NEW_VERSION=$$(.bin/semver bump $* "$(CLI_VERSION)"); \
+	NEW_VERSION=$$(./.bin/semver bump $* "$(CLI_VERSION)"); \
 	echo "Updating CLI from $(CLI_VERSION) to $${NEW_VERSION}"; \
 	git tag --annotate --sign --message "CLI v$${NEW_VERSION}" cli/$${NEW_VERSION}; \
 	git push --tags
