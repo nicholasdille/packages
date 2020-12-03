@@ -26,7 +26,7 @@ jobs:
               echo "ERROR: Unable to determine version"
               exit 1
           fi
-          sed -i "s/MY_VERSION=master/MY_VERSION=${VERSION}/"
+          sed -i "s/MY_VERSION=master/MY_VERSION=${VERSION}/" pkgctl.sh
 
       - name: Create release
         id: create_release
@@ -49,5 +49,5 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./pkgctl.sh
-          asset_name: pkg
+          asset_name: pkgctl
           asset_content_type: text/x-shellscript
