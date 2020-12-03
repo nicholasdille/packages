@@ -20,23 +20,12 @@ jobs:
 
       - name: Create changelog
         run: |
-          function github_api() {
-              local path=$1
-
-              if test -z "${GITHUB_TOKEN}"; then
-                  echo "ERROR: Missing GitHub token"
-                  exit 1
-              fi
-
-              curl "https://api.github.com${path}" \
-                      --header "Authorization: token ${GITHUB_TOKEN}" \
-                      --silent
-          }
-
           TIMESTAMP=$(
-              github_api "/repos/nicholasdille/packages/releases" | \
-                  jq 'map(select(.tag_name | startswith("packages/"))) | first' | \
-                  jq --raw-output '.published_at'
+              curl "https://api.github.com/repos/nicholasdille/packages/releases" \
+                  --header "Authorization: token ${GITHUB_TOKEN}" \
+                  --silent | \
+                      jq 'map(select(.tag_name | startswith("packages/"))) | first' | \
+                      jq --raw-output '.published_at'
           )
           if test -z "${TIMESTAMP}"; then
               echo "ERROR: Unable to determine timestamp"
@@ -48,13 +37,17 @@ jobs:
               echo
               echo "## Packages updated:"
               echo
-              github_api "/search/issues?sort=updated&order=desc&q=repo:nicholasdille/packages+type:pr+label:type/renovate+is:merged+merged:>${TIMESTAMP}" | \
-                  jq --raw-output '.items[] | "- \(.title) (#\(.number))"'
+              curl "https://api.github.com/search/issues?sort=updated&order=desc&q=repo:nicholasdille/packages+type:pr+label:type/renovate+is:merged+merged:>${TIMESTAMP}" \
+                  --header "Authorization: token ${GITHUB_TOKEN}" \
+                  --silent | \
+                      jq --raw-output '.items[] | "- \(.title) (#\(.number))"'
               echo
               echo "## Packages added/fixed:"
               echo
-              github_api "/search/issues?sort=updated&order=desc&q=repo:nicholasdille/packages+type:issue+label:component/package+is:closed+closed:>${TIMESTAMP}" | \
-                  jq --raw-output '.items[] | "- \(.title) (#\(.number))"'
+              curl "https://api.github.com/search/issues?sort=updated&order=desc&q=repo:nicholasdille/packages+type:issue+label:component/package+is:closed+closed:>${TIMESTAMP}" \
+                  --header "Authorization: token ${GITHUB_TOKEN}" \
+                  --silent | \
+                      jq --raw-output '.items[] | "- \(.title) (#\(.number))"'
           ) >CHANGELOG.md
 
       - name: Create release
