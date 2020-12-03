@@ -14,6 +14,20 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Substitute version
+        run: |
+          BRANCH="$(echo "${GITHUB_REF}" | cut -d/ -f3-)"
+          if test -z "${BRANCH}"; then
+              echo "ERROR: Unable to determine branch name"
+              exit 1
+          fi
+          VERSION="$(echo "${BRANCH}" | cut -d/ -f2)"
+          if test -z "${VERSION}"; then
+              echo "ERROR: Unable to determine version"
+              exit 1
+          fi
+          sed -i "s/MY_VERSION=master/MY_VERSION=${VERSION}/"
+
       - name: Create release
         id: create_release
         uses: actions/create-release@v1
