@@ -82,7 +82,7 @@ jobs:
         run: |
           TIMESTAMP=$(
               curl "https://api.github.com/repos/nicholasdille/packages/releases" \
-                  --header "Authorization: token ${GITHUB_TOKEN}" \
+                  --header "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
                   --silent | \
                       jq 'map(select(.tag_name | startswith("packages/"))) | first' | \
                       jq --raw-output '.published_at'
@@ -98,14 +98,14 @@ jobs:
               echo "## Packages updated:"
               echo
               curl "https://api.github.com/search/issues?sort=updated&order=desc&q=repo:nicholasdille/packages+type:pr+label:type/renovate+is:merged+merged:>${TIMESTAMP}" \
-                  --header "Authorization: token ${GITHUB_TOKEN}" \
+                  --header "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
                   --silent | \
                       jq --raw-output '.items[] | "- \(.title) (#\(.number))"'
               echo
               echo "## Packages added/fixed:"
               echo
               curl "https://api.github.com/search/issues?sort=updated&order=desc&q=repo:nicholasdille/packages+type:issue+label:component/package+is:closed+closed:>${TIMESTAMP}" \
-                  --header "Authorization: token ${GITHUB_TOKEN}" \
+                  --header "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
                   --silent | \
                       jq --raw-output '.items[] | "- \(.title) (#\(.number))"'
           ) >CHANGELOG.md
