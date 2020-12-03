@@ -2,7 +2,7 @@ name: docker-ls
 description: Tools for browsing and manipulating docker registries
 repo: mayflower/docker-ls
 version:
-  latest: v0.3.2 # renovate: datasource=github-releases depName=mayflower/docker-ls
+  latest: v0.4.0 # renovate: datasource=github-releases depName=mayflower/docker-ls
   command: docker-ls version
   filter: ^version
   pattern: s/^version:\s(\S+)\s.+$/v\1/
