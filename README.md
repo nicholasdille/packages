@@ -72,3 +72,11 @@ kind
 kubectl
 $ pkgctl install --file packages.txt
 ```
+
+## Completion
+
+`pkgctl` includes completion:
+
+```bash
+source completion.sh
+```
