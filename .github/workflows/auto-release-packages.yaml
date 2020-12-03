@@ -22,10 +22,11 @@ jobs:
           make .bin/jq .bin/semver
 
           TIMESTAMP="$(
-              curl "https://api.github.com/repos/${GITHUB_REPOSITORY}/releases/latest" \
+              curl "https://api.github.com/repos/${GITHUB_REPOSITORY}/releases" \
                     --silent \
                     --location \
                     --header 'Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' | \
+                  ./.bin/jq 'map(select(.tag_name | startswith("packages/"))) | first' | \
                   ./.bin/jq --raw-output .created_at
           )"
           echo "Timestamp of latest release is ${TIMESTAMP}."
