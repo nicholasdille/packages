@@ -1196,13 +1196,14 @@ function handle_file() {
                 .files[]
             '
     else
-        if test -f "${package}/${file}"; then
-            >&2 echo "Using local file"
-            cat "${package}/${file}"
-        else
-            >&2 echo "Downloading file"
-            curl --silent "https://pkg.dille.io/${package}/${file}"
-        fi
+        get_packages | \
+            jq --raw-output --arg package "${package}" --arg file "${file}" '
+                .packages[] |
+                select(.name == $package) |
+                .files[] |
+                select(.name == $file) |
+                .content
+            '
     fi
 }
 
