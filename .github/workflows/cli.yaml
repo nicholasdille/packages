@@ -28,6 +28,31 @@ jobs:
           fi
           sed -i "s/MY_VERSION=master/MY_VERSION=${VERSION}/" pkgctl.sh
 
+      - name: Create changelog
+        run: |
+          TIMESTAMP=$(
+              curl "https://api.github.com/repos/nicholasdille/packages/releases" \
+                  --header "Authorization: token ${GITHUB_TOKEN}" \
+                  --silent | \
+                      jq 'map(select(.tag_name | startswith("cli/"))) | first' | \
+                      jq --raw-output '.published_at'
+          )
+          if test -z "${TIMESTAMP}"; then
+              echo "ERROR: Unable to determine timestamp"
+              exit 1
+          fi
+
+          (
+              echo "# Changelog"
+              echo
+              echo "## Issues closed:"
+              echo
+              curl "https://api.github.com/search/issues?sort=updated&order=desc&q=repo:nicholasdille/packages+type:issue+-label:component/package+is:closed+closed:>${TIMESTAMP}" \
+                  --header "Authorization: token ${GITHUB_TOKEN}" \
+                  --silent | \
+                      jq --raw-output '.items[] | "- \(.title) (#\(.number))"'
+          ) >CHANGELOG.md
+
       - name: Create release
         id: create_release
         uses: actions/create-release@v1
@@ -36,8 +61,7 @@ jobs:
         with:
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
-          body: |
-            ADD CHANGELOG HERE
+          body_path: ./CHANGELOG.md
           draft: false
           prerelease: false
 
