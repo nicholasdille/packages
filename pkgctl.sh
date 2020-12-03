@@ -1469,7 +1469,8 @@ function main() {
                 show_help
             ;;
             --version|-v)
-                VERSION=$1
+                echo "pkgctl version ${MY_VERSION}"
+                exit 0
             ;;
             cache|c)
                 handle_cache "$@"
