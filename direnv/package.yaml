@@ -5,7 +5,7 @@ links:
   - text: Homepage
     url: https://direnv.net/
 version:
-  latest: v2.24.0 # renovate: datasource=github-releases depName=direnv/direnv
+  latest: v2.25.0 # renovate: datasource=github-releases depName=direnv/direnv
   command: direnv --version
   filter: ^[[:digit:]]
   pattern: s/^(.+)$/v\1/
