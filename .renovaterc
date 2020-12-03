@@ -10,16 +10,16 @@
     ":semanticCommits"
   ],
   "major": {
-    "labels": ["type/renovate", "bump/major"]
+    "labels": ["type/renovate", "component/package", "bump/major"]
   },
   "minor": {
-    "labels": ["type/renovate", "bump/minor"]
+    "labels": ["type/renovate", "component/package", "bump/minor"]
   },
   "patch": {
-    "labels": ["type/renovate", "bump/patch"]
+    "labels": ["type/renovate", "component/package", "bump/patch"]
   },
   "pin": {
-    "labels": ["type/renovate", "bump/pin"]
+    "labels": ["type/renovate", "component/package", "bump/pin"]
   },
   "packageRules": [
     {
