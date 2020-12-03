@@ -2,7 +2,7 @@ name: prism
 description: Turn any OpenAPI2/3 and Postman Collection file into an API server with mocking, transformations and validations
 repo: stoplightio/prism
 version:
-  latest: v4.1.1 # renovate: datasource=github-releases depName=stoplightio/prism
+  latest: v4.1.2 # renovate: datasource=github-releases depName=stoplightio/prism
   command: prism-cli --version
   filter: ^[[:digit:]]
   pattern: s/^(.+)$/v\1/
