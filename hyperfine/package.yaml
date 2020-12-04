@@ -1,0 +1,25 @@
+name: hyperfine
+description: A command-line benchmarking tool
+repo: sharkdp/hyperfine
+version:
+  latest: v1.11.0 # renovate: datasource=github-releases depName=sharkdp/hyperfine
+  command: hyperfine --version
+  filter: ^hyperfine
+  pattern: s/^hyperfine\s(.+)$/v\1/
+tags:
+  - shell
+  - terminal
+  - performance
+  - monitor
+install:
+  script: |-
+    echo "https://github.com/sharkdp/hyperfine/releases/download/${requested_version}/hyperfine-${requested_version}-x86_64-unknown-linux-gnu.tar.gz" | \
+        download_file | \
+        tar -xz --strip-components=1
+
+    ${SUDO} cp hyperfine "${TARGET_BIN}"
+
+    mkdir -p ${TARGET_BASE}/share/man/man1
+    ${SUDO} cp hyperfine.1 ${TARGET_BASE}/share/man/man1/
+
+    ${SUDO} cp autocomplete/hyperfine.bash-completion ${TARGET_COMPLETION}/hyperfine.sh
