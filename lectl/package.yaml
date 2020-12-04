@@ -5,7 +5,7 @@ links:
   - text: Certificate search
     url: https://crt.sh
 version:
-  latest: v0.21 # renovate: datasource=github-releases depName=sahsanu/lectl versioning=loose
+  latest: v0.21 # renovate: datasource=github-releases depName=sahsanu/lectl versioning=regex:^v(?<major>\d+?)\.(?<minor>\d+?)$
   command: lectl --version
   filter: ^lectl
   pattern: s/^lectl\s(\S+)\s.+$/v\1/

@@ -2,7 +2,7 @@ name: kubeletctl
 description: A client for kubelet
 repo: cyberark/kubeletctl
 version:
-  latest: v1.6 # renovate: datasource=github-releases depName=cyberark/kubeletctl versioning=loose
+  latest: v1.6 # renovate: datasource=github-releases depName=cyberark/kubeletctl versioning=regex:^v(?<major>\d+?)\.(?<minor>\d+?)$
   command: kubeletctl version
   filter: ^Version
   pattern: s/^Version:\s(.+)$/v\1/

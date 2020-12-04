@@ -5,7 +5,7 @@ links:
   - text: Homepage
     url: https://pandoc.org/
 version:
-  latest: 2.11.2 # renovate: datasource=github-releases depName=jgm/pandoc versioning=loose
+  latest: 2.11.2 # renovate: datasource=github-releases depName=jgm/pandoc
   command: pandoc --version
   filter: ^pandoc
   pattern: s/^pandoc\s(.+)$/\1/
