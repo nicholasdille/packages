@@ -223,6 +223,7 @@ function install_node_module() {
 
 function install_python_module() {
     require python
+    ${SUDO} bash --login -c "printenv | sort"
     ${SUDO} bash --login -c "pip3 install --upgrade $*"
 }
 
