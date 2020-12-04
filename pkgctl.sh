@@ -223,8 +223,9 @@ function install_node_module() {
 
 function install_python_module() {
     require python
+    source /etc/profile.d/python.sh
     ${SUDO} env PATH="${PATH}" bash --login -c "printenv | sort"
-    ${SUDO} bash --login -c "pip3 install --upgrade $*"
+    ${SUDO} env PATH="${PATH}" bash --login -c "pip3 install --upgrade $*"
 }
 
 function install_ruby_module() {
