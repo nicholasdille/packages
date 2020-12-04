@@ -33,7 +33,7 @@ jobs:
 
                       echo "Testing package ${PACKAGE}"
                       docker ps --filter name="test-${PACKAGE}" --all --quiet | xargs -r docker rm -f
-                      docker run -d --name "test-${PACKAGE}" --mount=type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock test-package:ubuntu
+                      docker run -d --name "test-${PACKAGE}" --env GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} --mount=type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock test-package:ubuntu
                       docker exec "test-${PACKAGE}" bash -c "curl -sL https://pkg.dille.io/pkgctl.sh | bash -s cache"
                       docker exec "test-${PACKAGE}" bash -c "curl -sL https://pkg.dille.io/pkgctl.sh | bash -s install docker"
                       docker exec "test-${PACKAGE}" bash -c "curl -sL https://pkg.dille.io/pkgctl.sh | bash -s install ${PACKAGE}"
