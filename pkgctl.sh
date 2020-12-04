@@ -1153,8 +1153,8 @@ function handle_bootstrap() {
 
     mkdir -p "${PREFIX}/bin"
     curl --silent --location "https://raw.githubusercontent.com/${MY_REPO}/${MY_VERSION}/pkgctl.sh" \
-        >"${PREFIX}/bin/pkg"
-    chmod +x "${PREFIX}/bin/pkg"
+        >"${PREFIX}/bin/pkgctl"
+    chmod +x "${PREFIX}/bin/pkgctl"
 }
 
 function handle_cache() {
