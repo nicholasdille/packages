@@ -476,6 +476,11 @@ function github_api() {
     if test -n "${GITHUB_TOKEN}"; then
         >&2 echo "Using authentication for GitHub"
         GITHUB_AUTH_PARAMETER=("--header" "Authorization: token ${GITHUB_TOKEN}")
+    else
+        if ! github_rate_limit_ok; then
+            echo "ERROR: Rate limit exceeded"
+            exit 1
+        fi
     fi
 
     curl "https://api.github.com${path}" \
@@ -497,7 +502,7 @@ function github_api_repo() {
 
 function github_rate_limit_ok() {
     eval "$(
-        github_api /rate_limit | \
+        curl --silent "https://api.github.com/rate_limit" | \
         jq \
             --raw-output '
                 "
