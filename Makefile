@@ -41,7 +41,7 @@ check-packages: packages.json
 	fi
 
 .PHONY:
-check-renovate: packages.json
+check-renovate: .bin/jq packages.json
 	@\
 	PACKAGES=$$(\
 		cat packages.json | \
@@ -54,7 +54,7 @@ check-renovate: packages.json
 	fi
 
 .PHONY:
-check-version: packages.json
+check-version: .bin/jq packages.json
 	@\
 	PACKAGES=$$(\
 		cat packages.json | \
@@ -66,7 +66,7 @@ check-version: packages.json
 		false; \
 	fi
 
-packages.json: $(DEFINITIONS) tools
+packages.json: .bin/jq .bin/yq $(DEFINITIONS) tools
 	@\
 	(\
 		echo "packages:"; \
@@ -82,7 +82,7 @@ packages.json: $(DEFINITIONS) tools
 .PHONY:
 readme: check-scripts $(READMES)
 
-%/README.md: %/package.yaml
+%/README.md: .bin/yq .bin/jq %/package.yaml
 	@\
 	case "$$(./.bin/yq read $*/package.yaml type)" in \
 		codeberg) \
