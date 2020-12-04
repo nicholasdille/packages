@@ -2,7 +2,7 @@ name: arkade
 description: Your one-stop CLI for Kubernetes
 repo: alexellis/arkade
 version:
-  latest: 0.6.25 # renovate: datasource=github-releases depName=alexellis/arkade
+  latest: 0.6.28 # renovate: datasource=github-releases depName=alexellis/arkade
   command: arkade version
   filter: Version
   pattern: s/Version:\s(.+)/\1/
