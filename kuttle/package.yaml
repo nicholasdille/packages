@@ -5,10 +5,7 @@ links:
   - text: Homepage
     url: https://kustomize.io/
 version:
-  latest: kustomize/v3.8.7 # renovate: datasource=github-releases depName=kayrus/kuttle
-  #command: kustomize version
-  #filter: ^{Version
-  #pattern: s/^\{Version:(\S+)\s.+$/\1/
+  latest: master
 tags:
   - k8s
   - kubernetes
@@ -17,7 +14,7 @@ install:
   script: |-
     require sshuttle
 
-    echo "https://github.com/kayrus/kuttle/raw/master/kuttle" | \
+    echo "https://github.com/kayrus/kuttle/raw/${requested_version}/kuttle" | \
         download_file | \
         store_file kuttle | \
         make_executable

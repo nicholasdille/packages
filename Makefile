@@ -3,6 +3,7 @@ READMES            := $(DEFINITIONS:package.yaml=README.md)
 SCRIPTS            := $(shell find . -type f -name \*.sh | sort)
 PACKAGES_VERSION   := $(shell git tag | grep "packages/" | cut -d/ -f2 | sort -V -r | head -n 1)
 CLI_VERSION        := $(shell git tag | grep "cli/" | cut -d/ -f2 | sort -V -r | head -n 1)
+DEFAULT_BRANCH     := $(shell git rev-parse --abbrev-ref HEAD)
 # renovate: datasource=github-releases depName=mikefarah/yq
 YQ_VERSION         := 3.4.0
 # renovate: datasource=github-releases depName=stedolan/jq versioning=regex:^jq-(?<major>\d+?)\.(?<minor>\d+?)(\.(?<patch>\d+?))?$
@@ -116,9 +117,9 @@ check-dirty:
 		git status --short; \
 		exit 1; \
 	fi; \
-	if test -n "$$(git log --pretty=oneline origin/master..HEAD)" >/dev/null; then \
+	if test -n "$$(git log --pretty=oneline origin/$(DEFAULT_BRANCH)..HEAD)" >/dev/null; then \
 		echo "!!! You have unpushed commits."; \
-		git --no-pager log --pretty=oneline origin/master..HEAD; \
+		git --no-pager log --pretty=oneline origin/$(DEFAULT_BRANCH)..HEAD; \
 		exit 1; \
 	fi
 

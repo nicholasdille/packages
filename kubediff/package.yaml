@@ -14,7 +14,7 @@ install:
   script: |-
     require python
 
-    echo "https://github.com/weaveworks/kubediff/archive/master.tar.gz" | \
+    echo "https://github.com/weaveworks/kubediff/archive/${requested_version}.tar.gz" | \
         download_file | \
         tar -xz
     cd kubediff-${requested_version}

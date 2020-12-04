@@ -5,7 +5,7 @@ links:
   - text: Docker CLI plugins proposal
     url: https://github.com/docker/cli/issues/1534
 version:
-  latest: master # renovate: datasource=github-tags depName=lukaszlach/clip
+  latest: master
 tags:
   - docker
   - plugins
