@@ -19,12 +19,12 @@ tags:
 install:
   docker: false
   script: |
-    github_get_release docker/docker-ce | \
-        jq --raw-output '.name' | \
-        xargs -I{} curl --location --fail https://download.docker.com/linux/static/stable/x86_64/docker-{}.tgz | \
+    echo "https://download.docker.com/linux/static/stable/x86_64/docker-${requested_version#v}.tgz" | \
+        download_file | \
         untar_file --strip-components=1
 
-    curl --location --fail "https://raw.githubusercontent.com/docker/cli/${requested_version}/contrib/completion/bash/docker" | \
+    echo "https://raw.githubusercontent.com/docker/cli/${requested_version}/contrib/completion/bash/docker" | \
+        download_file | \
         store_completion docker
 
     get_file docker profile.d.docker.sh | \
