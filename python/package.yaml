@@ -27,10 +27,6 @@ files:
               libbz2-dev \
               curl \
               ca-certificates
-- name: profile.d.python.sh
-  content: |
-    #!/bin/bash
-    export PATH="${TARGET_BASE}/python/bin:${PATH}"
 install:
   docker: true
   script: |-
@@ -40,14 +36,9 @@ install:
     build_containerized build-python <<EOF
         curl --silent --location "https://github.com/python/cpython/archive/${requested_version}.tar.gz" | \
             tar -xz --strip-components=1
-        ./configure --prefix="${TARGET_BASE}/python"
+        ./configure --prefix="${TARGET_BASE}"
         make -j2
         make install
     EOF
-    ${SUDO} mkdir -p "${TARGET_BASE}/python"
-    docker cp "${container_name}:${TARGET_BASE}/python" - | \
-        ${SUDO} tar -xC "${TARGET_BASE}"
-
-    get_file go profile.d.python.sh | \
-        TARGET_BASE="${TARGET_BASE}" envsubst '${TARGET_BASE}' | \
-        store_file python.sh /etc/profile.d
+    docker cp "${container_name}:${TARGET_BASE}" - | \
+        ${SUDO} tar -xC "${TARGET_BASE}/.."

@@ -223,14 +223,12 @@ function install_node_module() {
 
 function install_python_module() {
     require python
-    source /etc/profile.d/python.sh
-    ${SUDO} env PATH="${PATH}" bash --login -c "printenv | sort"
-    ${SUDO} env PATH="${PATH}" bash --login -c "pip3 install --upgrade $*"
+    ${SUDO} pip3 install --upgrade "$@"
 }
 
 function install_ruby_module() {
     require ruby
-    ${SUDO} bash --login -c "gem install $*"
+    ${SUDO} gem install "$@"
 }
 
 function get_package_definition() {
