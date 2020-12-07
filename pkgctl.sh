@@ -290,7 +290,7 @@ function get_installed_version() {
     fi
 
     # shellcheck disable=SC2086
-    eval "${version_command} 2>/dev/null | \
+    eval "${version_command} | \
         grep \"${version_filter}\" | \
         sed -E \"${version_pattern}\""
 }
@@ -1455,9 +1455,9 @@ function handle_version() {
         return
     fi
 
-    ${version_command} 2>/dev/null | \
-        grep "${version_filter}" | \
-        sed -E "${version_pattern}"
+    eval "${version_command} | \
+        grep \"${version_filter}\" | \
+        sed -E \"${version_pattern}\""
 }
 
 function main() {
