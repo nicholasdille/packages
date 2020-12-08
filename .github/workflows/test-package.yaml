@@ -3,6 +3,12 @@ on:
     types:
     - opened
     - reopened
+  push:
+    branches:
+    - master
+    paths:
+    - aws-cli/package.yaml
+    - aws-cli2/package.yaml
 
 name: Test package
 
