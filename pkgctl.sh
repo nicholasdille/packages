@@ -640,8 +640,8 @@ function show_help_version() {
 }
 
 function get_packages() {
-    if test -f "${HOME}/.pkg/packages.json"; then
-        cat "${HOME}/.pkg/packages.json"
+    if test -f "${HOME}/.pkgctl/packages.json"; then
+        cat "${HOME}/.pkgctl/packages.json"
 
     elif test -f packages.json; then
         >&2 echo "Using local copy of packages.json in current directory. If you are not a contributor, please run <pkg cache>."
@@ -697,7 +697,7 @@ function handle_cache() {
     echo "Using version ${TAG}."
     curl --silent "https://api.github.com/repos/${MY_REPO}/releases/tags/${TAG}" | \
         jq --raw-output '.assets[] | select(.name == "packages.json") | .browser_download_url' | \
-        xargs curl --silent --location --output "${HOME}/.pkg/packages.json"
+        xargs curl --silent --location --output "${HOME}/.pkgctl/packages.json"
 }
 
 function handle_file() {
@@ -777,7 +777,7 @@ function handle_install() {
         exit 1
     fi
 
-    if ! test -f "${HOME}/.pkg/packages.json"; then
+    if ! test -f "${HOME}/.pkgctl/packages.json"; then
         handle_cache
     fi
 
