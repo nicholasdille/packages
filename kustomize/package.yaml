@@ -20,10 +20,7 @@ tags:
   - yaml
 install:
   script: |-
-    github_get_release kubernetes-sigs/kustomize | \
-        github_resolve_assets | \
-        github_select_asset_by_suffix _linux_amd64.tar.gz | \
-        github_get_asset_download_url | \
+    echo "https://github.com/kubernetes-sigs/kustomize/releases/download/${requested_version}/kustomize_${requested_version#kustomize/}_linux_amd64.tar.gz" | \
         download_file | \
         untar_file kustomize
 

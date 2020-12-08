@@ -16,11 +16,7 @@ tags:
   - firecracker
 install:
   script: |-
-    github_get_release firecracker-microvm/firecracker "${requested_version}" | \
-        github_resolve_assets | \
-        github_select_asset_by_prefix firecracker- | \
-        github_select_asset_by_suffix -x86_64 | \
-        github_get_asset_download_url | \
+    echo "https://github.com/firecracker-microvm/firecracker/releases/download/${requested_version}/firecracker-${requested_version}-x86_64" | \
         download_file | \
         store_file firecracker | \
         make_executable

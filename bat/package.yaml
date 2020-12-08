@@ -10,10 +10,7 @@ tags:
   - console
 install:
   script: |-
-    github_get_release sharkdp/bat | \
-        github_resolve_assets | \
-        github_select_asset_by_suffix -x86_64-unknown-linux-gnu.tar.gz | \
-        github_get_asset_download_url | \
+    echo "https://github.com/sharkdp/bat/releases/download/${requested_version}/bat-${requested_version}-i686-unknown-linux-gnu.tar.gz" | \
         download_file \
         >"${temporary_directory}/bat.tar.gz"
 

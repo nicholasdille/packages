@@ -10,10 +10,7 @@ tags:
   - github
 install:
   script: |-
-    github_get_release cli/cli | \
-        github_resolve_assets | \
-        github_select_asset_by_suffix _linux_amd64.tar.gz | \
-        github_get_asset_download_url | \
+    echo "https://github.com/cli/cli/releases/download/${requested_version}/gh_${requested_version#v}_linux_amd64.tar.gz" | \
         download_file | \
         ${SUDO} tar -xzC "${TARGET}/bin/" --wildcards --strip-components=2 "*/bin/gh"
 

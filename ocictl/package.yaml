@@ -9,9 +9,6 @@ tags:
   - oci
 install:
   script: |-
-    github_get_release ocibuilder/ocibuilder | \
-        github_resolve_assets | \
-        github_select_asset_by_name ocictl-linux-amd64.tar.gz | \
-        github_get_asset_download_url | \
+    echo "https://github.com/ocibuilder/ocibuilder/releases/download/${requested_version}/ocictl-linux-amd64.tar.gz" | \
         download_file | \
         ${SUDO} tar -xzC "${TARGET_BIN}" --strip-components=2 ./ocictl/ocictl

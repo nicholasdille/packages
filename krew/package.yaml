@@ -15,10 +15,7 @@ tags:
   - plugins
 install:
   script: |-
-    github_get_release kubernetes-sigs/krew | \
-        github_resolve_assets | \
-        github_select_asset_by_name krew.tar.gz | \
-        github_get_asset_download_url | \
+    echo "https://github.com/kubernetes-sigs/krew/releases/download/${requested_version}/krew.tar.gz" | \
         download_file | \
         untar_file ./krew-linux_amd64
     rename_file krew-linux_amd64 krew

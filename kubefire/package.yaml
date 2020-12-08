@@ -56,10 +56,7 @@ install:
         --type binary \
         --name kubefire
 
-    github_get_release innobead/kubefire | \
-        github_resolve_assets | \
-        github_select_asset_by_name host-local-rev-linux-amd64 | \
-        github_get_asset_download_url | \
+    echo "https://github.com/innobead/kubefire/releases/download/${requested_version}/host-local-rev-linux-amd64" | \
         download_file | \
         ${SUDO} tar -xzC /opt/cni/bin/
 

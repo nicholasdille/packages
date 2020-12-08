@@ -14,10 +14,7 @@ tags:
   - context
 install:
   script: |-
-    github_get_release rothgar/k | \
-        github_resolve_assets | \
-        github_select_asset_by_suffix _Linux_x86_64.tar.gz | \
-        github_get_asset_download_url | \
+    echo "https://github.com/rothgar/k/releases/download/${requested_version}/k_${requested_version}_Linux_x86_64.tar.gz" | \
         download_file \
         >"${temporary_directory}/k.tar.gz"
 

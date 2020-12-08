@@ -16,12 +16,8 @@ tags:
 install:
   script: |-
     require runc
-    
-    github_get_release containerd/containerd | \
-        github_resolve_assets | \
-        github_select_asset_by_prefix containerd- | \
-        github_select_asset_by_suffix -linux-amd64.tar.gz | \
-        github_get_asset_download_url | \
+
+    echo "https://github.com/containerd/containerd/releases/download/${requested_version}/containerd-${requested_version#v}-linux-amd64.tar.gz" | \
         download_file | \
         ${SUDO} tar -xzC "${TARGET_BASE}"
 

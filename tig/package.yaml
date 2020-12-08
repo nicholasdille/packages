@@ -13,10 +13,7 @@ install:
   script: |-
     docker create -i --name "${container_name}" ubuntu:bionic bash -xe
 
-    github_get_release jonas/tig}" | \
-        github_resolve_assets | \
-        github_select_asset_by_suffix .tar.gz | \
-        github_get_asset_download_url | \
+    echo "https://github.com/jonas/tig/releases/download/${requested_version}/${requested_version}.tar.gz" | \
         download_file | \
         gunzip_file | \
         docker cp - "${container_name}:/"

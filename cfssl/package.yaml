@@ -13,21 +13,12 @@ tags:
   - pki
 install:
   script: |-
-    github_get_release cloudflare/cfssl | \
-        github_resolve_assets | \
-        github_select_asset_by_suffix _linux_amd64 | \
-        run_tasks \
-            "\
-                github_select_asset_by_prefix cfssl_ | \
-                github_get_asset_download_url | \
-                download_file | \
-                store_file cfssl | \
-                make_executable \
-            " \
-            "\
-                github_select_asset_by_prefix cfssljson_ | \
-                github_get_asset_download_url | \
-                download_file | \
-                store_file cfssljson | \
-                make_executable \
-            "
+    echo "https://github.com/cloudflare/cfssl/releases/download/${requested_version}/cfssl_${requested_version#v}_linux_amd64" | \
+        download_file | \
+        store_file cfssl | \
+        make_executable
+
+    echo "https://github.com/cloudflare/cfssl/releases/download/${requested_version}/cfssljson_${requested_version#v}_linux_amd64" | \
+        download_file | \
+        store_file cfssljson | \
+        make_executable

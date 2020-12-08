@@ -17,10 +17,7 @@ install:
   script: |-
     ${SUDO} ln -sf "${TARGET_BIN}/docker" "${TARGET_BIN}/com.docker.cli"
 
-    github_get_release docker/compose-cli | \
-        github_resolve_assets | \
-        github_select_asset_by_name docker-linux-amd64.tar.gz | \
-        github_get_asset_download_url | \
+    echo "https://github.com/docker/compose-cli/releases/download/${requested_version}/docker-linux-amd64.tar.gz" | \
         download_file | \
         TARGET_BIN="${temporary_directory}" untar_file --strip-components=1 docker/docker
     ${SUDO} mv docker "${TARGET_BIN}/compose-cli"

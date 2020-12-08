@@ -31,25 +31,15 @@ install:
         exit 1
     fi
 
-    github_get_release weaveworks/ignite "${requested_version}" | \
-        github_resolve_assets | \
-        run_tasks \
-            "\
-                github_select_asset_by_prefix ignite- | \
-                github_select_asset_by_suffix -amd64 | \
-                github_get_asset_download_url | \
-                download_file | \
-                store_file ignite | \
-                make_executable \
-            " \
-            "\
-                github_select_asset_by_prefix ignited- | \
-                github_select_asset_by_suffix -amd64 | \
-                github_get_asset_download_url | \
-                download_file | \
-                store_file ignited | \
-                make_executable \
-            "
+    echo "https://github.com/weaveworks/ignite/releases/download/${requested_version}/ignite-amd64" | \
+        download_file | \
+        store_file ignite | \
+        make_executable
+
+    echo "https://github.com/weaveworks/ignite/releases/download/${requested_version}/ignited-amd64" | \
+        download_file | \
+        store_file ignited | \
+        make_executable
 
     ignite completion | \
         store_completion ignite

@@ -10,10 +10,6 @@ tags:
   - namespaces
 install:
   script: |-
-    github_get_release ahmetb/kubectx | \
-        github_resolve_assets | \
-        github_select_asset_by_prefix kubectx | \
-        github_select_asset_by_suffix _linux_x86_64.tar.gz | \
-        github_get_asset_download_url | \
+    echo "https://github.com/ahmetb/kubectx/releases/download/${requested_version}/kubectx_${requested_version}_linux_x86_64.tar.gz" | \
         download_file | \
         untar_file kubectx

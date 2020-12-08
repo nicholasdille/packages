@@ -10,10 +10,7 @@ tags:
   - security
 install:
   script: |-
-    github_get_release little-angry-clouds/kubectl-ssh-proxy | \
-        github_resolve_assets | \
-        github_select_asset_by_name kubectl-ssh-proxy-linux-amd64.tar.gz | \
-        github_get_asset_download_url | \
+    echo "https://github.com/little-angry-clouds/kubectl-ssh-proxy/releases/download/${requested_version}/kubectl-ssh-proxy-linux-amd64.tar.gz" | \
         download_file | \
         untar_file --strip-components=1
     ${SUDO} mv ${TARGET_BIN}/kubectl-ssh_proxy-linux-amd64 ${TARGET_BIN}/kubectl-ssh_proxy

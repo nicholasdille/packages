@@ -12,12 +12,7 @@ tags:
   - cri
 install:
   script: |-
-    github_get_release kubernetes-sigs/cri-tools | \
-        github_resolve_assets | \
-        run_filters \
-            "github_select_asset_by_prefix crictl-" \
-            "github_select_asset_by_suffix -linux-amd64.tar.gz" | \
-        github_get_asset_download_url | \
+    echo "https://github.com/kubernetes-sigs/cri-tools/releases/download/${requested_version}/crictl-${requested_version}-linux-amd64.tar.gz" | \
         download_file | \
         untar_file crictl
 

@@ -16,10 +16,7 @@ tags:
   - moby
 install:
   script: |-
-    github_get_release moby/buildkit | \
-        github_resolve_assets | \
-        github_select_asset_by_suffix .linux-amd64.tar.gz | \
-        github_get_asset_download_url | \
+    echo "https://github.com/moby/buildkit/releases/download/${requested_version}/buildkit-${requested_version}.linux-amd64.tar.gz" | \
         download_file | \
         ${SUDO} tar -xzC "${TARGET_BASE}"
 

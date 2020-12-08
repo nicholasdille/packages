@@ -12,9 +12,6 @@ tags:
   - kubernetes
 install:
   script: |-
-    github_get_release vmware-tanzu/buildkit-cli-for-kubectl | \
-        github_resolve_assets | \
-        github_select_asset_by_prefix linux- | \
-        github_get_asset_download_url | \
+    echo "https://github.com/vmware-tanzu/buildkit-cli-for-kubectl/releases/download/${requested_version}/linux-${requested_version}.tgz" | \
         download_file | \
         untar_file

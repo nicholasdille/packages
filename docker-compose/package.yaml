@@ -14,15 +14,12 @@ tags:
 - container
 - compose
 install: |
-  github_install \
-      --name docker-compose \
-      --repo docker/compose \
-      --match name \
-      --asset docker-compose-Linux-x86_64 \
-      --type binary
+  echo "https://github.com/docker/compose/releases/download/${requested_version}/docker-compose-Linux-x86_64" | \
+      download_file | \
+      store_file docker-compose | \
+      make_executable
 
   ${SUDO} mkdir -p "${TARGET}/etc/bash_completion.d"
-  github_get_release docker/compose | \
-      jq --raw-output '.tag_name' | \
-      xargs -I{} curl --location --fail https://github.com/docker/compose/raw/{}/contrib/completion/bash/docker-compose | \
+  echo "https://github.com/docker/compose/raw/${requested_version}/contrib/completion/bash/docker-compose" | \
+      download_file | \
       store_completion docker-compose

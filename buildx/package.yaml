@@ -39,10 +39,7 @@ install:
 
     ${SUDO} mkdir --parents "${DOCKER_CLI_DIR}"
 
-    github_get_release docker/buildx | \
-        github_resolve_assets | \
-        github_select_asset_by_suffix .linux-amd64 | \
-        github_get_asset_download_url | \
+    echo "https://github.com/docker/buildx/releases/download/${requested_version}/buildx-${requested_version}.linux-amd64" | \
         download_file | \
         store_file docker-buildx "${DOCKER_CLI_DIR}" | \
         make_executable
