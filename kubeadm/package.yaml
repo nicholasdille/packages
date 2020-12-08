@@ -5,7 +5,7 @@ links:
   - text: Documentation
     url: https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/#installing-kubeadm-kubelet-and-kubectl
 version:
-  latest: v1.19.3 # renovate: datasource=gitlab-releases depName=kubernetes/kubernetes versioning=regex:^v(?<major>\d+?)\.(?<minor>\d+?)\.(?<patch>\d+?)(-(?<prerelease>.+?))?$
+  latest: v1.19.3 # renovate: datasource=github-releases depName=kubernetes/kubernetes versioning=regex:^v(?<major>\d+?)\.(?<minor>\d+?)\.(?<patch>\d+?)(-(?<prerelease>.+?))?$
   command: kubeadm version --output short
   filter: ^v
   pattern: s/^(.+)$/\1/
