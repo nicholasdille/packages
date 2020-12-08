@@ -25,6 +25,9 @@ files:
               libgdbm-dev \
               libc6-dev \
               libbz2-dev \
+              libffi-dev \
+              zlib1g-dev \
+              openssl \
               curl \
               ca-certificates
 install:
@@ -36,9 +39,10 @@ install:
     build_containerized build-python <<EOF
         curl --silent --location "https://github.com/python/cpython/archive/${requested_version}.tar.gz" | \
             tar -xz --strip-components=1
-        ./configure --prefix="${TARGET_BASE}"
+        ./configure --prefix="${TARGET_BASE}" --enable-optimizations
         make -j2
         make install
+        python3 -m pip install --upgrade pip
     EOF
     docker cp "${container_name}:${TARGET_BASE}" - | \
         ${SUDO} tar -xC "${TARGET_BASE}/.."
