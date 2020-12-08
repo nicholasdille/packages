@@ -25,6 +25,10 @@
     {
       "updateTypes": ["patch", "pin", "digest"],
       "automerge": true
+    },
+    {
+      "packageNames": [ "kubernetes-sigs/kustomize" ],
+      "extractVersion": "^kustomize/v(?<version>.+)$"
     }
   ],
   "regexManagers": [
