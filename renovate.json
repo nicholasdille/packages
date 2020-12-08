@@ -190,7 +190,7 @@
       "packageNames": [
         "curl/curl"
       ],
-      "extractVersion": "^curl-(?<major>\d+?)_(?<minor>\d+?)_(?<patch>\d+?)$"
+      "extractVersion": "^curl-(?<major>\\d+?)_(?<minor>\\d+?)_(?<patch>\\d+?)$"
     },
     {
       "packageNames": [
@@ -202,7 +202,7 @@
       "packageNames": [
         "k3s-io/k3s"
       ],
-      "extractVersion": "^v(?<major>\d+?)_(?<minor>\d+?)_(?<patch>\d+?)+k3s\d+$"
+      "extractVersion": "^v(?<major>\\d+?)_(?<minor>\\d+?)_(?<patch>\\d+?)+k3s\\d+$"
     },
     {
       "packageNames": [
