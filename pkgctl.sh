@@ -424,8 +424,15 @@ function require() {
 
     echo
     echo "### Installing dependency <${package}>..."
-    curl --silent "https://pkg.dille.io/pkgctl.sh" | \
-        bash -s install "${package}"
+    case "$0" in
+        -bash|bash)
+            curl --silent "https://pkg.dille.io/pkgctl.sh" | \
+                bash -s install "${package}"
+        ;;
+        *)
+            pkgctl install "${package}"
+        ;;
+    esac
     echo
 }
 
