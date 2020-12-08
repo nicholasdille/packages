@@ -19,12 +19,10 @@ tags:
   - api
 install:
   script: |-
-    github_install \
-        --name clusterctl \
-        --repo kubernetes-sigs/cluster-api \
-        --match name \
-        --asset clusterctl-linux-amd64 \
-        --type binary
+    echo "https://github.com/kubernetes-sigs/cluster-api/releases/download/${requested_version}/clusterctl-linux-amd64" | \
+        download_file | \
+        store_file clusterctl | \
+        make_executable
 
     clusterctl completion bash | \
         store_completion clusterctl

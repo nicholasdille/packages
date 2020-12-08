@@ -19,9 +19,6 @@ tags:
   - rego
 install:
   script: |-
-    github_install \
-        --repo open-policy-agent/conftest \
-        --match suffix \
-        --asset _Linux_x86_64.tar.gz \
-        --type tarball \
-        --include conftest
+    echo "https://github.com/open-policy-agent/conftest/releases/download/${requested_version}/conftest_${requested_version#v}_Linux_x86_64.tar.gz" | \
+        download_file | \
+        untar_file conftest

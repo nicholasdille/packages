@@ -16,9 +16,6 @@ tags:
   - bootstrap
 install:
   script: |-
-    github_install \
-        --repo adfolks/aksctl \
-        --match name \
-        --asset aksctl-linux-amd64.tar.gz \
-        --type tarball \
-        --include ./aksctl
+    echo "https://github.com/adfolks/aksctl/releases/download/${requested_version}/aksctl-linux-amd64.tar.gz" | \
+        download_file | \
+        untar_file ./aksctl

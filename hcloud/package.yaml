@@ -11,12 +11,9 @@ tags:
   - cloud
 install:
   script: |-
-    github_install \
-        --repo hetznercloud/cli \
-        --match name \
-        --asset hcloud-linux-amd64.tar.gz \
-        --type tarball \
-        --include hcloud
+    echo "https://github.com/hetznercloud/cli/releases/download/${requested_version}/hcloud-linux-amd64.tar.gz" | \
+        download_file | \
+        untar_file hcloud
 
     hcloud completion bash | \
         store_completion hcloud

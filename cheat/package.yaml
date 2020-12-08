@@ -14,12 +14,11 @@ tags:
   - manpage
 install:
   script: |-
-    github_install \
-        --repo cheat/cheat \
-        --match name \
-        --asset cheat-linux-amd64.gz \
-        --type gunzip \
-        --name cheat
+    echo "https://github.com/cheat/cheat/releases/download/${requested_version}/cheat-linux-amd64.gz" | \
+        download_file | \
+        gunzip_file | \
+        store_file cheat | \
+        make_executable
 
     mkdir -p "${HOME}/.config/cheat/cheatsheets/personal"
     cheat --init > "${HOME}/.config/cheat/conf.yml"

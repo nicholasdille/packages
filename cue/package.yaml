@@ -13,13 +13,9 @@ tags:
   - configuration
 install:
   script: |-
-    github_install \
-        --name cue \
-        --repo cuelang/cue \
-        --match suffix \
-        --asset _Linux_x86_64.tar.gz \
-        --type tarball \
-        --include cue
+    echo "https://github.com/cuelang/cue/releases/download/${requested_version}/cue_${requested_version#v}_Linux_x86_64.tar.gz" | \
+        download_file | \
+        untar_file cue
 
     cue completion bash | \
         store_completion cue

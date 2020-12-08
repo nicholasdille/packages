@@ -13,10 +13,6 @@ install:
     : "${DOCKER_CLI_DIR:=${TARGET_BASE}/lib/docker/cli-plugins}"
     ${SUDO} mkdir --parents "${DOCKER_CLI_DIR}" 
 
-    github_install \
-        --repo docker/app \
-        --match name \
-        --asset docker-app-linux.tar.gz \
-        --type tarball \
-        --name docker-app-plugin-linux
-    ${SUDO} mv "${TARGET_BIN}/docker-app-plugin-linux" "${DOCKER_CLI_DIR}/docker-app"
+    echo "https://github.com/docker/app/releases/download/${requested_version}/docker-app-linux.tar.gz" | \
+        download_file | \
+        untar_file docker-app "${DOCKER_CLI_DIR}"

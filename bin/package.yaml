@@ -10,9 +10,7 @@ tags:
   - shell
 install:
   script: |-
-    github_install \
-        --repo marcosnils/bin \
-        --match suffix \
-        --asset _Linux_x86_64 \
-        --type binary \
-        --name bin
+    echo "https://github.com/marcosnils/bin/releases/download/${requested_version}/bin_${requested_version#v}_Linux_x86_64" | \
+        download_file | \
+        store_file bin | \
+        make_executable

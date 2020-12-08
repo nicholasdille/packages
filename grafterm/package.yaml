@@ -17,9 +17,7 @@ tags:
   - terminal
 install:
   script: |-
-    github_install \
-        --repo slok/grafterm \
-        --match name \
-        --asset grafterm-linux-amd64 \
-        --type binary \
-        --name grafterm
+    echo "https://github.com/slok/grafterm/releases/download/${requested_version}/grafterm-linux-amd64" | \
+        download_file | \
+        store_file grafterm | \
+        make_executable

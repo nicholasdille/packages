@@ -10,9 +10,6 @@ tags:
   - git
 install:
   script: |-
-    github_install \
-        --repo extrawurst/gitui \
-        --match name \
-        --asset gitui-linux-musl.tar.gz \
-        --type tarball \
-        --include ./gitui
+    echo "https://github.com/extrawurst/gitui/releases/download/${requested_version}/gitui-linux-musl.tar.gz" | \
+        download_file | \
+        untar_file ./gitui

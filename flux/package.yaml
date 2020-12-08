@@ -12,12 +12,9 @@ tags:
   - gitops
 install:
   script: |-
-    github_install \
-        --repo fluxcd/flux2 \
-        --match suffix \
-        --asset _linux_amd64.tar.gz \
-        --type tarball \
-        --include flux
+    echo "https://github.com/fluxcd/flux2/releases/download/${requested_version}/flux_${requested_version#v}_linux_amd64.tar.gz" | \
+        download_file | \
+        untar_file flux
 
     flux completion bash | \
         store_completion flux

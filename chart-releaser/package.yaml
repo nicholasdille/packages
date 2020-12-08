@@ -18,9 +18,6 @@ tags:
   - pages
 install:
   script: |-
-    github_install \
-        --repo helm/chart-releaser \
-        --match suffix \
-        --asset _linux_amd64.tar.gz \
-        --type tarball \
-        --include cr
+    echo "https://github.com/helm/chart-releaser/releases/download/${requested_version}/chart-releaser_${requested_version#v}_linux_amd64.tar.gz" | \
+        download_file | \
+        untar_file cr

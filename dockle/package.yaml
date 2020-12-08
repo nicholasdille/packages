@@ -14,9 +14,6 @@ tags:
   - security
 install:
   script: |-
-    github_install \
-        --repo goodwithtech/dockle \
-        --match suffix \
-        --asset _Linux-64bit.tar.gz \
-        --type tarball \
-        --include dockle
+    echo "https://github.com/goodwithtech/dockle/releases/download/${requested_version}/dockle_${requested_version#v}_Linux-64bit.tar.gz" | \
+        download_file | \
+        untar_file dockle

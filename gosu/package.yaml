@@ -10,9 +10,7 @@ tags:
   - sudo
 install:
   script: |-
-    github_install \
-        --repo tianon/gosu \
-        --match name \
-        --asset gosu-amd64 \
-        --type binary \
-        --name gosu
+    echo "https://github.com/tianon/gosu/releases/download/${requested_version}/gosu-amd64" | \
+        download_file | \
+        store_file gosu | \
+        make_executable

@@ -10,9 +10,6 @@ tags:
   - markdown
 install:
   script: |-
-    github_install \
-        --repo charmbracelet/glow \
-        --match suffix \
-        --asset _linux_x86_64.tar.gz \
-        --type tarball \
-        --include glow
+    echo "https://github.com/charmbracelet/glow/releases/download/${requested_version}/glow_${requested_version#v}_linux_x86_64.tar.gz" | \
+        download_file | \
+        untar_file glow

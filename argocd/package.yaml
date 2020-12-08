@@ -12,12 +12,10 @@ tags:
   - k8s
 install:
   script: |-
-    github_install \
-        --repo argoproj/argo-cd \
-        --match name \
-        --asset argocd-linux-amd64 \
-        --type binary \
-        --name argocd
+    echo "https://github.com/argoproj/argo-cd/releases/download/${requested_version}/argocd-linux-amd64" | \
+        download_file | \
+        store_file argocd | \
+        make_executable
 
     argocd completion bash | \
         store_completion argocd

@@ -11,9 +11,7 @@ tags:
   - k8s
 install:
   script: |-
-    github_install \
-        --repo alexellis/arkade \
-        --match name \
-        --asset arkade \
-        --type binary \
-        --name arkade
+    echo "https://github.com/alexellis/arkade/releases/download/${requested_version}/arkade" | \
+        download_file | \
+        store_file | \
+        make_executable

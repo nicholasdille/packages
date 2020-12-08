@@ -15,12 +15,10 @@ tags:
   - k8s
 install:
   script: |-
-    github_install \
-        --repo fluxcd/flux \
-        --match name \
-        --asset fluxctl_linux_amd64 \
-        --type binary \
-        --name fluxctl
+    echo "https://github.com/fluxcd/flux/releases/download/${requested_version}/fluxctl_linux_amd64" | \
+        download_file | \
+        store_file fluxctl | \
+        make_executable
 
     fluxctl completion bash | \
         store_completion fluxctl

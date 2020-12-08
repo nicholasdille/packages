@@ -15,9 +15,6 @@ tags:
   - dns
 install:
   script: |-
-    github_install \
-        --repo cloudflare/cloudflare-go \
-        --match suffix \
-        --asset _linux_amd64.tar.xz \
-        --type xz \
-        --include flarectl
+    echo "https://github.com/cloudflare/cloudflare-go/releases/download/${requested_version}/flarectl_${requested_version#v}_linux_amd64.tar.xz" | \
+        download_file | \
+        unxz_file flarectl

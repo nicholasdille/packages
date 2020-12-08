@@ -13,9 +13,7 @@ tags:
   - variables
 install:
   script: |-
-    github_install \
-        --repo stephenc/envsub \
-        --match name \
-        --asset envsub \
-        --type binary \
-        --name envsub
+    echo "https://github.com/stephenc/envsub/releases/download/${requested_version}/envsub" | \
+        download_file | \
+        store_file envsub | \
+        make_executable

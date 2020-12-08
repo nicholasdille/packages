@@ -14,9 +14,6 @@ tags:
   - quality
 install:
   script: |-
-    github_install \
-        --repo wagoodman/dive \
-        --match suffix \
-        --asset _linux_amd64.tar.gz \
-        --type tarball \
-        --include dive
+    echo "https://github.com/wagoodman/dive/releases/download/${requested_version}/dive_${requested_version#v}_linux_amd64.tar.gz" | \
+        download_file | \
+        untar dive

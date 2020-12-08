@@ -13,9 +13,6 @@ tags:
   - quality
 install:
   script: |-
-    github_install \
-        --repo digitalocean/clusterlint \
-        --match suffix \
-        --asset -linux-amd64.tar.gz \
-        --type tarball \
-        --include ./clusterlint
+    echo "https://github.com/digitalocean/clusterlint/releases/download/${requested_version}/clusterlint-${requested_version#v}-linux-amd64.tar.gz" | \
+        download_file | \
+        untar_file ./clusterlint

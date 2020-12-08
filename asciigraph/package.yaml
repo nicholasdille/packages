@@ -7,9 +7,6 @@ tags:
   - shell
 install:
   script: |-
-    github_install \
-        --repo guptarohit/asciigraph \
-        --match suffix \
-        --asset _Linux_x86_64.tar.gz \
-        --type tarball \
-        --include asciigraph
+    echo "https://github.com/guptarohit/asciigraph/releases/download/${requested_version}/asciigraph_${requested_version#v}_Linux_x86_64.tar.gz" | \
+        download_file | \
+        untar_file asciigraph

@@ -17,9 +17,7 @@ tags:
   - containerd
 install:
   script: |-
-    github_install \
-        --repo openfaas/faasd \
-        --match name \
-        --asset faasd \
-        --type binary \
-        --name faasd
+    echo "https://github.com/openfaas/faasd/releases/download/${requested_version}/faasd" | \
+        download_file | \
+        store_file faasd | \
+        make_executable

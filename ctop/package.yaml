@@ -16,9 +16,7 @@ tags:
   - performance
 install:
   script: |-
-    github_install \
-        --repo bcicen/ctop \
-        --match suffix \
-        --asset -linux-amd64 \
-        --type binary \
-        --name ctop
+    echo "https://github.com/bcicen/ctop/releases/download/${requested_version}/ctop-${requested_version#v}-linux-amd64" | \
+        download_file | \
+        store_file ctop | \
+        make_executable

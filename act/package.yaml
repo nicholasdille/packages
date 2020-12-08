@@ -16,9 +16,6 @@ tags:
   - container
 install:
   script: |-
-    github_install \
-        --repo nektos/act \
-        --match suffix \
-        --asset _Linux_x86_64.tar.gz \
-        --type tarball \
-        --include act
+    echo "https://github.com/nektos/act/releases/download/${requested_version}/act_Linux_x86_64.tar.gz" | \
+        download_file | \
+        untar_file act
