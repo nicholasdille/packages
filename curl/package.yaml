@@ -5,7 +5,7 @@ links:
   - text: Homepage
     url: https://curl.se/
 version:
-  latest: curl-7_73_0 # renovate: datasource=github-releases depName=curl/curl
+  latest: curl-7_73_0 # renovate: datasource=github-releases depName=curl/curl versioning=regex:^curl-(?<major>\d+?)_(?<minor>\d+?)_(?<patch>\d+?)$
   #command: curl --version
   #filter: ^curl
   #pattern: s/^curl\s(\d+)\.(\d+)\.(\d+)\s.+$/curl-\1_\2_\3/
