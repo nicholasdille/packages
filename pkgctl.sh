@@ -223,6 +223,8 @@ function install_node_module() {
 
 function install_python_module() {
     require python
+    which pip3
+    ls -l /usr/local/bin/
     ${SUDO} pip3 install --upgrade "$@"
 }
 

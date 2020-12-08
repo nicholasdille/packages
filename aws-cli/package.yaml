@@ -13,4 +13,5 @@ tags:
   - aws
   - cloud
 install:
-  script: install_python_module awscli==${requested_version}
+  script: |
+    install_python_module awscli==${requested_version}
