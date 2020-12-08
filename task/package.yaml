@@ -13,9 +13,6 @@ tags:
   - make
 install:
   script: |-
-    github_install \
-        --repo go-task/task \
-        --match name \
-        --asset task_linux_amd64.tar.gz \
-        --type tarball \
-        --include task
+    echo "https://github.com/go-task/task/releases/download/${requested_version}/task_linux_amd64.tar.gz" | \
+        download_file | \
+        untar_file task

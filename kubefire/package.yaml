@@ -49,12 +49,10 @@ install:
     require containerd
     require cni
 
-    github_install \
-        --repo innobead/kubefire \
-        --match name \
-        --asset kubefire-linux-amd64 \
-        --type binary \
-        --name kubefire
+    echo "https://github.com/innobead/kubefire/releases/download/${requested_version}/kubefire-linux-amd64" | \
+        download_file | \
+        store_file kubefire | \
+        make_executable
 
     echo "https://github.com/innobead/kubefire/releases/download/${requested_version}/host-local-rev-linux-amd64" | \
         download_file | \

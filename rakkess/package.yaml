@@ -15,10 +15,7 @@ tags:
   - kubectl
 install:
   script: |-
-    github_install \
-        --repo corneliusweig/rakkess \
-        --match name \
-        --asset rakkess-amd64-linux.tar.gz \
-        --type tarball \
-        --include rakkess-amd64-linux
+    echo "https://github.com/corneliusweig/rakkess/releases/download/${requested_version}/rakkess-amd64-linux.tar.gz" | \
+        download_file | \
+        untar_file rakkess-amd64-linux
     rename_file rakkess-amd64-linux rakkess

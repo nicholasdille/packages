@@ -1,11 +1,13 @@
 name: kbld
 description: kbld seamlessly incorporates image building and image pushing into your development and deployment workflows
-repo: k14s/kbld
+repo: vmware-tanzu/carvel-kbld
 links:
   - text: Homepage
+    url: https://get-kbld.io/
+  - text: Project homepage
     url: https://carvel.dev/
 version:
-  latest: v0.27.0 # renovate: datasource=github-releases depName=k14s/kbld
+  latest: v0.27.0 # renovate: datasource=github-releases depName=vmware-tanzu/carvel-kbld
   command: kbld --version
   filter: ^kbld
   pattern: s/^kbld\sversion\s(.+)$/v\1/
@@ -15,9 +17,7 @@ tags:
   - image
 install:
   script: |-
-    github_install \
-        --repo k14s/imgpkg \
-        --match suffix \
-        --asset -linux-amd64 \
-        --type binary \
-        --name imgpkg
+    echo "https://github.com/vmware-tanzu/carvel-kbld/releases/download/${requested_version}/kbld-linux-amd64" | \
+        download_file | \
+        store_file kbld | \
+        make_executable

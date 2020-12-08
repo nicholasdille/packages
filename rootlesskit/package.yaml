@@ -11,8 +11,6 @@ tags:
   - rootless
 install:
   script: |-
-    github_install \
-        --repo rootless-containers/rootlesskit \
-        --match name \
-        --asset rootlesskit-x86_64.tar.gz \
-        --type tarball
+    echo "https://github.com/rootless-containers/rootlesskit/releases/download/${requested_version}/rootlesskit-x86_64.tar.gz" | \
+        download_file | \
+        untar_file

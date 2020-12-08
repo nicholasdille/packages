@@ -18,12 +18,10 @@ tags:
   - bootstrap
 install:
   script: |-
-    github_install \
-        --repo kubernetes-sigs/kind \
-        --match name \
-        --asset kind-linux-amd64 \
-        --type binary \
-        --name kind
+    echo "https://github.com/kubernetes-sigs/kind/releases/download/${requested_version}/kind-linux-amd64" | \
+        download_file | \
+        store_file kind | \
+        make_executable
 
     kind completion bash | \
         store_completion kind

@@ -11,9 +11,7 @@ tags:
   - k8s
 install:
   script: |-
-    github_install \
-        --repo yanc0/untrak \
-        --match prefix \
-        --asset untrak_linux_amd64_ \
-        --type binary \
-        --name untrak
+    echo "https://github.com/yanc0/untrak/releases/download/${requested_version}/untrak_linux_amd64_${requested_version}" | \
+        download_file | \
+        store_file untrak | \
+        make_executable

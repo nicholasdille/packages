@@ -16,12 +16,9 @@ tags:
   - deployment
 install:
   script: |-
-    github_install \
-        --repo zaquestion/lab \
-        --match suffix \
-        --asset _linux_amd64.tar.gz \
-        --type tarball \
-        --include lab
+    echo "https://github.com/zaquestion/lab/releases/download/${requested_version}/lab_${requested_version#v}_linux_amd64.tar.gz" | \
+        download_file | \
+        untar_file lab
 
     lab completion bash | \
         store_completion lab

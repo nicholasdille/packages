@@ -16,9 +16,7 @@ tags:
   - mount
 install:
   script: |-
-    github_install \
-        --repo AkihiroSuda/sshocker \
-        --match name \
-        --asset sshocker-Linux-x86_64 \
-        --type binary \
-        --name sshocker
+    echo "https://github.com/AkihiroSuda/sshocker/releases/download/${requested_version}/sshocker-Linux-x86_64" | \
+        download_file | \
+        store_file sshocker | \
+        make_executable

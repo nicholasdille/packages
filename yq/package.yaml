@@ -13,12 +13,10 @@ tags:
 install:
   docker: false
   script: |
-    github_install \
-        --repo mikefarah/yq \
-        --match name \
-        --asset yq_linux_amd64 \
-        --type binary \
-        --name yq
+    echo "https://github.com/mikefarah/yq/releases/download/${requested_version}/yq_linux_amd64" | \
+        download_file | \
+        store_file yq | \
+        make_executable
 
     yq shell-completion | \
         store_completion yq

@@ -15,12 +15,10 @@ tags:
   - bootstrap
 install:
   script: |-
-    github_install \
-        --repo xetys/hetzner-kube \
-        --match suffix \
-        --asset -linux-amd64 \
-        --type binary \
-        --name hetzner-kube
+    echo "https://github.com/xetys/hetzner-kube/releases/download/${requested_version}/hetzner-kube-${requested_version}-linux-amd64" | \
+        download_file | \
+        store_file hetzner-kube | \
+        make_executable
 
     hetzner-kube completion bash | \
         store_completion hetzner-kube

@@ -1,11 +1,13 @@
 name: kapp
 description: kapp is a simple deployment tool focused on the concept of "Kubernetes application" — a set of resources with the same label
-repo: k14s/kapp
+repo: vmware-tanzu/carvel-kapp
 links:
   - text: Homepage
+    url: https://get-kapp.io/
+  - text: Project homepage
     url: https://carvel.dev/
 version:
-  latest: v0.34.0 # renovate: datasource=github-releases depName=k14s/kapp
+  latest: v0.34.0 # renovate: datasource=github-releases depName=vmware-tanzu/carvel-kapp
   command: kapp --version
   filter: ^kapp
   pattern: s/^kapp\sversion\s(.+)$/v\1/
@@ -16,9 +18,7 @@ tags:
   - package
 install:
   script: |-
-    github_install \
-        --repo k14s/kapp \
-        --match suffix \
-        --asset -linux-amd64 \
-        --type binary \
-        --name kapp
+    echo "https://github.com/vmware-tanzu/carvel-kapp/releases/download/${requested_version}/kapp-linux-amd64" | \
+        download_file | \
+        store_file kapp | \
+        make_executable

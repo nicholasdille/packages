@@ -13,9 +13,7 @@ tags:
   - network
 install:
   script: |-
-    github_install \
-        --repo stedolan/jq \
-        --match name \
-        --asset jq-linux64 \
-        --type binary \
-        --name jq
+    echo "https://github.com/stedolan/jq/releases/download/${requested_version}/jq-linux64" | \
+        download_file | \
+        store_file jq | \
+        make_executable

@@ -10,9 +10,7 @@ tags:
   - json
 install:
   script: |-
-    github_install \
-        --repo simeji/jid \
-        --match name \
-        --asset jid_linux_amd64.zip \
-        --type zip \
-        --include jid
+    echo "https://github.com/simeji/jid/releases/download/${requested_version}/jid_linux_amd64.zip" | \
+        download_file | \
+        store_file "jid.zip" "${temporary_directory}"
+    unzip_file "${temporary_directory}/jid.zip

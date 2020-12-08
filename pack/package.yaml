@@ -13,9 +13,6 @@ tags:
   - build
 install:
   script: |-
-    github_install \
-        --repo buildpacks/pack \
-        --match suffix \
-        --asset -linux.tgz \
-        --type tarball \
-        --include pack
+    echo "https://github.com/buildpacks/pack/releases/download/${requested_version}/pack-${requested_version}-linux.tgz" | \
+        download_file | \
+        untar_file pack

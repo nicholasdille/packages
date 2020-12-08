@@ -14,9 +14,6 @@ install:
     ${SUDO} apt-get -y install \
         bpfcc-tools
 
-    github_install \
-        --repo aquasecurity/tracee \
-        --match name \
-        --asset tracee.tar.gz \
-        --type tarball \
-        --include tracee
+    echo "https://github.com/aquasecurity/tracee/releases/download/${requested_version}/tracee.tar.gz" | \
+        download_file | \
+        untar_file tracee

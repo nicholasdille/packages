@@ -15,9 +15,7 @@ tags:
   - paas
 install:
   script: |-
-    github_install \
-        --repo rancher/rio \
-        --match name \
-        --asset rio-linux-amd64 \
-        --type binary \
-        --name rio
+    echo "https://github.com/rancher/rio/releases/download/${requested_version}/rio-linux-amd64" | \
+        download_file | \
+        store_file rio | \
+        make_executable

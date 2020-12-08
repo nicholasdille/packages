@@ -9,9 +9,7 @@ tags:
   - pipe
 install:
   script: |-
-    github_install \
-        --repo NZSmartie/npiperelay \
-        --match name \
-        --asset npiperelay.exe \
-        --type binary \
-        --name npiperelay.exe
+    echo "https://github.com/NZSmartie/npiperelay/releases/download/${requested_version}/npiperelay.exe" | \
+        download_file | \
+        store_file npiperelay.exe | \
+        make_executable

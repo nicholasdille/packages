@@ -12,9 +12,6 @@ tags:
   - security
 install:
   script: |-
-    github_install \
-        --repo zegl/kube-score \
-        --match suffix \
-        --asset _linux_amd64.tar.gz \
-        --type tarball \
-        --include kube-score
+    echo "https://github.com/zegl/kube-score/releases/download/${requested_version}/kube-score_${requested_version#v}_linux_amd64.tar.gz" | \
+        download_file | \
+        untar_file kube-score

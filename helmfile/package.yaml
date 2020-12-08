@@ -19,9 +19,7 @@ install:
     require helm
     require kubectl
 
-    github_install \
-        --repo roboll/helmfile \
-        --match name \
-        --asset helmfile_linux_amd64 \
-        --type binary \
-        --name helmfile
+    echo "https://github.com/roboll/helmfile/releases/download/${requested_version}/helmfile_linux_amd64" | \
+        download_file | \
+        store_file helmfile | \
+        make_executable

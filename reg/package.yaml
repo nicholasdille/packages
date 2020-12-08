@@ -14,9 +14,7 @@ tags:
   - security
 install:
   script: |-
-    github_install \
-        --repo genuinetools/reg \
-        --match name \
-        --asset reg-linux-amd64 \
-        --type binary \
-        --name reg
+    echo "https://github.com/genuinetools/reg/releases/download/${requested_version}/reg-linux-amd64" | \
+        download_file | \
+        store_file reg | \
+        make_executable

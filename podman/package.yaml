@@ -10,11 +10,8 @@ tags:
   - container
 install:
   script: |-
-    github_install \
-        --repo containers/podman \
-        --match name \
-        --asset podman-remote-static.tar.gz \
-        --type tarball \
-        --include podman-remote-static
+    echo "https://github.com/containers/podman/releases/download/${requested_version}/podman-remote-static.tar.gz" | \
+        download_file | \
+        untar_file podman-remote-static
 
     rename_file podman-remote-static podman

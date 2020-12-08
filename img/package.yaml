@@ -14,9 +14,7 @@ tags:
   - image
 install:
   script: |-
-    github_install \
-        --repo genuinetools/img \
-        --match name \
-        --asset img-linux-amd64 \
-        --type binary \
-        --name img
+    echo "https://github.com/genuinetools/img/releases/download/${requested_version}/img-linux-amd64" | \
+        download_file | \
+        store_file img | \
+        make_executable

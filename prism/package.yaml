@@ -11,9 +11,7 @@ tags:
   - development
 install:
   script: |
-    github_install \
-        --repo stoplightio/prism \
-        --match name \
-        --asset prism-cli-linux \
-        --type binary \
-        --name prism-cli
+    echo "https://github.com/stoplightio/prism/releases/download/${requested_version}/prism-cli-linux" | \
+        download_file | \
+        store_file prism-cli | \
+        make_executable

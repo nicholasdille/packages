@@ -17,9 +17,6 @@ tags:
   - quality
 install:
   script: |-
-    github_install \
-        --repo instrumenta/kubeval \
-        --match name \
-        --asset kubeval-linux-amd64.tar.gz \
-        --type tarball \
-        --include kubeval
+    echo "https://github.com/instrumenta/kubeval/releases/download/${requested_version}/kubeval-linux-amd64.tar.gz" | \
+        download_file | \
+        untar_file kubeval

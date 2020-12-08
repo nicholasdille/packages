@@ -12,9 +12,7 @@ tags:
   - kubelet
 install:
   script: |-
-    github_install \
-        --repo cyberark/kubeletctl \
-        --match name \
-        --asset kubeletctl_linux_amd64 \
-        --type binary \
-        --name kubeletctl
+    echo "https://github.com/cyberark/kubeletctl/releases/download/${requested_version}/kubeletctl_linux_amd64" | \
+        download_file | \
+        store_file kubeletctl | \
+        make_executable

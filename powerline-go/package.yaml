@@ -355,12 +355,10 @@ files:
       }
 install:
   script: |-
-    github_install \
-        --repo justjanne/powerline-go \
-        --match suffix \
-        --asset -linux-amd64 \
-        --type binary \
-        --name powerline-go
+    echo "https://github.com/justjanne/powerline-go/releases/download/${requested_version}/powerline-go-linux-amd64" | \
+        download_file | \
+        store_file powerline-go | \
+        make_executable
 
     mkdir -p "${HOME}/.local/etc"
     get_file powerline-go theme.json | \

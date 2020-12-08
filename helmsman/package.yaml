@@ -19,9 +19,6 @@ install:
     require helm
     require kubectl
 
-    github_install \
-        --repo Praqma/helmsman \
-        --match suffix \
-        --asset _linux_amd64.tar.gz \
-        --type tarball \
-        --include helmsman
+    echo "https://github.com/Praqma/helmsman/releases/download/${requested_version}/helmsman_${requested_version#v}_linux_amd64.tar.gz" | \
+        download_file | \
+        untar_file helmsman

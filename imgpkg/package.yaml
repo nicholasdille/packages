@@ -1,11 +1,11 @@
 name: imgpkg
 description: Store application configuration files in Docker/OCI registries
-repo: k14s/imgpkg
+repo: vmware-tanzu/carvel-imgpkg
 links:
-  - text: Homepage
+  - text: Project homepage
     url: https://carvel.dev/
 version:
-  latest: v0.2.0 # renovate: datasource=github-releases depName=k14s/imgpkg
+  latest: v0.2.0 # renovate: datasource=github-releases depName=vmware-tanzu/carvel-imgpkg
   command: imgpkg version
   filter: ^imgpkg
   pattern: s/^imgpkg\sversion\s(.+)$/v\1/
@@ -17,9 +17,7 @@ tags:
   - artifact
 install:
   script: |-
-    github_install \
-        --repo k14s/imgpkg \
-        --match suffix \
-        --asset -linux-amd64 \
-        --type binary \
-        --name imgpkg
+    echo "https://github.com/vmware-tanzu/carvel-imgpkg/releases/download/${requested_version}/imgpkg-linux-amd64" | \
+        download_file | \
+        store_file imgpkg | \
+        make_executable

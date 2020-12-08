@@ -14,9 +14,7 @@ tags:
   - k8s
 install:
   script: |-
-    github_install \
-        --repo rancher/k3s \
-        --match name \
-        --asset k3s \
-        --type binary \
-        --name k3s
+    echo "https://github.com/k3s-io/k3s/releases/download/${requested_version}/k3s" | \
+        download_file | \
+        store_file k3s | \
+        make_executable

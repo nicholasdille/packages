@@ -13,9 +13,6 @@ tags:
   - bootstrap
 install:
   script: |-
-    github_install \
-        --repo weaveworks/wksctl \
-        --match suffix \
-        --asset -linux-x86_64.tar.gz \
-        --type tarball \
-        --include wksctl
+    echo "https://github.com/weaveworks/wksctl/releases/download/${requested_version}/wksctl-${requested_version#v}-linux-x86_64.tar.gz" | \
+        download_file | \
+        untar_file wksctl

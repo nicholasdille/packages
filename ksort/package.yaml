@@ -3,14 +3,15 @@ description: Sort manifest files in a proper order by Kind
 repo: superbrothers/ksort
 version:
   latest: v0.4.1 # renovate: datasource=github-releases depName=superbrothers/ksort
+  command: ksort --version 2>&1
+  filter: ^\&
+  pattern: s/^&ksort\.info\{GitVersion:\"([^\"]+).+$/\1/
 tags:
   - kubernetes
   - k8s
 install:
   script: |-
-    github_install \
-        --repo superbrothers/ksort \
-        --match name \
-        --asset ksort-linux-amd64.tar.gz \
-        --type zip \
-        --include ksort
+    echo "https://github.com/superbrothers/ksort/releases/download/${requested_version}/ksort-linux-amd64.zip" | \
+        download_file | \
+        store_file ksort.zip "${temporary_directory}"
+    unzip_file "${temporary_directory}/ksort.zip" ksort

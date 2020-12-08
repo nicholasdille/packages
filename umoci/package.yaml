@@ -15,9 +15,7 @@ tags:
   - oci
 install:
   script: |-
-    github_install \
-        --repo opencontainers/umoci \
-        --match name \
-        --asset umoci.amd64 \
-        --type binary \
-        --name umoci
+    echo "https://github.com/opencontainers/umoci/releases/download/${requested_version}/umoci.amd64" | \
+        download_file | \
+        store_file umoci | \
+        make_executable

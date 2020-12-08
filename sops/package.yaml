@@ -13,9 +13,7 @@ tags:
   - json
 install:
   script: |-
-    github_install \
-        --repo mozilla/sops \
-        --match suffix \
-        --asset .linux \
-        --type binary \
-        --name sops
+    echo "https://github.com/mozilla/sops/releases/download/${requested_version}/sops-${requested_version}.linux" | \
+        download_file | \
+        store_file sops | \
+        make_executable

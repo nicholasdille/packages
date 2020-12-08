@@ -15,12 +15,10 @@ tags:
   - compose
 install:
   script: |-
-    github_install \
-        --repo kubernetes/kompose \
-        --match name \
-        --asset kompose-linux-amd64 \
-        --type binary \
-        --name kompose
+    echo "https://github.com/kubernetes/kompose/releases/download/${requested_version}/kompose-linux-amd64" | \
+        download_file | \
+        store_file kompose | \
+        make_executable
 
     kompose completion bash | \
         store_completion kompose

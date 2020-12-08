@@ -10,9 +10,6 @@ tags:
   - namespaces
 install:
   script: |-
-    github_install \
-        --repo danielb42/kubeswitch \
-        --match name \
-        --asset kubeswitch_linux_amd64.tar.gz \
-        --type tarball \
-        --include kubeswitch
+    echo "https://github.com/danielb42/kubeswitch/releases/download/${requested_version}/kubeswitch_linux_amd64.tar.gz" | \
+        download_file | \
+        untar_file kubeswitch

@@ -10,9 +10,7 @@ tags:
 install:
   docker: false
   script: |-
-    github_install \
-        --repo regclient/regclient \
-        --match name \
-        --asset regctl-linux-amd64 \
-        --type binary \
-        --name regctl
+    echo "https://github.com/regclient/regclient/releases/download/${requested_version}/regctl-linux-amd64" | \
+        download_file | \
+        store_file regctl | \
+        make_executable

@@ -10,9 +10,6 @@ tags:
 - docker
 - ui
 install: |
-  github_install \
-      --repo jesseduffield/lazydocker \
-      --match suffix \
-      --asset _Linux_x86_64.tar.gz \
-      --type tarball \
-      --include lazydocker
+  echo "https://github.com/jesseduffield/lazydocker/releases/download/${requested_version}/lazydocker_${requested_version#v}_Linux_x86_64.tar.gz" | \
+      download_file | \
+      untar_file lazydocker

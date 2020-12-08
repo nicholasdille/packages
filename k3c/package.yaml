@@ -14,9 +14,7 @@ tags:
   - image
 install:
   script: |-
-    github_install \
-        --repo rancher/k3c \
-        --match name \
-        --asset k3c-linux-amd64 \
-        --type binary \
-        --name k3c
+    echo "https://github.com/rancher/k3c/releases/download/${requested_version}/k3c-linux-amd64" | \
+        download_file | \
+        store_file k3c | \
+        make_executable

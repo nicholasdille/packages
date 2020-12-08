@@ -15,9 +15,6 @@ tags:
   - artifact
 install:
   script: |-
-    github_install \
-        --repo deislabs/oras \
-        --match suffix \
-        --asset _linux_amd64.tar.gz \
-        --type tarball \
-        --include oras
+    echo "https://github.com/deislabs/oras/releases/download/${requested_version}/oras_${requested_version#v}_linux_amd64.tar.gz" | \
+        download_file | \
+        untar_file oras

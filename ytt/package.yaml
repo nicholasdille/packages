@@ -1,11 +1,11 @@
 name: ytt
 description: YAML templating tool that works on YAML structure instead of text
-repo: k14s/ytt
+repo: vmware-tanzu/carvel-ytt
 links:
   - text: Homepage
     url: https://carvel.dev/
 version:
-  latest: v0.30.0 # renovate: datasource=github-releases depName=k14s/ytt
+  latest: v0.30.0 # renovate: datasource=github-releases depName=vmware-tanzu/carvel-ytt
   command: ytt --version
   filter: ^ytt
   pattern: s/^ytt\sversion\s(.+)$/v\1/
@@ -17,9 +17,7 @@ tags:
   - expansion
 install:
   script: |-
-    github_install \
-        --repo k14s/ytt \
-        --match suffix \
-        --asset -linux-amd64 \
-        --type binary \
-        --name ytt
+    echo "https://github.com/vmware-tanzu/carvel-ytt/releases/download/${requested_version}/ytt-linux-amd64" | \
+        download_file | \
+        store_file ytt | \
+        make_executable

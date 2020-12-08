@@ -11,9 +11,6 @@ tags:
   - k8s
 install:
   script: |-
-    github_install \
-        --repo omrikiei/ktunnel \
-        --match suffix \
-        --asset _Linux_x86_64.tar.gz \
-        --type tarball \
-        --include ktunnel
+    echo "https://github.com/omrikiei/ktunnel/releases/download/${requested_version}/ktunnel_${requested_version#v}_Linux_x86_64.tar.gz" | \
+        download_file | \
+        untar_file ktunnel

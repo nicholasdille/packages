@@ -11,9 +11,7 @@ tags:
   - shell
 install:
   script: |-
-    github_install \
-        --repo andreazorzetto/yh \
-        --match name \
-        --asset yh-linux-amd64.zip \
-        --type zip \
-        --include yh
+    echo "https://github.com/andreazorzetto/yh/releases/download/${requested_version}/yh-linux-amd64.zip" | \
+        download_file | \
+        store_file yh.zip "${temporary_directory}"
+    unzip "${temporary_directory}/yh.zip" yh

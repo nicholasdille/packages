@@ -12,9 +12,7 @@ tags:
   - security
 install:
   script: |-
-    github_install \
-        --repo kubernetes-sigs/multi-tenancy \
-        --match name \
-        --asset kubectl-hns_linux_amd64 \
-        --type binary \
-        --name kubectl-hns
+    echo "https://github.com/kubernetes-sigs/multi-tenancy/releases/download/${requested_version}/kubectl-hns_linux_amd64" | \
+        download_file | \
+        store_file kubectl-hns | \
+        make_executable

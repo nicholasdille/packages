@@ -13,12 +13,11 @@ tags:
   - namespace
 install:
   script: |-
-    github_install \
-        --repo sbstp/kubie \
-        --match name \
-        --asset kubie-linux-amd64 \
-        --type binary \
-        --name kubie
+    echo "https://github.com/sbstp/kubie/releases/download/${requested_version}/kubie-linux-amd64" | \
+        download_file | \
+        store_file kubie | \
+        make_executable
 
-    curl --location --fail "https://github.com/sbstp/kubie/raw/${requested_version}/completion/kubie.bash" | \
+    echo "https://github.com/sbstp/kubie/raw/${requested_version}/completion/kubie.bash" | \
+        download_file | \
         store_completion kubie
