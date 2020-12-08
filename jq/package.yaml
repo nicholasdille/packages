@@ -5,15 +5,15 @@ links:
   - text: Homepage
     url: http://stedolan.github.io/jq/
 version:
-  latest: jq-1.6 # renovate: datasource=github-releases depName=stedolan/jq versioning=regex:^jq-(?<major>\d+?)\.(?<minor>\d+?)(\.(?<patch>\d+?))?$
+  latest: 1.6 # renovate: datasource=github-releases depName=stedolan/jq
   command: jq --version
   filter: ^jq
-  pattern: s/^(.+)$/\1/
+  pattern: s/^jq-(.+)$/\1/
 tags:
   - network
 install:
   script: |-
-    echo "https://github.com/stedolan/jq/releases/download/${requested_version}/jq-linux64" | \
+    echo "https://github.com/stedolan/jq/releases/download/jq-${requested_version}/jq-linux64" | \
         download_file | \
         store_file jq | \
         make_executable

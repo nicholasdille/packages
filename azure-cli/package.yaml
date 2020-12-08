@@ -5,11 +5,11 @@ links:
   - text: Homepage
     url: https://docs.microsoft.com/cli/azure/
 version:
-  latest: azure-cli-2.16.0 # renovate: datasource=github-releases depName=Azure/azure-cli versioning=regex:^azure-cli-(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
+  latest: 2.16.0 # renovate: datasource=github-releases depName=Azure/azure-cli
   command: az version --output yaml
   filter: |
     ^azure-cli:
-  pattern: s/^(azure-cli):\s(.+)$/\1-\2/
+  pattern: s/^azure-cli:\s(.+)$/\1/
 tags:
   - azure
   - cloud

@@ -2,19 +2,27 @@ name: gvisor
 description: Application Kernel for Containers
 repo: google/gvisor
 version:
-  latest: release-20201130.0 # renovate: datasource=github-tags depName=google/gvisor versioning=regex:^release-(?<major>\d+)\.(?<minor>\d+)$
+  latest: 20201130.0 # renovate: datasource=github-tags depName=google/gvisor
   command: runsc --version
   filter: ^runsc
-  pattern: s/^runsc\sversion\s(.+)$/\1/
+  pattern: s/^runsc\sversion\srelease-(.+)$/\1/
 tags:
   - container
   - runtime
   - security
 install:
   script: |-
-    echo "https://storage.googleapis.com/gvisor/releases/release/latest/runsc" | \
+    echo "https://storage.googleapis.com/gvisor/releases/release/${requested_version}/runsc" | \
         download_file | \
         store_file runsc | \
+        make_executable
+    echo "https://storage.googleapis.com/gvisor/releases/release/${requested_version}/gvisor-containerd-shim" | \
+        download_file | \
+        store_file gvisor-containerd-shim | \
+        make_executable
+    echo "https://storage.googleapis.com/gvisor/releases/release/${requested_version}/containerd-shim-runsc-v1" | \
+        download_file | \
+        store_file containerd-shim-runsc-v1 | \
         make_executable
 
     ${SUDO} runsc install

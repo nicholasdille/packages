@@ -33,6 +33,34 @@
     {
       "packageNames": [ "microsoft/WSL2-Linux-Kernel" ],
       "extractVersion": "^(?<version>.+)-microsoft-standard$"
+    },
+    {
+      "packageNames": [ "jonas/tig" ],
+      "extractVersion": "^tig-(?<version>.+)$"
+    },
+    {
+      "packageNames": [ "ruby/ruby" ],
+      "extractVersion": "^v(?<major>\\d+)_(?<minor>\\d+)_(?<patch>\\d+)$"
+    },
+    {
+      "packageNames": [ "kubernetes-sigs/multi-tenancy" ],
+      "extractVersion": "^hnc-v(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)$"
+    },
+    {
+      "packageNames": [ "stedolan/jq" ],
+      "extractVersion": "^jq-(?<major>\\d+?)\\.(?<minor>\\d+?)(\\.(?<patch>\\d+?))?$"
+    },
+    {
+      "packageNames": [ "google/gvisor" ],
+      "extractVersion": "^release-(?<major>\\d+)\\.(?<minor>\\d+)$"
+    },
+    {
+      "packageNames": [ "curl/curl" ],
+      "extractVersion": "^curl-(?<major>\\d+?)_(?<minor>\\d+?)_(?<patch>\\d+?)$"
+    },
+    {
+      "packageNames": [ "Azure/azure-cli" ],
+      "extractVersion": "^azure-cli-(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)$"
     }
   ],
   "regexManagers": [

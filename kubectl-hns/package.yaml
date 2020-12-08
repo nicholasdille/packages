@@ -2,17 +2,17 @@ name: kubectl-hns
 description: A working place for multi-tenancy related proposals and prototypes
 repo: kubernetes-sigs/multi-tenancy
 version:
-  latest: hnc-v0.6.0 # renovate: datasource=github-releases depName=kubernetes-sigs/multi-tenancy versioning=regex:^hnc-v(?<major>\d+?)\.(?<minor>\d+?)\.(?<patch>\d+?)$
+  latest: 0.6.0 # renovate: datasource=github-releases depName=kubernetes-sigs/multi-tenancy
   command: kubectl-hns --version
   filter: ^kubectl-hns
-  pattern: s/^kubectl-hns\sversion\s(.+)$/hnc-\1/
+  pattern: s/^kubectl-hns\sversion\sv(.+)$/\1/
 tags:
   - kubernetes
   - k8s
   - security
 install:
   script: |-
-    echo "https://github.com/kubernetes-sigs/multi-tenancy/releases/download/${requested_version}/kubectl-hns_linux_amd64" | \
+    echo "https://github.com/kubernetes-sigs/multi-tenancy/releases/download/hnc-v${requested_version}/kubectl-hns_linux_amd64" | \
         download_file | \
         store_file kubectl-hns | \
         make_executable
