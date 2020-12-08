@@ -2,7 +2,7 @@ name: terraform
 description: Terraform enables you to safely and predictably create, change, and improve infrastructure. It is an open source tool that codifies APIs into declarative configuration files that can be shared amongst team members, treated as code, edited, reviewed, and versioned
 repo: hashicorp/terraform
 version:
-  latest: v0.14.1 # renovate: datasource=github-releases depName=hashicorp/terraform
+  latest: v0.14.2 # renovate: datasource=github-releases depName=hashicorp/terraform
   command: terraform version
   filter: ^Terraform
   pattern: s/^Terraform\s(.+)$/\1/
