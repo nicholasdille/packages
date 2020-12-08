@@ -8,7 +8,7 @@ version:
   latest: 3.8.7 # renovate: datasource=github-releases depName=kubernetes-sigs/kustomize
   command: kustomize version
   filter: ^{Version
-  pattern: s/^\{Version:(\S+)\s.+$/\1/
+  pattern: s/^\{Version:kustomize/(\S+)\s.+$/\1/
 tags:
   - kubernetes
   - k8s

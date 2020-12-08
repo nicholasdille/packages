@@ -2,10 +2,10 @@ name: wsl2-kernel
 description: The source for the Linux kernel used in Windows Subsystem for Linux 2 (WSL2)
 repo: microsoft/WSL2-Linux-Kernel
 version:
-  latest: 4.19.128-microsoft-standard # renovate: datasource=github-tags depName=microsoft/WSL2-Linux-Kernel versioning=regex:^(?<major>\d+?)\.(?<minor>\d+?)\.(?<patch>\d+?)-microsoft-standard$
+  latest: 4.19.128 # renovate: datasource=github-tags depName=microsoft/WSL2-Linux-Kernel
   command: ls -d "${TARGET_BASE}/WSL2-Linux-Kernel-*-microsoft-standard"
   filter: WSL2-Linux-Kernel
-  pattern: s|^/.+/WSL2-Linux-Kernel-(.+-microsoft-standard)$|\1|
+  pattern: s|^/.+/WSL2-Linux-Kernel-(.+)-microsoft-standard$|\1|
 tags:
   - linux
   - windows

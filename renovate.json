@@ -29,6 +29,10 @@
     {
       "packageNames": [ "kubernetes-sigs/kustomize" ],
       "extractVersion": "^kustomize/v(?<version>.+)$"
+    },
+    {
+      "packageNames": [ "microsoft/WSL2-Linux-Kernel" ],
+      "extractVersion": "^(?<version>.+)-microsoft-standard$"
     }
   ],
   "regexManagers": [
