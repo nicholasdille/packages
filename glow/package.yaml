@@ -2,14 +2,14 @@ name: glow
 description: Render markdown on the CLI, with pizzazz!
 repo: charmbracelet/glow
 version:
-  latest: v1.2.1 # renovate: datasource=github-releases depName=charmbracelet/glow
+  latest: 1.2.1 # renovate: datasource=github-releases depName=charmbracelet/glow
   command: glow --version
   filter: ^glow
-  pattern: s/^glow\sversion\s(\S+)\s.+$/v\1/
+  pattern: s/^glow\sversion\s(\S+)\s.+$/\1/
 tags:
   - markdown
 install:
   script: |-
-    echo "https://github.com/charmbracelet/glow/releases/download/${requested_version}/glow_${requested_version#v}_linux_x86_64.tar.gz" | \
+    echo "https://github.com/charmbracelet/glow/releases/download/v${requested_version}/glow_${requested_version}_linux_x86_64.tar.gz" | \
         download_file | \
         untar_file glow

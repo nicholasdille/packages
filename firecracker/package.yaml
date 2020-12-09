@@ -5,10 +5,10 @@ links:
   - text: Homepage
     url: http://firecracker-microvm.io/
 version:
-  latest: v0.23.1 # renovate: datasource=github-releases depName=firecracker-microvm/firecracker
+  latest: 0.23.1 # renovate: datasource=github-releases depName=firecracker-microvm/firecracker
   command: firecracker --version
   filter: ^Firecracker
-  pattern: s/^Firecracker\s(.+)$/\1/
+  pattern: s/^Firecracker\sv(.+)$/\1/
 tags:
   - serverless
   - virtual machine
@@ -16,7 +16,7 @@ tags:
   - firecracker
 install:
   script: |-
-    echo "https://github.com/firecracker-microvm/firecracker/releases/download/${requested_version}/firecracker-${requested_version}-x86_64" | \
+    echo "https://github.com/firecracker-microvm/firecracker/releases/download/v${requested_version}/firecracker-v${requested_version}-x86_64" | \
         download_file | \
         store_file firecracker | \
         make_executable

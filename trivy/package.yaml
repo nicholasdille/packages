@@ -2,10 +2,10 @@ name: trivy
 description: A Simple and Comprehensive Vulnerability Scanner for Containers, Suitable for CI
 repo: aquasecurity/trivy
 version:
-  latest: v0.14.0 # renovate: datasource=github-releases depName=aquasecurity/trivy
+  latest: 0.14.0 # renovate: datasource=github-releases depName=aquasecurity/trivy
   command: trivy --version
   filter: ^Version
-  pattern: s/^Version:\s(.+)$/v\1/
+  pattern: s/^Version:\s(.+)$/\1/
 tags:
   - container
   - security
@@ -14,7 +14,7 @@ tags:
   - quality
 install:
   script: |-
-    echo "https://github.com/aquasecurity/trivy/releases/download/${requested_version}/trivy_${requested_version#v}_Linux-64bit.tar.gz" | \
+    echo "https://github.com/aquasecurity/trivy/releases/download/v${requested_version}/trivy_${requested_version}_Linux-64bit.tar.gz" | \
         download_file | \
         untar_file trivy
 

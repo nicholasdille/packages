@@ -7,10 +7,10 @@ links:
   - text: Helm Hub
     url: https://hub.helm.sh/
 version:
-  latest: v3.4.1 # renovate: datasource=github-releases depName=helm/helm
+  latest: 3.4.1 # renovate: datasource=github-releases depName=helm/helm
   command: helm version --template {{.Version}}
   filter: ^v
-  pattern: s/^(.+)$/\1/
+  pattern: s/^v(.+)$/\1/
 tags:
   - kubernetes
   - k8s
@@ -23,7 +23,7 @@ install:
   script: |-
     require sops
 
-    curl --location --fail "https://get.helm.sh/helm-${requested_version}-linux-amd64.tar.gz" | \
+    curl --location --fail "https://get.helm.sh/helm-v${requested_version}-linux-amd64.tar.gz" | \
         ${SUDO} tar -xz --strip-components=1 -C "${TARGET_BIN}" linux-amd64/helm
 
     helm completion bash | \

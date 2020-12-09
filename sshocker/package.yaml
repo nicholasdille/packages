@@ -2,10 +2,10 @@ name: sshocker
 description: ssh + reverse sshfs + port forwarder, in Docker-like CLI
 repo: AkihiroSuda/sshocker
 version:
-  latest: v0.1.0 # renovate: datasource=github-releases depName=AkihiroSuda/sshocker
+  latest: 0.1.0 # renovate: datasource=github-releases depName=AkihiroSuda/sshocker
   command: sshocker --version
   filter: ^sshocker
-  pattern: s/^sshocker\sversion\s(.+)$/v\1/
+  pattern: s/^sshocker\sversion\s(.+)$/\1/
 tags:
   - docker
   - container
@@ -16,7 +16,7 @@ tags:
   - mount
 install:
   script: |-
-    echo "https://github.com/AkihiroSuda/sshocker/releases/download/${requested_version}/sshocker-Linux-x86_64" | \
+    echo "https://github.com/AkihiroSuda/sshocker/releases/download/v${requested_version}/sshocker-Linux-x86_64" | \
         download_file | \
         store_file sshocker | \
         make_executable

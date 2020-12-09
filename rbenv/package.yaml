@@ -2,10 +2,10 @@ name: rbenv
 description: Groom your app’s Ruby environment
 repo: rbenv/rbenv
 version:
-  latest: v1.1.2 # renovate: datasource=github-releases depName=rbenv/rbenv
+  latest: 1.1.2 # renovate: datasource=github-releases depName=rbenv/rbenv
   command: rbenv --version
   filter: ^rbenv
-  pattern: s/^rbenv\s([^-]+)-.+$/v\1/
+  pattern: s/^rbenv\s([^-]+)-.+$/\1/
 tags:
   - ruby
   - version
@@ -41,7 +41,7 @@ install:
   docker: true
   script: |-
     ${SUDO} mkdir -p "${TARGET_BASE}/rbenv"
-    echo "https://github.com/rbenv/rbenv/archive/${requested_version}.tar.gz" | \
+    echo "https://github.com/rbenv/rbenv/archive/v${requested_version}.tar.gz" | \
         download_file | \
         tar -xzC "${TARGET_BASE}/rbenv" --strip-components=1
     export PATH="${TARGET_BASE}/rbenv/shims:${TARGET_BASE}/rbenv/bin:${PATH}"

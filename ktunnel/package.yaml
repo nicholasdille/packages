@@ -2,15 +2,15 @@ name: ktunnel
 description: A cli that exposes your local resources to kubernetes
 repo: omrikiei/ktunnel
 version:
-  latest: v1.3.1 # renovate: datasource=github-releases depName=omrikiei/ktunnel
+  latest: 1.3.1 # renovate: datasource=github-releases depName=omrikiei/ktunnel
   command: ktunnel --version 2>/dev/null
   filter: ^ktunnel
-  pattern: s/^ktunnel\sversion\s(.+)$/v\1/
+  pattern: s/^ktunnel\sversion\s(.+)$/\1/
 tags:
   - kubernetes
   - k8s
 install:
   script: |-
-    echo "https://github.com/omrikiei/ktunnel/releases/download/${requested_version}/ktunnel_${requested_version#v}_Linux_x86_64.tar.gz" | \
+    echo "https://github.com/omrikiei/ktunnel/releases/download/v${requested_version}/ktunnel_${requested_version}_Linux_x86_64.tar.gz" | \
         download_file | \
         untar_file ktunnel

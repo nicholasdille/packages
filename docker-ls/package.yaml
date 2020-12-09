@@ -2,10 +2,10 @@ name: docker-ls
 description: Tools for browsing and manipulating docker registries
 repo: mayflower/docker-ls
 version:
-  latest: v0.4.1 # renovate: datasource=github-releases depName=mayflower/docker-ls
+  latest: 0.4.1 # renovate: datasource=github-releases depName=mayflower/docker-ls
   command: docker-ls version
   filter: ^version
-  pattern: s/^version:\s(\S+)\s.+$/v\1/
+  pattern: s/^version:\s(\S+)\s.+$/\1/
 tags:
 - docker
 - container
@@ -16,8 +16,9 @@ install:
   script: |
     build_containerized golang <<EOF
     go get -d github.com/mayflower/docker-ls/cli/...
+    git -C /go/src/github.com/mayflower/docker-ls checkout v${requested_version}
     go generate github.com/mayflower/docker-ls/lib/...
-    go install github.com/mayflower/docker-ls/cli/...
+    CGO_ENABLED=0 go install -ldflags="-extldflags=-static" github.com/mayflower/docker-ls/cli/...
     cp /go/bin/docker-ls /go/bin/docker-rm /
     EOF
     extract_file_from_container docker-ls docker-rm

@@ -2,15 +2,15 @@ name: podman
 description: A tool for managing OCI containers and pods
 repo: containers/podman
 version:
-  latest: v2.2.1 # renovate: datasource=github-releases depName=containers/podman
+  latest: 2.2.1 # renovate: datasource=github-releases depName=containers/podman
   command: podman --version
   filter: ^podman
-  pattern: s/^podman\sversion\s(.+)$/v\1/
+  pattern: s/^podman\sversion\s(.+)$/\1/
 tags:
   - container
 install:
   script: |-
-    echo "https://github.com/containers/podman/releases/download/${requested_version}/podman-remote-static.tar.gz" | \
+    echo "https://github.com/containers/podman/releases/download/v${requested_version}/podman-remote-static.tar.gz" | \
         download_file | \
         untar_file podman-remote-static
 

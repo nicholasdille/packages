@@ -2,16 +2,16 @@ name: ksort
 description: Sort manifest files in a proper order by Kind
 repo: superbrothers/ksort
 version:
-  latest: v0.4.1 # renovate: datasource=github-releases depName=superbrothers/ksort
+  latest: 0.4.1 # renovate: datasource=github-releases depName=superbrothers/ksort
   command: ksort --version 2>&1
   filter: ^\&
-  pattern: s/^&ksort\.info\{GitVersion:\"([^\"]+).+$/\1/
+  pattern: s/^&ksort\.info\{GitVersion:\"v([^\"]+).+$/\1/
 tags:
   - kubernetes
   - k8s
 install:
   script: |-
-    echo "https://github.com/superbrothers/ksort/releases/download/${requested_version}/ksort-linux-amd64.zip" | \
+    echo "https://github.com/superbrothers/ksort/releases/download/v${requested_version}/ksort-linux-amd64.zip" | \
         download_file | \
         store_file ksort.zip "${temporary_directory}"
     unzip_file "${temporary_directory}/ksort.zip" ksort

@@ -2,10 +2,10 @@ name: hyperfine
 description: A command-line benchmarking tool
 repo: sharkdp/hyperfine
 version:
-  latest: v1.11.0 # renovate: datasource=github-releases depName=sharkdp/hyperfine
+  latest: 1.11.0 # renovate: datasource=github-releases depName=sharkdp/hyperfine
   command: hyperfine --version
   filter: ^hyperfine
-  pattern: s/^hyperfine\s(.+)$/v\1/
+  pattern: s/^hyperfine\s(.+)$/\1/
 tags:
   - shell
   - terminal
@@ -13,7 +13,7 @@ tags:
   - monitor
 install:
   script: |-
-    echo "https://github.com/sharkdp/hyperfine/releases/download/${requested_version}/hyperfine-${requested_version}-x86_64-unknown-linux-gnu.tar.gz" | \
+    echo "https://github.com/sharkdp/hyperfine/releases/download/v${requested_version}/hyperfine-v${requested_version}-x86_64-unknown-linux-gnu.tar.gz" | \
         download_file | \
         tar -xz --strip-components=1
 

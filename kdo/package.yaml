@@ -2,15 +2,15 @@ name: kdo
 description: Deployless Development on Kubernetes
 repo: stepro/kdo
 version:
-  latest: v0.6.1 # renovate: datasource=github-tags depName=stepro/kdo
+  latest: 0.6.1 # renovate: datasource=github-tags depName=stepro/kdo
   command: kdo --version
   filter: ^kdo
-  pattern: s/^kdo\sversion\s(.+)$/v\1/
+  pattern: s/^kdo\sversion\s(.+)$/\1/
 tags:
   - kubernetes
   - k8s
 install:
   script: |-
-    echo "https://github.com/stepro/kdo/releases/download/${requested_version}/kdo-${requested_version}-linux-amd64.tar.gz" | \
+    echo "https://github.com/stepro/kdo/releases/download/v${requested_version}/kdo-v${requested_version}-linux-amd64.tar.gz" | \
         download_file | \
         untar_file kdo

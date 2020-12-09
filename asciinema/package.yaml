@@ -5,10 +5,10 @@ links:
   - text: Homepage
     url: https://asciinema.org/
 version:
-  latest: v2.0.2 # renovate: datasource=github-releases depName=asciinema/asciinema
+  latest: 2.0.2 # renovate: datasource=github-releases depName=asciinema/asciinema
   command: asciinema --version
   filter: ^asciinema
-  pattern: s/^asciinema\s(.+)$/v\1/
+  pattern: s/^asciinema\s(.+)$/\1/
 tags:
   - shell
   - record

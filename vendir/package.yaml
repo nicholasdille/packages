@@ -5,15 +5,15 @@ links:
   - text: Homepage
     url: https://carvel.dev/
 version:
-  latest: v0.14.0 # renovate: datasource=github-releases depName=vmware-tanzu/carvel-vendir
+  latest: 0.14.0 # renovate: datasource=github-releases depName=vmware-tanzu/carvel-vendir
   command: vendir --version
   filter: ^vendir
-  pattern: s/^vendir\sversion\s(.+)$/v\1/
+  pattern: s/^vendir\sversion\s(.+)$/\1/
 tags:
   - shell
 install:
   script: |-
-    echo "https://github.com/vmware-tanzu/carvel-vendir/releases/download/${requested_version}/vendir-linux-amd64" | \
+    echo "https://github.com/vmware-tanzu/carvel-vendir/releases/download/v${requested_version}/vendir-linux-amd64" | \
         download_file | \
         store_file vendir | \
         make_executable

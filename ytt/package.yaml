@@ -5,10 +5,10 @@ links:
   - text: Homepage
     url: https://carvel.dev/
 version:
-  latest: v0.30.0 # renovate: datasource=github-releases depName=vmware-tanzu/carvel-ytt
+  latest: 0.30.0 # renovate: datasource=github-releases depName=vmware-tanzu/carvel-ytt
   command: ytt --version
   filter: ^ytt
-  pattern: s/^ytt\sversion\s(.+)$/v\1/
+  pattern: s/^ytt\sversion\s(.+)$/\1/
 tags:
   - yaml
   - configuration
@@ -17,7 +17,7 @@ tags:
   - expansion
 install:
   script: |-
-    echo "https://github.com/vmware-tanzu/carvel-ytt/releases/download/${requested_version}/ytt-linux-amd64" | \
+    echo "https://github.com/vmware-tanzu/carvel-ytt/releases/download/v${requested_version}/ytt-linux-amd64" | \
         download_file | \
         store_file ytt | \
         make_executable

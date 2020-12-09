@@ -2,7 +2,7 @@ name: docker-shell
 description: A simple interactive prompt for docker
 repo: Trendyol/docker-shell
 version:
-  latest: v1.3.1 # renovate: datasource=github-tags depName=Trendyol/docker-shell
+  latest: 1.3.1 # renovate: datasource=github-tags depName=Trendyol/docker-shell
 tags:
   - docker
   - container
@@ -11,9 +11,9 @@ install:
   docker: true
   script: |-
     build_containerized golang <<EOF
-    curl --silent --location "https://github.com/Trendyol/docker-shell/archive/${requested_version}.tar.gz" | \
-        ${SUDO} tar -tvzC /tmp
-    cd "/tmp/docker-shell-${requested_version#v}"
+    curl --silent --location "https://github.com/Trendyol/docker-shell/archive/v${requested_version}.tar.gz" | \
+        ${SUDO} tar -xz -C /tmp
+    cd "/tmp/docker-shell-${requested_version}"
     go build -o docker-shell .
     cp docker-shell /
     EOF

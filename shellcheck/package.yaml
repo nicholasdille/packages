@@ -2,10 +2,10 @@ name: shellcheck
 description: A static analysis tool for shell scripts
 repo: koalaman/shellcheck
 version:
-  latest: v0.7.1 # renovate: datasource=github-releases depName=koalaman/shellcheck
+  latest: 0.7.1 # renovate: datasource=github-releases depName=koalaman/shellcheck
   command: shellcheck --version
   filter: ^version
-  pattern: s/^version:\s(.+)$/v\1/
+  pattern: s/^version:\s(.+)$/\1/
 tags:
   - shell
   - quality
@@ -14,6 +14,6 @@ tags:
   - analysis
 install:
   script: |-
-    echo "https://github.com/koalaman/shellcheck/releases/download/${requested_version}/shellcheck-${requested_version}.linux.x86_64.tar.xz" | \
+    echo "https://github.com/koalaman/shellcheck/releases/download/v${requested_version}/shellcheck-v${requested_version}.linux.x86_64.tar.xz" | \
         download_file | \
         ${SUDO} tar -xJC "${TARGET_BIN}" --strip-components 1 --wildcards "*/shellcheck"

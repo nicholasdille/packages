@@ -2,10 +2,10 @@ name: node
 description: Node.js JavaScript runtime
 repo: nodejs/node
 version:
-  latest: v15.4.0 # renovate: datasource=github-releases depName=nodejs/node
+  latest: 15.4.0 # renovate: datasource=github-releases depName=nodejs/node
   command: node --version
   filter: ^v
-  pattern: s/^(.+)$/\1/
+  pattern: s/^v(.+)$/\1/
 tags:
   - node
   - nodejs
@@ -15,4 +15,5 @@ install:
   script: |-
     require n
     source /etc/profile.d/n.sh
-    ${SUDO} n latest
+    ${SUDO} n ${requested_version}
+    ${SUDO} npm install -g npm

@@ -2,15 +2,15 @@ name: jfrog-cli
 description: JFrog CLI is a client that provides a simple interface that automates access to the JFrog products
 repo: jfrog/jfrog-cli
 version:
-  latest: v1.41.2 # renovate: datasource=github-releases depName=jfrog/jfrog-cli
+  latest: 1.41.2 # renovate: datasource=github-releases depName=jfrog/jfrog-cli
   command: jfrog --version
   filter: ^jfrog
-  pattern: s/^jfrog\sversion\s(.+)$/v\1/
+  pattern: s/^jfrog\sversion\s(.+)$/\1/
 tags:
   - jfrog
 install:
   script: |-
-    echo "https://api.bintray.com/content/jfrog/jfrog-cli-go/${requested_version#v}/jfrog-cli-linux-amd64/jfrog?bt_package=jfrog-cli-linux-amd64" | \
+    echo "https://api.bintray.com/content/jfrog/jfrog-cli-go/${requested_version}/jfrog-cli-linux-amd64/jfrog?bt_package=jfrog-cli-linux-amd64" | \
         download_file | \
         store_file jfrog | \
         make_executable

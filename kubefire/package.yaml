@@ -2,10 +2,10 @@ name: kubefire
 description: KubeFire, creates and manages Kubernetes Clusters using Firecracker microVMs
 repo: innobead/kubefire
 version:
-  latest: v0.3.3 # renovate: datasource=github-releases depName=innobead/kubefire
+  latest: 0.3.3 # renovate: datasource=github-releases depName=innobead/kubefire
   command: kubefire version
   filter: ^Version
-  pattern: s/^Version:\s(.+)$/\1/
+  pattern: s/^Version:\sv(.+)$/\1/
 tags:
   - kubernetes
   - k8s
@@ -49,14 +49,15 @@ install:
     require containerd
     require cni
 
-    echo "https://github.com/innobead/kubefire/releases/download/${requested_version}/kubefire-linux-amd64" | \
+    echo "https://github.com/innobead/kubefire/releases/download/v${requested_version}/kubefire-linux-amd64" | \
         download_file | \
         store_file kubefire | \
         make_executable
 
-    echo "https://github.com/innobead/kubefire/releases/download/${requested_version}/host-local-rev-linux-amd64" | \
+    echo "https://github.com/innobead/kubefire/releases/download/v${requested_version}/host-local-rev-linux-amd64" | \
         download_file | \
-        ${SUDO} tar -xzC /opt/cni/bin/
+        store_file host-local-rev | \
+        make_executable
 
     ${SUDO} mkdir -p /etc/cni/net.d
     get_file kubefire 00-kubefire.conflist | \

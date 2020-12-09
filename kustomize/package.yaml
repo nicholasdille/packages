@@ -20,7 +20,7 @@ tags:
   - yaml
 install:
   script: |-
-    echo "https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2F${requested_version}/kustomize_v${requested_version#kustomize/}_linux_amd64.tar.gz" | \
+    echo "https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv${requested_version}/kustomize_v${requested_version#kustomize/}_linux_amd64.tar.gz" | \
         download_file | \
         untar_file kustomize
 

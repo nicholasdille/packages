@@ -2,10 +2,10 @@ name: promql
 description: Prometheus Query CLI
 repo: nalbury/promql-cli
 version:
-  latest: v0.2.0 # renovate: datasource=github-releases depName=nalbury/promql-cli
+  latest: 0.2.0 # renovate: datasource=github-releases depName=nalbury/promql-cli
   command: promql --version
   filter: ^promql
-  pattern: s/^promql\sversion\s(.+)$/\1/
+  pattern: s/^promql\sversion\sv(.+)$/\1/
 tags:
   - prometheus
   - promql
@@ -13,7 +13,7 @@ install:
   docker: true
   script: |-
     build_containerized golang <<EOF
-    curl --silent --location "https://github.com/nalbury/promql-cli/archive/${requested_version}.tar.gz" | \
+    curl --silent --location "https://github.com/nalbury/promql-cli/archive/v${requested_version}.tar.gz" | \
         tar -xzC /tmp/promql-cli --strip-components=1
     cd /tmp/promql-cli
     go mod download

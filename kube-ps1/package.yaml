@@ -2,7 +2,7 @@ name: kube-ps1
 description: Kubernetes prompt info for bash and zsh
 repo: jonmosco/kube-ps1
 version:
-  latest: v0.7.0 # renovate: datasource=github-releases depName=jonmosco/kube-ps1
+  latest: 0.7.0 # renovate: datasource=github-releases depName=jonmosco/kube-ps1
 tags:
   - kubernetes
   - k8s
@@ -16,9 +16,9 @@ files:
       PS1='[\u@\h \W $(kube_ps1)]\$ '
 install:
   script: |-
-    echo "https://github.com/jonmosco/kube-ps1/archive/${requested_version}.tar.gz" | \
+    echo "https://github.com/jonmosco/kube-ps1/archive/v${requested_version}.tar.gz" | \
         download_file | \
-        untar_file --strip-components=1 "kube-ps1-${requested_version#v}/kube-ps1.sh"
+        untar_file --strip-components=1 "kube-ps1-${requested_version}/kube-ps1.sh"
 
     get_file kube-ps1 profile.d.kube-ps1.sh | \
         store_file kube-ps1.sh /etc/profile.d

@@ -5,11 +5,11 @@ links:
   - text: Homepage
     url: https://cluster-api.sigs.k8s.io/
 version:
-  latest: v0.3.11 # renovate: datasource=github-releases depName=kubernetes-sigs/cluster-api
+  latest: 0.3.11 # renovate: datasource=github-releases depName=kubernetes-sigs/cluster-api
   command: clusterctl version --output yaml
   filter: |
     ^[[:space:]]*gitVersion:
-  pattern: s/^\s+gitVersion:\s(.+)$/\1/
+  pattern: s/^\s+gitVersion:\sv(.+)$/\1/
 tags:
   - kubernetes
   - k8s
@@ -19,7 +19,7 @@ tags:
   - api
 install:
   script: |-
-    echo "https://github.com/kubernetes-sigs/cluster-api/releases/download/${requested_version}/clusterctl-linux-amd64" | \
+    echo "https://github.com/kubernetes-sigs/cluster-api/releases/download/v${requested_version}/clusterctl-linux-amd64" | \
         download_file | \
         store_file clusterctl | \
         make_executable

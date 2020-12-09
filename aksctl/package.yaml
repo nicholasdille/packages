@@ -5,7 +5,7 @@ links:
 - text: Homepage
   url: https://aksctl.io/
 version:
-  latest: v0.2.0 # renovate: datasource=github-releases depName=adfolks/aksctl
+  latest: 0.2.0 # renovate: datasource=github-releases depName=adfolks/aksctl
 tags:
   - kubernetes
   - k8s
@@ -16,6 +16,6 @@ tags:
   - bootstrap
 install:
   script: |-
-    echo "https://github.com/adfolks/aksctl/releases/download/${requested_version}/aksctl-linux-amd64.tar.gz" | \
+    echo "https://github.com/adfolks/aksctl/releases/download/v${requested_version}/aksctl-linux-amd64.tar.gz" | \
         download_file | \
         untar_file ./aksctl

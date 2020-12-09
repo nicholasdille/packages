@@ -2,10 +2,10 @@ name: clusterlint
 description: A best practices checker for Kubernetes clusters
 repo: digitalocean/clusterlint
 version:
-  latest: v0.2.4 # renovate: datasource=github-releases depName=digitalocean/clusterlint
+  latest: 0.2.4 # renovate: datasource=github-releases depName=digitalocean/clusterlint
   command: clusterlint --version
   filter: ^clusterlint
-  pattern: s/^(.+)$/v\1/
+  pattern: s/^(.+)$/\1/
 tags:
   - kubernetes
   - k8s
@@ -13,6 +13,6 @@ tags:
   - quality
 install:
   script: |-
-    echo "https://github.com/digitalocean/clusterlint/releases/download/${requested_version}/clusterlint-${requested_version#v}-linux-amd64.tar.gz" | \
+    echo "https://github.com/digitalocean/clusterlint/releases/download/v${requested_version}/clusterlint-${requested_version}-linux-amd64.tar.gz" | \
         download_file | \
         untar_file ./clusterlint

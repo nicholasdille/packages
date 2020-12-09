@@ -2,14 +2,14 @@ name: npiperelay
 description: npiperelay allows you to access Windows named pipes from WSL
 repo: NZSmartie/npiperelay
 version:
-  latest: v0.1 # renovate: datasource=github-releases depName=NZSmartie/npiperelay versioning=regex:^v(?<major>\d+?)\.(?<minor>\d+?)$
+  latest: 0.1 # renovate: datasource=github-releases depName=NZSmartie/npiperelay versioning=regex:^v(?<major>\d+?)\.(?<minor>\d+?)$
 tags:
   - wsl
   - npipe
   - pipe
 install:
   script: |-
-    echo "https://github.com/NZSmartie/npiperelay/releases/download/${requested_version}/npiperelay.exe" | \
+    echo "https://github.com/NZSmartie/npiperelay/releases/download/v${requested_version}/npiperelay.exe" | \
         download_file | \
         store_file npiperelay.exe | \
         make_executable

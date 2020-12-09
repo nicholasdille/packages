@@ -2,13 +2,13 @@ name: cascadia-code
 description: This is a fun, new monospaced font that includes programming ligatures and is designed to enhance the modern look and feel of the Windows Terminal
 repo: microsoft/cascadia-code
 version:
-  latest: v2009.22 # renovate: datasource=github-releases depName=microsoft/cascadia-code
+  latest: 2009.22 # renovate: datasource=github-releases depName=microsoft/cascadia-code
 tags:
   - font
   - powerline
 install:
   script: |-
-    curl --silent --location --remote-name "https://github.com/microsoft/cascadia-code/releases/download/${requested_version}/CascadiaCode-${requested_version#v}.zip"
+    curl --silent --location --remote-name "https://github.com/microsoft/cascadia-code/releases/download/v${requested_version}/CascadiaCode-${requested_version}.zip"
     unzip CascadiaCode-${requested_version#v}.zip
 
     ${SUDO} mkdir -p "${TARGET_BASE}/share/fonts/cascadia-code"

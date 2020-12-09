@@ -2,10 +2,10 @@ name: cnab-to-oci
 description: Tool to convert CNAB bundle.json to OCI index
 repo: cnabio/cnab-to-oci
 version:
-  latest: v0.3.1-beta1 # renovate: datasource=github-releases depName=cnabio/cnab-to-oci
+  latest: 0.3.1-beta1 # renovate: datasource=github-releases depName=cnabio/cnab-to-oci
   command: cnab-to-oci version
   filter: ^Version
-  pattern: s/^Version:\s+(.+)$/\1/
+  pattern: s/^Version:\s+v(.+)$/\1/
 tags:
   - cnab
   - oci
@@ -15,7 +15,7 @@ install:
     build_containerized golang <<EOF
     go get github.com/cnabio/cnab-to-oci
     cd /go/src/github.com/cnabio/cnab-to-oci
-    git checkout ${requested_version}
+    git checkout v${requested_version}
     make build
     cp ./bin/cnab-to-oci /
     EOF

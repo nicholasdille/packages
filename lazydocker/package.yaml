@@ -2,14 +2,15 @@ name: lazydocker
 description: The lazier way to manage everything docker
 repo: jesseduffield/lazydocker
 version:
-  latest: v0.10 # renovate: datasource=github-releases depName=jesseduffield/lazydocker versioning=regex:^v(?<major>\d+?)\.(?<minor>\d+?)$
+  latest: 0.10 # renovate: datasource=github-releases depName=jesseduffield/lazydocker versioning=regex:^v(?<major>\d+?)\.(?<minor>\d+?)$
   command: lazydocker --version
   filter: ^Version
-  pattern: s/^Version:\s(.+)$/v\1/
+  pattern: s/^Version:\s(.+)$/\1/
 tags:
 - docker
 - ui
-install: |
-  echo "https://github.com/jesseduffield/lazydocker/releases/download/${requested_version}/lazydocker_${requested_version#v}_Linux_x86_64.tar.gz" | \
-      download_file | \
-      untar_file lazydocker
+install:
+  script: |
+    echo "https://github.com/jesseduffield/lazydocker/releases/download/v${requested_version}/lazydocker_${requested_version}_Linux_x86_64.tar.gz" | \
+        download_file | \
+        untar_file lazydocker

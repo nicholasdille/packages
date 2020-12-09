@@ -5,10 +5,10 @@ links:
 - text: Homepage
   url: http://swagger.io/
 version:
-  latest: v3.0.23 # renovate: datasource=github-releases depName=swagger-api/swagger-codegen
+  latest: 3.0.23 # renovate: datasource=github-releases depName=swagger-api/swagger-codegen
   command: java -jar ${TARGET_BIN}/swagger-codegen-cli.jar version
   filter: ^[[:digit:]]
-  pattern: s/^(.+)$/v\1/
+  pattern: s/^(.+)$/\1/
 tags:
   - java
   - version
@@ -19,6 +19,6 @@ install:
     require java
     source /etc/profile.d/java.sh
 
-    echo "https://repo1.maven.org/maven2/io/swagger/codegen/v3/swagger-codegen-cli/${requested_version#v}/swagger-codegen-cli-${requested_version#v}.jar" | \
+    echo "https://repo1.maven.org/maven2/io/swagger/codegen/v3/swagger-codegen-cli/${requested_version}/swagger-codegen-cli-${requested_version}.jar" | \
         download_file | \
         store_file swagger-codegen-cli.jar

@@ -14,12 +14,12 @@ tags:
 install:
   script: |-
     if ! test -d "${TARGET_BASE}/src/WSL2-Linux-Kernel-${requested_version}"; then
-      echo "https://github.com/microsoft/WSL2-Linux-Kernel/archive/${requested_version}.tar.gz" | \
-          download_file | \
-          TARGET_BIN="${TARGET_BASE}/src" untar_file
+        echo "https://github.com/microsoft/WSL2-Linux-Kernel/archive/${requested_version}-microsoft-standard.tar.gz" | \
+            download_file | \
+            TARGET_BIN="${TARGET_BASE}/src" untar_file
     fi
 
-    cd "${TARGET_BASE}/src/WSL2-Linux-Kernel-${requested_version}"
+    cd "${TARGET_BASE}/src/WSL2-Linux-Kernel-${requested_version}-microsoft-standard"
     ${SUDO} cp Microsoft/config-wsl .config
     get_file wsl2-kernel config | \
         ${SUDO} patch .config
@@ -30,7 +30,7 @@ install:
     docker run --interactive --rm \
         --mount "type=bind,src=${TARGET_BASE}/src,dst=${TARGET_BASE}/src" \
         --mount type=bind,src=/lib/modules,dst=/lib/modules \
-        --workdir "${TARGET_BASE}/src/WSL2-Linux-Kernel-${requested_version}" \
+        --workdir "${TARGET_BASE}/src/WSL2-Linux-Kernel-${requested_version}-microsoft-standard" \
         wsl2-kernel \
         bash <<EOF
     make -j 4
@@ -43,7 +43,7 @@ install:
     echo "##########################################################"
     echo "###"
     echo "### Install and run the kernel:"
-    echo "###   1. Copy ${TARGET_BASE}/src/WSL2-Linux-Kernel-${requested_version}/arch/x86/boot/bzImage over to Windows"
+    echo "###   1. Copy ${TARGET_BASE}/src/WSL2-Linux-Kernel-${requested_version}-microsoft-standard/arch/x86/boot/bzImage over to Windows"
     echo "###   2. Add 'kernel=<path/to/bzImage>' to .wslconfig"
     echo "###   3. Add 'nestedVirtualization=true' to .wslconfig"
     echo "###   4. Shutdown WSL2: wsl --shutdown"

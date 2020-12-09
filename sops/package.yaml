@@ -2,10 +2,10 @@ name: sops
 description: Simple and flexible tool for managing secrets
 repo: mozilla/sops
 version:
-  latest: v3.6.1 # renovate: datasource=github-releases depName=mozilla/sops
+  latest: 3.6.1 # renovate: datasource=github-releases depName=mozilla/sops
   command: sops --version
   filter: ^sops
-  pattern: s/^sops\s(\S+)\s.+$/v\1/
+  pattern: s/^sops\s(\S+)\s.+$/\1/
 tags:
   - secrets
   - security
@@ -13,7 +13,7 @@ tags:
   - json
 install:
   script: |-
-    echo "https://github.com/mozilla/sops/releases/download/${requested_version}/sops-${requested_version}.linux" | \
+    echo "https://github.com/mozilla/sops/releases/download/v${requested_version}/sops-v${requested_version}.linux" | \
         download_file | \
         store_file sops | \
         make_executable

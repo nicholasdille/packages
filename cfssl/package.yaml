@@ -2,10 +2,10 @@ name: cfssl
 description: Cloudflare's PKI and TLS toolkit
 repo: cloudflare/cfssl
 version:
-  latest: v1.5.0 # renovate: datasource=github-releases depName=cloudflare/cfssl
+  latest: 1.5.0 # renovate: datasource=github-releases depName=cloudflare/cfssl
   command: cfssl version
   filter: ^Version
-  pattern: s/^Version:\s(.+)$/v\1/
+  pattern: s/^Version:\s(.+)$/\1/
 tags:
   - certificate
   - ssl
@@ -13,12 +13,12 @@ tags:
   - pki
 install:
   script: |-
-    echo "https://github.com/cloudflare/cfssl/releases/download/${requested_version}/cfssl_${requested_version#v}_linux_amd64" | \
+    echo "https://github.com/cloudflare/cfssl/releases/download/v${requested_version}/cfssl_${requested_version}_linux_amd64" | \
         download_file | \
         store_file cfssl | \
         make_executable
 
-    echo "https://github.com/cloudflare/cfssl/releases/download/${requested_version}/cfssljson_${requested_version#v}_linux_amd64" | \
+    echo "https://github.com/cloudflare/cfssl/releases/download/v${requested_version}/cfssljson_${requested_version}_linux_amd64" | \
         download_file | \
         store_file cfssljson | \
         make_executable

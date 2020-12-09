@@ -5,10 +5,10 @@ links:
   - text: Homepage
     url: https://ctop.sh/
 version:
-  latest: v0.7.5 # renovate: datasource=github-releases depName=bcicen/ctop
+  latest: 0.7.5 # renovate: datasource=github-releases depName=bcicen/ctop
   command: ctop -v
   filter: ^ctop
-  pattern: s/^ctop\sversion\s(\S+),.+$/v\1/
+  pattern: s/^ctop\sversion\s(\S+),.+$/\1/
 tags:
   - shell
   - terminal
@@ -16,7 +16,7 @@ tags:
   - performance
 install:
   script: |-
-    echo "https://github.com/bcicen/ctop/releases/download/${requested_version}/ctop-${requested_version#v}-linux-amd64" | \
+    echo "https://github.com/bcicen/ctop/releases/download/v${requested_version}/ctop-${requested_version}-linux-amd64" | \
         download_file | \
         store_file ctop | \
         make_executable

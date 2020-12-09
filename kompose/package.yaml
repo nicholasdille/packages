@@ -5,17 +5,17 @@ links:
   - text: Homepage
     url: http://kompose.io/
 version:
-  latest: v1.22.0 # renovate: datasource=github-releases depName=kubernetes/kompose
+  latest: 1.22.0 # renovate: datasource=github-releases depName=kubernetes/kompose
   command: kompose version
   filter: ^[[:digit:]]
-  pattern: s/^(\S+)\s(.+)$/v\1/
+  pattern: s/^(\S+)\s(.+)$/\1/
 tags:
   - kubernetes
   - k8s
   - compose
 install:
   script: |-
-    echo "https://github.com/kubernetes/kompose/releases/download/${requested_version}/kompose-linux-amd64" | \
+    echo "https://github.com/kubernetes/kompose/releases/download/v${requested_version}/kompose-linux-amd64" | \
         download_file | \
         store_file kompose | \
         make_executable

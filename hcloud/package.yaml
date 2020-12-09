@@ -2,16 +2,16 @@ name: hcloud
 description: A command-line interface for Hetzner Cloud
 repo: hetznercloud/cli
 version:
-  latest: v1.20.0 # renovate: datasource=github-releases depName=hetznercloud/cli
+  latest: 1.20.0 # renovate: datasource=github-releases depName=hetznercloud/cli
   command: hcloud version
   filter: ^hcloud
-  pattern: s/^hcloud\s(.+)$/v\1/
+  pattern: s/^hcloud\s(.+)$/\1/
 tags:
   - hetzner
   - cloud
 install:
   script: |-
-    echo "https://github.com/hetznercloud/cli/releases/download/${requested_version}/hcloud-linux-amd64.tar.gz" | \
+    echo "https://github.com/hetznercloud/cli/releases/download/v${requested_version}/hcloud-linux-amd64.tar.gz" | \
         download_file | \
         untar_file hcloud
 

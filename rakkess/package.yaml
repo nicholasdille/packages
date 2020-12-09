@@ -2,10 +2,10 @@ name: rakkess
 description: Review Access - kubectl plugin to show an access matrix for k8s server resources
 repo: corneliusweig/rakkess
 version:
-  latest: v0.4.6 # renovate: datasource=github-releases depName=corneliusweig/rakkess
+  latest: 0.4.6 # renovate: datasource=github-releases depName=corneliusweig/rakkess
   command: rakkess version
   filter: ^v
-  pattern: s/^(.+)$/\1/
+  pattern: s/^v(.+)$/\1/
 tags:
   - kubernetes
   - k8s
@@ -15,7 +15,7 @@ tags:
   - kubectl
 install:
   script: |-
-    echo "https://github.com/corneliusweig/rakkess/releases/download/${requested_version}/rakkess-amd64-linux.tar.gz" | \
+    echo "https://github.com/corneliusweig/rakkess/releases/download/v${requested_version}/rakkess-amd64-linux.tar.gz" | \
         download_file | \
         untar_file rakkess-amd64-linux
     rename_file rakkess-amd64-linux rakkess

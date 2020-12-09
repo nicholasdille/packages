@@ -2,10 +2,10 @@ name: toast
 description: Containerize your development and continuous integration environments
 repo: stepchowfun/toast
 version:
-  latest: v0.32.0 # renovate: datasource=github-releases depName=stepchowfun/toast
+  latest: 0.32.0 # renovate: datasource=github-releases depName=stepchowfun/toast
   command: toast --version
   filter: ^Toast
-  pattern: s/^Toast\s(.+)$/v\1/
+  pattern: s/^Toast\s(.+)$/\1/
 tags:
   - pipeline
   - continuous
@@ -16,7 +16,7 @@ tags:
   - container
 install:
   script: |-
-    echo "https://github.com/stepchowfun/toast/releases/download/${requested_version}/toast-x86_64-unknown-linux-gnu" | \
+    echo "https://github.com/stepchowfun/toast/releases/download/v${requested_version}/toast-x86_64-unknown-linux-gnu" | \
         download_file | \
         store_file toast | \
         make_executable

@@ -2,17 +2,17 @@ name: kubeletctl
 description: A client for kubelet
 repo: cyberark/kubeletctl
 version:
-  latest: v1.6 # renovate: datasource=github-releases depName=cyberark/kubeletctl versioning=regex:^v(?<major>\d+?)\.(?<minor>\d+?)$
+  latest: 1.6 # renovate: datasource=github-releases depName=cyberark/kubeletctl versioning=regex:^v(?<major>\d+?)\.(?<minor>\d+?)$
   command: kubeletctl version
   filter: ^Version
-  pattern: s/^Version:\s(.+)$/v\1/
+  pattern: s/^Version:\s(.+)$/\1/
 tags:
   - kubernetes
   - k8s
   - kubelet
 install:
   script: |-
-    echo "https://github.com/cyberark/kubeletctl/releases/download/${requested_version}/kubeletctl_linux_amd64" | \
+    echo "https://github.com/cyberark/kubeletctl/releases/download/v${requested_version}/kubeletctl_linux_amd64" | \
         download_file | \
         store_file kubeletctl | \
         make_executable

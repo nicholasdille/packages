@@ -2,15 +2,15 @@ name: bat
 description: A cat(1) clone with wings
 repo: sharkdp/bat
 version:
-  latest: v0.17.1 # renovate: datasource=github-releases depName=sharkdp/bat
+  latest: 0.17.1 # renovate: datasource=github-releases depName=sharkdp/bat
   command: bat --version
   filter: ^bat
-  pattern: s/^bat\s(.+)$/v\1/
+  pattern: s/^bat\s(.+)$/\1/
 tags:
   - console
 install:
   script: |-
-    echo "https://github.com/sharkdp/bat/releases/download/${requested_version}/bat-${requested_version}-i686-unknown-linux-gnu.tar.gz" | \
+    echo "https://github.com/sharkdp/bat/releases/download/v${requested_version}/bat-v${requested_version}-i686-unknown-linux-gnu.tar.gz" | \
         download_file \
         >"${temporary_directory}/bat.tar.gz"
 

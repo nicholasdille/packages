@@ -2,16 +2,16 @@ name: vault
 description: A tool for secrets management, encryption as a service, and privileged access management
 repo: hashicorp/vault
 version:
-  latest: v1.6.0 # renovate: datasource=github-tags depName=hashicorp/vault
+  latest: 1.6.0 # renovate: datasource=github-tags depName=hashicorp/vault
   command: vault --version
   filter: ^Vault
-  pattern: s/^Vault\s(\S+)\s.+$/\1/
+  pattern: s/^Vault\sv(\S+)\s.+$/\1/
 tags:
   - security
   - secrets
 install:
   script: |-
-    echo "https://releases.hashicorp.com/vault/${requested_version#v}/vault_${requested_version#v}_linux_amd64.zip" | \
+    echo "https://releases.hashicorp.com/vault/${requested_version}/vault_${requested_version}_linux_amd64.zip" | \
         download_file | \
         store_file "vault.zip" "${temporary_directory}"
     unzip_file "${temporary_directory}/vault.zip"

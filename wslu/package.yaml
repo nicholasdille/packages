@@ -2,13 +2,13 @@ name: wslu
 description: A collection of utilities for Windows 10 Linux Subsystems
 repo: wslutilities/wslu
 version:
-  latest: v3.2.1 # renovate: datasource=github-releases depName=wslutilities/wslu
+  latest: 3.2.1 # renovate: datasource=github-releases depName=wslutilities/wslu
 tags:
   - wsl
 install:
   script: |-
-    echo "https://github.com/wslutilities/wslu/archive/${requested_version}.tar.gz" | \
+    echo "https://github.com/wslutilities/wslu/archive/v${requested_version}.tar.gz" | \
         download_file | \
         tar -xz
-    cd "wslu-${requested_version}"
+    cd "wslu-v${requested_version}"
     ${SUDO} PREFIX=/usr/local make all install

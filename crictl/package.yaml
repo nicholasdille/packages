@@ -2,17 +2,17 @@ name: crictl
 description: CLI and validation tools for Kubelet Container Runtime Interface (CRI)
 repo: kubernetes-sigs/cri-tools
 version:
-  latest: v1.19.0 # renovate: datasource=github-releases depName=kubernetes-sigs/cri-tools
+  latest: 1.19.0 # renovate: datasource=github-releases depName=kubernetes-sigs/cri-tools
   command: crictl --version
   filter: ^crictl
-  pattern: s/^crictl\sversion\s(.+)$/\1/
+  pattern: s/^crictl\sversion\sv(.+)$/\1/
 tags:
   - container
   - runtime
   - cri
 install:
   script: |-
-    echo "https://github.com/kubernetes-sigs/cri-tools/releases/download/${requested_version}/crictl-${requested_version}-linux-amd64.tar.gz" | \
+    echo "https://github.com/kubernetes-sigs/cri-tools/releases/download/v${requested_version}/crictl-v${requested_version}-linux-amd64.tar.gz" | \
         download_file | \
         untar_file crictl
 

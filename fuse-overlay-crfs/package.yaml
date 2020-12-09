@@ -12,6 +12,7 @@ files:
      && apt-get -y install \
             build-essential \
             autoconf \
+            autogen \
             ca-certificates \
             git \
             make

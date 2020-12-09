@@ -2,10 +2,10 @@ name: manifest-tool
 description: Manifest tool for manifest list object creation/query
 repo: estesp/manifest-tool
 version:
-  latest: v1.0.3 # renovate: datasource=github-releases depName=estesp/manifest-tool
+  latest: 1.0.3 # renovate: datasource=github-releases depName=estesp/manifest-tool
   command: manifest-tool --version
   filter: ^manifest-tool
-  pattern: s/^manifest-tool\sversion\s(\S+)\s.+$/v\1/
+  pattern: s/^manifest-tool\sversion\s(\S+)\s.+$/\1/
 tags:
   - docker
   - container
@@ -15,7 +15,7 @@ tags:
   - architecture
 install:
   script: |-
-    echo "https://github.com/estesp/manifest-tool/releases/download/${requested_version}/manifest-tool-linux-amd64" | \
+    echo "https://github.com/estesp/manifest-tool/releases/download/v${requested_version}/manifest-tool-linux-amd64" | \
         download_file | \
         store_file manifest-tool | \
         make_executable

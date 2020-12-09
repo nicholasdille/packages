@@ -11,6 +11,7 @@ tags:
   - runtime
   - security
 install:
+  docker: true
   script: |-
     docker run -i --name "${container_name}" \
         --mount type=bind,src=/usr/local/bin,dst=/usr/local/bin \

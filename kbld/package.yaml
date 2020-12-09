@@ -7,17 +7,17 @@ links:
   - text: Project homepage
     url: https://carvel.dev/
 version:
-  latest: v0.27.0 # renovate: datasource=github-releases depName=vmware-tanzu/carvel-kbld
+  latest: 0.27.0 # renovate: datasource=github-releases depName=vmware-tanzu/carvel-kbld
   command: kbld --version
   filter: ^kbld
-  pattern: s/^kbld\sversion\s(.+)$/v\1/
+  pattern: s/^kbld\sversion\s(.+)$/\1/
 tags:
   - kubernetes
   - k8s
   - image
 install:
   script: |-
-    echo "https://github.com/vmware-tanzu/carvel-kbld/releases/download/${requested_version}/kbld-linux-amd64" | \
+    echo "https://github.com/vmware-tanzu/carvel-kbld/releases/download/v${requested_version}/kbld-linux-amd64" | \
         download_file | \
         store_file kbld | \
         make_executable

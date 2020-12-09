@@ -55,4 +55,4 @@ install:
 
     docker cp "${container_name}:/curl.1" - | \
         tar -x --to-stdout | \
-        sudo tee "${TARGET_BASE}/share/man/man1/curl.1" >/dev/null
+        ${SUDO} tee "${TARGET_BASE}/share/man/man1/curl.1" >/dev/null

@@ -2,15 +2,15 @@ name: fuse-overlayfs
 description: FUSE implementation for overlayfs
 repo: containers/fuse-overlayfs
 version:
-  latest: v1.3.0 # renovate: datasource=github-releases depName=containers/fuse-overlayfs
+  latest: 1.3.0 # renovate: datasource=github-releases depName=containers/fuse-overlayfs
   command: fuse-overlay --version
   filter: ^fuse-overlayfs
-  pattern: s/^fuse-overlayfs:\sversion\s(.+)$/v\1/
+  pattern: s/^fuse-overlayfs:\sversion\s(.+)$/\1/
 tags:
   - container
 install:
   script: |-
-    echo "https://github.com/containers/fuse-overlayfs/releases/download/${requested_version}/fuse-overlayfs-x86_64" | \
+    echo "https://github.com/containers/fuse-overlayfs/releases/download/v${requested_version}/fuse-overlayfs-x86_64" | \
         download_file | \
         store_file fuse-overlay | \
         make_executable

@@ -2,10 +2,10 @@ name: python
 description: The Python programming language
 repo: python/cpython
 version:
-  latest: v3.9.1 # renovate: datasource=github-tags depName=python/cpython
+  latest: 3.9.1 # renovate: datasource=github-tags depName=python/cpython
   command: python3 --version
   filter: ^Python
-  pattern: s/^Python\s(.+)$/v\1/
+  pattern: s/^Python\s(.+)$/\1/
 tags:
   - python
   - py
@@ -37,7 +37,7 @@ install:
         docker build --tag build-python -
 
     build_containerized build-python <<EOF
-        curl --silent --location "https://github.com/python/cpython/archive/${requested_version}.tar.gz" | \
+        curl --silent --location "https://github.com/python/cpython/archive/v${requested_version}.tar.gz" | \
             tar -xz --strip-components=1
         ./configure --prefix="${TARGET_BASE}" --enable-optimizations
         make -j2

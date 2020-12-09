@@ -7,17 +7,17 @@ links:
 - text: Handbook
   url: https://minikube.sigs.k8s.io/docs/handbook/
 version:
-  latest: v1.15.1 # renovate: datasource=github-releases depName=kubernetes/minikube
+  latest: 1.15.1 # renovate: datasource=github-releases depName=kubernetes/minikube
   command: minikube version
   filter: ^minikube
-  pattern: s/^minikube\sversion:\s(.+)$/\1/
+  pattern: s/^minikube\sversion:\sv(.+)$/\1/
 tags:
   - kubernetes
   - k8s
   - container
 install:
   script: |-
-    echo "https://github.com/kubernetes/minikube/releases/download/${requested_version}/minikube-linux-amd64" | \
+    echo "https://github.com/kubernetes/minikube/releases/download/v${requested_version}/minikube-linux-amd64" | \
         download_file | \
         store_file minikube | \
         make_executable

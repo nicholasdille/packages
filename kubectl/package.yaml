@@ -5,16 +5,16 @@ links:
   - text: Reference
     url: https://kubernetes.io/docs/reference/kubectl/kubectl/
 version:
-  latest: v1.20.0 # renovate: datasource=github-releases depName=kubernetes/kubernetes versioning=regex:^v(?<major>\d+?)\.(?<minor>\d+?)\.(?<patch>\d+?)(-(?<prerelease>.+?))?$
+  latest: 1.20.0 # renovate: datasource=github-releases depName=kubernetes/kubernetes versioning=regex:^v(?<major>\d+?)\.(?<minor>\d+?)\.(?<patch>\d+?)(-(?<prerelease>.+?))?$
   command: kubectl version --client --output json
   filter: gitVersion
-  pattern: s/^\s+\"gitVersion\":\s\"(.+)\",$/\1/
+  pattern: s/^\s+\"gitVersion\":\s\"v(.+)\",$/\1/
 tags:
   - kubernetes
   - k8s
 install:
   script: |-
-    echo "https://storage.googleapis.com/kubernetes-release/release/${requested_version}/bin/linux/amd64/kubectl" | \
+    echo "https://storage.googleapis.com/kubernetes-release/release/v${requested_version}/bin/linux/amd64/kubectl" | \
         download_file | \
         store_file kubectl | \
         make_executable

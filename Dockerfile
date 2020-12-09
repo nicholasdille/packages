@@ -17,6 +17,8 @@ RUN apt-get update \
         unzip \
         git \
         ca-certificates \
-        gettext
+        gettext \
+        fontconfig \
+        patch
 WORKDIR /tmp
 CMD sleep infinity

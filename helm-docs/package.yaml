@@ -2,10 +2,10 @@ name: helm-docs
 description: A tool for automatically generating markdown documentation for helm charts
 repo: norwoodj/helm-docs
 version:
-  latest: v1.4.0 # renovate: datasource=github-releases depName=norwoodj/helm-docs
+  latest: 1.4.0 # renovate: datasource=github-releases depName=norwoodj/helm-docs
   command: helm-docs --version
   filter: ^helm-docs
-  pattern: s/^helm-docs\sversion\s(.+)$/v\1/
+  pattern: s/^helm-docs\sversion\s(.+)$/\1/
 tags:
   - kubernetes
   - k8s
@@ -16,6 +16,6 @@ tags:
   - configuration
 install:
   script: |-
-    echo "https://github.com/norwoodj/helm-docs/releases/download/${requested_version}/helm-docs_${requested_version#v}_Linux_x86_64.tar.gz" | \
+    echo "https://github.com/norwoodj/helm-docs/releases/download/v${requested_version}/helm-docs_${requested_version}_Linux_x86_64.tar.gz" | \
         download_file | \
         untar_file helm-docs
