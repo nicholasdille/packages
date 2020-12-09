@@ -16,4 +16,4 @@ install:
 
     echo "https://github.com/aquasecurity/tracee/releases/download/${requested_version}/tracee.tar.gz" | \
         download_file | \
-        untar_file tracee
+        untar_file --strip-components=1 dist/tracee

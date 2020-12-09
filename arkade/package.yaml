@@ -13,5 +13,5 @@ install:
   script: |-
     echo "https://github.com/alexellis/arkade/releases/download/${requested_version}/arkade" | \
         download_file | \
-        store_file | \
+        store_file arkade | \
         make_executable

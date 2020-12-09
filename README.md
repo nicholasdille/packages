@@ -33,7 +33,7 @@ The subcommands `list` and `search` also require `column` for formatting the out
 
 Several packages require Docker and/or Git to compile the binaries from source
 
-Some packages require some logic to install which is based on `envsubst` and `unzip`
+Some packages require some logic to install which is based on `envsubst`, `xz` and `unzip`
 
 ## Usage
 

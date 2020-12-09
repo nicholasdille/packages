@@ -13,6 +13,7 @@ RUN apt-get update \
         bash \
         curl \
         jq \
+        xz-utils \
         unzip \
         git \
         ca-certificates \
