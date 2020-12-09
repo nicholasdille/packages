@@ -7,7 +7,7 @@ links:
   - text: Helm Hub
     url: https://hub.helm.sh/
 version:
-  latest: 3.4.1 # renovate: datasource=github-releases depName=helm/helm
+  latest: 3.4.2 # renovate: datasource=github-releases depName=helm/helm
   command: helm version --template {{.Version}}
   filter: ^v
   pattern: s/^v(.+)$/\1/
