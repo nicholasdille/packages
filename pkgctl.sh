@@ -698,7 +698,7 @@ function handle_cache() {
         exit 1
     fi
 
-    mkdir -p "${HOME}/.pkg"
+    mkdir -p "${HOME}/.pkgctl"
     echo "Using version ${TAG}."
     curl --silent "https://api.github.com/repos/${MY_REPO}/releases/tags/${TAG}" | \
         jq --raw-output '.assets[] | select(.name == "packages.json") | .browser_download_url' | \
