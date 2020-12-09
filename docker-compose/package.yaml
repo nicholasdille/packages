@@ -13,13 +13,14 @@ tags:
 - docker
 - container
 - compose
-install: |
-  echo "https://github.com/docker/compose/releases/download/${requested_version}/docker-compose-Linux-x86_64" | \
-      download_file | \
-      store_file docker-compose | \
-      make_executable
+install:
+  script: |
+    echo "https://github.com/docker/compose/releases/download/${requested_version}/docker-compose-Linux-x86_64" | \
+        download_file | \
+        store_file docker-compose | \
+        make_executable
 
-  ${SUDO} mkdir -p "${TARGET}/etc/bash_completion.d"
-  echo "https://github.com/docker/compose/raw/${requested_version}/contrib/completion/bash/docker-compose" | \
-      download_file | \
-      store_completion docker-compose
+    ${SUDO} mkdir -p "${TARGET}/etc/bash_completion.d"
+    echo "https://github.com/docker/compose/raw/${requested_version}/contrib/completion/bash/docker-compose" | \
+        download_file | \
+        store_completion docker-compose
