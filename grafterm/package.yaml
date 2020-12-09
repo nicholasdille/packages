@@ -5,10 +5,10 @@ links:
   - text: Creating dashboards
     url: https://github.com/slok/grafterm/blob/master/docs/cfg.md
 version:
-  latest: v0.2.0 # renovate: datasource=github-releases depName=slok/grafterm
+  latest: 0.2.0 # renovate: datasource=github-releases depName=slok/grafterm
   command: grafterm --version
   filter: ^v
-  pattern: s/^(.+)$/\1/
+  pattern: s/^v(.+)$/\1/
 tags:
   - metrics
   - dashboard
@@ -17,7 +17,7 @@ tags:
   - terminal
 install:
   script: |-
-    echo "https://github.com/slok/grafterm/releases/download/${requested_version}/grafterm-linux-amd64" | \
+    echo "https://github.com/slok/grafterm/releases/download/v${requested_version}/grafterm-linux-amd64" | \
         download_file | \
         store_file grafterm | \
         make_executable

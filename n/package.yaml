@@ -2,10 +2,10 @@ name: "n"
 description: Node version management
 repo: tj/n
 version:
-  latest: v6.7.1 # renovate: datasource=github-releases depName=tj/n
+  latest: 6.7.1 # renovate: datasource=github-releases depName=tj/n
   command: n --version
   filter: ^[[:digit:]]
-  pattern: s/^(.+)$/v\1/
+  pattern: s/^(.+)$/\1/
 tags:
   - node
   - nodejs
@@ -19,7 +19,7 @@ files:
       export N_PREFIX="${TARGET_BASE}"
 install:
   script: |-
-    echo "https://github.com/tj/n/raw/${requested_version}/bin/n" | \
+    echo "https://github.com/tj/n/raw/v${requested_version}/bin/n" | \
         download_file | \
         store_file n | \
         make_executable

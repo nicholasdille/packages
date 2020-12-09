@@ -2,10 +2,10 @@ name: wksctl
 description: Open Source Weaveworks Kubernetes System
 repo: weaveworks/wksctl
 version:
-  latest: v0.9.0-rc.3 # renovate: datasource=github-releases depName=weaveworks/wksctl
+  latest: 0.9.0-rc.3 # renovate: datasource=github-releases depName=weaveworks/wksctl
   command: wksctl version
   filter: ^[[:digit:]]
-  pattern: s/^(.+)$/v\1/
+  pattern: s/^(.+)$/\1/
 tags:
   - kubernetes
   - k8s
@@ -13,6 +13,6 @@ tags:
   - bootstrap
 install:
   script: |-
-    echo "https://github.com/weaveworks/wksctl/releases/download/${requested_version}/wksctl-${requested_version#v}-linux-x86_64.tar.gz" | \
+    echo "https://github.com/weaveworks/wksctl/releases/download/v${requested_version}/wksctl-${requested_version}-linux-x86_64.tar.gz" | \
         download_file | \
         untar_file wksctl

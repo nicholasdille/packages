@@ -5,10 +5,10 @@ links:
   - text: Homepage
     url: https://kind.sigs.k8s.io/
 version:
-  latest: v0.9.0 # renovate: datasource=github-releases depName=kubernetes-sigs/kind
+  latest: 0.9.0 # renovate: datasource=github-releases depName=kubernetes-sigs/kind
   command: kind --version
   filter: ^kind
-  pattern: s/^kind\sversion\s(.+)$/v\1/
+  pattern: s/^kind\sversion\s(.+)$/\1/
 tags:
   - kubernetes
   - k8s
@@ -18,7 +18,7 @@ tags:
   - bootstrap
 install:
   script: |-
-    echo "https://github.com/kubernetes-sigs/kind/releases/download/${requested_version}/kind-linux-amd64" | \
+    echo "https://github.com/kubernetes-sigs/kind/releases/download/v${requested_version}/kind-linux-amd64" | \
         download_file | \
         store_file kind | \
         make_executable

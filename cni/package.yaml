@@ -2,11 +2,11 @@ name: cni
 description: Some reference and example networking plugins
 repo: containernetworking/plugins
 version:
-  latest: v0.8.7 # renovate: datasource=github-releases depName=containernetworking/plugins
+  latest: 0.8.7 # renovate: datasource=github-releases depName=containernetworking/plugins
   command: |
     /opt/cni/bin/loopback --version 2>&1
   filter: ^CNI
-  pattern: s/^CNI\sloopback\splugin\s(.+)$/\1/
+  pattern: s/^CNI\sloopback\splugin\sv(.+)$/\1/
 tags:
   - kubernetes
   - k8s
@@ -16,6 +16,6 @@ tags:
 install:
   script: |-
     ${SUDO} mkdir -p /opt/cni/bin
-    echo "https://github.com/containernetworking/plugins/releases/download/${requested_version}/cni-plugins-linux-amd64-${requested_version}.tgz" | \
+    echo "https://github.com/containernetworking/plugins/releases/download/v${requested_version}/cni-plugins-linux-amd64-v${requested_version}.tgz" | \
         download_file | \
         ${SUDO} tar -xzC /opt/cni/bin/

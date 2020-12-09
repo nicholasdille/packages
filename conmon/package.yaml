@@ -2,10 +2,10 @@ name: conmon
 description: An OCI container runtime monitor
 repo: containers/conmon
 version:
-  latest: v2.0.21 # renovate: datasource=github-releases depName=containers/conmon
+  latest: 2.0.21 # renovate: datasource=github-releases depName=containers/conmon
   command: conmon --version
   filter: ^conmon
-  pattern: s/^conmon\sversion\s(.+)$/v\1/
+  pattern: s/^conmon\sversion\s(.+)$/\1/
 tags:
   - container
   - runtime
@@ -31,11 +31,11 @@ install:
         docker build --tag conmon -
 
     build_containerized conmon <<EOF
-    curl --silent --location https://github.com/containers/conmon/archive/${requested_version}.tar.gz | tar -xvzC /tmp
-    cd /tmp/conmon-${requested_version#v}
+    curl --silent --location https://github.com/containers/conmon/archive/v${requested_version}.tar.gz | tar -xvzC /tmp
+    cd /tmp/conmon-${requested_version}
     PREFIX=/usr/local make all
     cp bin/conmon /
     EOF
     extract_file_from_container conmon
 
-    docker image rm conmon
+    docker image rm -f conmon

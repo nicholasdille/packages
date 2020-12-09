@@ -5,16 +5,16 @@ links:
   - text: Homepage
     url: https://r.j3ss.co/
 version:
-  latest: v0.16.1 # renovate: datasource=github-releases depName=genuinetools/reg
+  latest: 0.16.1 # renovate: datasource=github-releases depName=genuinetools/reg
   command: reg version
   filter: ^[[:space:]]*version
-  pattern: s/^\s+version\s+:\s(.+)$/\1/
+  pattern: s/^\s+version\s+:\sv(.+)$/\1/
 tags:
   - container
   - security
 install:
   script: |-
-    echo "https://github.com/genuinetools/reg/releases/download/${requested_version}/reg-linux-amd64" | \
+    echo "https://github.com/genuinetools/reg/releases/download/v${requested_version}/reg-linux-amd64" | \
         download_file | \
         store_file reg | \
         make_executable

@@ -5,10 +5,10 @@ links:
   - text: Project homepage
     url: https://carvel.dev/
 version:
-  latest: v0.2.0 # renovate: datasource=github-releases depName=vmware-tanzu/carvel-imgpkg
+  latest: 0.2.0 # renovate: datasource=github-releases depName=vmware-tanzu/carvel-imgpkg
   command: imgpkg version
   filter: ^imgpkg
-  pattern: s/^imgpkg\sversion\s(.+)$/v\1/
+  pattern: s/^imgpkg\sversion\s(.+)$/\1/
 tags:
   - docker
   - registry
@@ -17,7 +17,7 @@ tags:
   - artifact
 install:
   script: |-
-    echo "https://github.com/vmware-tanzu/carvel-imgpkg/releases/download/${requested_version}/imgpkg-linux-amd64" | \
+    echo "https://github.com/vmware-tanzu/carvel-imgpkg/releases/download/v${requested_version}/imgpkg-linux-amd64" | \
         download_file | \
         store_file imgpkg | \
         make_executable

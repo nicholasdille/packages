@@ -5,14 +5,14 @@ links:
   - text: Documentation
     url: https://taskfile.dev/
 version:
-  latest: v3.0.0 # renovate: datasource=github-releases depName=go-task/task
+  latest: 3.0.0 # renovate: datasource=github-releases depName=go-task/task
   command: task --version
   filter: ^task
-  pattern: s/^Task\sversion:\s(.+)$/\1/
+  pattern: s/^Task\sversion:\sv(.+)$/\1/
 tags:
   - make
 install:
   script: |-
-    echo "https://github.com/go-task/task/releases/download/${requested_version}/task_linux_amd64.tar.gz" | \
+    echo "https://github.com/go-task/task/releases/download/v${requested_version}/task_linux_amd64.tar.gz" | \
         download_file | \
         untar_file task

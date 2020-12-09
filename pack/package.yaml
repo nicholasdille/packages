@@ -5,14 +5,14 @@ links:
   - text: Homepage
     url: https://buildpacks.io/
 version:
-  latest: v0.15.1 # renovate: datasource=github-releases depName=buildpacks/pack
+  latest: 0.15.1 # renovate: datasource=github-releases depName=buildpacks/pack
   command: pack --version
   filter: ^[[:digit:]]
-  pattern: s/^([^+]+)\+.+$/v\1/
+  pattern: s/^([^+]+)\+.+$/\1/
 tags:
   - build
 install:
   script: |-
-    echo "https://github.com/buildpacks/pack/releases/download/${requested_version}/pack-${requested_version}-linux.tgz" | \
+    echo "https://github.com/buildpacks/pack/releases/download/v${requested_version}/pack-v${requested_version}-linux.tgz" | \
         download_file | \
         untar_file pack

@@ -2,7 +2,7 @@ name: buildah
 description: A tool that facilitates building OCI images
 repo: containers/buildah
 version:
-  latest: v1.18.0 # renovate: datasource=github-releases depName=containers/buildah
+  latest: 1.18.0 # renovate: datasource=github-releases depName=containers/buildah
 tags:
   - container
   - build
@@ -58,16 +58,17 @@ install:
     mkdir -p ./src/github.com/containers/buildah
     git clone https://github.com/containers/buildah ./src/github.com/containers/buildah
     cd ./src/github.com/containers/buildah
-    git checkout ${requested_version}
+    git checkout v${requested_version}
 
     echo "Building..."
     make all SECURITYTAGS="apparmor seccomp"
     make install
-    
+
     cp /usr/local/bin/buildah /
     cp /usr/local/share/man/man1/buildah*.1 /
     EOF
 
+    ${SUDO} mkdir --parents "${TARGET_BASE}/share/man/man1/"
     extract_file_from_container buildah
     for MAN in buildah-add buildah-bud buildah-commit buildah-config buildah-containers buildah-copy buildah-from buildah-images buildah-info buildah-inspect buildah-login buildah-logout buildah-manifest-add buildah-manifest-annotate buildah-manifest-create buildah-manifest-inspect buildah-manifest-push buildah-manifest-remove buildah-manifest buildah-mount buildah-pull buildah-push buildah-rename buildah-rm buildah-rmi buildah-run buildah-tag buildah-umount buildah-unshare buildah-version buildah; do
         docker cp "${container_name}:/${MAN}.1" - | \

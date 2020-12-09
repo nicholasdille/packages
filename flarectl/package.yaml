@@ -7,14 +7,14 @@ links:
   - text: CloudFlare API
     url: https://api.cloudflare.com/
 version:
-  latest: v0.13.5 # renovate: datasource=github-releases depName=cloudflare/cloudflare-go
+  latest: 0.13.5 # renovate: datasource=github-releases depName=cloudflare/cloudflare-go
   command: flarectl --version
   filter: ^flarectl
-  pattern: s/^flarectl\sversion\s(.+)$/\1/
+  pattern: s/^flarectl\sversion\sv(.+)$/\1/
 tags:
   - dns
 install:
   script: |-
-    echo "https://github.com/cloudflare/cloudflare-go/releases/download/${requested_version}/flarectl_${requested_version#v}_linux_amd64.tar.xz" | \
+    echo "https://github.com/cloudflare/cloudflare-go/releases/download/v${requested_version}/flarectl_${requested_version}_linux_amd64.tar.xz" | \
         download_file | \
         unxz_file flarectl

@@ -5,13 +5,13 @@ links:
 - text: Homepage
   url: https://aksctl.io/
 version:
-  latest: v0.2.0 # renovate: datasource=github-releases depName=yanc0/untrak
+  latest: 0.2.0 # renovate: datasource=github-releases depName=yanc0/untrak
 tags:
   - kubernetes
   - k8s
 install:
   script: |-
-    echo "https://github.com/yanc0/untrak/releases/download/${requested_version}/untrak_linux_amd64_${requested_version}" | \
+    echo "https://github.com/yanc0/untrak/releases/download/v${requested_version}/untrak_linux_amd64_${requested_version}" | \
         download_file | \
         store_file untrak | \
         make_executable

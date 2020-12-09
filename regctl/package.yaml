@@ -2,7 +2,7 @@ name: regctl
 description: Client interface for the registry API
 repo: regclient/regclient
 version:
-  latest: v0.1.0 # renovate: datasource=github-releases depName=regclient/regclient
+  latest: 0.1.0 # renovate: datasource=github-releases depName=regclient/regclient
 tags:
   - docker
   - container
@@ -10,7 +10,7 @@ tags:
 install:
   docker: false
   script: |-
-    echo "https://github.com/regclient/regclient/releases/download/${requested_version}/regctl-linux-amd64" | \
+    echo "https://github.com/regclient/regclient/releases/download/v${requested_version}/regctl-linux-amd64" | \
         download_file | \
         store_file regctl | \
         make_executable

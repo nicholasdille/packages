@@ -5,10 +5,10 @@ links:
 - text: Homepage
   url: https://traefik.io/
 version:
-  latest: v2.3.4 # renovate: datasource=github-releases depName=traefik/traefik
+  latest: 2.3.4 # renovate: datasource=github-releases depName=traefik/traefik
   command: traefik version
   filter: ^Version
-  pattern: s/^Version:\s+(.+)$/v\1/
+  pattern: s/^Version:\s+(.+)$/\1/
 tags:
   - container
   - kubernetes
@@ -17,6 +17,6 @@ tags:
   - security
 install:
   script: |-
-    echo "https://github.com/traefik/traefik/releases/download/${requested_version}/traefik_${requested_version}_linux_amd64.tar.gz" | \
+    echo "https://github.com/traefik/traefik/releases/download/v${requested_version}/traefik_v${requested_version}_linux_amd64.tar.gz" | \
         download_file | \
         untar_file traefik

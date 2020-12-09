@@ -2,15 +2,15 @@ name: norouter
 description: IP-over-Stdio. The easiest multi-host & multi-cloud networking ever. No root privilege is required
 repo: norouter/norouter
 version:
-  latest: v0.5.1 # renovate: datasource=github-releases depName=norouter/norouter
+  latest: 0.5.1 # renovate: datasource=github-releases depName=norouter/norouter
   command: norouter --version
   filter: ^norouter
-  pattern: s/^norouter\sversion\s(.+)$/v\1/
+  pattern: s/^norouter\sversion\s(.+)$/\1/
 tags:
   - network
 install:
   script: |-
-    echo "https://github.com/norouter/norouter/releases/download/${requested_version}/norouter-Linux-x86_64" | \
+    echo "https://github.com/norouter/norouter/releases/download/v${requested_version}/norouter-Linux-x86_64" | \
         download_file | \
         store_file norouter | \
         make_executable

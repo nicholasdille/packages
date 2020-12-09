@@ -2,10 +2,10 @@ name: lab
 description: Lab wraps Git or Hub, making it simple to clone, fork, and interact with repositories on GitLab
 repo: zaquestion/lab
 version:
-  latest: v0.17.2 # renovate: datasource=github-releases depName=zaquestion/lab
+  latest: 0.17.2 # renovate: datasource=github-releases depName=zaquestion/lab
   command: lab version
   filter: ^lab
-  pattern: s/^lab\sversion\s(.+)$/v\1/
+  pattern: s/^lab\sversion\s(.+)$/\1/
 tags:
   - gitlab
   - pipeline
@@ -16,7 +16,7 @@ tags:
   - deployment
 install:
   script: |-
-    echo "https://github.com/zaquestion/lab/releases/download/${requested_version}/lab_${requested_version#v}_linux_amd64.tar.gz" | \
+    echo "https://github.com/zaquestion/lab/releases/download/v${requested_version}/lab_${requested_version}_linux_amd64.tar.gz" | \
         download_file | \
         untar_file lab
 

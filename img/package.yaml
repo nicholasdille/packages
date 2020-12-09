@@ -2,10 +2,10 @@ name: img
 description: Standalone, daemon-less, unprivileged Dockerfile and OCI compatible container image builder
 repo: genuinetools/img
 version:
-  latest: v0.5.11 # renovate: datasource=github-releases depName=genuinetools/img
+  latest: 0.5.11 # renovate: datasource=github-releases depName=genuinetools/img
   command: img version
   filter: ^[[:space:]]version
-  pattern: s/^\sversion\s+:\s(.+)$/\1/
+  pattern: s/^\sversion\s+:\sv(.+)$/\1/
 tags:
   - docker
   - container
@@ -14,7 +14,7 @@ tags:
   - image
 install:
   script: |-
-    echo "https://github.com/genuinetools/img/releases/download/${requested_version}/img-linux-amd64" | \
+    echo "https://github.com/genuinetools/img/releases/download/v${requested_version}/img-linux-amd64" | \
         download_file | \
         store_file img | \
         make_executable

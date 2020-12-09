@@ -2,15 +2,15 @@ name: lazygit
 description: Simple terminal UI for git commands
 repo: jesseduffield/lazygit
 version:
-  latest: v0.23.7 # renovate: datasource=github-releases depName=jesseduffield/lazygit
+  latest: 0.23.7 # renovate: datasource=github-releases depName=jesseduffield/lazygit
   command: lazygit --version
   filter: version=
-  pattern: s/^.+,\sversion=([^,]+),\s.+$/v\1/
+  pattern: s/^.+,\sversion=([^,]+),\s.+$/\1/
 tags:
   - git
   - ui
 install:
   script: |-
-    echo "https://github.com/jesseduffield/lazygit/releases/download/${requested_version}/lazygit_${requested_version#v}_Linux_x86_64.tar.gz" | \
+    echo "https://github.com/jesseduffield/lazygit/releases/download/v${requested_version}/lazygit_${requested_version}_Linux_x86_64.tar.gz" | \
         download_file | \
         untar_file lazygit

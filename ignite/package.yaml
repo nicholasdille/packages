@@ -5,10 +5,10 @@ links:
   - text: Documentation
     url: https://ignite.readthedocs.org/
 version:
-  latest: v0.8.0 # renovate: datasource=github-releases depName=weaveworks/ignite
+  latest: 0.8.0 # renovate: datasource=github-releases depName=weaveworks/ignite
   command: ignite version --output short
   filter: ^v
-  pattern: s/^(.+)$/\1/
+  pattern: s/^v(.+)$/\1/
 tags:
   - serverless
   - virtual machine
@@ -18,7 +18,6 @@ tags:
   - firecracker
 install:
   script: |-
-    require wsl2-kernel
     require cni
 
     if ! cat /proc/config.gz | gunzip | grep --quiet CONFIG_KVM=y || ! cat /proc/config.gz | gunzip | grep --quiet CONFIG_KVM_INTEL=y; then
@@ -31,12 +30,12 @@ install:
         exit 1
     fi
 
-    echo "https://github.com/weaveworks/ignite/releases/download/${requested_version}/ignite-amd64" | \
+    echo "https://github.com/weaveworks/ignite/releases/download/v${requested_version}/ignite-amd64" | \
         download_file | \
         store_file ignite | \
         make_executable
 
-    echo "https://github.com/weaveworks/ignite/releases/download/${requested_version}/ignited-amd64" | \
+    echo "https://github.com/weaveworks/ignite/releases/download/v${requested_version}/ignited-amd64" | \
         download_file | \
         store_file ignited | \
         make_executable

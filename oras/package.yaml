@@ -5,16 +5,16 @@ links:
   - text: OCI artifacts
     url: https://github.com/opencontainers/artifacts
 version:
-  latest: v0.8.1 # renovate: datasource=github-releases depName=deislabs/oras
+  latest: 0.8.1 # renovate: datasource=github-releases depName=deislabs/oras
   command: oras version
   filter: ^Version
-  pattern: s/^Version:\s+(\S+)$/v\1/
+  pattern: s/^Version:\s+(\S+)$/\1/
 tags:
   - oci
   - registry
   - artifact
 install:
   script: |-
-    echo "https://github.com/deislabs/oras/releases/download/${requested_version}/oras_${requested_version#v}_linux_amd64.tar.gz" | \
+    echo "https://github.com/deislabs/oras/releases/download/v${requested_version}/oras_${requested_version}_linux_amd64.tar.gz" | \
         download_file | \
         untar_file oras

@@ -2,10 +2,10 @@ name: helmfile
 description: Deploy Kubernetes Helm Charts
 repo: roboll/helmfile
 version:
-  latest: v0.135.0 # renovate: datasource=github-releases depName=roboll/helmfile
+  latest: 0.135.0 # renovate: datasource=github-releases depName=roboll/helmfile
   command: helmfile --version
   filter: ^helmfile
-  pattern: s/^helmfile\sversion\s(.+)$/\1/
+  pattern: s/^helmfile\sversion\sv(.+)$/\1/
 tags:
   - kubernetes
   - k8s
@@ -19,7 +19,7 @@ install:
     require helm
     require kubectl
 
-    echo "https://github.com/roboll/helmfile/releases/download/${requested_version}/helmfile_linux_amd64" | \
+    echo "https://github.com/roboll/helmfile/releases/download/v${requested_version}/helmfile_linux_amd64" | \
         download_file | \
         store_file helmfile | \
         make_executable

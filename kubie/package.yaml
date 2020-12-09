@@ -2,10 +2,10 @@ name: kubie
 description: A more powerful alternative to kubectx and kubens
 repo: sbstp/kubie
 version:
-  latest: v0.11.1 # renovate: datasource=github-releases depName=sbstp/kubie
+  latest: 0.11.1 # renovate: datasource=github-releases depName=sbstp/kubie
   command: kubie --version
   filter: ^kubie
-  pattern: s/^kubie\s(.+)$/v\1/
+  pattern: s/^kubie\s(.+)$/\1/
 tags:
   - kubernetes
   - k8s
@@ -13,11 +13,11 @@ tags:
   - namespace
 install:
   script: |-
-    echo "https://github.com/sbstp/kubie/releases/download/${requested_version}/kubie-linux-amd64" | \
+    echo "https://github.com/sbstp/kubie/releases/download/v${requested_version}/kubie-linux-amd64" | \
         download_file | \
         store_file kubie | \
         make_executable
 
-    echo "https://github.com/sbstp/kubie/raw/${requested_version}/completion/kubie.bash" | \
+    echo "https://github.com/sbstp/kubie/raw/v${requested_version}/completion/kubie.bash" | \
         download_file | \
         store_completion kubie

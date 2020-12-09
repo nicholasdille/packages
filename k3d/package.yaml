@@ -5,10 +5,10 @@ links:
   - text: Homepage
     url: https://k3d.io/
 version:
-  latest: v3.4.0 # renovate: datasource=github-releases depName=rancher/k3d
+  latest: 3.4.0 # renovate: datasource=github-releases depName=rancher/k3d
   command: k3d version
   filter: ^k3d
-  pattern: s/^k3d\sversion\s(.+)$/\1/
+  pattern: s/^k3d\sversion\sv(.+)$/\1/
 tags:
   - kubernetes
   - k8s
@@ -17,7 +17,7 @@ tags:
   - docker
 install:
   script: |-
-    echo "https://github.com/rancher/k3d/releases/download/${requested_version}/k3d-linux-amd64" | \
+    echo "https://github.com/rancher/k3d/releases/download/v${requested_version}/k3d-linux-amd64" | \
         download_file | \
         store_file k3d | \
         make_executable

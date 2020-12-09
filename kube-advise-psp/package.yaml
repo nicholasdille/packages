@@ -2,7 +2,7 @@ name: kube-advise-psp
 description: Help building an adaptive and fine-grained pod security policy
 repo: sysdiglabs/kube-psp-advisor
 version:
-  latest: v2.0.0 # renovate: datasource=github-releases depName=sysdiglabs/kube-psp-advisor
+  latest: 2.0.0 # renovate: datasource=github-releases depName=sysdiglabs/kube-psp-advisor
 tags:
   - kubernetes
   - k8s
@@ -10,7 +10,7 @@ tags:
   - policy
 install:
   script: |-
-    echo "https://github.com/sysdiglabs/kube-psp-advisor/releases/download/${requested_version}/kube-psp-advisor_${requested_version}_linux_amd64.tar.gz" | \
+    echo "https://github.com/sysdiglabs/kube-psp-advisor/releases/download/v${requested_version}/kube-psp-advisor_v${requested_version}_linux_amd64.tar.gz" | \
         download_file | \
         untar_file kubectl-advise-psp
     rename_file kubectl-advise-psp kube-advise-psp

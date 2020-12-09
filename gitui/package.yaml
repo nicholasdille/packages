@@ -2,14 +2,14 @@ name: gitui
 description: Blazing fast terminal-ui for git written in rust
 repo: extrawurst/gitui
 version:
-  latest: v0.10.1 # renovate: datasource=github-releases depName=extrawurst/gitui
+  latest: 0.10.1 # renovate: datasource=github-releases depName=extrawurst/gitui
   command: gitui --version
   filter: ^gitui
-  pattern: s/^gitui\s(.+)$/v\1/
+  pattern: s/^gitui\s(.+)$/\1/
 tags:
   - git
 install:
   script: |-
-    echo "https://github.com/extrawurst/gitui/releases/download/${requested_version}/gitui-linux-musl.tar.gz" | \
+    echo "https://github.com/extrawurst/gitui/releases/download/v${requested_version}/gitui-linux-musl.tar.gz" | \
         download_file | \
         untar_file ./gitui

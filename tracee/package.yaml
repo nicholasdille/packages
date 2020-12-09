@@ -2,7 +2,7 @@ name: tracee
 description: Container and system event tracing using eBPF
 repo: aquasecurity/tracee
 version:
-  latest: v0.3.0 # renovate: datasource=github-releases depName=aquasecurity/tracee
+  latest: 0.3.0 # renovate: datasource=github-releases depName=aquasecurity/tracee
 tags:
   - container
   - ebpf
@@ -14,6 +14,6 @@ install:
     ${SUDO} apt-get -y install \
         bpfcc-tools
 
-    echo "https://github.com/aquasecurity/tracee/releases/download/${requested_version}/tracee.tar.gz" | \
+    echo "https://github.com/aquasecurity/tracee/releases/download/v${requested_version}/tracee.tar.gz" | \
         download_file | \
         untar_file --strip-components=1 dist/tracee

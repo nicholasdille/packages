@@ -2,17 +2,17 @@ name: flux
 description: Kubernetes toolkit for assembling CD pipelines the GitOps way
 repo: fluxcd/flux2
 version:
-  latest: v0.4.3 # renovate: datasource=github-releases depName=fluxcd/flux2
+  latest: 0.4.3 # renovate: datasource=github-releases depName=fluxcd/flux2
   command: flux --version
   filter: ^flux
-  pattern: s/^flux\sversion\s(.+)$/v\1/
+  pattern: s/^flux\sversion\s(.+)$/\1/
 tags:
   - kubernetes
   - k8s
   - gitops
 install:
   script: |-
-    echo "https://github.com/fluxcd/flux2/releases/download/${requested_version}/flux_${requested_version#v}_linux_amd64.tar.gz" | \
+    echo "https://github.com/fluxcd/flux2/releases/download/v${requested_version}/flux_${requested_version}_linux_amd64.tar.gz" | \
         download_file | \
         untar_file flux
 

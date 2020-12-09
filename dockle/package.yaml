@@ -5,15 +5,15 @@ links:
   - text: Homepage
     url: https://containers.goodwith.tech/
 version:
-  latest: v0.3.1 # renovate: datasource=github-releases depName=goodwithtech/dockle
+  latest: 0.3.1 # renovate: datasource=github-releases depName=goodwithtech/dockle
   command: dockle --version
   filter: ^dockle
-  pattern: s/^dockle\sversion\s(.+)$/v\1/
+  pattern: s/^dockle\sversion\s(.+)$/\1/
 tags:
   - container
   - security
 install:
   script: |-
-    echo "https://github.com/goodwithtech/dockle/releases/download/${requested_version}/dockle_${requested_version#v}_Linux-64bit.tar.gz" | \
+    echo "https://github.com/goodwithtech/dockle/releases/download/v${requested_version}/dockle_${requested_version}_Linux-64bit.tar.gz" | \
         download_file | \
         untar_file dockle

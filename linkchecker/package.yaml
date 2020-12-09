@@ -5,7 +5,7 @@ links:
   - text: Homepage
     url: https://linkchecker.github.io/linkchecker/
 version:
-  latest: v9.4.0 # renovate: datasource=github-releases depName=linkchecker/linkchecker
+  latest: 9.4.0 # renovate: datasource=github-releases depName=linkchecker/linkchecker
 tags:
   - web
   - html
@@ -14,4 +14,4 @@ tags:
   - quality
 install:
   script: |
-    install_python_module git+https://github.com/linkchecker/linkchecker.git
+    install_python_module linkchecker==${requested_version}

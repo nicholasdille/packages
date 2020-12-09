@@ -2,15 +2,15 @@ name: jid
 description: json incremental digger
 repo: simeji/jid
 version:
-  latest: v0.7.6 # renovate: datasource=github-releases depName=simeji/jid
+  latest: 0.7.6 # renovate: datasource=github-releases depName=simeji/jid
   command: jid --version
   filter: ^jid
-  pattern: s/^jid\sversion\s(.+)$/\1/
+  pattern: s/^jid\sversion\sv(.+)$/\1/
 tags:
   - json
 install:
   script: |-
-    echo "https://github.com/simeji/jid/releases/download/${requested_version}/jid_linux_amd64.zip" | \
+    echo "https://github.com/simeji/jid/releases/download/v${requested_version}/jid_linux_amd64.zip" | \
         download_file | \
         store_file "jid.zip" "${temporary_directory}"
-    unzip_file "${temporary_directory}/jid.zip
+    unzip_file "${temporary_directory}/jid.zip"

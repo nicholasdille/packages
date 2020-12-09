@@ -5,16 +5,16 @@ links:
   - text: Runtime spec
     url: https://github.com/opencontainers/runtime-spec
 version:
-  latest: v1.0.0-rc92 # renovate: datasource=github-releases depName=opencontainers/runc
+  latest: 1.0.0-rc92 # renovate: datasource=github-releases depName=opencontainers/runc
   command: runc --version
   filter: ^runc
-  pattern: s/^runc\sversion\s(.+)$/v\1/
+  pattern: s/^runc\sversion\s(.+)$/\1/
 tags:
   - container
   - oci
 install:
   script: |-
-    echo "https://github.com/opencontainers/runc/releases/download/${requested_version}/runc.amd64" | \
+    echo "https://github.com/opencontainers/runc/releases/download/v${requested_version}/runc.amd64" | \
         download_file | \
         store_file runc | \
         make_executable

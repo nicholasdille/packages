@@ -2,10 +2,10 @@ name: act
 description: Run your GitHub Actions locally
 repo: nektos/act
 version:
-  latest: v0.2.17 # renovate: datasource=github-releases depName=nektos/act
+  latest: 0.2.17 # renovate: datasource=github-releases depName=nektos/act
   command: act --version
   filter: act
-  pattern: s/^act\sversion\s(.+)$/v\1/
+  pattern: s/^act\sversion\s(.+)$/\1/
 tags:
   - pipeline
   - continuous
@@ -16,6 +16,6 @@ tags:
   - container
 install:
   script: |-
-    echo "https://github.com/nektos/act/releases/download/${requested_version}/act_Linux_x86_64.tar.gz" | \
+    echo "https://github.com/nektos/act/releases/download/v${requested_version}/act_Linux_x86_64.tar.gz" | \
         download_file | \
         untar_file act

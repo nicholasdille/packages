@@ -2,10 +2,10 @@ name: cfssl
 description: Hosting Helm Charts via GitHub Pages and Releases
 repo: helm/chart-releaser
 version:
-  latest: v1.1.1 # renovate: datasource=github-releases depName=helm/chart-releaser
+  latest: 1.1.1 # renovate: datasource=github-releases depName=helm/chart-releaser
   command: cr version
   filter: ^Version
-  pattern: s/^Version:\s+(.+)$/\1/
+  pattern: s/^Version:\s+v(.+)$/\1/
 tags:
   - kubernetes
   - k8s
@@ -18,6 +18,6 @@ tags:
   - pages
 install:
   script: |-
-    echo "https://github.com/helm/chart-releaser/releases/download/${requested_version}/chart-releaser_${requested_version#v}_linux_amd64.tar.gz" | \
+    echo "https://github.com/helm/chart-releaser/releases/download/v${requested_version}/chart-releaser_${requested_version}_linux_amd64.tar.gz" | \
         download_file | \
         untar_file cr

@@ -5,10 +5,10 @@ links:
 - text: Homepage
   url: https://www.dropseed.io/p/
 version:
-  latest: v1.1.0 # renovate: datasource=github-tags depName=dropseed/p
+  latest: 1.1.0 # renovate: datasource=github-tags depName=dropseed/p
   command: pip3 list
   filter: p-cli
-  pattern: s/^p-cli\s+(.+)$/\1/
+  pattern: s/^p-cli\s+v(.+)$/\1/
 tags:
   - bookmark
   - shell

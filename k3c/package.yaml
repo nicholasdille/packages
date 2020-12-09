@@ -2,10 +2,10 @@ name: k3c
 description: Lightweight local container engine for container development
 repo: rancher/k3c
 version:
-  latest: v0.2.1 # renovate: datasource=github-releases depName=rancher/k3c
+  latest: 0.2.1 # renovate: datasource=github-releases depName=rancher/k3c
   command: k3c --version
   filter: ^k3c
-  pattern: s/^k3c\sversion\s(\S+)\s.+$/\1/
+  pattern: s/^k3c\sversion\sv(\S+)\s.+$/\1/
 tags:
   - container
   - runtime
@@ -14,7 +14,7 @@ tags:
   - image
 install:
   script: |-
-    echo "https://github.com/rancher/k3c/releases/download/${requested_version}/k3c-linux-amd64" | \
+    echo "https://github.com/rancher/k3c/releases/download/v${requested_version}/k3c-linux-amd64" | \
         download_file | \
         store_file k3c | \
         make_executable

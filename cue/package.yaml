@@ -5,15 +5,15 @@ links:
   - text: Homepage
     url: https://cuelang.org/
 version:
-  latest: v0.2.2 # renovate: datasource=github-releases depName=cuelang/cue
+  latest: 0.2.2 # renovate: datasource=github-releases depName=cuelang/cue
   command: cue version
   filter: ^cue
-  pattern: s/^cue\sversion\s(\S+)\s.+$/v\1/
+  pattern: s/^cue\sversion\s(\S+)\s.+$/\1/
 tags:
   - configuration
 install:
   script: |-
-    echo "https://github.com/cuelang/cue/releases/download/${requested_version}/cue_${requested_version#v}_Linux_x86_64.tar.gz" | \
+    echo "https://github.com/cuelang/cue/releases/download/v${requested_version}/cue_${requested_version}_Linux_x86_64.tar.gz" | \
         download_file | \
         untar_file cue
 

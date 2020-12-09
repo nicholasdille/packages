@@ -2,7 +2,7 @@ name: sysbox
 description: Sysbox is an open-source container runtime that enables Docker containers to act as virtual servers capable of running software such as Systemd, Docker, and Kubernetes in them, easily and with proper isolation
 repo: nestybox/sysbox
 version:
-  latest: v0.2.1 # renovate: datasource=github-releases depName=nestybox/sysbox
+  latest: 0.2.1 # renovate: datasource=github-releases depName=nestybox/sysbox
   #command: ""
   #filter: ""
   #pattern: ""
@@ -37,7 +37,7 @@ install:
     #docker run --interactive --mount type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock build-sysbox bash <<EOF
     git clone https://github.com/nestybox/sysbox
     cd sysbox
-    git checkout ${requested_version}
+    git checkout v${requested_version}
     sed -i -E "s|git@github.com:|https://github.com/|" .gitmodules
     git submodule update --init
     sed -i -E "s|git@github.com:|https://github.com/|" sysbox-fs/.gitmodules

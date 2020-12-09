@@ -2,10 +2,10 @@ name: skopeo
 description: Work with remote images registries - retrieving information, images, signing content
 repo: containers/skopeo
 version:
-  latest: v1.2.0 # renovate: datasource=github-releases depName=containers/skopeo
+  latest: 1.2.0 # renovate: datasource=github-releases depName=containers/skopeo
   command: skopeo --version
   filter: ^skopeo
-  pattern: s/^skopeo\sversion\s(\S+)\s.+$/v\1/
+  pattern: s/^skopeo\sversion\s(\S+)\s.+$/\1/
 tags:
   - container
   - registry
@@ -14,7 +14,7 @@ install:
   docker: true
   script: |-
     build_containerized golang <<EOF
-    curl --silent --location "https://github.com/containers/skopeo/archive/${requested_version}.tar.gz" | \
+    curl --silent --location "https://github.com/containers/skopeo/archive/v${requested_version}.tar.gz" | \
         tar xzC /tmp/skopeo
     cd /tmp/skopeo
     make bin/skopeo DISABLE_CGO=1

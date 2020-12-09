@@ -2,13 +2,13 @@ name: k9s
 description: Kubernetes CLI To Manage Your Clusters In Style
 repo: derailed/k9s
 version:
-  latest: v0.24.2 # renovate: datasource=github-releases depName=derailed/k9s
+  latest: 0.24.2 # renovate: datasource=github-releases depName=derailed/k9s
 tags:
   - kubernetes
   - k8s
   - ui
 install:
   script: |-
-    echo "https://github.com/derailed/k9s/releases/download/${requested_version}/k9s_Linux_x86_64.tar.gz" | \
+    echo "https://github.com/derailed/k9s/releases/download/v${requested_version}/k9s_Linux_x86_64.tar.gz" | \
         download_file | \
         untar_file k9s

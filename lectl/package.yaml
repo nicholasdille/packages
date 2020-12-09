@@ -5,15 +5,15 @@ links:
   - text: Certificate search
     url: https://crt.sh
 version:
-  latest: v0.21 # renovate: datasource=github-releases depName=sahsanu/lectl versioning=regex:^v(?<major>\d+?)\.(?<minor>\d+?)$
+  latest: 0.21 # renovate: datasource=github-releases depName=sahsanu/lectl versioning=regex:^v(?<major>\d+?)\.(?<minor>\d+?)$
   command: lectl --version
   filter: ^lectl
-  pattern: s/^lectl\s(\S+)\s.+$/v\1/
+  pattern: s/^lectl\s(\S+)\s.+$/\1/
 tags:
   - letsencrypt
   - certificate
 install:
   script: |-
-    curl --location --fail "https://raw.githubusercontent.com/sahsanu/lectl/${requested_version}/lectl" | \
+    curl --location --fail "https://raw.githubusercontent.com/sahsanu/lectl/v${requested_version}/lectl" | \
         store_file lectl | \
         make_executable

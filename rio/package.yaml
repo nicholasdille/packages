@@ -5,7 +5,7 @@ links:
   - text: Homepage
     url: https://rio.io/
 version:
-  latest: v0.8.0 # renovate: datasource=github-releases depName=rancher/rio
+  latest: 0.8.0 # renovate: datasource=github-releases depName=rancher/rio
   command: rio --version
   filter: ^rio
   pattern: s/^rio\sversion\s(\S+)\s.+$/\1/
@@ -15,7 +15,7 @@ tags:
   - paas
 install:
   script: |-
-    echo "https://github.com/rancher/rio/releases/download/${requested_version}/rio-linux-amd64" | \
+    echo "https://github.com/rancher/rio/releases/download/v${requested_version}/rio-linux-amd64" | \
         download_file | \
         store_file rio | \
         make_executable

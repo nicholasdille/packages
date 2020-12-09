@@ -2,7 +2,7 @@ name: kubeseal
 description: A Kubernetes controller and tool for one-way encrypted Secrets
 repo: bitnami-labs/sealed-secrets
 version:
-  latest: v0.13.1 # renovate: datasource=github-releases depName=bitnami-labs/sealed-secrets
+  latest: 0.13.1 # renovate: datasource=github-releases depName=bitnami-labs/sealed-secrets
   command: kubeseal --version
   filter: ^kubeseal
   pattern: s/^kubeseal\sversion:\s(.+)\+.+$/\1/
@@ -13,7 +13,7 @@ tags:
   - security
 install:
   script: |-
-    echo "https://github.com/bitnami-labs/sealed-secrets/releases/download/${requested_version}/kubeseal-linux-amd64" | \
+    echo "https://github.com/bitnami-labs/sealed-secrets/releases/download/v${requested_version}/kubeseal-linux-amd64" | \
         download_file | \
         store_file kubeseal | \
         make_executable

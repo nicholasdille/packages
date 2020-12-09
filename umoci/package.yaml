@@ -5,17 +5,17 @@ links:
   - text: Homepage
     url: https://umo.ci/
 version:
-  latest: v0.4.6 # renovate: datasource=github-releases depName=opencontainers/umoci
+  latest: 0.4.6 # renovate: datasource=github-releases depName=opencontainers/umoci
   command: umoci --version
   filter: ^umoci
-  pattern: s/^umoci\sversion\s(.+)$/v\1/
+  pattern: s/^umoci\sversion\s(.+)$/\1/
 tags:
   - container
   - image
   - oci
 install:
   script: |-
-    echo "https://github.com/opencontainers/umoci/releases/download/${requested_version}/umoci.amd64" | \
+    echo "https://github.com/opencontainers/umoci/releases/download/v${requested_version}/umoci.amd64" | \
         download_file | \
         store_file umoci | \
         make_executable

@@ -2,13 +2,13 @@ name: mkcert
 description: A simple zero-config tool to make locally trusted development certificates with any names you'd like
 repo: FiloSottile/mkcert
 version:
-  latest: v1.4.3 # renovate: datasource=github-releases depName=FiloSottile/mkcert
+  latest: 1.4.3 # renovate: datasource=github-releases depName=FiloSottile/mkcert
 tags:
   - certificate
   - security
 install:
   script: |-
-    echo "https://github.com/FiloSottile/mkcert/releases/download/${requested_version}/mkcert-${requested_version}-linux-amd64" | \
+    echo "https://github.com/FiloSottile/mkcert/releases/download/v${requested_version}/mkcert-v${requested_version}-linux-amd64" | \
         download_file | \
         store_file mkcert | \
         make_executable

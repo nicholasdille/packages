@@ -2,17 +2,17 @@ name: slirp4netns
 description: User-mode networking for unprivileged network namespaces
 repo: rootless-containers/slirp4netns
 version:
-  latest: v1.1.8 # renovate: datasource=github-releases depName=rootless-containers/slirp4netns
+  latest: 1.1.8 # renovate: datasource=github-releases depName=rootless-containers/slirp4netns
   command: slirp4netns --version
   filter: ^slirp4netns
-  pattern: s/^slirp4netns\sversion\s(.+)$/v\1/
+  pattern: s/^slirp4netns\sversion\s(.+)$/\1/
 tags:
   - container
   - rootless
   - network
 install:
   script: |-
-    echo "https://github.com/rootless-containers/slirp4netns/releases/download/${requested_version}/slirp4netns-x86_64" | \
+    echo "https://github.com/rootless-containers/slirp4netns/releases/download/v${requested_version}/slirp4netns-x86_64" | \
         download_file | \
         store_file slirp4netns | \
         make_executable

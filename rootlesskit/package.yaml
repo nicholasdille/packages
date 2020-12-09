@@ -2,15 +2,15 @@ name: rootlesskit
 description: Linux-native "fake root" for rootless containers
 repo: rootless-containers/rootlesskit
 version:
-  latest: v0.11.1 # renovate: datasource=github-releases depName=rootless-containers/rootlesskit
+  latest: 0.11.1 # renovate: datasource=github-releases depName=rootless-containers/rootlesskit
   command: rootlesskit --version
   filter: ^rootlesskit
-  pattern: s/^rootlesskit\sversion\s(.+)$/v\1/
+  pattern: s/^rootlesskit\sversion\s(.+)$/\1/
 tags:
   - container
   - rootless
 install:
   script: |-
-    echo "https://github.com/rootless-containers/rootlesskit/releases/download/${requested_version}/rootlesskit-x86_64.tar.gz" | \
+    echo "https://github.com/rootless-containers/rootlesskit/releases/download/v${requested_version}/rootlesskit-x86_64.tar.gz" | \
         download_file | \
         untar_file

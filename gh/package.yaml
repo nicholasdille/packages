@@ -2,15 +2,15 @@ name: gh
 description: GitHub’s official command line tool
 repo: cli/cli
 version:
-  latest: v1.3.1 # renovate: datasource=github-releases depName=cli/cli
+  latest: 1.3.1 # renovate: datasource=github-releases depName=cli/cli
   command: gh --version
   filter: ^gh
-  pattern: s/^gh\sversion\s(\S+)\s.+$/v\1/
+  pattern: s/^gh\sversion\s(\S+)\s.+$/\1/
 tags:
   - github
 install:
   script: |-
-    echo "https://github.com/cli/cli/releases/download/${requested_version}/gh_${requested_version#v}_linux_amd64.tar.gz" | \
+    echo "https://github.com/cli/cli/releases/download/v${requested_version}/gh_${requested_version}_linux_amd64.tar.gz" | \
         download_file | \
         ${SUDO} tar -xzC "${TARGET}/bin/" --wildcards --strip-components=2 "*/bin/gh"
 

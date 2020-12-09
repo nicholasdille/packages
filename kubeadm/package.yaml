@@ -5,10 +5,10 @@ links:
   - text: Documentation
     url: https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/#installing-kubeadm-kubelet-and-kubectl
 version:
-  latest: v1.20.0 # renovate: datasource=github-releases depName=kubernetes/kubernetes versioning=regex:^v(?<major>\d+?)\.(?<minor>\d+?)\.(?<patch>\d+?)(-(?<prerelease>.+?))?$
+  latest: 1.20.0 # renovate: datasource=github-releases depName=kubernetes/kubernetes versioning=regex:^v(?<major>\d+?)\.(?<minor>\d+?)\.(?<patch>\d+?)(-(?<prerelease>.+?))?$
   command: kubeadm version --output short
   filter: ^v
-  pattern: s/^(.+)$/\1/
+  pattern: s/^v(.+)$/\1/
 tags:
   - kubernetes
   - k8s
@@ -16,7 +16,7 @@ tags:
   - bootstrap
 install:
   script: |-
-    echo "https://storage.googleapis.com/kubernetes-release/release/${requested_version}/bin/linux/amd64/kubeadm" | \
+    echo "https://storage.googleapis.com/kubernetes-release/release/v${requested_version}/bin/linux/amd64/kubeadm" | \
         download_file | \
         store_file kubeadm | \
         make_executable

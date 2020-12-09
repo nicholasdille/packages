@@ -5,11 +5,11 @@ links:
   - text: Homepage
     url: https://conftest.dev/
 version:
-  latest: v0.22.0 # renovate: datasource=github-releases depName=open-policy-agent/conftest
+  latest: 0.22.0 # renovate: datasource=github-releases depName=open-policy-agent/conftest
   command: conftest --version
   filter: |
     ^Version:
-  pattern: s/^Version:\s(.+)$/v\1/
+  pattern: s/^Version:\s(.+)$/\1/
 tags:
   - validation
   - schema
@@ -19,6 +19,6 @@ tags:
   - rego
 install:
   script: |-
-    echo "https://github.com/open-policy-agent/conftest/releases/download/${requested_version}/conftest_${requested_version#v}_Linux_x86_64.tar.gz" | \
+    echo "https://github.com/open-policy-agent/conftest/releases/download/v${requested_version}/conftest_${requested_version}_Linux_x86_64.tar.gz" | \
         download_file | \
         untar_file conftest

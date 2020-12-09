@@ -2,16 +2,16 @@ name: yh
 description: YAML syntax highlighter to bring colours where only jq could
 repo: andreazorzetto/yh
 version:
-  latest: v0.4.0 # renovate: datasource=github-releases depName=andreazorzetto/yh
+  latest: 0.4.0 # renovate: datasource=github-releases depName=andreazorzetto/yh
   command: yh version
   filter: ^[[:digit:]]
-  pattern: s/^(.+)$/v\1/
+  pattern: s/^(.+)$/\1/
 tags:
   - yaml
   - shell
 install:
   script: |-
-    echo "https://github.com/andreazorzetto/yh/releases/download/${requested_version}/yh-linux-amd64.zip" | \
+    echo "https://github.com/andreazorzetto/yh/releases/download/v${requested_version}/yh-linux-amd64.zip" | \
         download_file | \
         store_file yh.zip "${temporary_directory}"
     unzip "${temporary_directory}/yh.zip" yh

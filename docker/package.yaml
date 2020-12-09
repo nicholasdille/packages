@@ -5,10 +5,10 @@ links:
 - text: Homepage
   url: https://www.docker.com/
 version:
-  latest: v19.03.14 # renovate: datasource=github-releases depName=docker/docker-ce versioning=regex:^v(?<major>\d+?)\.(?<minor>\d+?)\.(?<patch>\d+?)(-(?<prerelease>.+?))?$
+  latest: 19.03.14 # renovate: datasource=github-releases depName=docker/docker-ce
   command: ${TARGET_BIN}/docker --version
   filter: ^Docker
-  pattern: s/^Docker\sversion\s([^,]+),.+$/v\1/
+  pattern: s/^Docker\sversion\s([^,]+),.+$/\1/
 tags:
 - docker
 - container
@@ -19,11 +19,11 @@ tags:
 install:
   docker: false
   script: |
-    echo "https://download.docker.com/linux/static/stable/x86_64/docker-${requested_version#v}.tgz" | \
+    echo "https://download.docker.com/linux/static/stable/x86_64/docker-${requested_version}.tgz" | \
         download_file | \
         untar_file --strip-components=1
 
-    echo "https://raw.githubusercontent.com/docker/cli/${requested_version}/contrib/completion/bash/docker" | \
+    echo "https://raw.githubusercontent.com/docker/cli/v${requested_version}/contrib/completion/bash/docker" | \
         download_file | \
         store_completion docker
 

@@ -66,8 +66,10 @@ install:
     extract_file_from_container firecracker-containerd
     extract_file_from_container firecracker-ctr
 
+    ${SUDO} mkdir --parents /etc/firecracker-containerd
     get_file firecracker-containerd etc.firecracker-containerd.config.toml | \
         store_file config.toml /etc/firecracker-containerd
 
+    ${SUDO} mkdir --parents /etc/containerd
     get_file firecracker-containerd etc.containerd.firecracker-runtime.json | \
         store_file firecracker-runtime.json /etc/containerd

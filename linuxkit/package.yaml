@@ -2,16 +2,16 @@ name: linuxkit
 description: A toolkit for building secure, portable and lean operating systems for containers
 repo: linuxkit/linuxkit
 version:
-  latest: v0.8 # renovate: datasource=github-releases depName=linuxkit/linuxkit versioning=regex:^v(?<major>\d+?)\.(?<minor>\d+?)$
+  latest: 0.8 # renovate: datasource=github-releases depName=linuxkit/linuxkit versioning=regex:^v(?<major>\d+?)\.(?<minor>\d+?)$
   command: linuxkit version
   filter: ^linuxkit
-  pattern: s/^linuxkit\sversion\s(.+)$/\1/
+  pattern: s/^linuxkit\sversion\sv(.+)$/\1/
 tags:
   - container
   - moby
 install:
   script: |-
-    echo "https://github.com/linuxkit/linuxkit/releases/download/${requested_version}/linuxkit-linux-amd64" | \
+    echo "https://github.com/linuxkit/linuxkit/releases/download/v${requested_version}/linuxkit-linux-amd64" | \
         download_file | \
         store_file linuxkit | \
         make_executable
