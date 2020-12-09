@@ -2,7 +2,7 @@ name: argocd
 description: Declarative continuous deployment for Kubernetes
 repo: argoproj/argo-cd
 version:
-  latest: 1.7.10 # renovate: datasource=github-releases depName=argoproj/argo-cd
+  latest: 1.8.0 # renovate: datasource=github-releases depName=argoproj/argo-cd
   command: argocd version
   filter: argocd
   pattern: s/^argocd:\sv(.+)\+.+$/\1/
