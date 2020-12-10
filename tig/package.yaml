@@ -10,10 +10,11 @@ tags:
   - git
   - ui
 install:
+  docker: true
   script: |-
     docker create -i --name "${container_name}" ubuntu:bionic bash -xe
 
-    echo "https://github.com/jonas/tig/releases/download/tag-${requested_version}/tig-${requested_version}.tar.gz" | \
+    echo "https://github.com/jonas/tig/releases/download/tig-${requested_version}/tig-${requested_version}.tar.gz" | \
         download_file | \
         gunzip_file | \
         docker cp - "${container_name}:/"
@@ -26,7 +27,7 @@ install:
         gcc \
         ncurses-dev \
         make
-    cd tig-*
+    cd tig-${requested_version}
     ./configure
     make prefix=/usr/local
     make install prefix=/usr/local

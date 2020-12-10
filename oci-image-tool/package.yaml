@@ -19,6 +19,7 @@ install:
     EOF
     extract_file_from_container oci-image-tool
 
+    ${SUDO} mkdir --parents "${TARGET_BASE}/share/man/man1"
     for MAN in oci-image-tool oci-image-tool-create oci-image-tool-unpack oci-image-tool-validate; do
         # shellcheck disable=SC2154
         docker cp "${container_name}:/go/src/github.com/opencontainers/image-tools/${MAN}.1" - | \

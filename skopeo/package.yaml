@@ -14,6 +14,7 @@ install:
   docker: true
   script: |-
     build_containerized golang <<EOF
+    mkdir -p /tmp/skopeo
     curl --silent --location "https://github.com/containers/skopeo/archive/v${requested_version}.tar.gz" | \
         tar xzC /tmp/skopeo
     cd /tmp/skopeo

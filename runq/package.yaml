@@ -5,6 +5,7 @@ tags:
   - container
   - virtual machine
 install:
+  docker: true
   script: |-
     git clone --recurse-submodules https://github.com/gotoz/runq.git
     cd runq

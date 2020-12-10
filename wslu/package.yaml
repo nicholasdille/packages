@@ -10,5 +10,5 @@ install:
     echo "https://github.com/wslutilities/wslu/archive/v${requested_version}.tar.gz" | \
         download_file | \
         tar -xz
-    cd "wslu-v${requested_version}"
-    ${SUDO} PREFIX=/usr/local make all install
+    cd "wslu-${requested_version}"
+    ${SUDO} make all install PREFIX=/usr/local

@@ -43,8 +43,9 @@ install:
     EOF
     extract_file_from_container socat
 
+    ${SUDO} mkdir --parents "${TARGET_BASE}/share/man/man1"
     docker cp "${container_name}:/socat.1" - | \
         tar -x --to-stdout | \
         ${SUDO} tee "${TARGET_BASE}/share/man/man1/socat.1" >/dev/null
 
-    docker image rm socat
+    docker image rm -f socat

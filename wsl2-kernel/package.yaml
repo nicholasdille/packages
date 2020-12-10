@@ -12,6 +12,7 @@ tags:
   - kernel
   - wsl
 install:
+  docker: true
   script: |-
     if ! test -d "${TARGET_BASE}/src/WSL2-Linux-Kernel-${requested_version}"; then
         echo "https://github.com/microsoft/WSL2-Linux-Kernel/archive/${requested_version}-microsoft-standard.tar.gz" | \

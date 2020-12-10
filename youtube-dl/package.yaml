@@ -19,6 +19,8 @@ install:
     apt-get -y install \
         zip \
         pandoc
+
+    mkdir -p /tmp/youtube-dl
     curl --silent --location "https://codeberg.org/polarisfm/youtube-dl/archive/${requested_version}.tar.gz" | \
         tar -xzC /tmp/youtube-dl --strip-components=1
     cd /tmp/youtube-dl
@@ -28,6 +30,7 @@ install:
     EOF
     extract_file_from_container youtube-dl
 
+    ${SUDO} mkdir --parents "${TARGET_BASE}/share/man/man1"
     docker cp "${container_name}:/youtube-dl.1" - | \
         tar -x --to-stdout | \
         ${SUDO} tee "${TARGET_BASE}/share/man/man1/youtube-dl.1" >/dev/null
