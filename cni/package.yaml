@@ -2,7 +2,7 @@ name: cni
 description: Some reference and example networking plugins
 repo: containernetworking/plugins
 version:
-  latest: 0.8.7 # renovate: datasource=github-releases depName=containernetworking/plugins
+  latest: 0.9.0 # renovate: datasource=github-releases depName=containernetworking/plugins
   command: |
     /opt/cni/bin/loopback --version 2>&1
   filter: ^CNI
