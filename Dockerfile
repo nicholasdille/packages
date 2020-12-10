@@ -7,6 +7,24 @@ RUN apk add --update-cache \
 WORKDIR /tmp
 CMD while true; do sleep 10; done
 
+FROM ubuntu:18.04 AS ubuntu-bionic
+RUN apt-get update \
+ && DEBIAN_FRONTEND=noninteractive apt-get -y install --no-install-recommends \
+        bash \
+        curl \
+        jq \
+        xz-utils \
+        unzip \
+        git \
+        ca-certificates \
+        gettext \
+        fontconfig \
+        patch \
+        make \
+        libffi6
+WORKDIR /tmp
+CMD sleep infinity
+
 FROM ubuntu:20.04@sha256:4e4bc990609ed865e07afc8427c30ffdddca5153fd4e82c20d8f0783a291e241 AS ubuntu-focal
 RUN apt-get update \
  && DEBIAN_FRONTEND=noninteractive apt-get -y install --no-install-recommends \
