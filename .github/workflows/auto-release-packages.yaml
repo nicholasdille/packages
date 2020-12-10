@@ -7,7 +7,7 @@ name: Auto release packages
 jobs:
   build:
     name: Auto release packages
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
 
       - name: Checkout code

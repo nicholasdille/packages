@@ -8,7 +8,7 @@ name: Create CLI release
 jobs:
   build:
     name: Create CLI release
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
 
       - name: Checkout code
