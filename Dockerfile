@@ -43,7 +43,7 @@ RUN apt-get update \
 WORKDIR /tmp
 CMD sleep infinity
 
-FROM ubuntu:20.04@sha256:4e4bc990609ed865e07afc8427c30ffdddca5153fd4e82c20d8f0783a291e241 AS ubuntu-groovy
+FROM ubuntu:20.10 AS ubuntu-groovy
 RUN apt-get update \
  && DEBIAN_FRONTEND=noninteractive apt-get -y install --no-install-recommends \
         bash \
