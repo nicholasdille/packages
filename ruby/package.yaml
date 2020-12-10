@@ -40,9 +40,13 @@ install:
     requested_version_minor=$(echo "${requested_version}" | cut -d'.' -f1-2)
 
     build_containerized build-ruby <<EOF
+        mkdir -p /tmp/ruby
         curl --silent "https://cache.ruby-lang.org/pub/ruby/${requested_version_minor}/ruby-${requested_version}.tar.gz" | \
-            tar -xz --strip-components=1
-        ./configure --prefix="${TARGET_BASE}"
+            tar -xzC /tmp/ruby --strip-components=1
+        cd /tmp/ruby
+        ./configure \
+            --prefix="${TARGET_BASE}" \
+            --enable-shared
         make
         make install
     EOF
