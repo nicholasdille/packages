@@ -210,7 +210,8 @@
         "adrienverge/yamllint",
         "andreazorzetto/yh",
         "vmware-tanzu/carvel-ytt",
-        "AkihiroSuda/nerdctl"
+        "AkihiroSuda/nerdctl",
+        "docker/cli"
       ],
       "extractVersion": "^v(?<version>.+)$"
     }
