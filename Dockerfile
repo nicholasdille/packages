@@ -19,6 +19,7 @@ RUN apt-get update \
         ca-certificates \
         gettext \
         fontconfig \
-        patch
+        patch \
+        make
 WORKDIR /tmp
 CMD sleep infinity
