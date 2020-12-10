@@ -3,7 +3,7 @@ description: The Python programming language
 repo: python/cpython
 version:
   latest: 3.9.1 # renovate: datasource=github-tags depName=python/cpython
-  command: python3 --version
+  command: ${TARGET_BIN}/python3 --version
   filter: ^Python
   pattern: s/^Python\s(.+)$/\1/
 tags:
@@ -37,9 +37,17 @@ install:
         docker build --tag build-python -
 
     build_containerized build-python <<EOF
+        mkdir /tmp/python
         curl --silent --location "https://github.com/python/cpython/archive/v${requested_version}.tar.gz" | \
-            tar -xz --strip-components=1
-        ./configure --prefix="${TARGET_BASE}" --enable-optimizations
+            tar -xzC /tmp/python --strip-components=1
+        cd /tmp/python
+        CXX="/usr/bin/g++" ./configure \
+            --prefix="${TARGET_BASE}" \
+            --enable-shared \
+            --with-system-expat \
+            --with-ensurepip=yes \
+            --enable-optimizations \
+            LDFLAGS="-Wl,-rpath ${TARGET_BASE}/lib"
         make -j2
         make install
         python3 -m pip install --upgrade pip
