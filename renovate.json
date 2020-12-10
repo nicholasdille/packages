@@ -209,7 +209,8 @@
         "krishicks/yaml-patch",
         "adrienverge/yamllint",
         "andreazorzetto/yh",
-        "vmware-tanzu/carvel-ytt"
+        "vmware-tanzu/carvel-ytt",
+        "AkihiroSuda/nerdctl"
       ],
       "extractVersion": "^v(?<version>.+)$"
     }
