@@ -7,7 +7,7 @@ RUN apk add --update-cache \
 WORKDIR /tmp
 CMD while true; do sleep 10; done
 
-FROM ubuntu:18.04 AS ubuntu-bionic
+FROM ubuntu:18.04@sha256:a7fa45fb43d471f4e66c5b53b1b9b0e02f7f1d37a889a41bbe1601fac70cb54e AS ubuntu-bionic
 RUN apt-get update \
  && DEBIAN_FRONTEND=noninteractive apt-get -y install --no-install-recommends \
         bash \
@@ -43,7 +43,7 @@ RUN apt-get update \
 WORKDIR /tmp
 CMD sleep infinity
 
-FROM ubuntu:20.10 AS ubuntu-groovy
+FROM ubuntu:20.10@sha256:c41e8d2a4ca9cddb4398bf08c99548b9c20d238f575870ae4d3216bc55ef3ca7 AS ubuntu-groovy
 RUN apt-get update \
  && DEBIAN_FRONTEND=noninteractive apt-get -y install --no-install-recommends \
         bash \
