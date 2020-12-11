@@ -23,6 +23,14 @@ install:
         download_file | \
         untar_file --strip-components=1
 
+    echo "https://download.docker.com/linux/static/stable/x86_64/docker-rootless-extras-${requested_version}.tgz" | \
+        download_file | \
+        untar_file --strip-components=1 \
+            docker-rootless-extras/rootlesskit \
+            docker-rootless-extras/rootlesskit-docker-proxy \
+            docker-rootless-extras/vpnkit
+
+
     echo "https://raw.githubusercontent.com/docker/cli/v${requested_version}/contrib/completion/bash/docker" | \
         download_file | \
         store_completion docker
