@@ -2,7 +2,7 @@ name: gtop
 description: System monitoring dashboard for terminal
 repo: aksakalli/gtop
 version:
-  latest: 1.0.2 # renovate: datasource=github-releases depName=aksakalli/gtop
+  latest: 1.1.0 # renovate: datasource=github-releases depName=aksakalli/gtop
   command: npm info gtop version
   filter: ^[[:digit:]]
   pattern: s/^(.+)$/\1/
