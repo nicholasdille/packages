@@ -5,7 +5,7 @@ links:
 - text: Homepage
   url: https://mitmproxy.org/
 version:
-  latest: 6.0.0 # renovate: datasource=github-releases depName=mitmproxy/mitmproxy
+  latest: 6.0.1 # renovate: datasource=github-releases depName=mitmproxy/mitmproxy
   command: mitmproxy --version
   filter: ^Mitmproxy
   pattern: s/^Mitmproxy:\s(\S+)\s.+$/\1/
