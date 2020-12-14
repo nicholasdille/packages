@@ -2,7 +2,7 @@ name: kmon
 description: Linux Kernel Manager and Activity Monitor
 repo: orhun/kmon
 version:
-  latest: 1.5.1 # renovate: datasource=github-releases depName=orhun/kmon
+  latest: 1.5.3 # renovate: datasource=github-releases depName=orhun/kmon
   command: kmon --version
   filter: ^kmon
   pattern: s/^kmon\s(.+)$/\1/
