@@ -2,7 +2,7 @@ name: lsd
 description: The next gen ls command
 repo: Peltoche/lsd
 version:
-  latest: 0.18.0 # renovate: datasource=github-releases depName=Peltoche/lsd
+  latest: 0.19.0 # renovate: datasource=github-releases depName=Peltoche/lsd
   command: lsd --version
   filter: ^lsd
   pattern: s/^lsd\s(.+)$/\1/
