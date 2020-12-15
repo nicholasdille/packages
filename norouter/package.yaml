@@ -12,5 +12,4 @@ install:
   script: |-
     echo "https://github.com/norouter/norouter/releases/download/v${requested_version}/norouter-Linux-x86_64" | \
         download_file | \
-        store_file norouter | \
-        make_executable
+        untar_file norouter
