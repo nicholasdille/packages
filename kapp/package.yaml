@@ -22,3 +22,6 @@ install:
         download_file | \
         store_file kapp | \
         make_executable
+
+    kapp completion bash | \
+        store_completion kapp
