@@ -7,7 +7,7 @@ links:
   - text: Project homepage
     url: https://carvel.dev/
 version:
-  latest: 0.34.0 # renovate: datasource=github-releases depName=vmware-tanzu/carvel-kapp
+  latest: 0.35.0 # renovate: datasource=github-releases depName=vmware-tanzu/carvel-kapp
   command: kapp --version
   filter: ^kapp
   pattern: s/^kapp\sversion\s(.+)$/\1/
