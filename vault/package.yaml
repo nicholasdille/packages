@@ -2,7 +2,7 @@ name: vault
 description: A tool for secrets management, encryption as a service, and privileged access management
 repo: hashicorp/vault
 version:
-  latest: 1.6.0 # renovate: datasource=github-tags depName=hashicorp/vault
+  latest: 1.6.1 # renovate: datasource=github-tags depName=hashicorp/vault
   command: vault --version
   filter: ^Vault
   pattern: s/^Vault\sv(\S+)\s.+$/\1/
