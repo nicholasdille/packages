@@ -1,0 +1,20 @@
+name: kindbox
+description: Kubernetes in Docker in Sysbox
+repo: nestybox/kindbox
+version:
+  latest: master
+tags:
+  - kubernetes
+  - k8s
+  - dind
+  - docker
+  - cluster
+  - bootstrap
+install:
+  script: |-
+    require sysbox
+
+    echo "https://github.com/nestybox/kindbox/raw/${requested_version}/scr/kindbox" | \
+        download_file | \
+        store_file kindbox | \
+        make_executable
