@@ -10,6 +10,7 @@ tags:
   - container
   - runtime
   - security
+  - oci
 install:
   script: |-
     echo "https://storage.googleapis.com/gvisor/releases/release/${requested_version}/runsc" | \

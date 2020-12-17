@@ -10,6 +10,7 @@ tags:
   - container
   - runtime
   - security
+  - oci
 install:
   docker: true
   script: |-

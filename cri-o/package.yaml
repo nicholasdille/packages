@@ -8,11 +8,13 @@ version:
   pattern: s/^crio\sversion\s(.+)$/\1/
 tags:
   - container
-  - runtime
+  - oci
   - cri
+  - runtime
 install:
   script: |-
     require cni
+    require runc
     require conmon
     require crictl
 

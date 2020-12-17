@@ -12,6 +12,7 @@ version:
 tags:
   - container
   - oci
+  - runtime
 install:
   script: |-
     echo "https://github.com/opencontainers/runc/releases/download/v${requested_version}/runc.amd64" | \
