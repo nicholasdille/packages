@@ -1,0 +1,33 @@
+name: cri-o
+description: Open Container Initiative-based implementation of Kubernetes Container Runtime Interface
+repo: cri-o/cri-o
+version:
+  latest: 1.20.0 # renovate: datasource=github-releases depName=cri-o/cri-o
+  command: crio --version 2>/dev/null
+  filter: ^crio
+  pattern: s/^crio\sversion\s(.+)$/\1/
+tags:
+  - container
+  - runtime
+  - cri
+install:
+  script: |-
+    require cni
+    require conmon
+    require crictl
+
+    echo "https://github.com/cri-o/cri-o/releases/download/v${requested_version}/crio-v${requested_version}.tar.gz" | \
+        download_file | \
+        tar -xz --strip-components=1
+
+    ${SUDO} cp bin/crio "${TARGET_BIN}"
+    ${SUDO} cp bin/crio-status "${TARGET_BIN}"
+
+    ${SUDO} mkdir --parents "${TARGET_BASE}/share/man/man5" "${TARGET_BASE}/share/man/man8"
+    ${SUDO} cp man/crio.8 "${TARGET_BASE}/share/man/man8"
+    ${SUDO} cp man/crio.conf{,.d}.5 "${TARGET_BASE}/share/man/man5"
+
+    cat completions/bash/crio | \
+        store_completion crio
+    cat completions/bash/crio-status | \
+        store_completion crio-status
