@@ -1,0 +1,16 @@
+name: earthly
+description: Build automation for the container era
+repo: earthly/earthly
+version:
+  latest: 0.4.0 # renovate: datasource=github-releases depName=earthly/earthly
+  command: earthly --version
+  filter: ^earthly
+  pattern: s/^earthly\sversion\sv(.+)$/\1/
+tags:
+  - container
+install:
+  script: |
+    echo "https://github.com/earthly/earthly/releases/download/v${requested_version}/earthly-linux-amd64" | \
+        download_file | \
+        store_file earthly | \
+        make_executable
