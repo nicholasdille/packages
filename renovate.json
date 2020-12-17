@@ -69,6 +69,7 @@
     },
     {
       "packageNames": [
+        "iovisor/bcc",
         "rancher/rke",
         "k0sproject/k0s",
         "denoland/deno",

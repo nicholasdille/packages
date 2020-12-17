@@ -10,9 +10,7 @@ tags:
   - tracing
 install:
   script: |-
-    ${SUDO} apt-get update
-    ${SUDO} apt-get -y install \
-        bpfcc-tools
+    require bcc
 
     echo "https://github.com/aquasecurity/tracee/releases/download/v${requested_version}/tracee.tar.gz" | \
         download_file | \

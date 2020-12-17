@@ -1,0 +1,54 @@
+name: bcc
+description: BCC - Tools for BPF-based Linux IO analysis, networking, monitoring, and more
+repo: iovisor/bcc
+version:
+  latest: 0.17.0 # renovate: datasource=github-releases depName=iovisor/bcc
+tags:
+  - ebpf
+  - security
+  - tracing
+files:
+- name: Dockerfile
+  content: |
+      FROM ubuntu:20.04
+      RUN apt-get update \
+       && DEBIAN_FRONTEND=noninteractive apt-get -y install --no-install-recommends \
+              bison \
+              build-essential \
+              ca-certificates \
+              cmake \
+              curl \
+              flex \
+              git \
+              libedit-dev \
+              libllvm7 \
+              llvm-7-dev \
+              libclang-7-dev \
+              python \
+              zlib1g-dev \
+              libelf-dev \
+              libfl-dev
+install:
+  docker: true
+  script: |-
+    get_file bcc Dockerfile | \
+        docker build --tag build-bcc -
+
+    build_containerized build-bcc <<EOF
+    mkdir -p /tmp/bcc
+    cd /tmp/bcc
+    curl --silent --location "https://github.com/iovisor/bcc/releases/download/v${requested_version}/bcc-src-with-submodule.tar.gz" | \
+        tar -xz
+    cd bcc
+    mkdir build
+    cd build
+    cmake ..
+    make
+    make install
+    EOF
+
+    #/usr/share/bcc/tools: argdist bashreadline bindsnoop biolatency biolatpcts biosnoop biotop bitesize bpflist btrfsdist btrfsslower cachestat cachetop capable compactsnoop cpudist cpuunclaimed criticalstat dbslower dbstat dcsnoop dcstat deadlock dirtop drsnoop execsnoop exitsnoop ext4dist ext4slower filelife fileslower filetop funccount funcinterval funclatency funcslower gethostlatency hardirqs inject killsnoop klockstat llcstat mdflush memleak mountsnoop mysqld_qslower netqtop nfsdist nfsslower offcputime offwaketime oomkill opensnoop pidpersec profile readahead runqlat runqlen runqslower shmsnoop slabratetop sofdsnoop softirqs solisten sslsniff stackcount statsnoop swapin swapin_example syncsnoop syscount tcpaccept tcpconnect tcpconnlat tcpdrop tcplife tcpretrans tcprtt tcpstates tcpsubnet tcpsynbl tcptop tcptracer threadsnoop tplist trace ttysnoop vfscount vfsstat wakeuptime xfsdist xfsslower zfsdist zfsslower cobjnew javacalls javaflow javagc javaobjnew javastat javathreads nodegc nodestat perlcalls perlflow perlstat phpcalls phpflow phpstat pythoncalls pythonflow pythongc pythonstat reset-trace rubycalls rubyflow rubygc rubyobjnew rubystat tclcalls tclflow tclobjnew tclstat deadlock.c netqtop.c
+    #/usr/share/bcc/man/man8: argdist.8.gz bashreadline.8.gz bindsnoop.8.gz biolatency.8.gz biolatpcts.8.gz biosnoop.8.gz biotop.8.gz bitesize.8.gz bpflist.8.gz bps.8.gz btrfsdist.8.gz btrfsslower.8.gz cachestat.8.gz cachetop.8.gz capable.8.gz cobjnew.8.gz compactsnoop.8.gz cpudist.8.gz cpuunclaimed.8.gz criticalstat.8.gz cthreads.8.gz dbslower.8.gz dbstat.8.gz dcsnoop.8.gz dcstat.8.gz deadlock.8.gz dirtop.8.gz drsnoop.8.gz execsnoop.8.gz exitsnoop.8.gz ext4dist.8.gz ext4slower.8.gz filelife.8.gz fileslower.8.gz filetop.8.gz funccount.8.gz funcinterval.8.gz funclatency.8.gz funcslower.8.gz gethostlatency.8.gz hardirqs.8.gz inject.8.gz javacalls.8.gz javaflow.8.gz javagc.8.gz javaobjnew.8.gz javastat.8.gz javathreads.8.gz killsnoop.8.gz klockstat.8.gz llcstat.8.gz mdflush.8.gz memleak.8.gz mountsnoop.8.gz mysqld_qslower.8.gz netqtop.8.gz nfsdist.8.gz nfsslower.8.gz nodegc.8.gz nodestat.8.gz offcputime.8.gz offwaketime.8.gz oomkill.8.gz opensnoop.8.gz perlcalls.8.gz perlflow.8.gz perlstat.8.gz phpcalls.8.gz phpflow.8.gz phpstat.8.gz pidpersec.8.gz profile.8.gz pythoncalls.8.gz pythonflow.8.gz pythongc.8.gz pythonstat.8.gz readahead.8.gz reset-trace.8.gz rubycalls.8.gz rubyflow.8.gz rubygc.8.gz rubyobjnew.8.gz rubystat.8.gz runqlat.8.gz runqlen.8.gz runqslower.8.gz shmsnoop.8.gz slabratetop.8.gz sofdsnoop.8.gz softirqs.8.gz solisten.8.gz spfdsnoop.8.gz sslsniff.8.gz stackcount.8.gz statsnoop.8.gz swapin.8.gz syncsnoop.8.gz syscount.8.gz tclcalls.8.gz tclflow.8.gz tclobjnew.8.gz tclstat.8.gz tcpaccept.8.gz tcpconnect.8.gz tcpconnlat.8.gz tcpdrop.8.gz tcplife.8.gz tcpretrans.8.gz tcprtt.8.gz tcpstates.8.gz tcpsubnet.8.gz tcpsynbl.8.gz tcptop.8.gz tcptracer.8.gz threadsnoop.8.gz tplist.8.gz trace.8.gz ttysnoop.8.gz ucalls.8.gz uflow.8.gz ugc.8.gz uobjnew.8.gz ustat.8.gz uthreads.8.gz vfscount.8.gz vfsstat.8.gz wakeuptime.8.gz xfsdist.8.gz xfsslower.8.gz zfsdist.8.gz zfsslower.8.gz
+    #/usr/share/bcc/tools/lib: ucalls uflow ugc uobjnew ustat uthreads
+
+    docker image rm -f build-bcc
