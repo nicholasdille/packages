@@ -28,6 +28,10 @@
       "automerge": true
     },
     {
+      "packageNames": [ "containers/crun" ],
+      "extractVersion": "^v(?<major>\\d+)\\.(?<minor>\\d+)$"
+    },
+    {
       "packageNames": [ "kubernetes-sigs/kustomize" ],
       "extractVersion": "^kustomize/v(?<version>.+)$"
     },
