@@ -3,9 +3,9 @@ description: Highly configurable prompt builder for Bash, ZSH and PowerShell wri
 repo: jtyr/gbt
 version:
   latest: 2.0.0 # renovate: datasource=github-releases depName=jtyr/gbt
-  #command: lectl --version
-  #filter: ^lectl
-  #pattern: s/^lectl\s(\S+)\s.+$/v\1/
+  command: gbt -version
+  filter: ^GBT
+  pattern: s/^GBT\sversion\sv([^,]+),.+$/\1/
 tags:
   - powerline
   - shell

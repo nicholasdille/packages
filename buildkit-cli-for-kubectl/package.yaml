@@ -3,6 +3,9 @@ description: BuildKit CLI for kubectl is a tool for building container images wi
 repo: vmware-tanzu/buildkit-cli-for-kubectl
 version:
   latest: 0.1.2 # renovate: datasource=github-tags depName=vmware-tanzu/buildkit-cli-for-kubectl
+  command: kubectl-buildkit version
+  filter: ^v
+  pattern: s/^v(.+)$/\1/
 tags:
   - container
   - build

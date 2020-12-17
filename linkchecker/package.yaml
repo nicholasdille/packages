@@ -6,6 +6,9 @@ links:
     url: https://linkchecker.github.io/linkchecker/
 version:
   latest: 9.4.0 # renovate: datasource=github-releases depName=linkchecker/linkchecker
+  command: pip3 list
+  filter: ^LinkChecker
+  pattern: s/^LinkChecker\s+(.+)$/\1/
 tags:
   - web
   - html
