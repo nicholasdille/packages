@@ -65,6 +65,7 @@
     },
     {
       "packageNames": [
+        "kubernetes/kubernetes",
         "nektos/act",
         "FiloSottile/age",
         "adfolks/aksctl",
