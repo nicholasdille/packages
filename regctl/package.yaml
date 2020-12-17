@@ -14,3 +14,8 @@ install:
         download_file | \
         store_file regctl | \
         make_executable
+
+    echo "https://github.com/regclient/regclient/releases/download/v${requested_version}/regsync-linux-amd64" | \
+        download_file | \
+        store_file regctl | \
+        make_executable
