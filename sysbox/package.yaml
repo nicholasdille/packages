@@ -12,29 +12,9 @@ tags:
   - virtualization
   - kubernetes
   - k8s
-files:
-- name: Dockerfile
-  content: |
-    FROM ubuntu:20.04@sha256:1d7b639619bdca2d008eca2d5293e3c43ff84cbee597ff76de3b7a7de3e84956
-    ENV DEBIAN_FRONTEND=noninteractive
-    RUN apt-get update \
-     && apt-get -y install --no-install-recommends \
-            curl \
-            ca-certificates \
-            jq \
-            make \
-            git \
-            lsb-release \
-            iproute2 \
-            protobuf-compiler \
-     && curl --silent https://pkg.dille.io/pkgctl.sh | bash -s install docker
 install:
   docker: true
   script: |-
-    #get_file sysbox Dockerfile | \
-    #    docker build --tag build-sysbox -
-
-    #docker run --interactive --mount type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock build-sysbox bash <<EOF
     git clone https://github.com/nestybox/sysbox
     cd sysbox
     git checkout v${requested_version}
@@ -44,5 +24,17 @@ install:
     git -C sysbox-fs submodule update --init
     sed -i -E "s|git@github.com:|https://github.com/|" sysbox-libs/.gitmodules
     git -C sysbox-libs submodule update --init
-    make sysbox-static
-    #EOF
+    make sysbox
+
+    ${SUDO} sysbox-fs/sysbox-fs ${TARGET_BIN}/sysbox-fs
+    ${SUDO} sysbox-mgr/sysbox-mgr ${TARGET_BIN}/sysbox-mgr
+    ${SUDO} sysbox-runc/sysbox-runc ${TARGET_BIN}/sysbox-runc
+    ${SUDO} scr/sysbox ${TARGET_BIN}/sysbox
+
+    ${SUDO} mkdir -p /etc/docker
+    if ! test -f /etc/docker/daemon.json; then
+        echo "{}" | ${SUDO} tee /etc/docker/daemon.json >/dev/null
+    fi
+    ${SUDO} mv /etc/docker/daemon.json /etc/docker/daemon.json.bak
+    jq --arg bin "${TARGET_BIN}" '. * {"runtimes": {"sysbox-runc": {"path": ($bin + "/sysbox-runc")}}}' /etc/docker/daemon.json.bak | \
+        ${SUDO} tee /etc/docker/daemon.json >/dev/null
