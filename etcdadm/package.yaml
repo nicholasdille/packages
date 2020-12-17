@@ -1,0 +1,16 @@
+name: etcdadm
+description: A command-line tool for operating an etcd cluster
+repo: kubernetes-sigs/etcdadm
+version:
+  latest: 0.1.3 # renovate: datasource=github-releases depName=kubernetes-sigs/etcdadm
+  command: etcdadm version --short
+  filter: ^v
+  pattern: s/^v(.+)$/\1/
+tags:
+  - shell
+install:
+  script: |-
+    echo "https://github.com/kubernetes-sigs/etcdadm/releases/download/v${requested_version}/etcdadm-linux-amd64" | \
+        download_file | \
+        store_file etcdadm | \
+        make_executable
