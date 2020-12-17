@@ -3,12 +3,13 @@ set -o errexit
 
 make packages.json
 
+# shellcheck disable=SC1091
 source /etc/lsb-release
 if test "${DISTRIB_ID}" != "Ubuntu"; then
     echo "ERROR: Distribution ${DISTRIB_ID} is unsupported"
     exit 1
 fi
-DOCKER_BUILDKIT=1 docker build --target ${DISTRIB_ID,,}-${DISTRIB_CODENAME} --tag test-package:ubuntu .
+DOCKER_BUILDKIT=1 docker build --target "${DISTRIB_ID,,}-${DISTRIB_CODENAME}" --tag test-package:ubuntu .
 
 docker ps --filter name="test-build" --all --quiet | xargs -r docker rm -f
 docker run -d --name "test-build" --mount=type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock test-package:ubuntu
@@ -33,6 +34,6 @@ while test "$#" -gt 0; do
         docker exec "test-build" pkgctl install docker
     fi
 
-    docker exec "test-build" pkgctl install ${PACKAGE}
+    docker exec "test-build" pkgctl install "${PACKAGE}"
 
 done
