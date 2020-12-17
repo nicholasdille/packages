@@ -1,0 +1,39 @@
+name: bubblewrap
+description: Unprivileged sandboxing tool
+repo: containers/bubblewrap
+version:
+  latest: 0.4.1 # renovate: datasource=github-releases depName=containers/bubblewrap
+  command: bwrap --version
+  filter: ^bubblewrap
+  pattern: s/^bubblewrap\s(.+)$/\1/
+tags:
+- namespaces
+install:
+  docker: true
+  script: |-
+    build_containerized ubuntu:focal <<EOF
+    apt-get update
+    DEBIAN_FRONTEND=noninteractive apt-get -y install --no-install-recommends \
+        curl \
+        ca-certificates \
+        xz-utils \
+        build-essential \
+        autoconf \
+        autogen \
+        make \
+        libcap-dev
+
+    mkdir --parents /tmp/bubblewrap
+    cd /tmp/bubblewrap
+    curl --silent --location "https://github.com/containers/bubblewrap/releases/download/v${requested_version}/bubblewrap-${requested_version}.tar.xz" | \
+        tar -xvJ --strip-components=1
+
+    ./configure
+    make LDFLAGS=-static
+    cp bwrap /
+    cp completions/bash/bwrap /bwrap.sh
+    EOF
+    extract_file_from_container bwrap
+    docker cp "${container_name}:/bwrap.sh" - | \
+        tar -x --to-stdout | \
+        store_completion bwrap
