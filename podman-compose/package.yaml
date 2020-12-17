@@ -1,0 +1,13 @@
+name: podman-compose
+description: a script to run docker-compose.yml using podman
+repo: containers/podman-compose
+version:
+  latest: 0.1.5 # renovate: datasource=github-tags depName=containers/podman-compose
+  command: pip3 list
+  filter: podman-compose
+  pattern: s/^podman-compose\s+(.+)$/\1/
+tags:
+  - container
+install:
+  script: |-
+    install_python_module podman-compose==${requested_version}
