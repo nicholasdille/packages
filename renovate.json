@@ -69,6 +69,7 @@
     },
     {
       "packageNames": [
+        "k0sproject/k0s",
         "denoland/deno",
         "tilt-dev/ctlptl",
         "earthly/earthly",

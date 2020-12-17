@@ -1,0 +1,17 @@
+name: k0s
+description: k0s - Zero Friction Kubernetes
+repo: k0sproject/k0s
+version:
+  latest: 0.8.1 # renovate: datasource=github-releases depName=k0sproject/k0s
+  command: k0s version
+  filter: ^v
+  pattern: s/^v(.+)$/\1/
+tags:
+  - kubernetes
+  - k8s
+install:
+  script: |-
+    echo "https://github.com/k0sproject/k0s/releases/download/v${requested_version}/k0s-v${requested_version}-amd64" | \
+        download_file | \
+        store_file k0s | \
+        make_executable
