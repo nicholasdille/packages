@@ -2,6 +2,6 @@
 
 Store application configuration files in Docker/OCI registries
 
-[GitHub](https://github.com/k14s/imgpkg)
+[GitHub](https://github.com/vmware-tanzu/carvel-imgpkg)
 
-[Homepage](https://carvel.dev/)
+[Project homepage](https://carvel.dev/)

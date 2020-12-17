@@ -2,6 +2,6 @@
 
 Lightweight Kubernetes
 
-[GitHub](https://github.com/rancher/k3s)
+[GitHub](https://github.com/k3s-io/k3s)
 
 [Homepage](https://k3s.io/)
