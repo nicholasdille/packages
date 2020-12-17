@@ -1,4 +1,4 @@
-# regctl
+# regclient
 
 Client interface for the registry API
 

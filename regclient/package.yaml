@@ -1,4 +1,4 @@
-name: regctl
+name: regclient
 description: Client interface for the registry API
 repo: regclient/regclient
 version:
