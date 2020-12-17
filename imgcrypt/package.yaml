@@ -38,10 +38,13 @@ install:
 
     get_file imgcrypt ctd-decoder-version.patch >ctd-decoder-version.patch
 
-    docker create -i --name "${container_name}" golang bash -xe
+    docker create \
+        --name "${container_name}" \
+        --interactive \
+        golang bash -xe
     docker cp ctd-decoder-version.patch "${container_name}:/tmp"
 
-    docker start -i "${container_name}" <<EOF
+    docker start --interactive "${container_name}" <<EOF
     apt-get update
     apt-get -y install patch
     go get -d github.com/containerd/imgcrypt

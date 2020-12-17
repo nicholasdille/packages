@@ -53,3 +53,5 @@ install:
     ${SUDO} mkdir -p "${TARGET_BASE}/ruby"
     docker cp "${container_name}:${TARGET_BASE}" - | \
         ${SUDO} tar -xC "${TARGET_BASE}/.."
+
+    docker image rm -f build-ruby

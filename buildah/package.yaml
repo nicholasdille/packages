@@ -43,9 +43,9 @@ install:
     require cnitool
 
     get_file buildah Dockerfile | \
-        docker build --tag buildah -
+        docker build --tag build-buildah -
 
-    build_containerized buildah <<EOF
+    build_containerized build-buildah <<EOF
     echo "START"
     export PATH="/usr/lib/go-1.13/bin:\${PATH}"
 
@@ -75,3 +75,5 @@ install:
             tar -x --to-stdout | \
             ${SUDO} tee "${TARGET_BASE}/share/man/man1/${MAN}.1" >/dev/null
     done
+
+    docker image rm -f build-buildah

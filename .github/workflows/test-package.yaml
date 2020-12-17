@@ -25,7 +25,9 @@ jobs:
               echo "Running for PR #${PR}"
 
               source /etc/lsb-release
-              docker build --target ${DISTRIB_ID,,}-${DISTRIB_CODENAME} --tag test-package:ubuntu .
+              docker build \
+                  --target "${DISTRIB_ID,,}-${DISTRIB_CODENAME}" \
+                  --tag test-package:ubuntu .
 
               FILES=$(curl --silent --location --header 'Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' "https://api.github.com/repos/${GITHUB_REPOSITORY}/pulls/${PR}/files" | jq --raw-output '.[].filename')
               for FILE in ${FILES}; do

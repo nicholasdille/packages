@@ -12,14 +12,17 @@ tags:
 install:
   docker: true
   script: |-
-    docker create -i --name "${container_name}" ubuntu:bionic bash -xe
+    docker create \
+        --name "${container_name}" \
+        --interactive \
+        ubuntu:bionic bash -xe
 
     echo "https://github.com/jonas/tig/releases/download/tig-${requested_version}/tig-${requested_version}.tar.gz" | \
         download_file | \
         gunzip_file | \
         docker cp - "${container_name}:/"
 
-    docker start -i "${container_name}" <<EOF
+    docker start --interactive "${container_name}" <<EOF
     apt-get update
     apt-get -y install --no-install-recommends \
         curl \
