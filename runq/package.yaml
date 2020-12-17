@@ -7,14 +7,29 @@ tags:
 install:
   docker: true
   script: |-
-    git clone --recurse-submodules https://github.com/gotoz/runq.git
-    cd runq
-
-    docker run --name "${container_name}" --interactive --mount "type=bind,src=${PWD},dst=/src" --workdir /src golang bash <<EOF
+    docker run \
+        --name "${container_name}" \
+        --interactive \
+        --mount "type=bind,src=${PWD},dst=/src" \
+        --workdir /src \
+        golang bash <<EOF
     apt-get update
     apt-get -y install --no-install-recommends \
         libseccomp-dev
+    git clone --recurse-submodules https://github.com/gotoz/runq.git
+    cd runq
     make all
+    find . -type f -executable
     EOF
 
-    make image
+    #make image
+
+    ${SUDO} chown -R $(id -u):$(id -g) .
+
+    #${SUDO} mkdir -p /etc/docker
+    #if ! test -f /etc/docker/daemon.json; then
+    #    echo "{}" | ${SUDO} tee /etc/docker/daemon.json >/dev/null
+    #fi
+    #${SUDO} mv /etc/docker/daemon.json /etc/docker/daemon.json.bak
+    #jq --arg bin "${TARGET_BIN}" '. * {"runtimes": {"runq": {"path": ($bin + "/runq"), "runtimeArgs": ["--cpu", "1", "--mem", "256", "--dns", "8.8.8.8,8.8.4.4", "--tmpfs", "/tmp"]}}}' /etc/docker/daemon.json.bak | \
+    #    ${SUDO} tee /etc/docker/daemon.json >/dev/null
