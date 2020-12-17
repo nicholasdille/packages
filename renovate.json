@@ -69,6 +69,7 @@
     },
     {
       "packageNames": [
+        "denoland/deno",
         "tilt-dev/ctlptl",
         "earthly/earthly",
         "kubernetes-sigs/etcdadm",

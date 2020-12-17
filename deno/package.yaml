@@ -1,0 +1,25 @@
+name: deno
+description: A secure JavaScript and TypeScript runtime
+repo: denoland/deno
+links:
+- text: Homepage
+  url: https://deno.land/
+version:
+  latest: 1.6.1 # renovate: datasource=github-releases depName=denoland/deno
+  command: deno --version
+  filter: ^deno
+  pattern: s/^deno\s(\S+)\s.+$/\1/
+tags:
+  - node
+  - nodejs
+  - javascript
+  - typescript
+install:
+  script: |-
+    echo "https://github.com/denoland/deno/releases/download/v${requested_version}/deno-x86_64-unknown-linux-gnu.zip" | \
+        download_file | \
+        store_file deno.zip "${temporary_directory}"
+    unzip_file "${temporary_directory}/deno.zip" deno
+
+    deno completions bash | \
+        store_completion deno
