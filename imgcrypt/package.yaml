@@ -1,0 +1,59 @@
+name: imgcrypt
+description: OCI Image Encryption Package
+repo: containerd/imgcrypt
+version:
+  latest: 1.0.3 # renovate: datasource=github-releases depName=containerd/imgcrypt
+  command: ctd-decoder --version
+  filter: ^ctd-decoder
+  pattern: s/^ctd-decoder\sversion\s(.+)$/\1/
+tags:
+  - container
+  - oci
+  - security
+files:
+- name: ctd-decoder-version.patch
+  content: |
+    --- cmd/ctd-decoder/main.go.orig        2020-12-17 09:38:16.617488100 +0000
+    +++ cmd/ctd-decoder/main.go     2020-12-17 09:38:54.887488100 +0000
+    @@ -32,6 +32,7 @@
+    
+     var (
+             Usage = "ctd-decoder is used as a call-out from containerd content stream plugins"
+    +        Version = "0.0.0"
+     )
+    
+     func main() {
+    @@ -45,6 +46,7 @@
+                             Usage: "Path to load decryption keys from. (optional)",
+                     },
+             }
+    +        app.Version = Version
+             if err := app.Run(os.Args); err != nil {
+                     fmt.Fprintf(os.Stderr, "%s\n", err)
+                     os.Exit(1)
+install:
+  docker: true
+  script: |-
+    require containerd
+
+    get_file imgcrypt ctd-decoder-version.patch >ctd-decoder-version.patch
+
+    docker create -i --name "${container_name}" golang bash -xe
+    docker cp ctd-decoder-version.patch "${container_name}:/tmp"
+
+    docker start -i "${container_name}" <<EOF
+    apt-get update
+    apt-get -y install patch
+    go get -d github.com/containerd/imgcrypt
+    cd /go/src/github.com/containerd/imgcrypt
+    git checkout v${requested_version}
+    sed -i 's/\t/        /g' cmd/ctd-decoder/main.go
+    patch cmd/ctd-decoder/main.go </tmp/ctd-decoder-version.patch
+    sed -i -E "s/Version = \"0.0.0\"/Version = \"1.0.3\"/" cmd/ctd-decoder/main.go
+    go mod download
+    CGO_ENABLED=0 go build -ldflags="-extldflags=-static" -o bin/ctd-decoder ./cmd/ctd-decoder
+    CGO_ENABLED=0 go build -ldflags="-extldflags=-static" -o bin/ctr-enc ./cmd/ctr
+    cp bin/* /
+    EOF
+    extract_file_from_container ctd-decoder
+    extract_file_from_container ctr-enc
