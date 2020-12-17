@@ -22,6 +22,7 @@ install:
 
     ${SUDO} cp bin/crio "${TARGET_BIN}"
     ${SUDO} cp bin/crio-status "${TARGET_BIN}"
+    ${SUDO} cp bin/pinns "${TARGET_BIN}"
 
     ${SUDO} mkdir --parents "${TARGET_BASE}/share/man/man5" "${TARGET_BASE}/share/man/man8"
     ${SUDO} cp man/crio.8 "${TARGET_BASE}/share/man/man8"
