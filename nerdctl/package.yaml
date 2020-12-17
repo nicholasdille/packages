@@ -3,6 +3,9 @@ description: Docker-compatible CLI for containerd
 repo: AkihiroSuda/nerdctl
 version:
   latest: 0.2.0 # renovate: datasource=github-resources depName=AkihiroSuda/nerdctl
+  command: nerdctl --version
+  filter: ^nerdctl
+  pattern: s/^nerdctl\sversion\sv(.+)$/\1/
 tags:
   - container
 install:
