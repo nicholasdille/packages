@@ -3,6 +3,9 @@ description: A pure Unix shell script implementing ACME client protocol
 repo: acmesh-official/acme.sh
 version:
   latest: 2.8.8 # renovate: datasource=github-releases depName=acmesh-official/acme.sh
+  command: acme.sh --version
+  filter: ^v
+  pattern: s/^v(.+)$/\1/
 tags:
   - certificate
   - shell
@@ -12,4 +15,9 @@ tags:
   - ssl
   - tls
 install:
-  script: curl https://get.acme.sh | sh
+  script: |
+    git clone https://github.com/acmesh-official/acme.sh.git
+    cd acme.sh
+    git checkout ${requested_version}
+    ${SUDO} ./acme.sh --install \
+        --home "${TARGET_BIN}"
