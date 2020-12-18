@@ -13,6 +13,10 @@ files:
             build-essential \
             autoconf \
             autogen \
+            clang \
+            pkgconf \
+            libfuse3-dev \
+            golang \
             ca-certificates \
             git \
             make
