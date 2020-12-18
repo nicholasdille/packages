@@ -69,6 +69,7 @@
     },
     {
       "packageNames": [
+        "ynqa/ktop",
         "bytecodealliance/wasmtime",
         "git/git",
         "iovisor/bcc",

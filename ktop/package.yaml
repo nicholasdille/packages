@@ -1,0 +1,15 @@
+name: ktop
+description: top for k8s
+repo: ynqa/ktop
+version:
+  latest: 0.1.2 # renovate: datasource=github-releases depName=ynqa/ktop
+tags:
+  - kubernetes
+  - k8s
+  - performance
+  - monitoring
+install:
+  script: |-
+    echo "https://github.com/ynqa/ktop/releases/download/v${requested_version}/ktop_${requested_version}_linux_amd64.tar.gz" | \
+        download_file | \
+        untar_file ktop
