@@ -69,6 +69,7 @@
     },
     {
       "packageNames": [
+        "bytecodealliance/wasmtime",
         "git/git",
         "iovisor/bcc",
         "rancher/rke",

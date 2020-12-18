@@ -1,0 +1,19 @@
+name: wasmtime
+description: Standalone JIT-style runtime for WebAssembly, using Cranelift
+repo: bytecodealliance/wasmtime
+links:
+- text: Homepage
+  url: https://wasmtime.dev/
+version:
+  latest: 0.21.0 # renovate: datasource=github-releases depName=bytecodealliance/wasmtime
+  command: wasmtime --version
+  filter: ^wasmtime
+  pattern: s/^wasmtime\s(.+)$/\1/
+tags:
+  - webassembly
+  - wasm
+install:
+  script: |-
+    echo "https://github.com/bytecodealliance/wasmtime/releases/download/v${requested_version}/wasmtime-v${requested_version}-x86_64-linux.tar.xz" | \
+        download_file | \
+        unxz_file --strip-components=1 --wildcards \*/wasmtime
