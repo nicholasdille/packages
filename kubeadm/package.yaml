@@ -5,7 +5,7 @@ links:
   - text: Documentation
     url: https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/#installing-kubeadm-kubelet-and-kubectl
 version:
-  latest: 1.20.0 # renovate: datasource=github-releases depName=kubernetes/kubernetes
+  latest: 1.20.1 # renovate: datasource=github-releases depName=kubernetes/kubernetes
   command: kubeadm version --output short
   filter: ^v
   pattern: s/^v(.+)$/\1/
