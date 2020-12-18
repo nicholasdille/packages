@@ -3,6 +3,9 @@ description: OCI Runtime Tools
 repo: opencontainers/runtime-tools
 version:
   latest: 0.9.0 # renovate: datasource=github-releases depName=opencontainers/runtime-tools
+  command: oci-runtime-tool --version
+  filter: ^oci-runtime-tool
+  pattern: s/^oci-runtime-tool\sversion\s([^,]+),.+$/\1/
 tags:
   - container
   - oci
@@ -14,6 +17,7 @@ install:
     go get github.com/cpuguy83/go-md2man
     go get -d github.com/opencontainers/runtime-tools/cmd/oci-runtime-tool
     cd /go/src/github.com/opencontainers/runtime-tools/
+    git checkout v${requested_version}
     make all man
     cp oci-runtime-tool /
     EOF

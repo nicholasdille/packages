@@ -3,6 +3,9 @@ description: OCI Image Tooling
 repo: opencontainers/image-tools
 version:
   latest: 1.0.0-rc1 # renovate: datasource=github-releases depName=opencontainers/image-tools
+  command: oci-image-tool --version
+  filter: ^oci-image-tool
+  pattern: s/^oci-image-tool\sversion\s(\S+)\s.+$/\1/
 tags:
   - container
   - oci
@@ -14,6 +17,7 @@ install:
     go get github.com/cpuguy83/go-md2man
     go get -d github.com/opencontainers/image-tools/cmd/oci-image-tool
     cd /go/src/github.com/opencontainers/image-tools/
+    git checkout v${requested_version}
     make all
     cp oci-image-tool /
     EOF

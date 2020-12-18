@@ -10,7 +10,12 @@ install:
   docker: true
   script: |-
     build_containerized golang <<EOF
-    go get github.com/krishicks/yaml-patch/cmd/yaml-patch
-    cp /go/bin/yaml-patch /
+    go get github.com/krishicks/yaml-patch
+    cd /go/src/github.com/krishicks/yaml-patch
+    git checkout v${requested_version}
+    go mod init
+    go mod tidy
+    CGO_ENABLED=0 go build -ldflags="-extldflags=-static" -o yaml-patch github.com/krishicks/yaml-patch/cmd/yaml-patch
+    cp yaml-patch /
     EOF
     extract_file_from_container yaml-patch
