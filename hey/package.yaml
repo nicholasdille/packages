@@ -1,0 +1,22 @@
+name: hey
+description: HTTP load generator, ApacheBench (ab) replacement, formerly known as rakyll/boom
+repo: rakyll/hey
+version:
+  latest: 0.1.4 # renovate: datasource=github-releases depName=rakyll/hey
+tags:
+  - web
+  - network
+  - performance
+  - testing
+install:
+  docker: true
+  script: |-
+    build_containerized golang <<EOF
+    go get -d github.com/rakyll/hey
+    cd /go/src/github.com/rakyll/hey
+    git checkout v${requested_version}
+    go mod download
+    CGO_ENABLED=0 go build -ldflags="-extldflags=-static" -o hey
+    cp hey /
+    EOF
+    extract_file_from_container hey

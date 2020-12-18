@@ -69,6 +69,7 @@
     },
     {
       "packageNames": [
+        "rakyll/hey",
         "ynqa/ktop",
         "bytecodealliance/wasmtime",
         "git/git",
