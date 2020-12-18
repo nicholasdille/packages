@@ -13,15 +13,15 @@ tags:
   - development
 install:
   script: |-
+    export CARGO_HOME="${TARGET_BASE}"
     curl https://sh.rustup.rs \
             --proto '=https' \
             --tlsv1.2 \
             --silent \
             --show-error \
             --fail | \
-        bash -s -- \
+        ${SUDO} env CARGO_HOME="${CARGO_HOME}" bash -s -- \
             --default-toolchain "${requested_version}" \
-            --profile default \
             --no-modify-path \
             -y
 
