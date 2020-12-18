@@ -29,6 +29,20 @@ install:
     helm completion bash | \
         store_completion helm
 
-    helm plugin install https://github.com/databus23/helm-diff
-    SKIP_SOPS_INSTALL=true helm plugin install https://github.com/jkroepke/helm-secrets
-    helm plugin install https://github.com/ContainerSolutions/helm-monitor
+    if ! helm plugin list | grep ^diff >/dev/null 2>&1; then
+        helm plugin install https://github.com/databus23/helm-diff
+    else
+        helm plugin update diff
+    fi
+
+    if ! helm plugin list | grep ^secrets >/dev/null 2>&1; then
+        SKIP_SOPS_INSTALL=true helm plugin install https://github.com/jkroepke/helm-secrets
+    else
+        helm plugin update secrets
+    fi
+
+    if ! helm plugin list | grep ^monitor >/dev/null 2>&1; then
+        helm plugin install https://github.com/ContainerSolutions/helm-monitor
+    else
+        helm plugin update monitor
+    fi
