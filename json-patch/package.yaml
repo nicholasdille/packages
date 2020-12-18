@@ -2,7 +2,7 @@ name: json-patch
 description: A Go library to apply RFC6902 patches and create and apply RFC7386 patches
 repo: evanphx/json-patch
 version:
-  latest: 5.0.0 # renovate: datasource=github-releases depName=evanphx/json-patch
+  latest: 5.0.0 # renovate: datasource=github-tags depName=evanphx/json-patch
 tags:
   - json
   - patch
@@ -10,7 +10,12 @@ install:
   docker: true
   script: |-
     build_containerized golang <<EOF
-    go get -u github.com/evanphx/json-patch/cmd/json-patch
-    cp /go/bin/json-patch /
+    mkdir --parents /go/src/github.com/evanphx/json-patch
+    curl -sL https://github.com/evanphx/json-patch/archive/v5.0.0.tar.gz | \
+        tar -xzC /go/src/github.com/evanphx/json-patch --strip-components=1
+    cd /go/src/github.com/evanphx/json-patch
+    go mod download
+    CGO_ENABLED=0 go build -ldflags="-extldflags=-static" -o json-patch github.com/evanphx/json-patch/cmd/json-patch
+    cp json-patch /
     EOF
     extract_file_from_container json-patch
