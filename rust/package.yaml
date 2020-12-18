@@ -1,0 +1,29 @@
+name: rust
+description: Empowering everyone to build reliable and efficient software
+repo: rust-lang/rust
+links:
+- text: Homepage
+  url: https://www.rust-lang.org/
+version:
+  latest: 1.48.0 # renovate: datasource=github-releases depName=rust-lang/rust
+  command: rustc --version
+  filter: ^rustc
+  pattern: s/^rustc\s(\S+)\s.+$/\1/
+tags:
+  - development
+install:
+  script: |-
+    curl https://sh.rustup.rs \
+            --proto '=https' \
+            --tlsv1.2 \
+            --silent \
+            --show-error \
+            --fail | \
+        bash -s -- \
+            --default-toolchain "${requested_version}" \
+            --profile default \
+            --no-modify-path \
+            -y
+
+    rustup completions bash | \
+        store_completion rust
