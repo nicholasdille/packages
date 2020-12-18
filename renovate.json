@@ -69,6 +69,7 @@
     },
     {
       "packageNames": [
+        "git/git",
         "iovisor/bcc",
         "rancher/rke",
         "k0sproject/k0s",

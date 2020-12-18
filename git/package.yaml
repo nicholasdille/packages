@@ -1,0 +1,54 @@
+name: git
+description: Git is a fast, scalable, distributed revision control system with an unusually rich command set that provides both high-level operations and full access to internals
+repo: git/git
+version:
+  latest: 2.29.2 # renovate: datasource=github-tags depName=git/git
+  command: git --version
+  filter: ^git
+  pattern: s/^git\sversion\s(.+)$/\1/
+tags:
+  - git
+files:
+- name: Dockerfile
+  content: |
+    FROM ubuntu:20.04
+    ENV DEBIAN_FRONTEND=noninteractive
+    RUN apt-get update \
+     && apt-get -y install --no-install-recommends \
+            curl \
+            ca-certificates \
+            xz-utils \
+            dh-autoreconf \
+            cmake \
+            gcc \
+            libcurl4-gnutls-dev \
+            libexpat1-dev \
+            gettext \
+            libz-dev \
+            libssl-dev \
+            asciidoc \
+            xmlto \
+            install-info
+install:
+  script: |-
+    get_file git Dockerfile | \
+        docker build --tag build-git -
+
+    build_containerized build-git <<EOF
+    mkdir /tmp/git
+    cd /tmp/git
+    curl --silent --location "https://www.kernel.org/pub/software/scm/git/git-${requested_version}.tar.xz" | \
+        tar -xJ --strip-components=1
+    make configure
+    ./configure \
+        --prefix=${TARGET_BASE} \
+        --with-python=python3 \
+        --with-gitconfig=/etc/gitconfig
+    make all man
+    make install install-man
+    EOF
+
+    docker cp "${container_name}:${TARGET_BASE}" - | \
+        ${SUDO} tar -xvC "${TARGET_BASE}/.."
+
+    docker image rm -f build-git
