@@ -2,7 +2,7 @@ name: eksctl
 description: The official CLI for Amazon EKS
 repo: weaveworks/eksctl
 version:
-  latest: 0.34.0 # renovate: datasource=github-releases depName=weaveworks/eksctl
+  latest: 0.35.0 # renovate: datasource=github-releases depName=weaveworks/eksctl
   command: eksctl version
   filter: ^[[:digit:]]
   pattern: s/^(.+)$/\1/
