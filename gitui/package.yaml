@@ -2,7 +2,7 @@ name: gitui
 description: Blazing fast terminal-ui for git written in rust
 repo: extrawurst/gitui
 version:
-  latest: 0.10.1 # renovate: datasource=github-releases depName=extrawurst/gitui
+  latest: 0.11.0 # renovate: datasource=github-releases depName=extrawurst/gitui
   command: gitui --version
   filter: ^gitui
   pattern: s/^gitui\s(.+)$/\1/
