@@ -2,7 +2,7 @@ name: k3sup
 description: bootstrap Kubernetes with k3s over SSH < 1 min
 repo: alexellis/k3sup
 version:
-  latest: 0.9.12 # renovate: datasource=github-releases depName=alexellis/k3sup
+  latest: 0.9.13 # renovate: datasource=github-releases depName=alexellis/k3sup
   command: k3sup version
   filter: Version
   pattern: s/^.*Version:\s(.+)$/\1/
