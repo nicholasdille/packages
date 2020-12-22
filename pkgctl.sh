@@ -905,6 +905,7 @@ function handle_install() {
         if test "${requested_version}" == "${package}"; then
             unset requested_version
         fi
+        export PACKAGE_NAME=${package}
 
         temporary_directory=$(mktemp -d)
         # shellcheck disable=SC2164
@@ -912,6 +913,8 @@ function handle_install() {
         cleanup_tasks+=("remove_temporary_directory")
 
         get_package_definition "${package}" >"${temporary_directory}/package.json"
+        PACKAGE_REPOSITORY="$(jq --raw-output .repo "${temporary_directory}/package.json")"
+        export PACKAGE_REPOSITORY
 
         latest_version=$(get_latest_version "${package}")
         if test "${latest_version}" == "null"; then
@@ -920,6 +923,8 @@ function handle_install() {
         if test -z "${requested_version}"; then
             requested_version="${latest_version}"
         fi
+        export PACKAGE_LATEST_VERSION="${latest_version}"
+        export PACKAGE_REQUESTED_VERSION="${requested_version}"
 
         if ${force_install}; then
             echo "WARNING: This is a forced installation."
