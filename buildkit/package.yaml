@@ -8,7 +8,7 @@ version:
   latest: 0.8.1 # renovate: datasource=github-releases depName=moby/buildkit
   command: buildkitd --version
   filter: ^buildkit
-  pattern: s/^buildkitd\sgithub.com\/moby\/buildkit\s(.+)\s.+$/\1/
+  pattern: s/^buildkitd\sgithub.com\/moby\/buildkit\sv(.+)\s.+$/\1/
 tags:
   - container
   - build
@@ -16,10 +16,10 @@ tags:
   - moby
 install:
   script: |-
-    echo "https://github.com/moby/buildkit/releases/download/${requested_version}/buildkit-${requested_version}.linux-amd64.tar.gz" | \
+    echo "https://github.com/moby/buildkit/releases/download/v${requested_version}/buildkit-v${requested_version}.linux-amd64.tar.gz" | \
         download_file | \
         ${SUDO} tar -xzC "${TARGET_BASE}"
 
-    curl --location --fail "https://raw.githubusercontent.com/moby/buildkit/${requested_version}/examples/buildctl-daemonless/buildctl-daemonless.sh" | \
+    curl --location --fail "https://github.com/moby/buildkit/raw/v${requested_version}/examples/buildctl-daemonless/buildctl-daemonless.sh" | \
         store_file buildctl-daemonless.sh | \
         make_executable
