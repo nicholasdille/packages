@@ -2,7 +2,7 @@ name: earthly
 description: Build automation for the container era
 repo: earthly/earthly
 version:
-  latest: 0.4.1 # renovate: datasource=github-releases depName=earthly/earthly
+  latest: 0.4.2 # renovate: datasource=github-releases depName=earthly/earthly
   command: earthly --version
   filter: ^earthly
   pattern: s/^earthly\sversion\sv(.+)$/\1/
