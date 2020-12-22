@@ -16,6 +16,6 @@ tags:
   - container
 install:
   script: |-
-    echo "https://github.com/nektos/act/releases/download/v${requested_version}/act_Linux_x86_64.tar.gz" | \
-        download_file | \
-        untar_file act
+    download "https://github.com/nektos/act/releases/download/v${requested_version}/act_Linux_x86_64.tar.gz"
+    untargz act_Linux_x86_64.tar.gz
+    install_binary act

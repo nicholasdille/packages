@@ -10,7 +10,5 @@ tags:
   - quality
 install:
   script: |-
-    echo "https://raw.githubusercontent.com/fidian/ansi/${requested_version}/ansi" | \
-        download_file | \
-        store_file ansi | \
-        make_executable
+    download "https://raw.githubusercontent.com/fidian/ansi/${requested_version}/ansi"
+    install_binary ansi

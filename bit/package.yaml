@@ -16,6 +16,6 @@ tags:
   - container
 install:
   script: |-
-    echo "https://github.com/chriswalz/bit/releases/download/v${requested_version}/bit_${requested_version}_linux_amd64.tar.gz" | \
-        download_file | \
-        untar_file bit
+    download "https://github.com/chriswalz/bit/releases/download/v${requested_version}/bit_${requested_version}_linux_amd64.tar.gz"
+    untargz "bit_${requested_version}_linux_amd64.tar.gz"
+    install_binary bit

@@ -10,7 +10,6 @@ tags:
   - shell
 install:
   script: |-
-    echo "https://github.com/marcosnils/bin/releases/download/${requested_version}/bin_${requested_version#v}_Linux_x86_64" | \
-        download_file | \
-        store_file bin | \
-        make_executable
+    download "https://github.com/marcosnils/bin/releases/download/${requested_version}/bin_${requested_version#v}_Linux_x86_64"
+    mv "bin_${requested_version#v}_Linux_x86_64" bin
+    install_binary bin

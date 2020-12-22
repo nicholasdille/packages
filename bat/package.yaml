@@ -10,11 +10,10 @@ tags:
   - console
 install:
   script: |-
-    echo "https://github.com/sharkdp/bat/releases/download/v${requested_version}/bat-v${requested_version}-i686-unknown-linux-gnu.tar.gz" | \
-        download_file \
-        >"${temporary_directory}/bat.tar.gz"
+    download "https://github.com/sharkdp/bat/releases/download/v${requested_version}/bat-v${requested_version}-i686-unknown-linux-gnu.tar.gz"
+    untargz "bat-v${requested_version}-i686-unknown-linux-gnu.tar.gz"
+    ls -al "bat-v${requested_version}-i686-unknown-linux-gnu"
+    install_binary "bat-v${requested_version}-i686-unknown-linux-gnu/bat"
 
-    ${SUDO} tar -xz -f "${temporary_directory}/bat.tar.gz" -C "${TARGET_BIN}" --wildcards --strip-components=1 "*/bat"
-
-    mkdir -p "${TARGET_BASE}/man/man1"
-    ${SUDO} tar -xz -f "${temporary_directory}/bat.tar.gz" -C "${TARGET_BASE}/man/man1" --wildcards --strip-components=1 "*/bat.1"
+    mkdir -p "${TARGET_BASE}/share/man/man1"
+    TARGET="${TARGET_BASE}/share/man/man1" install_file "bat-v${requested_version}-i686-unknown-linux-gnu/bat.1"

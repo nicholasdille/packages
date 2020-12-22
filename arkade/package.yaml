@@ -11,7 +11,5 @@ tags:
   - k8s
 install:
   script: |-
-    echo "https://github.com/alexellis/arkade/releases/download/${requested_version}/arkade" | \
-        download_file | \
-        store_file arkade | \
-        make_executable
+    download "https://github.com/alexellis/arkade/releases/download/${requested_version}/arkade"
+    install_binary arkade

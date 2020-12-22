@@ -16,6 +16,6 @@ tags:
   - bootstrap
 install:
   script: |-
-    echo "https://github.com/adfolks/aksctl/releases/download/v${requested_version}/aksctl-linux-amd64.tar.gz" | \
-        download_file | \
-        untar_file ./aksctl
+    download "https://github.com/adfolks/aksctl/releases/download/v${requested_version}/aksctl-linux-amd64.tar.gz"
+    untargz aksctl-linux-amd64.tar.gz
+    install_binary aksctl

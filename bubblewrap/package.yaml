@@ -34,6 +34,6 @@ install:
     cp completions/bash/bwrap /bwrap.sh
     EOF
     extract_file_from_container bwrap
-    docker cp "${container_name}:/bwrap.sh" - | \
-        tar -x --to-stdout | \
-        store_completion bwrap
+
+    docker cp "${container_name}:/bwrap.sh" bwrap.sh
+    install_completion bwrap.sh

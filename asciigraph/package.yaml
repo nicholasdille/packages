@@ -7,6 +7,6 @@ tags:
   - shell
 install:
   script: |-
-    echo "https://github.com/guptarohit/asciigraph/releases/download/v${requested_version}/asciigraph_${requested_version}_Linux_x86_64.tar.gz" | \
-        download_file | \
-        untar_file asciigraph
+    download "https://github.com/guptarohit/asciigraph/releases/download/v${requested_version}/asciigraph_${requested_version}_Linux_x86_64.tar.gz"
+    untargz asciigraph_${requested_version}_Linux_x86_64.tar.gz
+    install_binary asciigraph

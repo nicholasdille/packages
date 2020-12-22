@@ -73,9 +73,8 @@ install:
     ${SUDO} mkdir --parents "${TARGET_BASE}/share/man/man1/"
     extract_file_from_container buildah
     for MAN in buildah-add buildah-bud buildah-commit buildah-config buildah-containers buildah-copy buildah-from buildah-images buildah-info buildah-inspect buildah-login buildah-logout buildah-manifest-add buildah-manifest-annotate buildah-manifest-create buildah-manifest-inspect buildah-manifest-push buildah-manifest-remove buildah-manifest buildah-mount buildah-pull buildah-push buildah-rename buildah-rm buildah-rmi buildah-run buildah-tag buildah-umount buildah-unshare buildah-version buildah; do
-        docker cp "${container_name}:/${MAN}.1" - | \
-            tar -x --to-stdout | \
-            ${SUDO} tee "${TARGET_BASE}/share/man/man1/${MAN}.1" >/dev/null
+        docker cp "${container_name}:/${MAN}.1" "${MAN}.1"
+        TARGET="${TARGET_BASE}/share/man/man1" install_file "${MAN}.1"
     done
 
     docker image rm -f build-buildah
