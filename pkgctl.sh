@@ -101,6 +101,16 @@ function download_file() {
         xargs curl --location --fail ${CURL_ADDITIONAL_PARAMS}
 }
 
+function download() {
+    local url=$1
+    if test -z "${url}"; then
+        echo "ERROR: URL must be specified."
+        exit 1
+    fi
+    >&2 echo "Downloading file from <${url}>..."
+    curl --location --fail --remote-name "${url}"
+}
+
 function untar_file() {
     local parameters=("$@")
 
@@ -112,6 +122,56 @@ function untar_file() {
     >&2 echo "  Including parameters <${parameters[*]}>"
     cat | \
         ${SUDO} tar -x -z ${TAR_ADDITIONAL_PARAMS} -C "${TARGET_BIN}" "${parameters[@]}"
+}
+
+function unpack() {
+    local filename=$1
+    if test -z "${filename}"; then
+        echo "ERROR: Filename must be specified."
+        exit 1
+    fi
+    shift
+    if ! test -s "${temporary_directory}/${filename}"; then
+        echo "ERROR: Filename must exist."
+        exit 1
+    fi
+    local parameters=("$@")
+
+    : "${COMPRESSION_PARAMETER:=-z}"
+
+    >&2 echo "Unpacking asset to temporary directory..."
+    if test "${#parameters[*]}" -gt 0; then
+        >&2 echo "  Including parameters <${parameters[*]}>"
+    fi
+    tar -x "${COMPRESSION_PARAMETER}" -C "${temporary_directory}" -f "${temporary_directory}/${filename}" "${parameters[@]}"
+}
+
+function untargz() {
+    COMPRESSION_PARAMETER="-z" unpack "$1"
+}
+
+function untarxz() {
+    COMPRESSION_PARAMETER="-J" unpack "$1"
+}
+
+function untarbz2() {
+    COMPRESSION_PARAMETER="-j" unpack "$1"
+}
+
+function ungz() {
+    local filename=$1
+    if test -z "${filename}"; then
+        echo "ERROR: Filename must be specified."
+        exit 1
+    fi
+    shift
+    if ! test -s "${temporary_directory}/${filename}"; then
+        echo "ERROR: Filename must exist."
+        exit 1
+    fi
+
+    >&2 echo "Unpacking asset in temporary directory..."
+    gunzip "${temporary_directory}/${filename}"
 }
 
 function unxz_file() {
@@ -162,6 +222,42 @@ function store_file() {
     cat | \
         ${SUDO} tee "${dirname}/${filename}" >/dev/null
     echo "${dirname}/${filename}"
+}
+
+function install_binary() {
+    local filename=$1
+    if test -z "${filename}"; then
+        echo "ERROR: Filename must be specified."
+        exit 1
+    fi
+    shift
+    local mode=$1
+    if test -z "${mode}"; then
+        mode=0755
+    fi
+
+    local FILES=""
+    if test -d "${temporary_directory}/${filename}"; then
+        >&2 echo "DEBUG: Filename points to a directory."
+        FILES="$(find "${temporary_directory}/${filename}" -maxdepth 1 -type f -executable)"
+
+    elif test -s "${temporary_directory}/${filename}"; then
+        >&2 echo "DEBUG: Filename points to a non-empty file."
+        FILES="${temporary_directory}/${filename}"
+
+    else
+        echo "ERROR: Unable to determine type of <${filename}> (neither file nor directory)."
+        exit 1
+    fi
+
+    ${SUDO} install --directory "${TARGET_BIN}"
+    for binary in ${FILES}; do
+        ${SUDO} install --verbose --mode="${mode}" --compare "${binary}" "${TARGET_BIN}"
+    done
+}
+
+function install_completion() {
+    TARGET_BIN="${TARGET_COMPLETION}" install_binary "$1" "0644"
 }
 
 # shellcheck disable=SC2120
