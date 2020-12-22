@@ -21,8 +21,10 @@ install:
         make_executable
 
     mkdir -p "${HOME}/.config/cheat/cheatsheets/personal"
-    cheat --init > "${HOME}/.config/cheat/conf.yml"
-    
+    if ! test -s "${HOME}/.config/cheat/conf.yml"; then
+        cheat --init > "${HOME}/.config/cheat/conf.yml"
+    fi
+
     if ! test -d "${HOME}/.config/cheat/cheatsheets/community"; then
         git clone https://github.com/cheat/cheatsheets "${HOME}/.config/cheat/cheatsheets/community"
     else
