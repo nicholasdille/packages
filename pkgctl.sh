@@ -362,8 +362,7 @@ function get_installed_version() {
         exit 1
     fi
 
-    local PACKAGE_JSON
-    PACKAGE_JSON=$(get_package_definition "${package}")
+    PACKAGE_JSON=$(cat "${temporary_directory}/package.json")
 
     local version_command
     version_command=$(
@@ -408,10 +407,7 @@ function get_latest_version() {
         exit 1
     fi
 
-    local PACKAGE_JSON
-    PACKAGE_JSON=$(get_package_definition "${package}")
-
-    echo "${PACKAGE_JSON}" | \
+    cat "${temporary_directory}/package.json" | \
         jq --raw-output '.version.latest'
 }
 
@@ -487,7 +483,7 @@ function get_install_script() {
         exit 1
     fi
 
-    get_package_definition "${package}" | \
+    cat "${temporary_directory}/package.json" | \
         jq \
             --raw-output \
             '.install.script'
@@ -502,7 +498,7 @@ function package_needs_docker() {
 
     local needs_docker
     needs_docker=$(
-        get_package_definition "${package}" | \
+        cat "${temporary_directory}/package.json" | \
             jq \
                 --raw-output \
                 '.install.docker'
@@ -910,12 +906,12 @@ function handle_install() {
             unset requested_version
         fi
 
-        local package_definition
-        package_definition=$(get_package_definition "${package}")
-        if test -z "${package_definition}"; then
-            echo "ERROR: Package ${package} not found"
-            exit 1
-        fi
+        temporary_directory=$(mktemp -d)
+        # shellcheck disable=SC2164
+        cd "${temporary_directory}"
+        cleanup_tasks+=("remove_temporary_directory")
+
+        get_package_definition "${package}" >"${temporary_directory}/package.json"
 
         latest_version=$(get_latest_version "${package}")
         if test "${latest_version}" == "null"; then
@@ -934,16 +930,15 @@ function handle_install() {
             fi
         fi
 
-        temporary_directory=$(mktemp -d)
-        # shellcheck disable=SC2164
-        cd "${temporary_directory}"
-        cleanup_tasks+=("remove_temporary_directory")
-
         if package_needs_docker "${package}"; then
             check_docker
             cleanup_tasks+=("remove_temporary_container")
         fi
         unlock_sudo
+
+        for filename in $(jq --raw-output .files[].name "${temporary_directory}/package.json"); do
+            jq --raw-output --arg name "${filename}" '.files[] | select(.name == $name) | .content' "${temporary_directory}/package.json" >"${temporary_directory}/${filename}"
+        done
 
         install_script="$(get_install_script "${package}")"
         if test -z "${requested_version}"; then
