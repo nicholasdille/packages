@@ -31,8 +31,7 @@ files:
             install-info
 install:
   script: |-
-    get_file git Dockerfile | \
-        docker build --tag build-git -
+    docker build --tag build-git .
 
     build_containerized build-git <<EOF
     mkdir /tmp/git

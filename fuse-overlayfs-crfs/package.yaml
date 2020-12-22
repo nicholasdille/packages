@@ -25,8 +25,7 @@ install:
   script: |-
     require fuse-overlayfs
 
-    get_file fuse-overlayfs-crfs Dockerfile | \
-        docker build --tag fuse-overlay-crfs -
+    docker build --tag fuse-overlay-crfs .
 
     build_containerized fuse-overlay-crfs <<EOF
     git clone https://github.com/giuseppe/crfs-plugin

@@ -361,9 +361,9 @@ install:
         make_executable
 
     mkdir -p "${HOME}/.local/etc"
-    get_file powerline-go theme.json | \
+    cat theme.json | \
         store_file powerline-go-theme.json "${HOME}/.local/etc"
 
-    get_file powerline-go profile.d.powerline-go.sh | \
+    cat profile.d.powerline-go.sh | \
         TARGET_BIN="${TARGET_BIN}" envsubst '${TARGET_BIN}' | \
         store_file powerline-go.sh /etc/profile.d

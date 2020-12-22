@@ -31,8 +31,7 @@ files:
 install:
   docker: true
   script: |-
-    get_file bcc Dockerfile | \
-        docker build --tag build-bcc -
+    docker build --tag build-bcc .
 
     build_containerized build-bcc <<EOF
     mkdir -p /tmp/bcc

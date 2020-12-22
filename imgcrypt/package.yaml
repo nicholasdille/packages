@@ -16,12 +16,12 @@ files:
     --- cmd/ctd-decoder/main.go.orig        2020-12-17 09:38:16.617488100 +0000
     +++ cmd/ctd-decoder/main.go     2020-12-17 09:38:54.887488100 +0000
     @@ -32,6 +32,7 @@
-    
+
      var (
              Usage = "ctd-decoder is used as a call-out from containerd content stream plugins"
     +        Version = "0.0.0"
      )
-    
+
      func main() {
     @@ -45,6 +46,7 @@
                              Usage: "Path to load decryption keys from. (optional)",
@@ -35,8 +35,6 @@ install:
   docker: true
   script: |-
     require containerd
-
-    get_file imgcrypt ctd-decoder-version.patch >ctd-decoder-version.patch
 
     docker create \
         --name "${container_name}" \

@@ -28,8 +28,7 @@ files:
 install:
   docker: true
   script: |-
-    get_file socat Dockerfile | \
-        docker build --tag socat -
+    docker build --tag socat .
 
     build_containerized socat <<"EOF"
     curl --silent --location "http://www.dest-unreach.org/socat/download/socat-${requested_version}.tar.gz" | \

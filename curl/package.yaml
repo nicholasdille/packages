@@ -39,8 +39,7 @@ files:
 install:
   docker: true
   script: |-
-    get_file curl Dockerfile | \
-        docker build --tag build-curl -
+    docker build --tag build-curl .
 
     build_containerized build-curl <<"EOF"
     curl --silent --location "https://github.com/curl/curl/archive/curl-${requested_version//./_}.tar.gz" | \

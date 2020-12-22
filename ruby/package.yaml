@@ -34,8 +34,7 @@ files:
 install:
   docker: true
   script: |-
-    get_file ruby Dockerfile | \
-        docker build --tag build-ruby -
+    docker build --tag build-ruby .
 
     requested_version_minor=$(echo "${requested_version}" | cut -d'.' -f1-2)
 

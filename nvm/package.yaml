@@ -25,6 +25,6 @@ install:
         download_file | \
         ${SUDO} tar -xvzC "${TARGET_BASE}/nvm" --strip-components=1
 
-    get_file nvm profile.d.nvm.sh | \
+    cat profile.d.nvm.sh | \
         TARGET_BASE="${TARGET_BASE}" envsubst '${TARGET_BASE}' | \
         store_file nvm.sh /etc/profile.d

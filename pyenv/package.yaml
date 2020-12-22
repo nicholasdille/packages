@@ -64,8 +64,7 @@ install:
         ${SUDO} git clone https://github.com/pyenv/pyenv-doctor.git "${PYENV_ROOT}/plugins/pyenv-doctor"
     fi
 
-    get_file pyenv Dockerfile | \
-        docker build --tag pyenv -
+    docker build --tag pyenv .
 
     docker run \
         --name pyenv \
@@ -76,6 +75,6 @@ install:
         pyenv \
         pyenv doctor
 
-    get_file pyenv profile.d.pyenv.sh | \
+    cat profile.d.pyenv.sh | \
         TARGET_BASE="${TARGET_BASE}" envsubst '${TARGET_BASE}' | \
         store_file pyenv.sh /etc/profile.d

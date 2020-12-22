@@ -1,0 +1,12 @@
+name: _debug_zip
+description: Package used for development and debugging (based on yh)
+repo: nicholasdille/packages
+version:
+  latest: 0.4.0 # renovate: datasource=github-releases depName=andreazorzetto/yh
+tags:
+  - debug
+install:
+  script: |-
+    download "https://github.com/andreazorzetto/yh/releases/download/v${requested_version}/yh-linux-amd64.zip"
+    unzip yh-linux-amd64.zip
+    install_binary yh

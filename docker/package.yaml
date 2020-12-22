@@ -35,7 +35,7 @@ install:
         download_file | \
         store_completion docker
 
-    get_file docker profile.d.docker.sh | \
+    cat profile.d.docker.sh | \
         store_file docker.sh /etc/profile.d
 
     ${SUDO} mkdir --parents "/etc/docker/"

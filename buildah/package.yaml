@@ -45,8 +45,7 @@ install:
     require cni
     require cnitool
 
-    get_file buildah Dockerfile | \
-        docker build --tag build-buildah -
+    docker build --tag build-buildah .
 
     build_containerized build-buildah <<EOF
     echo "START"

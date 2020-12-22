@@ -19,6 +19,6 @@ install:
         download_file | \
         ${SUDO} tar -xzC "${TARGET_BASE}"
 
-    get_file go profile.d.go.sh | \
+    cat profile.d.go.sh | \
         TARGET_BASE="${TARGET_BASE}" envsubst '${TARGET_BASE}' | \
         store_file go.sh /etc/profile.d

@@ -60,5 +60,5 @@ install:
         make_executable
 
     ${SUDO} mkdir -p /etc/cni/net.d
-    get_file kubefire 00-kubefire.conflist | \
+    cat 00-kubefire.conflist | \
         store_file 00-kubefire.conflist /etc/cni/net.d

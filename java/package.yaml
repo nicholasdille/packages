@@ -21,7 +21,7 @@ install:
         jabba alias default openjdk@${requested_version}
     EOF
 
-    get_file java profile.d.java.sh | \
+    cat profile.d.java.sh | \
         TARGET_BASE=${TARGET_BASE} envsubst '${TARGET_BASE}' | \
         store_file java.sh /etc/profile.d
 files:

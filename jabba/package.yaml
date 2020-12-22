@@ -18,7 +18,7 @@ install:
         store_file jabba | \
         make_executable
 
-    get_file jabba profile.d.jabba.sh | \
+    cat profile.d.jabba.sh | \
         TARGET_BASE=${TARGET_BASE} envsubst '${TARGET_BASE}' | \
         store_file jabba.sh /etc/profile.d
 files:

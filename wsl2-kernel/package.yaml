@@ -22,11 +22,9 @@ install:
 
     cd "${TARGET_BASE}/src/WSL2-Linux-Kernel-${requested_version}-microsoft-standard"
     ${SUDO} cp Microsoft/config-wsl .config
-    get_file wsl2-kernel config | \
-        ${SUDO} patch .config
+    ${SUDO} patch .config <config
 
-    get_file wsl2-kernel Dockerfile | \
-        docker build --tag wsl2-kernel -
+    docker build --tag wsl2-kernel .
 
     docker run \
         --name "${container_name}" \
@@ -41,7 +39,7 @@ install:
     make modules_install
     EOF
 
-    get_file wsl2-kernel kvm-nested.conf | \
+    cat kvm-nested.conf | \
         store_file kvm-nested.conf /etc/modprobe.d
 
     docker image rm -f wsl2-kernel

@@ -33,8 +33,7 @@ files:
 install:
   docker: true
   script: |-
-    get_file python Dockerfile | \
-        docker build --tag build-python -
+    docker build --tag build-python .
 
     build_containerized build-python <<EOF
         mkdir /tmp/python
