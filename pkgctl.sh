@@ -921,7 +921,7 @@ function handle_install() {
         fi
         unlock_sudo
 
-        for filename in $(jq --raw-output .files[].name "${temporary_directory}/package.json"); do
+        for filename in $(jq --raw-output 'select(.files != null) | .files[].name' "${temporary_directory}/package.json"); do
             jq --raw-output --arg name "${filename}" '.files[] | select(.name == $name) | .content' "${temporary_directory}/package.json" >"${temporary_directory}/${filename}"
         done
 
