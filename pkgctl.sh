@@ -224,7 +224,7 @@ function store_file() {
     echo "${dirname}/${filename}"
 }
 
-function install_binary() {
+function install_file() {
     local filename=$1
     if test -z "${filename}"; then
         echo "ERROR: Filename must be specified."
@@ -233,7 +233,12 @@ function install_binary() {
     shift
     local mode=$1
     if test -z "${mode}"; then
-        mode=0755
+        mode=0644
+    fi
+
+    if test -z "${TARGET}"; then
+        echo "ERROR: Target must not be empty."
+        exit 1
     fi
 
     local FILES=""
@@ -252,12 +257,16 @@ function install_binary() {
 
     ${SUDO} install --directory "${TARGET_BIN}"
     for binary in ${FILES}; do
-        ${SUDO} install --verbose --mode="${mode}" --compare "${binary}" "${TARGET_BIN}"
+        ${SUDO} install --verbose --mode="${mode}" --compare "${binary}" "${TARGET}"
     done
 }
 
+function install_binary() {
+    TARGET="${TARGET_BIN}" install_file "$1" "0755"
+}
+
 function install_completion() {
-    TARGET_BIN="${TARGET_COMPLETION}" install_binary "$1" "0644"
+    TARGET="${TARGET_COMPLETION}" install_binary "$1" "0644"
 }
 
 # shellcheck disable=SC2120
