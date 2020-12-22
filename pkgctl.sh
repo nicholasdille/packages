@@ -456,26 +456,6 @@ function check_installed_version() {
     fi
 }
 
-function get_file() {
-    local package=$1
-    if test -z "${package}"; then
-        >&2 echo "ERROR: No package specified."
-        exit 1
-    fi
-
-    local file=$2
-    if test -z "${file}"; then
-        >&2 echo "ERROR: No file specified."
-        exit 1
-    fi
-
-    get_package_definition "${package}" | \
-        jq \
-            --raw-output \
-            --arg file "${file}" \
-            '.files[] | select(.name == $file) | .content'
-}
-
 function get_install_script() {
     local package=$1
     if test -z "${package}"; then
