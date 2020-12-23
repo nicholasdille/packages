@@ -5,7 +5,7 @@ links:
   - text: Homepage
     url: https://aws.amazon.com/cli/
 version:
-  latest: 1.18.202 # renovate: datasource=github-tags depName=aws/aws-cli versioning=regex:^(?<major>1?)\.(?<minor>\d+?)\.(?<patch>\d+?)(-(?<prerelease>.+?))?$
+  latest: 1.18.203 # renovate: datasource=github-tags depName=aws/aws-cli versioning=regex:^(?<major>1?)\.(?<minor>\d+?)\.(?<patch>\d+?)(-(?<prerelease>.+?))?$
   command: aws --version
   filter: ^aws-cli
   pattern: s/^aws-cli\/(\S+)\s.+$/\1/
