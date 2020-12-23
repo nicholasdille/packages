@@ -2,7 +2,7 @@ name: k0s
 description: k0s - Zero Friction Kubernetes
 repo: k0sproject/k0s
 version:
-  latest: 0.8.1 # renovate: datasource=github-releases depName=k0sproject/k0s
+  latest: 0.9.0 # renovate: datasource=github-releases depName=k0sproject/k0s
   command: k0s version
   filter: ^v
   pattern: s/^v(.+)$/\1/
