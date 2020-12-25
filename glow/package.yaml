@@ -2,7 +2,7 @@ name: glow
 description: Render markdown on the CLI, with pizzazz!
 repo: charmbracelet/glow
 version:
-  latest: 1.2.1 # renovate: datasource=github-releases depName=charmbracelet/glow
+  latest: 1.3.0 # renovate: datasource=github-releases depName=charmbracelet/glow
   command: glow --version
   filter: ^glow
   pattern: s/^glow\sversion\s(\S+)\s.+$/\1/
