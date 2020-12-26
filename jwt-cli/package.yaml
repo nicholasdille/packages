@@ -2,7 +2,7 @@ name: jwt-cli
 description: A super fast CLI tool to decode and encode JWTs built in Rust
 repo: mike-engel/jwt-cli
 version:
-  latest: 3.2.1 # renovate: datasource=github-releases depName=mike-engel/jwt-cli
+  latest: 3.3.0 # renovate: datasource=github-releases depName=mike-engel/jwt-cli
   command: jwt --version
   filter: ^jwt
   pattern: s/^jwt\s(.+)$/\1/
