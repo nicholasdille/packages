@@ -5,7 +5,7 @@ links:
   - text: Documentation
     url: https://taskfile.dev/
 version:
-  latest: 3.0.0 # renovate: datasource=github-releases depName=go-task/task
+  latest: 3.0.1 # renovate: datasource=github-releases depName=go-task/task
   command: task --version
   filter: ^task
   pattern: s/^Task\sversion:\sv(.+)$/\1/
