@@ -2,7 +2,7 @@ name: git
 description: Git is a fast, scalable, distributed revision control system with an unusually rich command set that provides both high-level operations and full access to internals
 repo: git/git
 version:
-  latest: 2.29.2 # renovate: datasource=github-tags depName=git/git
+  latest: 2.30.0 # renovate: datasource=github-tags depName=git/git
   command: git --version
   filter: ^git
   pattern: s/^git\sversion\s(.+)$/\1/
