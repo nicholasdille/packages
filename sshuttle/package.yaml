@@ -2,7 +2,7 @@ name: sshuttle
 description: Transparent proxy server that works as a poor man's VPN. Forwards over ssh. Doesn't require admin. Works with Linux and MacOS. Supports DNS tunneling
 repo: sshuttle/sshuttle
 version:
-  latest: 1.0.4 # renovate: datasource=github-tags depName=sshuttle/sshuttle
+  latest: 1.0.5 # renovate: datasource=github-tags depName=sshuttle/sshuttle
 tags:
   - k8s
   - kubernetes
