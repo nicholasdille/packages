@@ -5,7 +5,7 @@ links:
 - text: Homepage
   url: http://swagger.io/
 version:
-  latest: 3.0.23 # renovate: datasource=github-releases depName=swagger-api/swagger-codegen
+  latest: 3.0.24 # renovate: datasource=github-releases depName=swagger-api/swagger-codegen
   command: java -jar ${TARGET_BIN}/swagger-codegen-cli.jar version
   filter: ^[[:digit:]]
   pattern: s/^(.+)$/\1/
