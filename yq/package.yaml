@@ -18,5 +18,5 @@ install:
         store_file yq | \
         make_executable
 
-    yq shell-completion | \
+    yq shell-completion bash | \
         store_completion yq
