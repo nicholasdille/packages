@@ -5,7 +5,7 @@ links:
 - text: Homepage
   url: https://deno.land/
 version:
-  latest: 1.6.2 # renovate: datasource=github-releases depName=denoland/deno
+  latest: 1.6.3 # renovate: datasource=github-releases depName=denoland/deno
   command: deno --version
   filter: ^deno
   pattern: s/^deno\s(\S+)\s.+$/\1/
