@@ -11,7 +11,8 @@ on:
     - .github/workflows/build-image.yml
 
 jobs:
-  build:
+
+  build-ubuntu-bionic:
     name: docker-build-ubuntu-bionic
     runs-on: ubuntu-20.04
     env:
@@ -57,8 +58,7 @@ jobs:
       with:
         sarif_file: 'trivy-results.sarif'
 
-jobs:
-  build:
+  build-ubuntu-focal:
     name: docker-build-ubuntu-focal
     runs-on: ubuntu-20.04
     env:
@@ -104,8 +104,7 @@ jobs:
       with:
         sarif_file: 'trivy-results.sarif'
 
-jobs:
-  build:
+  build-ubuntu-groovy:
     name: docker-build-ubuntu-groovy
     runs-on: ubuntu-20.04
     env:
