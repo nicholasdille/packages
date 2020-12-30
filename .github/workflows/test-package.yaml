@@ -25,10 +25,9 @@ jobs:
               echo "Running for PR #${PR}"
 
               source /etc/lsb-release
-              docker build \
-                  --target "${DISTRIB_ID,,}-${DISTRIB_CODENAME}" \
-                  --tag test-package:ubuntu \
-                  .
+              export GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
+
+              make packages.json
 
               FILES=$(curl --silent --location --header 'Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' "https://api.github.com/repos/${GITHUB_REPOSITORY}/pulls/${PR}/files" | jq --raw-output '.[].filename')
               for FILE in ${FILES}; do
@@ -45,12 +44,11 @@ jobs:
                       docker run \
                           --name "test-${PACKAGE}" \
                           --detach \
-                          --env GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} \
-                          --mount type=bind,src=${PWD},dst=/src \
+                          --env GITHUB_TOKEN \
                           --mount type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock \
-                          --workdir /src \
-                          test-package:ubuntu
-                      docker exec "test-${PACKAGE}" ./pkgctl.sh cache
+                          --mount type=bind,src=${PWD}/packages.json,dst=/root/.pkgctl/packages.json \
+                          --mount type=bind,src=${PWD}/pkgctl.sh,dst=/usr/local/bin/pkgctl.sh \
+                          "nicholasdille/packages-build:${DISTRIB_ID,,}-${DISTRIB_CODENAME}"
                       docker exec "test-${PACKAGE}" ./pkgctl.sh install docker
                       docker exec "test-${PACKAGE}" ./pkgctl.sh install "${PACKAGE}"
                       docker rm -f "test-${PACKAGE}"
