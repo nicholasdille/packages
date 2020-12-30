@@ -23,7 +23,7 @@ docker run \
     --mount=type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock \
     --mount type=bind,src=${PWD}/packages.json,dst=/root/.pkgctl/packages.json \
     --mount type=bind,src=${PWD}/pkgctl.sh,dst=/usr/local/bin/pkgctl.sh \
-    "nicholasdille/packages-build:${DISTRIB_ID,,}-${DISTRIB_CODENAME}"
+    "nicholasdille/packages-runtime:${DISTRIB_ID,,}-${DISTRIB_CODENAME}"
 
 function cleanup() {
     docker rm -f "test-build"

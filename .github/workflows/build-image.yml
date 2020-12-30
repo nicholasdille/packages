@@ -16,7 +16,7 @@ jobs:
     name: docker-build-ubuntu-bionic
     runs-on: ubuntu-20.04
     env:
-      IMAGE_NAME: "${{ secrets.DOCKER_HUB_USERNAME }}/packages-build"
+      IMAGE_NAME: "${{ secrets.DOCKER_HUB_USERNAME }}/packages-runtime"
     steps:
 
     - name: Checkout
@@ -62,7 +62,7 @@ jobs:
     name: docker-build-ubuntu-focal
     runs-on: ubuntu-20.04
     env:
-      IMAGE_NAME: "${{ secrets.DOCKER_HUB_USERNAME }}/packages-build"
+      IMAGE_NAME: "${{ secrets.DOCKER_HUB_USERNAME }}/packages-runtime"
     steps:
 
     - name: Checkout
@@ -108,7 +108,7 @@ jobs:
     name: docker-build-ubuntu-groovy
     runs-on: ubuntu-20.04
     env:
-      IMAGE_NAME: "${{ secrets.DOCKER_HUB_USERNAME }}/packages-build"
+      IMAGE_NAME: "${{ secrets.DOCKER_HUB_USERNAME }}/packages-runtime"
     steps:
 
     - name: Checkout
