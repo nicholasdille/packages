@@ -5,7 +5,7 @@ links:
   - text: Homepage
     url: https://kustomize.io/
 version:
-  latest: 3.9.0 # renovate: datasource=github-releases depName=kubernetes-sigs/kustomize
+  latest: 3.9.1 # renovate: datasource=github-releases depName=kubernetes-sigs/kustomize
   command: kustomize version
   filter: ^{Version
   pattern: s/^\{Version:kustomize/(\S+)\s.+$/\1/
