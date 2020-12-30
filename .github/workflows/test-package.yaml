@@ -49,8 +49,8 @@ jobs:
                           --mount type=bind,src=${PWD}/packages.json,dst=/root/.pkgctl/packages.json \
                           --mount type=bind,src=${PWD}/pkgctl.sh,dst=/usr/local/bin/pkgctl.sh \
                           "nicholasdille/packages-build:${DISTRIB_ID,,}-${DISTRIB_CODENAME}"
-                      docker exec "test-${PACKAGE}" ./pkgctl.sh install docker
-                      docker exec "test-${PACKAGE}" ./pkgctl.sh install "${PACKAGE}"
+                      docker exec "test-${PACKAGE}" pkgctl.sh install docker
+                      docker exec "test-${PACKAGE}" pkgctl.sh install "${PACKAGE}"
                       docker rm -f "test-${PACKAGE}"
                   fi
               done
