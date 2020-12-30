@@ -16,10 +16,10 @@ tags:
   - moby
 install:
   script: |-
-    echo "https://github.com/moby/buildkit/releases/download/v${requested_version}/buildkit-v${requested_version}.linux-amd64.tar.gz" | \
-        download_file | \
-        ${SUDO} tar -xzC "${TARGET_BASE}"
+    download "https://github.com/moby/buildkit/releases/download/v${requested_version}/buildkit-v${requested_version}.linux-amd64.tar.gz"
+    download "https://github.com/moby/buildkit/raw/v${requested_version}/examples/buildctl-daemonless/buildctl-daemonless.sh"
 
-    curl --location --fail "https://github.com/moby/buildkit/raw/v${requested_version}/examples/buildctl-daemonless/buildctl-daemonless.sh" | \
-        store_file buildctl-daemonless.sh | \
-        make_executable
+    untargz "buildkit-v${requested_version}.linux-amd64.tar.gz"
+
+    install_binary bin
+    install_binary buildctl-daemonless.sh

@@ -13,12 +13,11 @@ tags:
   - pki
 install:
   script: |-
-    echo "https://github.com/cloudflare/cfssl/releases/download/v${requested_version}/cfssl_${requested_version}_linux_amd64" | \
-        download_file | \
-        store_file cfssl | \
-        make_executable
+    download "https://github.com/cloudflare/cfssl/releases/download/v${requested_version}/cfssl_${requested_version}_linux_amd64"
+    download "https://github.com/cloudflare/cfssl/releases/download/v${requested_version}/cfssljson_${requested_version}_linux_amd64"
 
-    echo "https://github.com/cloudflare/cfssl/releases/download/v${requested_version}/cfssljson_${requested_version}_linux_amd64" | \
-        download_file | \
-        store_file cfssljson | \
-        make_executable
+    mv cfssl_${requested_version}_linux_amd64 cfssl
+    mv cfssljson_${requested_version}_linux_amd64 cfssljson
+
+    install_binary cfssl
+    install_binary cfssljson

@@ -14,11 +14,10 @@ tags:
   - manpage
 install:
   script: |-
-    echo "https://github.com/cheat/cheat/releases/download/${requested_version}/cheat-linux-amd64.gz" | \
-        download_file | \
-        gunzip_file | \
-        store_file cheat | \
-        make_executable
+    download "https://github.com/cheat/cheat/releases/download/${requested_version}/cheat-linux-amd64.gz"
+    gunzip cheat-linux-amd64.gz
+    mv cheat-linux-amd64 cheat
+    install_binary cheat
 
     mkdir -p "${HOME}/.config/cheat/cheatsheets/personal"
     if ! test -s "${HOME}/.config/cheat/conf.yml"; then

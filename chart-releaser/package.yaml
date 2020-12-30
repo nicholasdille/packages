@@ -18,6 +18,6 @@ tags:
   - pages
 install:
   script: |-
-    echo "https://github.com/helm/chart-releaser/releases/download/v${requested_version}/chart-releaser_${requested_version}_linux_amd64.tar.gz" | \
-        download_file | \
-        untar_file cr
+    download "https://github.com/helm/chart-releaser/releases/download/v${requested_version}/chart-releaser_${requested_version}_linux_amd64.tar.gz"
+    untargz "chart-releaser_${requested_version}_linux_amd64.tar.gz"
+    install_binary cr

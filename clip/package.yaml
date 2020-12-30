@@ -31,7 +31,5 @@ install:
 
     ${SUDO} mkdir --parents "${DOCKER_CLI_DIR}"
 
-    echo "https://github.com/lukaszlach/clip/raw/${requested_version}/docker-clip" | \
-        download_file | \
-        store_file docker-clip "${DOCKER_CLI_DIR}" |
-        make_executable
+    download "https://github.com/lukaszlach/clip/raw/${requested_version}/docker-clip"
+    TARGET="${DOCKER_CLI_DIR}" install_binary docker-clip

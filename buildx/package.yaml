@@ -38,10 +38,9 @@ install:
     fi
 
     ${SUDO} mkdir --parents "${DOCKER_CLI_DIR}"
-    echo "https://github.com/docker/buildx/releases/download/v${requested_version}/buildx-v${requested_version}.linux-amd64" | \
-        download_file | \
-        store_file docker-buildx "${DOCKER_CLI_DIR}" | \
-        make_executable
+    download "https://github.com/docker/buildx/releases/download/v${requested_version}/buildx-v${requested_version}.linux-amd64"
+    mv buildx-v${requested_version}.linux-amd64 docker-buildx
+    TARGET="${DOCKER_CLI_DIR}" install_binary docker-buildx
 
     ${SUDO} mkdir --parents "${DOCKER_CONFIG}"
     if ! test -f "${DOCKER_CONFIG}/config.json"; then

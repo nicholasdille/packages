@@ -15,6 +15,7 @@ tags:
   - kubernetes
 install:
   script: |-
-    echo "https://github.com/vmware-tanzu/buildkit-cli-for-kubectl/releases/download/v${requested_version}/linux-v${requested_version}.tgz" | \
-        download_file | \
-        untar_file
+    download "https://github.com/vmware-tanzu/buildkit-cli-for-kubectl/releases/download/v${requested_version}/linux-v${requested_version}.tgz"
+    untargz linux-v${requested_version}.tgz
+    install_binary kubectl-build
+    install_binary kubectl-buildkit

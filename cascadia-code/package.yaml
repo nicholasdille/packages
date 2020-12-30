@@ -8,9 +8,9 @@ tags:
   - powerline
 install:
   script: |-
-    curl --silent --location --remote-name "https://github.com/microsoft/cascadia-code/releases/download/v${requested_version}/CascadiaCode-${requested_version}.zip"
+    download "https://github.com/microsoft/cascadia-code/releases/download/v${requested_version}/CascadiaCode-${requested_version}.zip"
     unzip CascadiaCode-${requested_version#v}.zip
 
-    ${SUDO} mkdir -p "${TARGET_BASE}/share/fonts/cascadia-code"
-    ${SUDO} cp ttf/*.ttf "${TARGET_BASE}/share/fonts/cascadia-code"
+    TARGET="${TARGET_BASE}/share/fonts/cascadia-code" install_file ttf
+
     ${SUDO} fc-cache -f -v

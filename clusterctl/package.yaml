@@ -19,10 +19,9 @@ tags:
   - api
 install:
   script: |-
-    echo "https://github.com/kubernetes-sigs/cluster-api/releases/download/v${requested_version}/clusterctl-linux-amd64" | \
-        download_file | \
-        store_file clusterctl | \
-        make_executable
+    download "https://github.com/kubernetes-sigs/cluster-api/releases/download/v${requested_version}/clusterctl-linux-amd64"
+    mv clusterctl-linux-amd64 clusterctl
+    install_binary clusterctl
 
     clusterctl completion bash | \
         store_completion clusterctl

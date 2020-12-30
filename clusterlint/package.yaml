@@ -13,6 +13,6 @@ tags:
   - quality
 install:
   script: |-
-    echo "https://github.com/digitalocean/clusterlint/releases/download/v${requested_version}/clusterlint-${requested_version}-linux-amd64.tar.gz" | \
-        download_file | \
-        untar_file ./clusterlint
+    download "https://github.com/digitalocean/clusterlint/releases/download/v${requested_version}/clusterlint-${requested_version}-linux-amd64.tar.gz"
+    untargz "clusterlint-${requested_version}-linux-amd64.tar.gz"
+    install_binary clusterlint

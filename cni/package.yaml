@@ -16,6 +16,7 @@ tags:
 install:
   script: |-
     ${SUDO} mkdir -p /opt/cni/bin
-    echo "https://github.com/containernetworking/plugins/releases/download/v${requested_version}/cni-plugins-linux-amd64-v${requested_version}.tgz" | \
-        download_file | \
-        ${SUDO} tar -xzC /opt/cni/bin/
+    download "https://github.com/containernetworking/plugins/releases/download/v${requested_version}/cni-plugins-linux-amd64-v${requested_version}.tgz"
+    untargz "cni-plugins-linux-amd64-v${requested_version}.tgz"
+    rm "cni-plugins-linux-amd64-v${requested_version}.tgz"
+    TARGET=/opt/cni/bin install_binary .

@@ -262,7 +262,8 @@ function install_file() {
 }
 
 function install_binary() {
-    TARGET="${TARGET_BIN}" install_file "$1" "0755"
+    : "${TARGET:=${TARGET_BIN}}"
+    TARGET="${TARGET}" install_file "$1" "0755"
 }
 
 function install_completion() {
