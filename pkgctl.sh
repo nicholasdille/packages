@@ -524,6 +524,8 @@ function require() {
                 "${working_directory}/pkgctl.sh" install "${package}"
             elif command -v pkgctl >/dev/null; then
                 pkgctl install "${package}"
+            elif command -v pkgctl.sh >/dev/null; then
+                pkgctl.sh install "${package}"
             else
                 echo "ERROR: Unable to recurse to install <${package}>."
                 exit 1
