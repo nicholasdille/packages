@@ -5,7 +5,7 @@ links:
 - text: Homepage
   url: https://www.rust-lang.org/
 version:
-  latest: 1.48.0 # renovate: datasource=github-releases depName=rust-lang/rust
+  latest: 1.49.0 # renovate: datasource=github-releases depName=rust-lang/rust
   command: rustc --version
   filter: ^rustc
   pattern: s/^rustc\s(\S+)\s.+$/\1/
