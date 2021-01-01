@@ -32,7 +32,7 @@ jobs:
                       PACKAGE="${FILE%/package.yaml}"
 
                       echo "Testing package ${PACKAGE}"
-                      GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} ./test.sh "${PACKAGE}"
+                      GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} ./test.sh docker "${PACKAGE}"
                   fi
               done
           fi
