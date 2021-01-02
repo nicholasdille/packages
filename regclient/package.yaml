@@ -2,7 +2,7 @@ name: regclient
 description: Client interface for the registry API
 repo: regclient/regclient
 version:
-  latest: 0.1.0 # renovate: datasource=github-releases depName=regclient/regclient
+  latest: 0.2.0 # renovate: datasource=github-releases depName=regclient/regclient
 tags:
   - docker
   - container
