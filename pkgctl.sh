@@ -519,7 +519,29 @@ function require() {
 
     echo
     echo "### Installing dependency <${package}>..."
-    force_install=false force_install_recursive=${force_install_recursive} install_package "${package}"
+
+    # The following works for #783 but breaks stuff documented in #784
+    #force_install=false force_install_recursive=${force_install_recursive} install_package "${package}"
+
+    case "$0" in
+        -bash|bash)
+            curl --silent "https://github.com/${MY_REPO}/raw/${MY_VERSION}/pkgctl.sh" | \
+                bash -s install "${package}"
+        ;;
+        *)
+            if test -x "${working_directory}/pkgctl.sh"; then
+                "${working_directory}/pkgctl.sh" install "${package}"
+            elif command -v pkgctl >/dev/null; then
+                pkgctl install "${package}"
+            elif command -v pkgctl.sh >/dev/null; then
+                pkgctl.sh install "${package}"
+            else
+                echo "ERROR: Unable to recurse to install <${package}>."
+                exit 1
+            fi
+        ;;
+    esac
+
     echo
 }
 
