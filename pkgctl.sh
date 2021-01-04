@@ -676,7 +676,11 @@ function show_help_install() {
     echo
     echo "Usage: sh ./pkgctl.sh install <package>[,<package>]"
     echo "       ./pkgctl.sh install <package>[,<package>]"
-    echo "       curl https://pkg.dille.io/pkgctl.sh | sh -s install <package>[,<package>]"
+    echo "       curl https://pkg.dille.io/pkgctl.sh | sh -s install [<options>] <package>[,<package>]"
+    echo
+    echo "Options:"
+    echo "    --force, -f    Force installation of specified package"
+    echo "    --force-all    Force installation of specified package as well as all dependencies"
     echo
 }
 
