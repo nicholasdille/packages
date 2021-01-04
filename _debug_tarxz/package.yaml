@@ -2,7 +2,7 @@ name: _debug_tarxz
 description: Package used for development and debugging (based on flarectl)
 repo: nicholasdille/packages
 version:
-  latest: 0.13.6 # renovate: datasource=github-releases depName=cloudflare/cloudflare-go
+  latest: 0.13.7 # renovate: datasource=github-releases depName=cloudflare/cloudflare-go
 tags:
   - debug
 install:
