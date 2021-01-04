@@ -668,7 +668,10 @@ function show_help_bootstrap() {
     echo
     echo "Usage: sh ./pkgctl.sh bootstrap [--prefix \${HOME}/.local] <string>"
     echo "       ./pkgctl.sh bootstrap [--prefix \${HOME}/.local] <string>"
-    echo "       curl https://pkg.dille.io/pkgctl.sh | sh -s bootstrap [--prefix \${HOME}/.local] <string>"
+    echo "       curl https://pkg.dille.io/pkgctl.sh | sh -s bootstrap [<options>] <string>"
+    echo
+    echo "Options:"
+    echo "    --prefix    Location to install pkgctl into (defaults to \${HOME}/.local)"
     echo
 }
 
@@ -696,7 +699,12 @@ function show_help_search() {
     echo
     echo "Usage: sh ./pkgctl.sh search <string>"
     echo "       ./pkgctl.sh search <string>"
-    echo "       curl https://pkg.dille.io/pkgctl.sh | sh -s search <string>"
+    echo "       curl https://pkg.dille.io/pkgctl.sh | sh -s search [<options>] <string>"
+    echo
+    echo "Options:"
+    echo "    --name, -n    Only search in package name"
+    echo "    --desc, -d    Only search in package description"
+    echo "    --tags, -t    Only search in package tags"
     echo
 }
 
@@ -951,13 +959,13 @@ function handle_search() {
     SEARCH_TAGS=false
     while test "$#" -gt 0; do
         case "$1" in
-            --name)
+            --name|-n)
                 SEARCH_NAME=true
             ;;
-            --desc)
+            --desc|-d)
                 SEARCH_DESC=true
             ;;
-            --tags)
+            --tags|-t)
                 SEARCH_TAGS=true
             ;;
             *)
