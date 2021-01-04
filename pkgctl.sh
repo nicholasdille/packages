@@ -147,15 +147,15 @@ function unpack() {
 }
 
 function untargz() {
-    COMPRESSION_PARAMETER="-z" unpack "$1"
+    COMPRESSION_PARAMETER="-z" unpack "$@"
 }
 
 function untarxz() {
-    COMPRESSION_PARAMETER="-J" unpack "$1"
+    COMPRESSION_PARAMETER="-J" unpack "$@"
 }
 
 function untarbz2() {
-    COMPRESSION_PARAMETER="-j" unpack "$1"
+    COMPRESSION_PARAMETER="-j" unpack "$@"
 }
 
 function ungz() {
@@ -255,7 +255,7 @@ function install_file() {
         exit 1
     fi
 
-    ${SUDO} install --directory "${TARGET_BIN}"
+    ${SUDO} install --directory "${TARGET}"
     for binary in ${FILES}; do
         ${SUDO} install --verbose --mode="${mode}" --compare "${binary}" "${TARGET}"
     done
@@ -268,6 +268,11 @@ function install_binary() {
 
 function install_completion() {
     TARGET="${TARGET_COMPLETION}" install_binary "$1" "0644"
+}
+
+function install_manpage() {
+    local man=$1
+    TARGET="${TARGET_BASE}/share/man/man${man}" install_file "$2" "0644"
 }
 
 # shellcheck disable=SC2120

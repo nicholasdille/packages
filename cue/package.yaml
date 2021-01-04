@@ -13,9 +13,9 @@ tags:
   - configuration
 install:
   script: |-
-    echo "https://github.com/cuelang/cue/releases/download/v${requested_version}/cue_${requested_version}_Linux_x86_64.tar.gz" | \
-        download_file | \
-        untar_file cue
+    download "https://github.com/cuelang/cue/releases/download/v${requested_version}/cue_${requested_version}_Linux_x86_64.tar.gz"
+    untargz "cue_${requested_version}_Linux_x86_64.tar.gz"
+    install_binary cue
 
-    cue completion bash | \
-        store_completion cue
+    cue completion bash >cue.sh
+    install_completion cue.sh

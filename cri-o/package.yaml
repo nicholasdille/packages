@@ -18,19 +18,18 @@ install:
     require conmon
     require crictl
 
-    echo "https://github.com/cri-o/cri-o/releases/download/v${requested_version}/crio-v${requested_version}.tar.gz" | \
-        download_file | \
-        tar -xz --strip-components=1
+    download "https://github.com/cri-o/cri-o/releases/download/v${requested_version}/crio-v${requested_version}.tar.gz"
+    untargz "crio-v${requested_version}.tar.gz" --strip-components=1
 
-    ${SUDO} cp bin/crio "${TARGET_BIN}"
-    ${SUDO} cp bin/crio-status "${TARGET_BIN}"
-    ${SUDO} cp bin/pinns "${TARGET_BIN}"
+    install_binary bin/crio
+    install_binary bin/crio-status
+    install_binary bin/pinns
 
-    ${SUDO} mkdir --parents "${TARGET_BASE}/share/man/man5" "${TARGET_BASE}/share/man/man8"
-    ${SUDO} cp man/crio.8 "${TARGET_BASE}/share/man/man8"
-    ${SUDO} cp man/crio.conf{,.d}.5 "${TARGET_BASE}/share/man/man5"
+    install_manpage 8 man/crio.8
+    install_manpage 5 man/crio.conf.5
+    install_manpage 5 man/crio.conf.d.5
 
-    cat completions/bash/crio | \
-        store_completion crio
-    cat completions/bash/crio-status | \
-        store_completion crio-status
+    cp completions/bash/crio crio.sh
+    cp completions/bash/crio-status crio-status.sh
+    install_completion crio.sh
+    install_completion crio-status.sh

@@ -19,10 +19,9 @@ files:
       eval "$(direnv hook bash)"
 install:
   script: |-
-    echo "https://github.com/direnv/direnv/releases/download/v${requested_version}/direnv.linux-amd64" | \
-        download_file | \
-        store_file direnv | \
-        make_executable
+    download "https://github.com/direnv/direnv/releases/download/v${requested_version}/direnv.linux-amd64"
+    mv direnv.linux-amd64 direnv
+    install_binary direnv
 
-    cat profile.d.direnv.sh | \
-        store_file direnv.sh /etc/profile.d
+    mv profile.d.direnv.sh direnv.sh
+    TARGET=/etc/profile.d install_file direnv.sh

@@ -13,6 +13,6 @@ tags:
   - bootstrap
 install:
   script: |-
-    echo "https://github.com/tilt-dev/ctlptl/releases/download/v${requested_version}/ctlptl.${requested_version}.linux.x86_64.tar.gz" | \
-        download_file | \
-        untar_file ctlptl
+    download "https://github.com/tilt-dev/ctlptl/releases/download/v${requested_version}/ctlptl.${requested_version}.linux.x86_64.tar.gz"
+    untargz "ctlptl.${requested_version}.linux.x86_64.tar.gz"
+    install_binary ctlptl

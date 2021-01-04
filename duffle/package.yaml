@@ -15,7 +15,6 @@ tags:
   - cnab
 install:
   script: |
-    echo "https://github.com/cnabio/duffle/releases/download/${requested_version}/duffle-linux-amd64" | \
-        download_file | \
-        store_file duffle | \
-        make_executable
+    download "https://github.com/cnabio/duffle/releases/download/${requested_version}/duffle-linux-amd64"
+    mv duffle-linux-amd64 duffle
+    install_binary duffle

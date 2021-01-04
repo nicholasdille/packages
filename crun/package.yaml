@@ -12,10 +12,9 @@ tags:
   - oci
 install:
   script: |-
-    echo "https://github.com/containers/crun/releases/download/${requested_version}/crun-${requested_version}-linux-amd64" | \
-        download_file | \
-        store_file crun | \
-        make_executable
+    download "https://github.com/containers/crun/releases/download/${requested_version}/crun-${requested_version}-linux-amd64"
+    mv crun-${requested_version}-linux-amd64 crun
+    install_binary crun
 
     ${SUDO} mkdir -p /etc/docker
     if ! test -f /etc/docker/daemon.json; then

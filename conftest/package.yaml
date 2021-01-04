@@ -19,6 +19,6 @@ tags:
   - rego
 install:
   script: |-
-    echo "https://github.com/open-policy-agent/conftest/releases/download/v${requested_version}/conftest_${requested_version}_Linux_x86_64.tar.gz" | \
-        download_file | \
-        untar_file conftest
+    download "https://github.com/open-policy-agent/conftest/releases/download/v${requested_version}/conftest_${requested_version}_Linux_x86_64.tar.gz"
+    untargz "conftest_${requested_version}_Linux_x86_64.tar.gz"
+    install_binary conftest

@@ -17,9 +17,9 @@ install:
   script: |-
     require runc
 
-    echo "https://github.com/containerd/containerd/releases/download/v${requested_version}/containerd-${requested_version}-linux-amd64.tar.gz" | \
-        download_file | \
-        ${SUDO} tar -xzC "${TARGET_BASE}"
+    download "https://github.com/containerd/containerd/releases/download/v${requested_version}/containerd-${requested_version}-linux-amd64.tar.gz"
+    untargz "containerd-${requested_version}-linux-amd64.tar.gz"
+    install_binary bin
 
     ${SUDO} mkdir -p /etc/containerd
     if ! test -s /etc/containerd/config.toml; then

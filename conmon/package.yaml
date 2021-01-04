@@ -17,7 +17,6 @@ files:
       RUN apt-get update \
       && apt-get -y install \
               gcc \
-              git \
               libc6-dev \
               libglib2.0-dev \
               pkg-config \

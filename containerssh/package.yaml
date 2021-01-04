@@ -2,12 +2,15 @@ name: containerssh
 description: An SSH server that launches containers
 repo: ContainerSSH/ContainerSSH
 version:
-  latest: 0.4.0-PR2 # renovate: datasource=github-releases depName=ContainerSSH/ContainerSSH
+  latest: 0.4.0-PR2 # renovate: datasource=github-tags depName=ContainerSSH/ContainerSSH
 tags:
   - encryption
   - security
 install:
   script: |-
-    echo "https://github.com/ContainerSSH/ContainerSSH/releases/download/${requested_version}/containerssh_${requested_version}_linux_amd64.tar.gz" | \
-        download_file | \
-        untar_file containerssh containerssh-auditlog-decoder containerssh-testauthconfigserver
+    download "https://github.com/ContainerSSH/ContainerSSH/releases/download/${requested_version}/containerssh_${requested_version}_linux_amd64.tar.gz"
+    untargz "containerssh_${requested_version}_linux_amd64.tar.gz"
+    ls -l
+    install_binary containerssh
+    install_binary containerssh-auditlog-decoder
+    install_binary containerssh-testauthconfigserver

@@ -12,9 +12,9 @@ tags:
   - cri
 install:
   script: |-
-    echo "https://github.com/kubernetes-sigs/cri-tools/releases/download/v${requested_version}/crictl-v${requested_version}-linux-amd64.tar.gz" | \
-        download_file | \
-        untar_file crictl
+    download "https://github.com/kubernetes-sigs/cri-tools/releases/download/v${requested_version}/crictl-v${requested_version}-linux-amd64.tar.gz"
+    untargz "crictl-v${requested_version}-linux-amd64.tar.gz"
+    install_binary crictl
 
-    crictl completion bash | \
-        store_completion crictl
+    crictl completion bash >crictl.sh
+    install_completion crictl.sh

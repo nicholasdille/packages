@@ -19,24 +19,31 @@ tags:
 install:
   docker: false
   script: |
-    echo "https://download.docker.com/linux/static/stable/x86_64/docker-${requested_version}.tgz" | \
-        download_file | \
-        untar_file --strip-components=1
+    download "https://download.docker.com/linux/static/stable/x86_64/docker-${requested_version}.tgz"
+    untargz "docker-${requested_version}.tgz"
+    mv docker "docker-${requested_version}"
+    install_binary "docker-${requested_version}/containerd"
+    install_binary "docker-${requested_version}/containerd-shim"
+    install_binary "docker-${requested_version}/containerd-shim-runc-v2"
+    install_binary "docker-${requested_version}/ctr"
+    install_binary "docker-${requested_version}/docker"
+    install_binary "docker-${requested_version}/docker-init"
+    install_binary "docker-${requested_version}/docker-proxy"
+    install_binary "docker-${requested_version}/dockerd"
+    install_binary "docker-${requested_version}/runc"
 
-    echo "https://download.docker.com/linux/static/stable/x86_64/docker-rootless-extras-${requested_version}.tgz" | \
-        download_file | \
-        untar_file --strip-components=1 \
-            docker-rootless-extras/rootlesskit \
-            docker-rootless-extras/rootlesskit-docker-proxy \
-            docker-rootless-extras/vpnkit
+    download "https://download.docker.com/linux/static/stable/x86_64/docker-rootless-extras-${requested_version}.tgz"
+    untargz "docker-rootless-extras-${requested_version}.tgz"
+    install_binary docker-rootless-extras/rootlesskit
+    install_binary docker-rootless-extras/rootlesskit-docker-proxy
+    install_binary docker-rootless-extras/vpnkit
 
+    download "https://raw.githubusercontent.com/docker/cli/v${requested_version}/contrib/completion/bash/docker"
+    mv docker docker.sh
+    install_completion docker.sh
 
-    echo "https://raw.githubusercontent.com/docker/cli/v${requested_version}/contrib/completion/bash/docker" | \
-        download_file | \
-        store_completion docker
-
-    cat profile.d.docker.sh | \
-        store_file docker.sh /etc/profile.d
+    mv profile.d.docker.sh docker.sh
+    TARGET=/etc/profile.d install_file docker.sh
 
     ${SUDO} mkdir --parents "/etc/docker/"
     if ! test -f "/etc/docker/daemon.json"; then

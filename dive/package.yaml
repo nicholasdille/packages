@@ -14,6 +14,6 @@ tags:
   - quality
 install:
   script: |-
-    echo "https://github.com/wagoodman/dive/releases/download/v${requested_version}/dive_${requested_version}_linux_amd64.tar.gz" | \
-        download_file | \
-        untar_file dive
+    download "https://github.com/wagoodman/dive/releases/download/v${requested_version}/dive_${requested_version}_linux_amd64.tar.gz"
+    untargz "dive_${requested_version}_linux_amd64.tar.gz"
+    install_binary dive

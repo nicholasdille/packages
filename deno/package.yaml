@@ -16,10 +16,9 @@ tags:
   - typescript
 install:
   script: |-
-    echo "https://github.com/denoland/deno/releases/download/v${requested_version}/deno-x86_64-unknown-linux-gnu.zip" | \
-        download_file | \
-        store_file deno.zip "${temporary_directory}"
-    unzip_file "${temporary_directory}/deno.zip" deno
+    download "https://github.com/denoland/deno/releases/download/v${requested_version}/deno-x86_64-unknown-linux-gnu.zip"
+    unzip deno-x86_64-unknown-linux-gnu.zip
+    install_binary deno
 
-    deno completions bash | \
-        store_completion deno
+    deno completions bash >deno.sh
+    install_completion deno.sh

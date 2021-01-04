@@ -13,7 +13,8 @@ install:
     : "${DOCKER_CLI_DIR:=${TARGET_BASE}/lib/docker/cli-plugins}"
     ${SUDO} mkdir --parents "${DOCKER_CLI_DIR}"
 
-    echo "https://github.com/docker/app/releases/download/v${requested_version}/docker-app-linux.tar.gz" | \
-        download_file | \
-        TARGET_BIN="${DOCKER_CLI_DIR}" untar_file docker-app-plugin-linux
-    ${SUDO} mv "${DOCKER_CLI_DIR}/docker-app-plugin-linux" "${DOCKER_CLI_DIR}/docker-app"
+    download "https://github.com/docker/app/releases/download/v${requested_version}/docker-app-linux.tar.gz"
+    untargz docker-app-linux.tar.gz
+    ls -l
+    mv docker-app-plugin-linux docker-app
+    TARGET="${DOCKER_CLI_DIR}" install_binary docker-app

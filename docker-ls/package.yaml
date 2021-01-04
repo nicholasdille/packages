@@ -23,8 +23,7 @@ install:
     EOF
     extract_file_from_container docker-ls docker-rm
 
-    docker-ls autocomplete bash | \
-        store_completion docker-ls
-
-    docker-rm autocomplete bash | \
-        store_completion docker-rm
+    docker-ls autocomplete bash >docker-ls.sh
+    docker-rm autocomplete bash >docker-rm.sh
+    install_completion docker-ls.sh
+    install_completion docker-rm.sh
