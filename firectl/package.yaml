@@ -16,7 +16,6 @@ tags:
   - firecracker
 install:
   script: |-
-    echo "https://firectl-release.s3.amazonaws.com/firectl-v${requested_version}" | \
-        download_file | \
-        store_file firectl | \
-        make_executable
+    download "https://firectl-release.s3.amazonaws.com/firectl-v${requested_version}"
+    mv "firectl-v${requested_version}" firectl
+    install_binary firectl

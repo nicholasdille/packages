@@ -13,7 +13,5 @@ tags:
   - variables
 install:
   script: |-
-    echo "https://github.com/stephenc/envsub/releases/download/${requested_version}/envsub" | \
-        download_file | \
-        store_file envsub | \
-        make_executable
+    download "https://github.com/stephenc/envsub/releases/download/${requested_version}/envsub"
+    install_binary envsub

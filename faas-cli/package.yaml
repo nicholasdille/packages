@@ -16,7 +16,5 @@ tags:
   - serverless
 install:
   script: |-
-    echo "https://github.com/openfaas/faas-cli/releases/download/${requested_version}/faas-cli" | \
-        download_file | \
-        store_file faas-cli | \
-        make_executable
+    download "https://github.com/openfaas/faas-cli/releases/download/${requested_version}/faas-cli"
+    install_binary faas-cli

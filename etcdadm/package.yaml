@@ -10,7 +10,6 @@ tags:
   - shell
 install:
   script: |-
-    echo "https://github.com/kubernetes-sigs/etcdadm/releases/download/v${requested_version}/etcdadm-linux-amd64" | \
-        download_file | \
-        store_file etcdadm | \
-        make_executable
+    download "https://github.com/kubernetes-sigs/etcdadm/releases/download/v${requested_version}/etcdadm-linux-amd64"
+    mv etcdadm-linux-amd64 etcdadm
+    install_binary etcdadm

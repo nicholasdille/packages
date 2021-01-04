@@ -16,12 +16,9 @@ tags:
   - firecracker
 install:
   script: |-
-    echo "https://github.com/firecracker-microvm/firecracker/releases/download/v${requested_version}/firecracker-v${requested_version}-x86_64" | \
-        download_file | \
-        store_file firecracker | \
-        make_executable
-
-    echo "https://github.com/firecracker-microvm/firecracker/releases/download/v${requested_version}/jailer-v${requested_version}-x86_64" | \
-        download_file | \
-        store_file jailer | \
-        make_executable
+    download "https://github.com/firecracker-microvm/firecracker/releases/download/v${requested_version}/firecracker-v${requested_version}-x86_64.tgz"
+    untargz "firecracker-v${requested_version}-x86_64.tgz"
+    mv firecracker-v${requested_version}-x86_64 firecracker
+    mv jailer-v${requested_version}-x86_64 jailer
+    install_binary firecracker
+    install_binary jailer

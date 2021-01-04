@@ -891,6 +891,7 @@ function install_package() {
     unlock_sudo
 
     for filename in $(jq --raw-output 'select(.files != null) | .files[].name' "${temporary_directory}/package.json"); do
+        >&2 echo "Injecting file <${filename}>..."
         jq --raw-output --arg name "${filename}" '.files[] | select(.name == $name) | .content' "${temporary_directory}/package.json" >"${temporary_directory}/${filename}"
     done
 

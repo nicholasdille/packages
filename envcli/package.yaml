@@ -11,7 +11,6 @@ tags:
   - development
 install:
   script: |-
-    echo "https://dl.bintray.com/envcli/golang/envcli/v${requested_version}/linux_amd64" | \
-        download_file | \
-        store_file envcli | \
-        make_executable
+    download "https://dl.bintray.com/envcli/golang/envcli/v${requested_version}/linux_amd64"
+    mv linux_amd64 envcli
+    install_binary envcli

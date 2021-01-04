@@ -16,6 +16,6 @@ tags:
   - bootstrap
 install:
   script: |-
-    echo "https://github.com/weaveworks/eksctl/releases/download/${requested_version}/eksctl_Linux_amd64.tar.gz" | \
-        download_file | \
-        untar_file eksctl
+    download "https://github.com/weaveworks/eksctl/releases/download/${requested_version}/eksctl_Linux_amd64.tar.gz"
+    untargz eksctl_Linux_amd64.tar.gz
+    install_binary eksctl

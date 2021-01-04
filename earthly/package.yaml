@@ -10,7 +10,6 @@ tags:
   - container
 install:
   script: |
-    echo "https://github.com/earthly/earthly/releases/download/v${requested_version}/earthly-linux-amd64" | \
-        download_file | \
-        store_file earthly | \
-        make_executable
+    download "https://github.com/earthly/earthly/releases/download/v${requested_version}/earthly-linux-amd64"
+    mv earthly-linux-amd64 earthly
+    install_binary earthly
