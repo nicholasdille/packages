@@ -836,6 +836,10 @@ function install_package() {
     cleanup_tasks+=("remove_temporary_directory")
 
     get_package_definition "${package}" >"${temporary_directory}/package.json"
+    if ! test -s "${temporary_directory}/package.json"; then
+        echo "ERROR: Package <${package}> does not exist."
+        exit 1
+    fi
     PACKAGE_REPOSITORY="$(jq --raw-output .repo "${temporary_directory}/package.json")"
     export PACKAGE_REPOSITORY
 
