@@ -519,24 +519,7 @@ function require() {
 
     echo
     echo "### Installing dependency <${package}>..."
-    case "$0" in
-        -bash|bash)
-            curl --silent "https://pkg.dille.io/pkgctl.sh" | \
-                bash -s install "${package}"
-        ;;
-        *)
-            if test -x "${working_directory}/pkgctl.sh"; then
-                "${working_directory}/pkgctl.sh" install "${package}"
-            elif command -v pkgctl >/dev/null; then
-                pkgctl install "${package}"
-            elif command -v pkgctl.sh >/dev/null; then
-                pkgctl.sh install "${package}"
-            else
-                echo "ERROR: Unable to recurse to install <${package}>."
-                exit 1
-            fi
-        ;;
-    esac
+    force_install=false force_install_recursive=${force_install_recursive} install_package "${package}"
     echo
 }
 
@@ -825,13 +808,81 @@ function handle_inspect() {
         jq --arg package "${package}" '.packages[] | select(.name == $package)'
 }
 
+function install_package() {
+    local package=$1
+    if test -z "${package}"; then
+        echo "ERROR: Package name must be specified."
+        exit 1
+    fi
+    local requested_version=$2
+
+    export PACKAGE_NAME=${package}
+
+    temporary_directory=$(mktemp -d)
+    # shellcheck disable=SC2164
+    cd "${temporary_directory}"
+    cleanup_tasks+=("remove_temporary_directory")
+
+    get_package_definition "${package}" >"${temporary_directory}/package.json"
+    PACKAGE_REPOSITORY="$(jq --raw-output .repo "${temporary_directory}/package.json")"
+    export PACKAGE_REPOSITORY
+
+    latest_version=$(get_latest_version "${package}")
+    if test "${latest_version}" == "null"; then
+        latest_version=""
+    fi
+    if test -z "${requested_version}"; then
+        requested_version="${latest_version}"
+    fi
+    export PACKAGE_LATEST_VERSION="${latest_version}"
+    export PACKAGE_REQUESTED_VERSION="${requested_version}"
+
+    if ${force_install} || ${force_install_recursive}; then
+        echo "WARNING: This is a forced installation."
+    else
+        if requested_version_installed "${package}" "${requested_version}"; then
+            echo "Requested version ${requested_version} of ${package} is already installed."
+            return
+        fi
+    fi
+
+    if package_needs_docker "${package}"; then
+        check_docker
+        cleanup_tasks+=("remove_temporary_container")
+    fi
+    unlock_sudo
+
+    for filename in $(jq --raw-output 'select(.files != null) | .files[].name' "${temporary_directory}/package.json"); do
+        jq --raw-output --arg name "${filename}" '.files[] | select(.name == $name) | .content' "${temporary_directory}/package.json" >"${temporary_directory}/${filename}"
+    done
+
+    install_script="$(get_install_script "${package}")"
+    if test -z "${requested_version}"; then
+        if echo "${install_script}" | grep requested_version; then
+            echo "ERROR: Requested package version is empty but install script uses it."
+            exit 1
+        fi
+    fi
+
+    echo "Installing ${package} version ${requested_version:-UNKNOWN}..."
+
+    eval "${install_script}"
+
+    echo "Finished installation of ${package} version ${requested_version:-UNKNOWN}."
+}
+
 function handle_install() {
     local force_install=false
+    local force_install_recursive=false
     local file=""
     while test "$#" -gt 0; do
         case "$1" in
             --force|-f)
                 force_install=true
+                ;;
+            --force-all)
+                force_install=true
+                force_install_recursive=true
                 ;;
             --file)
                 shift
@@ -873,59 +924,8 @@ function handle_install() {
         if test "${requested_version}" == "${package}"; then
             unset requested_version
         fi
-        export PACKAGE_NAME=${package}
 
-        temporary_directory=$(mktemp -d)
-        # shellcheck disable=SC2164
-        cd "${temporary_directory}"
-        cleanup_tasks+=("remove_temporary_directory")
-
-        get_package_definition "${package}" >"${temporary_directory}/package.json"
-        PACKAGE_REPOSITORY="$(jq --raw-output .repo "${temporary_directory}/package.json")"
-        export PACKAGE_REPOSITORY
-
-        latest_version=$(get_latest_version "${package}")
-        if test "${latest_version}" == "null"; then
-            latest_version=""
-        fi
-        if test -z "${requested_version}"; then
-            requested_version="${latest_version}"
-        fi
-        export PACKAGE_LATEST_VERSION="${latest_version}"
-        export PACKAGE_REQUESTED_VERSION="${requested_version}"
-
-        if ${force_install}; then
-            echo "WARNING: This is a forced installation."
-        else
-            if requested_version_installed "${package}" "${requested_version}"; then
-                echo "Requested version ${requested_version} of ${package} is already installed."
-                continue
-            fi
-        fi
-
-        if package_needs_docker "${package}"; then
-            check_docker
-            cleanup_tasks+=("remove_temporary_container")
-        fi
-        unlock_sudo
-
-        for filename in $(jq --raw-output 'select(.files != null) | .files[].name' "${temporary_directory}/package.json"); do
-            jq --raw-output --arg name "${filename}" '.files[] | select(.name == $name) | .content' "${temporary_directory}/package.json" >"${temporary_directory}/${filename}"
-        done
-
-        install_script="$(get_install_script "${package}")"
-        if test -z "${requested_version}"; then
-            if echo "${install_script}" | grep requested_version; then
-                echo "ERROR: Requested package version is empty but install script uses it."
-                exit 1
-            fi
-        fi
-
-        echo "Installing ${package} version ${requested_version:-UNKNOWN}..."
-
-        eval "${install_script}"
-
-        echo "Finished installation of ${package} version ${requested_version:-UNKNOWN}."
+        force_install=${force_install} force_install_recursive=${force_install_recursive} install_package "${package}" "${requested_version}"
     done
 }
 
