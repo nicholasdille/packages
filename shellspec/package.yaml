@@ -2,7 +2,7 @@ name: shellspec
 description: A full-featured BDD unit testing framework for bash, ksh, zsh, dash and all POSIX shells
 repo: shellspec/shellspec
 version:
-  latest: 0.27.2 # renovate: datasource=github-releases depName=shellspec/shellspec
+  latest: 0.28.0 # renovate: datasource=github-releases depName=shellspec/shellspec
   command: shellspec --version
   filter: ^[[:digit:]]
   pattern: s/^(.+)$/\1/
