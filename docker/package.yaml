@@ -5,7 +5,7 @@ links:
 - text: Homepage
   url: https://www.docker.com/
 version:
-  latest: 20.10.1 # renovate: datasource=github-tags depName=docker/cli
+  latest: 20.10.2 # renovate: datasource=github-tags depName=docker/cli
   command: ${TARGET_BIN}/docker --version
   filter: ^Docker
   pattern: s/^Docker\sversion\s([^,]+),.+$/\1/
