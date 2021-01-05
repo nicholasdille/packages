@@ -2,7 +2,7 @@ name: lab
 description: Lab wraps Git or Hub, making it simple to clone, fork, and interact with repositories on GitLab
 repo: zaquestion/lab
 version:
-  latest: 0.17.2 # renovate: datasource=github-releases depName=zaquestion/lab
+  latest: 0.18.0 # renovate: datasource=github-releases depName=zaquestion/lab
   command: lab version
   filter: ^lab
   pattern: s/^lab\sversion\s(.+)$/\1/
