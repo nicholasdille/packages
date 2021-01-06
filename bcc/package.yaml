@@ -2,7 +2,7 @@ name: bcc
 description: BCC - Tools for BPF-based Linux IO analysis, networking, monitoring, and more
 repo: iovisor/bcc
 version:
-  latest: 0.17.0 # renovate: datasource=github-releases depName=iovisor/bcc
+  latest: 0.18.0 # renovate: datasource=github-releases depName=iovisor/bcc
 tags:
   - ebpf
   - security
