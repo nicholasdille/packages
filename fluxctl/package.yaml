@@ -5,7 +5,7 @@ links:
   - text: Homepage
     url: https://fluxcd.io/
 version:
-  latest: 1.21.0 # renovate: datasource=github-releases depName=fluxcd/flux
+  latest: 1.21.1 # renovate: datasource=github-releases depName=fluxcd/flux
   command: fluxctl version
   filter: ^[[:digit:]]
   pattern: s/^(.+)$/\1/
