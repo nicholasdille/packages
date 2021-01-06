@@ -2,7 +2,7 @@ name: clusterlint
 description: A best practices checker for Kubernetes clusters
 repo: digitalocean/clusterlint
 version:
-  latest: 0.2.4 # renovate: datasource=github-releases depName=digitalocean/clusterlint
+  latest: 0.2.5 # renovate: datasource=github-releases depName=digitalocean/clusterlint
   command: clusterlint --version
   filter: ^clusterlint
   pattern: s/^(.+)$/\1/
