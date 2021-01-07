@@ -2,7 +2,7 @@ name: rke
 description: Rancher Kubernetes Engine (RKE), an extremely simple, lightning fast Kubernetes distribution that runs entirely within containers
 repo: rancher/rke
 version:
-  latest: 1.2.3 # renovate: datasource=github-releases depName=rancher/rke
+  latest: 1.2.4 # renovate: datasource=github-releases depName=rancher/rke
   command: rke --version
   filter: ^rke
   pattern: s/^rke\sversion\sv(.+)$/\1/
