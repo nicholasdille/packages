@@ -2,7 +2,7 @@ name: kubefire
 description: KubeFire, creates and manages Kubernetes Clusters using Firecracker microVMs
 repo: innobead/kubefire
 version:
-  latest: 0.3.3 # renovate: datasource=github-releases depName=innobead/kubefire
+  latest: 0.3.4 # renovate: datasource=github-releases depName=innobead/kubefire
   command: kubefire version
   filter: ^Version
   pattern: s/^Version:\sv(.+)$/\1/
