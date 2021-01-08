@@ -2,7 +2,7 @@ name: whalebrew
 description: Homebrew, but with Docker images
 repo: whalebrew/whalebrew
 version:
-  latest: 0.2.5 # renovate: datasource=github-releases depName=whalebrew/whalebrew
+  latest: 0.3.0 # renovate: datasource=github-releases depName=whalebrew/whalebrew
   command: whalebrew version
   filter: ^Whalebrew
   pattern: s/^Whalebrew\s(.+)$/\1/
