@@ -2,7 +2,7 @@ name: kubie
 description: A more powerful alternative to kubectx and kubens
 repo: sbstp/kubie
 version:
-  latest: 0.11.1 # renovate: datasource=github-releases depName=sbstp/kubie
+  latest: 0.12.0 # renovate: datasource=github-releases depName=sbstp/kubie
   command: kubie --version
   filter: ^kubie
   pattern: s/^kubie\s(.+)$/\1/
