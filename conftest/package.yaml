@@ -5,7 +5,7 @@ links:
   - text: Homepage
     url: https://conftest.dev/
 version:
-  latest: 0.22.0 # renovate: datasource=github-releases depName=open-policy-agent/conftest
+  latest: 0.23.0 # renovate: datasource=github-releases depName=open-policy-agent/conftest
   command: conftest --version
   filter: |
     ^Version:
