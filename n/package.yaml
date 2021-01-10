@@ -19,11 +19,10 @@ files:
       export N_PREFIX="${TARGET_BASE}"
 install:
   script: |-
-    echo "https://github.com/tj/n/raw/v${requested_version}/bin/n" | \
-        download_file | \
-        store_file n | \
-        make_executable
+    download "https://github.com/tj/n/raw/v${requested_version}/bin/n"
+    install_binary n
 
     cat profile.d.n.sh | \
-        TARGET_BASE="${TARGET_BASE}" envsubst '${TARGET_BASE}' | \
-        store_file n.sh /etc/profile.d
+        TARGET_BASE="${TARGET_BASE}" envsubst '${TARGET_BASE}' \
+        >n.sh
+    TARGET=/etc/profile.d install_file n.sh

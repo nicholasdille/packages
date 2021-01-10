@@ -30,15 +30,13 @@ install:
         exit 1
     fi
 
-    echo "https://github.com/weaveworks/ignite/releases/download/v${requested_version}/ignite-amd64" | \
-        download_file | \
-        store_file ignite | \
-        make_executable
+    download "https://github.com/weaveworks/ignite/releases/download/v${requested_version}/ignite-amd64"
+    mv ignite-amd64 ignite
+    install_binary ignite
 
-    echo "https://github.com/weaveworks/ignite/releases/download/v${requested_version}/ignited-amd64" | \
-        download_file | \
-        store_file ignited | \
-        make_executable
+    download "https://github.com/weaveworks/ignite/releases/download/v${requested_version}/ignited-amd64"
+    mv ignited-amd64 ignited
+    install_binary ignited
 
-    ignite completion | \
-        store_completion ignite
+    ignite completion >ignite.sh
+    install_completion ignite.sh

@@ -26,5 +26,6 @@ install:
         ${SUDO} tar -xzC "${TARGET_BASE}/gvm" --strip-components=1
 
     cat profile.d.gvm.sh | \
-        TARGET_BASE=${TARGET_BASE} envsubst '${TARGET_BASE}' | \
-        store_file gvm.sh /etc/profile.d
+        TARGET_BASE=${TARGET_BASE} envsubst '${TARGET_BASE}' \
+        >gvm.sh
+    TARGET=/etc/profile.d install_file gvm.sh

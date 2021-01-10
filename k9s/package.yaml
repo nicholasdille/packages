@@ -9,6 +9,6 @@ tags:
   - ui
 install:
   script: |-
-    echo "https://github.com/derailed/k9s/releases/download/v${requested_version}/k9s_Linux_x86_64.tar.gz" | \
-        download_file | \
-        untar_file k9s
+    download "https://github.com/derailed/k9s/releases/download/v${requested_version}/k9s_Linux_x86_64.tar.gz"
+    untargz "k9s_Linux_x86_64.tar.gz"
+    install_binary k9s

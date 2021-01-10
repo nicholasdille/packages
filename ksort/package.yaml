@@ -11,7 +11,6 @@ tags:
   - k8s
 install:
   script: |-
-    echo "https://github.com/superbrothers/ksort/releases/download/v${requested_version}/ksort-linux-amd64.zip" | \
-        download_file | \
-        store_file ksort.zip "${temporary_directory}"
-    unzip_file "${temporary_directory}/ksort.zip" ksort
+    download "https://github.com/superbrothers/ksort/releases/download/v${requested_version}/ksort-linux-amd64.zip"
+    unzip -q ksort-linux-amd64.zip
+    install_binary ksort

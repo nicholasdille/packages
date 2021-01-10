@@ -10,6 +10,6 @@ tags:
   - markdown
 install:
   script: |-
-    echo "https://github.com/charmbracelet/glow/releases/download/v${requested_version}/glow_${requested_version}_linux_x86_64.tar.gz" | \
-        download_file | \
-        untar_file glow
+    download "https://github.com/charmbracelet/glow/releases/download/v${requested_version}/glow_${requested_version}_linux_x86_64.tar.gz"
+    untargz "glow_${requested_version}_linux_x86_64.tar.gz"
+    install_binary glow

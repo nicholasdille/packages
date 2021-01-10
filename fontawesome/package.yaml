@@ -11,10 +11,9 @@ tags:
   - powerline
 install:
   script: |-
-    curl --silent --location --remote-name "https://github.com/FortAwesome/Font-Awesome/releases/download/${requested_version}/fontawesome-free-${requested_version}-desktop.zip"
-    unzip fontawesome-free-${requested_version}-desktop.zip
-    ls -l fontawesome-free-${requested_version}-desktop/otfs
+    download "https://github.com/FortAwesome/Font-Awesome/releases/download/${requested_version}/fontawesome-free-${requested_version}-desktop.zip"
+    unzip -q fontawesome-free-${requested_version}-desktop.zip
 
-    ${SUDO} mkdir -p "${TARGET_BASE}/share/fonts/fontawesome"
-    ${SUDO} cp fontawesome-free-${requested_version}-desktop/otfs/*.otf "${TARGET_BASE}/share/fonts/fontawesome"
+    TARGET="${TARGET_BASE}/share/fonts/fontawesome" install_file fontawesome-free-${requested_version}-desktop/otfs
+
     ${SUDO} fc-cache -f -v

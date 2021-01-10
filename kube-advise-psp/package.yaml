@@ -10,7 +10,7 @@ tags:
   - policy
 install:
   script: |-
-    echo "https://github.com/sysdiglabs/kube-psp-advisor/releases/download/v${requested_version}/kube-psp-advisor_v${requested_version}_linux_amd64.tar.gz" | \
-        download_file | \
-        untar_file kubectl-advise-psp
-    rename_file kubectl-advise-psp kube-advise-psp
+    download "https://github.com/sysdiglabs/kube-psp-advisor/releases/download/v${requested_version}/kube-psp-advisor_v${requested_version}_linux_amd64.tar.gz"
+    untargz "kube-psp-advisor_v${requested_version}_linux_amd64.tar.gz"
+    mv kubectl-advise-psp kube-advise-psp
+    install_binary kube-advise-psp

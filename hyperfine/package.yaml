@@ -13,13 +13,9 @@ tags:
   - monitor
 install:
   script: |-
-    echo "https://github.com/sharkdp/hyperfine/releases/download/v${requested_version}/hyperfine-v${requested_version}-x86_64-unknown-linux-gnu.tar.gz" | \
-        download_file | \
-        tar -xz --strip-components=1
-
-    ${SUDO} cp hyperfine "${TARGET_BIN}"
-
-    mkdir -p ${TARGET_BASE}/share/man/man1
-    ${SUDO} cp hyperfine.1 ${TARGET_BASE}/share/man/man1/
-
-    ${SUDO} cp autocomplete/hyperfine.bash-completion ${TARGET_COMPLETION}/hyperfine.sh
+    download "https://github.com/sharkdp/hyperfine/releases/download/v${requested_version}/hyperfine-v${requested_version}-x86_64-unknown-linux-gnu.tar.gz"
+    untargz "hyperfine-v${requested_version}-x86_64-unknown-linux-gnu.tar.gz"
+    install_binary "hyperfine-v${requested_version}-x86_64-unknown-linux-gnu/hyperfine"
+    install_manpage 1 "hyperfine-v${requested_version}-x86_64-unknown-linux-gnu/hyperfine.1"
+    mv "hyperfine-v${requested_version}-x86_64-unknown-linux-gnu/autocomplete/hyperfine.bash-completion" hyperfine.sh
+    install_completion hyperfine.sh

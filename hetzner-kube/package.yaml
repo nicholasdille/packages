@@ -15,10 +15,9 @@ tags:
   - bootstrap
 install:
   script: |-
-    echo "https://github.com/xetys/hetzner-kube/releases/download/${requested_version}/hetzner-kube-${requested_version}-linux-amd64" | \
-        download_file | \
-        store_file hetzner-kube | \
-        make_executable
+    download "https://github.com/xetys/hetzner-kube/releases/download/${requested_version}/hetzner-kube-${requested_version}-linux-amd64"
+    mv hetzner-kube-${requested_version}-linux-amd64 hetzner-kube
+    install_binary hetzner-kube
 
-    hetzner-kube completion bash | \
-        store_completion hetzner-kube
+    hetzner-kube completion bash >hetzner-kube.sh
+    install_completion hetzner-kube.sh

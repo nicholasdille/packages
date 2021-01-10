@@ -10,9 +10,9 @@ tags:
   - github
 install:
   script: |-
-    echo "https://github.com/github/hub/releases/download/v${requested_version}/hub-linux-amd64-${requested_version}.tgz" | \
-        download_file \
-        >hub.tar.gz
+    download "https://github.com/github/hub/releases/download/v${requested_version}/hub-linux-amd64-${requested_version}.tgz"
+    untargz "hub-linux-amd64-${requested_version}.tgz"
 
-    ${SUDO} tar -xzf hub.tar.gz -C ${TARGET_BASE} --wildcards --strip-components=1 */bin/hub
-    ${SUDO} tar -xzf hub.tar.gz -C ${TARGET_COMPLETION} --wildcards --strip-components=2 */etc/hub.bash_completion.sh
+    install_binary "hub-linux-amd64-${requested_version}/bin/hub"
+    mv "hub-linux-amd64-${requested_version}/etc/hub.bash_completion.sh" hub.sh
+    install_completion hub.sh

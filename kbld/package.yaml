@@ -17,7 +17,6 @@ tags:
   - image
 install:
   script: |-
-    echo "https://github.com/vmware-tanzu/carvel-kbld/releases/download/v${requested_version}/kbld-linux-amd64" | \
-        download_file | \
-        store_file kbld | \
-        make_executable
+    download "https://github.com/vmware-tanzu/carvel-kbld/releases/download/v${requested_version}/kbld-linux-amd64"
+    mv kbld-linux-amd64 kbld
+    install_binary kbld

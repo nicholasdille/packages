@@ -10,7 +10,6 @@ tags:
   - sudo
 install:
   script: |-
-    echo "https://github.com/tianon/gosu/releases/download/${requested_version}/gosu-amd64" | \
-        download_file | \
-        store_file gosu | \
-        make_executable
+    download "https://github.com/tianon/gosu/releases/download/${requested_version}/gosu-amd64"
+    mv gosu-amd64 gosu
+    install_binary gosu

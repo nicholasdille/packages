@@ -10,6 +10,6 @@ tags:
   - jwt
 install:
   script: |-
-    echo "https://github.com/mike-engel/jwt-cli/releases/download/${requested_version}/jwt-linux.tar.gz" | \
-        download_file | \
-        untar_file jwt
+    download "https://github.com/mike-engel/jwt-cli/releases/download/${requested_version}/jwt-linux.tar.gz"
+    untargz jwt-linux.tar.gz
+    install_binary jwt

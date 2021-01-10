@@ -23,11 +23,12 @@ install:
   script: |-
     require sops
 
-    curl --location --fail "https://get.helm.sh/helm-v${requested_version}-linux-amd64.tar.gz" | \
-        ${SUDO} tar -xz --strip-components=1 -C "${TARGET_BIN}" linux-amd64/helm
+    download "https://get.helm.sh/helm-v${requested_version}-linux-amd64.tar.gz"
+    untargz helm-v${requested_version}-linux-amd64.tar.gz
+    install_binary linux-amd64/helm
 
-    helm completion bash | \
-        store_completion helm
+    helm completion bash >helm.sh
+    install_completion helm.sh
 
     if ! helm plugin list | grep ^diff >/dev/null 2>&1; then
         helm plugin install https://github.com/databus23/helm-diff

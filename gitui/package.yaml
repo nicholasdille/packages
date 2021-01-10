@@ -10,6 +10,6 @@ tags:
   - git
 install:
   script: |-
-    echo "https://github.com/extrawurst/gitui/releases/download/v${requested_version}/gitui-linux-musl.tar.gz" | \
-        download_file | \
-        untar_file ./gitui
+    download "https://github.com/extrawurst/gitui/releases/download/v${requested_version}/gitui-linux-musl.tar.gz"
+    untargz gitui-linux-musl.tar.gz
+    install_binary gitui

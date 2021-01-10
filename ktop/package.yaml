@@ -10,6 +10,6 @@ tags:
   - monitoring
 install:
   script: |-
-    echo "https://github.com/ynqa/ktop/releases/download/v${requested_version}/ktop_${requested_version}_linux_amd64.tar.gz" | \
-        download_file | \
-        untar_file ktop
+    download "https://github.com/ynqa/ktop/releases/download/v${requested_version}/ktop_${requested_version}_linux_amd64.tar.gz"
+    untargz "ktop_${requested_version}_linux_amd64.tar.gz"
+    install_binary ktop

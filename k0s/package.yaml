@@ -11,7 +11,6 @@ tags:
   - k8s
 install:
   script: |-
-    echo "https://github.com/k0sproject/k0s/releases/download/v${requested_version}/k0s-v${requested_version}-amd64" | \
-        download_file | \
-        store_file k0s | \
-        make_executable
+    download "https://github.com/k0sproject/k0s/releases/download/v${requested_version}/k0s-v${requested_version}-amd64"
+    mv "k0s-v${requested_version}-amd64" k0s
+    install_binary k0s

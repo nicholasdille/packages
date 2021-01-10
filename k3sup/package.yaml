@@ -15,7 +15,5 @@ tags:
   - cluster
 install:
   script: |-
-    echo "https://github.com/alexellis/k3sup/releases/download/${requested_version}/k3sup" | \
-        download_file | \
-        store_file k3sup | \
-        make_executable
+    download "https://github.com/alexellis/k3sup/releases/download/${requested_version}/k3sup"
+    install_binary k3sup

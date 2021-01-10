@@ -15,10 +15,9 @@ tags:
   - compose
 install:
   script: |-
-    echo "https://github.com/kubernetes/kompose/releases/download/v${requested_version}/kompose-linux-amd64" | \
-        download_file | \
-        store_file kompose | \
-        make_executable
+    download "https://github.com/kubernetes/kompose/releases/download/v${requested_version}/kompose-linux-amd64"
+    mv kompose-linux-amd64 kompose
+    install_binary kompose
 
-    kompose completion bash | \
-        store_completion kompose
+    kompose completion bash >kompose.sh
+    install_completion kompose.sh

@@ -13,7 +13,6 @@ tags:
   - network
 install:
   script: |-
-    echo "https://github.com/stedolan/jq/releases/download/jq-${requested_version}/jq-linux64" | \
-        download_file | \
-        store_file jq | \
-        make_executable
+    download "https://github.com/stedolan/jq/releases/download/jq-${requested_version}/jq-linux64"
+    mv jq-linux64 jq
+    install_binary jq

@@ -13,10 +13,7 @@ tags:
   - performance
 install:
   script: |-
-    echo "https://github.com/orhun/kmon/releases/download/v${requested_version}/kmon-${requested_version}.tar.gz" | \
-        download_file | \
-        tar -xz
-
-    ${SUDO} cp kmon "${TARGET_BIN}"
-    ${SUDO} mkdir -p "${TARGET_BASE}/share/man/man8"
-    ${SUDO} cp man/kmon.8 "${TARGET_BASE}/share/man/man8"
+    download "https://github.com/orhun/kmon/releases/download/v${requested_version}/kmon-${requested_version}-x86_64-unknown-linux-gnu.tar.gz"
+    untargz "kmon-${requested_version}-x86_64-unknown-linux-gnu.tar.gz"
+    install_binary "kmon-${requested_version}/kmon"
+    install_manpage 8 "kmon-${requested_version}/man/kmon.8"

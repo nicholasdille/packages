@@ -16,6 +16,6 @@ tags:
   - configuration
 install:
   script: |-
-    echo "https://github.com/norwoodj/helm-docs/releases/download/v${requested_version}/helm-docs_${requested_version}_Linux_x86_64.tar.gz" | \
-        download_file | \
-        untar_file helm-docs
+    download "https://github.com/norwoodj/helm-docs/releases/download/v${requested_version}/helm-docs_${requested_version}_Linux_x86_64.tar.gz"
+    untargz "helm-docs_${requested_version}_Linux_x86_64.tar.gz"
+    install_binary helm-docs

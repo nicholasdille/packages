@@ -11,6 +11,6 @@ tags:
   - k8s
 install:
   script: |-
-    echo "https://github.com/stepro/kdo/releases/download/v${requested_version}/kdo-v${requested_version}-linux-amd64.tar.gz" | \
-        download_file | \
-        untar_file kdo
+    download "https://github.com/stepro/kdo/releases/download/v${requested_version}/kdo-v${requested_version}-linux-amd64.tar.gz"
+    untargz "kdo-v${requested_version}-linux-amd64.tar.gz"
+    install_binary kdo

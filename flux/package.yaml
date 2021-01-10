@@ -12,9 +12,9 @@ tags:
   - gitops
 install:
   script: |-
-    echo "https://github.com/fluxcd/flux2/releases/download/v${requested_version}/flux_${requested_version}_linux_amd64.tar.gz" | \
-        download_file | \
-        untar_file flux
+    download "https://github.com/fluxcd/flux2/releases/download/v${requested_version}/flux_${requested_version}_linux_amd64.tar.gz"
+    untargz "flux_${requested_version}_linux_amd64.tar.gz"
+    install_binary flux
 
-    flux completion bash | \
-        store_completion flux
+    flux completion bash >flux.sh
+    install_completion flux.sh

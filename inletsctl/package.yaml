@@ -15,6 +15,6 @@ tags:
   - tunnel
 install:
   script: |-
-    echo "https://github.com/inlets/inletsctl/releases/download/${requested_version}/inletsctl.tgz" | \
-        download_file | \
-        ${SUDO} tar -xzC "${TARGET_BASE}" bin/inletsctl
+    download "https://github.com/inlets/inletsctl/releases/download/${requested_version}/inletsctl.tgz"
+    untargz inletsctl.tgz
+    install_binary bin/inletsctl

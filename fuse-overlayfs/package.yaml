@@ -10,7 +10,6 @@ tags:
   - container
 install:
   script: |-
-    echo "https://github.com/containers/fuse-overlayfs/releases/download/v${requested_version}/fuse-overlayfs-x86_64" | \
-        download_file | \
-        store_file fuse-overlayfs | \
-        make_executable
+    download "https://github.com/containers/fuse-overlayfs/releases/download/v${requested_version}/fuse-overlayfs-x86_64"
+    mv fuse-overlayfs-x86_64 fuse-overlayfs
+    install_binary fuse-overlayfs

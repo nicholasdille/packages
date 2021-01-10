@@ -15,10 +15,10 @@ tags:
   - plugins
 install:
   script: |-
-    echo "https://github.com/kubernetes-sigs/krew/releases/download/v${requested_version}/krew.tar.gz" | \
-        download_file | \
-        untar_file ./krew-linux_amd64
-    rename_file krew-linux_amd64 krew
+    download "https://github.com/kubernetes-sigs/krew/releases/download/v${requested_version}/krew.tar.gz"
+    untargz krew.tar.gz
+    mv krew-linux_amd64 krew
+    install_binary krew
 
     krew update
     if ! krew index list | grep --quiet kvaps; then

@@ -17,7 +17,6 @@ tags:
   - artifact
 install:
   script: |-
-    echo "https://github.com/vmware-tanzu/carvel-imgpkg/releases/download/v${requested_version}/imgpkg-linux-amd64" | \
-        download_file | \
-        store_file imgpkg | \
-        make_executable
+    download "https://github.com/vmware-tanzu/carvel-imgpkg/releases/download/v${requested_version}/imgpkg-linux-amd64"
+    mv imgpkg-linux-amd64 imgpkg
+    install_binary imgpkg

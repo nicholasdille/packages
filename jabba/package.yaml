@@ -13,14 +13,14 @@ tags:
   - version manager
 install:
   script: |-
-    echo "https://github.com/shyiko/jabba/releases/download/${requested_version}/jabba-${requested_version}-linux-amd64" | \
-        download_file | \
-        store_file jabba | \
-        make_executable
+    download "https://github.com/shyiko/jabba/releases/download/${requested_version}/jabba-${requested_version}-linux-amd64"
+    mv "jabba-${requested_version}-linux-amd64" jabba
+    install_binary jabba
 
     cat profile.d.jabba.sh | \
-        TARGET_BASE=${TARGET_BASE} envsubst '${TARGET_BASE}' | \
-        store_file jabba.sh /etc/profile.d
+        TARGET_BASE=${TARGET_BASE} envsubst '${TARGET_BASE}' \
+        >jabba.sh
+    TARGET=/etc/profile.d install_file jabba.sh
 files:
 - name: profile.d.jabba.sh
   content: |

@@ -14,7 +14,5 @@ install:
   script: |-
     require sysbox
 
-    echo "https://github.com/nestybox/kindbox/raw/${requested_version}/scr/kindbox" | \
-        download_file | \
-        store_file kindbox | \
-        make_executable
+    download "https://github.com/nestybox/kindbox/raw/${requested_version}/scr/kindbox" | \
+    install_binary kindbox

@@ -18,10 +18,9 @@ tags:
   - bootstrap
 install:
   script: |-
-    echo "https://github.com/kubernetes-sigs/kind/releases/download/v${requested_version}/kind-linux-amd64" | \
-        download_file | \
-        store_file kind | \
-        make_executable
+    download "https://github.com/kubernetes-sigs/kind/releases/download/v${requested_version}/kind-linux-amd64"
+    mv kind-linux-amd64 kind
+    install_binary kind
 
-    kind completion bash | \
-        store_completion kind
+    kind completion bash >kind.sh
+    install_completion kind.sh

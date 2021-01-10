@@ -14,7 +14,5 @@ tags:
   - k8s
 install:
   script: |-
-    echo "https://github.com/k3s-io/k3s/releases/download/${requested_version}/k3s" | \
-        download_file | \
-        store_file k3s | \
-        make_executable
+    download "https://github.com/k3s-io/k3s/releases/download/${requested_version}/k3s"
+    install_binary k3s

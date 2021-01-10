@@ -17,10 +17,9 @@ tags:
   - docker
 install:
   script: |-
-    echo "https://github.com/rancher/k3d/releases/download/v${requested_version}/k3d-linux-amd64" | \
-        download_file | \
-        store_file k3d | \
-        make_executable
+    download "https://github.com/rancher/k3d/releases/download/v${requested_version}/k3d-linux-amd64"
+    mv k3d-linux-amd64 k3d
+    install_binary k3d
 
-    k3d completion bash | \
-        store_completion k3d
+    k3d completion bash >k3d.sh
+    install_completion k3d.sh

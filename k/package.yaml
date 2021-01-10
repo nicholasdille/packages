@@ -14,11 +14,8 @@ tags:
   - context
 install:
   script: |-
-    echo "https://github.com/rothgar/k/releases/download/${requested_version}/k_${requested_version}_Linux_x86_64.tar.gz" | \
-        download_file \
-        >"${temporary_directory}/k.tar.gz"
-
-    ${SUDO} tar -xz -f "${temporary_directory}/k.tar.gz" -C "${TARGET_BIN}" --strip-components=1 bin/k
-
-    ${SUDO} tar -xz -f "${temporary_directory}/k.tar.gz" -C "${TARGET_COMPLETION}" --strip-components=2 completions/bash/k
-    ${SUDO} mv "${TARGET_COMPLETION}/k" "${TARGET_COMPLETION}/k.sh"
+    download "https://github.com/rothgar/k/releases/download/${requested_version}/k_${requested_version}_Linux_x86_64.tar.gz"
+    untargz "k_${requested_version}_Linux_x86_64.tar.gz"
+    install_binary bin/k
+    mv completions/bash/k k.sh
+    install_completion k.sh

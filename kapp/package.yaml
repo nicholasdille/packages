@@ -18,10 +18,9 @@ tags:
   - package
 install:
   script: |-
-    echo "https://github.com/vmware-tanzu/carvel-kapp/releases/download/v${requested_version}/kapp-linux-amd64" | \
-        download_file | \
-        store_file kapp | \
-        make_executable
+    download "https://github.com/vmware-tanzu/carvel-kapp/releases/download/v${requested_version}/kapp-linux-amd64"
+    mv kapp-linux-amd64 kapp
+    install_binary kapp
 
-    kapp completion bash | \
-        store_completion kapp
+    kapp completion bash >kapp.sh
+    install_completion kapp.sh

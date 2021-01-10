@@ -2,7 +2,7 @@ name: gvisor
 description: Application Kernel for Containers
 repo: google/gvisor
 version:
-  latest: 20201130.0 # renovate: datasource=github-tags depName=google/gvisor
+  latest: "20201130.0" # renovate: datasource=github-tags depName=google/gvisor
   command: runsc --version
   filter: ^runsc
   pattern: s/^runsc\sversion\srelease-(.+)$/\1/
@@ -13,17 +13,12 @@ tags:
   - oci
 install:
   script: |-
-    echo "https://storage.googleapis.com/gvisor/releases/release/${requested_version}/runsc" | \
-        download_file | \
-        store_file runsc | \
-        make_executable
-    echo "https://storage.googleapis.com/gvisor/releases/release/${requested_version}/gvisor-containerd-shim" | \
-        download_file | \
-        store_file gvisor-containerd-shim | \
-        make_executable
-    echo "https://storage.googleapis.com/gvisor/releases/release/${requested_version}/containerd-shim-runsc-v1" | \
-        download_file | \
-        store_file containerd-shim-runsc-v1 | \
-        make_executable
+    download "https://storage.googleapis.com/gvisor/releases/release/${requested_version}/runsc"
+    download "https://storage.googleapis.com/gvisor/releases/release/${requested_version}/gvisor-containerd-shim"
+    download "https://storage.googleapis.com/gvisor/releases/release/${requested_version}/containerd-shim-runsc-v1"
+
+    install_binary runsc
+    install_binary gvisor-containerd-shim
+    install_binary containerd-shim-runsc-v1
 
     ${SUDO} runsc install

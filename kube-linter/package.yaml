@@ -13,6 +13,6 @@ tags:
   - quality
 install:
   script: |-
-    echo "https://github.com/stackrox/kube-linter/releases/download/${requested_version}/kube-linter-linux.tar.gz" | \
-        download_file | \
-        untar_file kube-linter
+    download "https://github.com/stackrox/kube-linter/releases/download/${requested_version}/kube-linter-linux.tar.gz"
+    untargz kube-linter-linux.tar.gz
+    install_binary kube-linter

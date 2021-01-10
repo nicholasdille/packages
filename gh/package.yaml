@@ -10,9 +10,11 @@ tags:
   - github
 install:
   script: |-
-    echo "https://github.com/cli/cli/releases/download/v${requested_version}/gh_${requested_version}_linux_amd64.tar.gz" | \
-        download_file | \
-        ${SUDO} tar -xzC "${TARGET}/bin/" --wildcards --strip-components=2 "*/bin/gh"
+    download "https://github.com/cli/cli/releases/download/v${requested_version}/gh_${requested_version}_linux_amd64.tar.gz"
+    untargz "gh_${requested_version}_linux_amd64.tar.gz"
 
-    gh completion | \
-        store_completion gh
+    install_binary "gh_${requested_version}_linux_amd64/bin/gh"
+    install_manpage 1 "gh_${requested_version}_linux_amd64/share/man/man1"
+
+    gh completion >gh.sh
+    install_completion gh.sh
