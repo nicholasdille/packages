@@ -244,7 +244,7 @@ function install_file() {
     local FILES=""
     if test -d "${temporary_directory}/${filename}"; then
         >&2 echo "DEBUG: Filename points to a directory."
-        FILES="$(find "${temporary_directory}/${filename}" -maxdepth 1 -type f -executable)"
+        FILES="$(find "${temporary_directory}/${filename}" -maxdepth 1 -type f)"
 
     elif test -s "${temporary_directory}/${filename}"; then
         >&2 echo "DEBUG: Filename points to a non-empty file."
@@ -256,9 +256,10 @@ function install_file() {
     fi
 
     ${SUDO} install --directory "${TARGET}"
-    for binary in ${FILES}; do
-        ${SUDO} install --verbose --mode="${mode}" --compare "${binary}" "${TARGET}"
-    done
+    echo "${FILES}" | \
+        while read -r binary; do
+            ${SUDO} install --verbose --mode="${mode}" --compare "${binary}" "${TARGET}"
+        done
 }
 
 function install_binary() {
