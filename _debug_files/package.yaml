@@ -2,7 +2,7 @@ name: _debug_files
 description: Package used for development and debugging (based on kubectl)
 repo: nicholasdille/packages
 version:
-  latest: 1.2.21 # renovate: datasource=github-releases depName=pyenv/pyenv
+  latest: 1.2.22 # renovate: datasource=github-releases depName=pyenv/pyenv
 tags:
   - debug
 files:
