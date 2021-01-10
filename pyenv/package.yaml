@@ -7,7 +7,7 @@ links:
   - text: Suggested build environment
     url: https://github.com/pyenv/pyenv/wiki#suggested-build-environment
 version:
-  latest: 1.2.21 # renovate: datasource=github-releases depName=pyenv/pyenv
+  latest: 1.2.22 # renovate: datasource=github-releases depName=pyenv/pyenv
   command: pyenv --version
   filter: ^pyenv
   pattern: s/^pyenv\s(.+)$/\1/
