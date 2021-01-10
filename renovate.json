@@ -66,9 +66,14 @@
     {
       "packageNames": [ "Azure/azure-cli" ],
       "extractVersion": "^azure-cli-(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)$"
+    },,
+    {
+      "packageNames": [ "golang/go" ],
+      "extractVersion": "^go(?<version>.+)$"
     },
     {
       "packageNames": [
+        "robscott/kube-capacity",
         "rakyll/hey",
         "ynqa/ktop",
         "bytecodealliance/wasmtime",

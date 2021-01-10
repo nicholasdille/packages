@@ -2,7 +2,7 @@ name: kube-capacity
 description: A simple CLI that provides an overview of the resource requests, limits, and utilization in a Kubernetes cluster
 repo: robscott/kube-capacity
 version:
-  latest: v0.5.0 # renovate: datasource=github-releases depName=robscott/kube-capacity
+  latest: 0.5.0 # renovate: datasource=github-releases depName=robscott/kube-capacity
   command: kube-capacity version
   filter: ^kube-capacity
   pattern: s/^kube-capacity\sversion\s(.+)$/\1/
@@ -16,6 +16,6 @@ tags:
   - utilization
 install:
   script: |-
-    echo "https://github.com/robscott/kube-capacity/releases/download/${requested_version}/kube-capacity_${requested_version}_Linux_x86_64.tar.gz" | \
-        download_file | \
-        untar_file kube-capacity
+    download "https://github.com/robscott/kube-capacity/releases/download/v${requested_version}/kube-capacity_${requested_version}_Linux_x86_64.tar.gz"
+    untargz "kube-capacity_${requested_version}_Linux_x86_64.tar.gz"
+    install_binary kube-capacity
