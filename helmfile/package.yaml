@@ -2,7 +2,7 @@ name: helmfile
 description: Deploy Kubernetes Helm Charts
 repo: roboll/helmfile
 version:
-  latest: 0.136.0 # renovate: datasource=github-releases depName=roboll/helmfile
+  latest: 0.137.0 # renovate: datasource=github-releases depName=roboll/helmfile
   command: helmfile --version
   filter: ^helmfile
   pattern: s/^helmfile\sversion\sv(.+)$/\1/
