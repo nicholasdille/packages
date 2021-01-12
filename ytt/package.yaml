@@ -5,7 +5,7 @@ links:
   - text: Homepage
     url: https://carvel.dev/
 version:
-  latest: 0.30.0 # renovate: datasource=github-releases depName=vmware-tanzu/carvel-ytt
+  latest: 0.31.0 # renovate: datasource=github-releases depName=vmware-tanzu/carvel-ytt
   command: ytt --version
   filter: ^ytt
   pattern: s/^ytt\sversion\s(.+)$/\1/
