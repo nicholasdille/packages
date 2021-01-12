@@ -5,7 +5,7 @@ links:
 - text: Homepage
   url: https://traefik.io/
 version:
-  latest: 2.3.6 # renovate: datasource=github-releases depName=traefik/traefik
+  latest: 2.3.7 # renovate: datasource=github-releases depName=traefik/traefik
   command: traefik version
   filter: ^Version
   pattern: s/^Version:\s+(.+)$/\1/
