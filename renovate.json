@@ -66,7 +66,7 @@
     {
       "packageNames": [ "Azure/azure-cli" ],
       "extractVersion": "^azure-cli-(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)$"
-    },,
+    },
     {
       "packageNames": [ "golang/go" ],
       "extractVersion": "^go(?<version>.+)$"
