@@ -8,7 +8,6 @@ tags:
   - security
 install:
   script: |-
-    echo "https://github.com/FiloSottile/mkcert/releases/download/v${requested_version}/mkcert-v${requested_version}-linux-amd64" | \
-        download_file | \
-        store_file mkcert | \
-        make_executable
+    download "https://github.com/FiloSottile/mkcert/releases/download/v${requested_version}/mkcert-v${requested_version}-linux-amd64"
+    mv mkcert-v${requested_version}-linux-amd64 mkcert
+    install_binary mkcert

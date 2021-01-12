@@ -10,6 +10,6 @@ tags:
   - network
 install:
   script: |-
-    echo "https://github.com/norouter/norouter/releases/download/v${requested_version}/norouter-Linux-x86_64" | \
-        download_file | \
-        untar_file norouter
+    download "https://github.com/norouter/norouter/releases/download/v${requested_version}/norouter-Linux-x86_64.tgz"
+    untargz norouter-Linux-x86_64.tgz
+    install_binary norouter

@@ -13,7 +13,6 @@ tags:
   - json
 install:
   script: |-
-    echo "https://github.com/mozilla/sops/releases/download/v${requested_version}/sops-v${requested_version}.linux" | \
-        download_file | \
-        store_file sops | \
-        make_executable
+    download "https://github.com/mozilla/sops/releases/download/v${requested_version}/sops-v${requested_version}.linux"
+    mv sops-v${requested_version}.linux sops
+    install_binary sops

@@ -10,8 +10,7 @@ tags:
   - container
 install:
   script: |-
-    echo "https://github.com/containers/podman/releases/download/v${requested_version}/podman-remote-static.tar.gz" | \
-        download_file | \
-        untar_file podman-remote-static
-
-    rename_file podman-remote-static podman
+    download "https://github.com/containers/podman/releases/download/v${requested_version}/podman-remote-static.tar.gz"
+    untargz podman-remote-static.tar.gz
+    mv podman-remote-static podman
+    install_binary podman

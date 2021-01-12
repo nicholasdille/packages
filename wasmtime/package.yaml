@@ -14,6 +14,6 @@ tags:
   - wasm
 install:
   script: |-
-    echo "https://github.com/bytecodealliance/wasmtime/releases/download/v${requested_version}/wasmtime-v${requested_version}-x86_64-linux.tar.xz" | \
-        download_file | \
-        unxz_file --strip-components=1 --wildcards \*/wasmtime
+    download "https://github.com/bytecodealliance/wasmtime/releases/download/v${requested_version}/wasmtime-v${requested_version}-x86_64-linux.tar.xz"
+    untarxz "wasmtime-v${requested_version}-x86_64-linux.tar.xz"
+    install_binary "wasmtime-v${requested_version}-x86_64-linux/wasmtime"

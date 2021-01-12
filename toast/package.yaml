@@ -16,7 +16,6 @@ tags:
   - container
 install:
   script: |-
-    echo "https://github.com/stepchowfun/toast/releases/download/v${requested_version}/toast-x86_64-unknown-linux-gnu" | \
-        download_file | \
-        store_file toast | \
-        make_executable
+    download "https://github.com/stepchowfun/toast/releases/download/v${requested_version}/toast-x86_64-unknown-linux-gnu"
+    mv toast-x86_64-unknown-linux-gnu toast
+    install_binary toast

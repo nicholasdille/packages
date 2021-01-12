@@ -13,7 +13,6 @@ tags:
   - security
 install:
   script: |-
-    echo "https://github.com/bitnami-labs/sealed-secrets/releases/download/v${requested_version}/kubeseal-linux-amd64" | \
-        download_file | \
-        store_file kubeseal | \
-        make_executable
+    download "https://github.com/bitnami-labs/sealed-secrets/releases/download/v${requested_version}/kubeseal-linux-amd64"
+    mv kubeseal-linux-amd64 kubeseal
+    install_binary kubeseal

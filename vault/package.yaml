@@ -11,7 +11,6 @@ tags:
   - secrets
 install:
   script: |-
-    echo "https://releases.hashicorp.com/vault/${requested_version}/vault_${requested_version}_linux_amd64.zip" | \
-        download_file | \
-        store_file "vault.zip" "${temporary_directory}"
-    unzip_file "${temporary_directory}/vault.zip"
+    download "https://releases.hashicorp.com/vault/${requested_version}/vault_${requested_version}_linux_amd64.zip"
+    unzip -q "vault_${requested_version}_linux_amd64.zip"
+    install_binary vault

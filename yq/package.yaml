@@ -13,10 +13,9 @@ tags:
 install:
   docker: false
   script: |
-    echo "https://github.com/mikefarah/yq/releases/download/${requested_version}/yq_linux_amd64" | \
-        download_file | \
-        store_file yq | \
-        make_executable
+    download "https://github.com/mikefarah/yq/releases/download/${requested_version}/yq_linux_amd64"
+    mv yq_linux_amd64 yq
+    install_binary yq
 
-    yq shell-completion bash | \
-        store_completion yq
+    yq shell-completion bash >yq.sh
+    install_completion yq.sh

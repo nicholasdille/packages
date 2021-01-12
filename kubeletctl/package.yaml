@@ -12,7 +12,6 @@ tags:
   - kubelet
 install:
   script: |-
-    echo "https://github.com/cyberark/kubeletctl/releases/download/v${requested_version}/kubeletctl_linux_amd64" | \
-        download_file | \
-        store_file kubeletctl | \
-        make_executable
+    download "https://github.com/cyberark/kubeletctl/releases/download/v${requested_version}/kubeletctl_linux_amd64"
+    mv kubeletctl_linux_amd64 kubeletctl
+    install_binary kubeletctl

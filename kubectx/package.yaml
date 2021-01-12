@@ -10,6 +10,6 @@ tags:
   - namespaces
 install:
   script: |-
-    echo "https://github.com/ahmetb/kubectx/releases/download/v${requested_version}/kubectx_v${requested_version}_linux_x86_64.tar.gz" | \
-        download_file | \
-        untar_file kubectx
+    download "https://github.com/ahmetb/kubectx/releases/download/v${requested_version}/kubectx_v${requested_version}_linux_x86_64.tar.gz"
+    untargz "kubectx_v${requested_version}_linux_x86_64.tar.gz"
+    install_binary kubectx

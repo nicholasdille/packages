@@ -11,7 +11,6 @@ tags:
   - security
 install:
   script: |-
-    echo "https://github.com/theupdateframework/notary/releases/download/v${requested_version}/notary-Linux-amd64" | \
-        download_file | \
-        store_file notary | \
-        make_executable
+    download "https://github.com/theupdateframework/notary/releases/download/v${requested_version}/notary-Linux-amd64"
+    mv notary-Linux-amd64 notary
+    install_binary notary

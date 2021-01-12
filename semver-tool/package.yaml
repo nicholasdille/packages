@@ -11,7 +11,5 @@ tags:
   - semver
 install:
   script: |-
-    echo "https://github.com/fsaintjacques/semver-tool/raw/${requested_version}/src/semver" | \
-        download_file | \
-        store_file semver | \
-        make_executable
+    download "https://github.com/fsaintjacques/semver-tool/raw/${requested_version}/src/semver"
+    install_binary semver

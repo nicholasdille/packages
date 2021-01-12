@@ -14,6 +14,5 @@ tags:
   - certificate
 install:
   script: |-
-    curl --location --fail "https://raw.githubusercontent.com/sahsanu/lectl/v${requested_version}/lectl" | \
-        store_file lectl | \
-        make_executable
+    download "https://raw.githubusercontent.com/sahsanu/lectl/v${requested_version}/lectl"
+    install_binary lectl

@@ -14,6 +14,6 @@ tags:
   - analysis
 install:
   script: |-
-    echo "https://github.com/koalaman/shellcheck/releases/download/v${requested_version}/shellcheck-v${requested_version}.linux.x86_64.tar.xz" | \
-        download_file | \
-        ${SUDO} tar -xJC "${TARGET_BIN}" --strip-components 1 --wildcards "*/shellcheck"
+    download "https://github.com/koalaman/shellcheck/releases/download/v${requested_version}/shellcheck-v${requested_version}.linux.x86_64.tar.xz"
+    untarxz "shellcheck-v${requested_version}.linux.x86_64.tar.xz"
+    install_binary "shellcheck-v${requested_version}/shellcheck"

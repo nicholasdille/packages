@@ -13,7 +13,6 @@ tags:
   - bootstrap
 install:
   script: |-
-    echo "https://github.com/rancher/rke/releases/download/v${requested_version}/rke_linux-amd64" | \
-        download_file | \
-        store_file rke | \
-        make_executable
+    download "https://github.com/rancher/rke/releases/download/v${requested_version}/rke_linux-amd64"
+    mv rke_linux-amd64 rke
+    install_binary rke

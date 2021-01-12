@@ -12,7 +12,6 @@ tags:
   - security
 install:
   script: |-
-    echo "https://github.com/kubernetes-sigs/multi-tenancy/releases/download/hnc-v${requested_version}/kubectl-hns_linux_amd64" | \
-        download_file | \
-        store_file kubectl-hns | \
-        make_executable
+    download "https://github.com/kubernetes-sigs/multi-tenancy/releases/download/hnc-v${requested_version}/kubectl-hns_linux_amd64"
+    mv kubectl-hns_linux_amd64 kubectl-hns
+    install_binary kubectl-hns

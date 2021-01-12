@@ -13,7 +13,6 @@ tags:
   - shell
 install:
   script: |-
-    echo "https://github.com/vmware-tanzu/carvel-vendir/releases/download/v${requested_version}/vendir-linux-amd64" | \
-        download_file | \
-        store_file vendir | \
-        make_executable
+    download "https://github.com/vmware-tanzu/carvel-vendir/releases/download/v${requested_version}/vendir-linux-amd64"
+    mv vendir-linux-amd64 vendir
+    install_binary vendir

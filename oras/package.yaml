@@ -15,6 +15,6 @@ tags:
   - artifact
 install:
   script: |-
-    echo "https://github.com/deislabs/oras/releases/download/v${requested_version}/oras_${requested_version}_linux_amd64.tar.gz" | \
-        download_file | \
-        untar_file oras
+    download "https://github.com/deislabs/oras/releases/download/v${requested_version}/oras_${requested_version}_linux_amd64.tar.gz"
+    untargz "oras_${requested_version}_linux_amd64.tar.gz"
+    install_binary oras

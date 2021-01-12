@@ -12,7 +12,6 @@ tags:
   - network
 install:
   script: |-
-    echo "https://github.com/rootless-containers/slirp4netns/releases/download/v${requested_version}/slirp4netns-x86_64" | \
-        download_file | \
-        store_file slirp4netns | \
-        make_executable
+    download "https://github.com/rootless-containers/slirp4netns/releases/download/v${requested_version}/slirp4netns-x86_64"
+    mv slirp4netns-x86_64 slirp4netns
+    install_binary slirp4netns

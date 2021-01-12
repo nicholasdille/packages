@@ -10,6 +10,6 @@ tags:
   - namespaces
 install:
   script: |-
-    echo "https://github.com/danielb42/kubeswitch/releases/download/v${requested_version}/kubeswitch_linux_amd64.tar.gz" | \
-        download_file | \
-        untar_file kubeswitch
+    download "https://github.com/danielb42/kubeswitch/releases/download/v${requested_version}/kubeswitch_linux_amd64.tar.gz"
+    untargz kubeswitch_linux_amd64.tar.gz
+    install_binary kubeswitch

@@ -13,6 +13,6 @@ tags:
   - build
 install:
   script: |-
-    echo "https://github.com/buildpacks/pack/releases/download/v${requested_version}/pack-v${requested_version}-linux.tgz" | \
-        download_file | \
-        untar_file pack
+    download "https://github.com/buildpacks/pack/releases/download/v${requested_version}/pack-v${requested_version}-linux.tgz"
+    untargz "pack-v${requested_version}-linux.tgz"
+    install_binary pack

@@ -11,7 +11,6 @@ tags:
   - shell
 install:
   script: |-
-    echo "https://github.com/andreazorzetto/yh/releases/download/v${requested_version}/yh-linux-amd64.zip" | \
-        download_file | \
-        store_file yh.zip "${temporary_directory}"
-    unzip "${temporary_directory}/yh.zip" yh
+    download "https://github.com/andreazorzetto/yh/releases/download/v${requested_version}/yh-linux-amd64.zip"
+    unzip -q yh-linux-amd64.zip
+    install_binary yh

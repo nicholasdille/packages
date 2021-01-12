@@ -21,9 +21,8 @@ files:
 install:
   script: |-
     ${SUDO} mkdir -p "${TARGET_BASE}/gvm"
-    echo "https://github.com/moovweb/gvm/archive/${requested_version}.tar.gz" | \
-        download_file | \
-        ${SUDO} tar -xzC "${TARGET_BASE}/gvm" --strip-components=1
+    download "https://github.com/moovweb/gvm/archive/${requested_version}.tar.gz"
+    ${SUDO} tar -xzf "${requested_version}.tar.gz" -C "${TARGET_BASE}/gvm" --strip-components=1
 
     cat profile.d.gvm.sh | \
         TARGET_BASE=${TARGET_BASE} envsubst '${TARGET_BASE}' \

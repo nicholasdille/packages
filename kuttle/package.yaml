@@ -14,7 +14,5 @@ install:
   script: |-
     require sshuttle
 
-    echo "https://github.com/kayrus/kuttle/raw/${requested_version}/kuttle" | \
-        download_file | \
-        store_file kuttle | \
-        make_executable
+    download "https://github.com/kayrus/kuttle/raw/${requested_version}/kuttle"
+    install_binary kuttle

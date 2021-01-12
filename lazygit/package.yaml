@@ -11,6 +11,6 @@ tags:
   - ui
 install:
   script: |-
-    echo "https://github.com/jesseduffield/lazygit/releases/download/v${requested_version}/lazygit_${requested_version}_Linux_x86_64.tar.gz" | \
-        download_file | \
-        untar_file lazygit
+    download "https://github.com/jesseduffield/lazygit/releases/download/v${requested_version}/lazygit_${requested_version}_Linux_x86_64.tar.gz"
+    untargz "lazygit_${requested_version}_Linux_x86_64.tar.gz"
+    install_binary lazygit

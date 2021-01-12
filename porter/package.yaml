@@ -17,10 +17,9 @@ tags:
   - cnab
 install:
   script: |-
-    echo "https://cdn.porter.sh/v${requested_version}/porter-linux-amd64" | \
-        download_file | \
-        store_file porter | \
-        make_executable
+    download "https://cdn.porter.sh/v${requested_version}/porter-linux-amd64"
+    mv porter-linux-amd64 porter
+    install_binary porter
 
     echo "###################################################################"
     echo "### You can now install the mixins using the following command:"

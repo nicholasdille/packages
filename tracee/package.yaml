@@ -10,8 +10,6 @@ tags:
   - tracing
 install:
   script: |-
-    require bcc
-
-    echo "https://github.com/aquasecurity/tracee/releases/download/v${requested_version}/tracee.tar.gz" | \
-        download_file | \
-        untar_file --strip-components=1 dist/tracee
+    download "https://github.com/aquasecurity/tracee/releases/download/v${requested_version}/tracee.tar.gz"
+    untargz tracee.tar.gz
+    install_binary dist/tracee

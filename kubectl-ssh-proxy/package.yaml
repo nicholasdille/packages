@@ -10,8 +10,10 @@ tags:
   - security
 install:
   script: |-
-    echo "https://github.com/little-angry-clouds/kubectl-ssh-proxy/releases/download/${requested_version}/kubectl-ssh-proxy-linux-amd64.tar.gz" | \
-        download_file | \
-        untar_file --strip-components=1
-    ${SUDO} mv ${TARGET_BIN}/kubectl-ssh_proxy-linux-amd64 ${TARGET_BIN}/kubectl-ssh_proxy
-    ${SUDO} mv ${TARGET_BIN}/kube-ssh-proxy-ssh-bin-linux-amd64 ${TARGET_BIN}/kube-ssh-proxy-ssh-bin
+    download "https://github.com/little-angry-clouds/kubectl-ssh-proxy/releases/download/${requested_version}/kubectl-ssh-proxy-linux-amd64.tar.gz"
+    untargz kubectl-ssh-proxy-linux-amd64.tar.gz
+    mv bin/kubectl-ssh_proxy-linux-amd64 bin/kubectl-ssh_proxy
+    mv bin/kube-ssh-proxy-ssh-bin-linux-amd64 bin/kube-ssh-proxy-ssh-bin
+
+    install_binary bin/kubectl-ssh_proxy
+    install_binary bin/kube-ssh-proxy-ssh-bin

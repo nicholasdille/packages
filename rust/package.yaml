@@ -25,5 +25,5 @@ install:
             --no-modify-path \
             -y
 
-    rustup completions bash | \
-        store_completion rust
+    rustup completions bash >rust.sh
+    install_completion rust.sh

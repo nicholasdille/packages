@@ -76,5 +76,6 @@ install:
         pyenv doctor
 
     cat profile.d.pyenv.sh | \
-        TARGET_BASE="${TARGET_BASE}" envsubst '${TARGET_BASE}' | \
-        store_file pyenv.sh /etc/profile.d
+        TARGET_BASE="${TARGET_BASE}" envsubst '${TARGET_BASE}' \
+        >pyenv.sh
+    TARGET=/etc/profile.d install_file pyenv.sh

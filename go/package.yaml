@@ -15,10 +15,11 @@ files:
       export PATH="${TARGET_BASE}/go/bin:${PATH}"
 install:
   script: |-
-    echo "https://golang.org/dl/go${requested_version}.linux-amd64.tar.gz" | \
-        download_file | \
-        ${SUDO} tar -xzC "${TARGET_BASE}"
+    download "https://golang.org/dl/go${requested_version}.linux-amd64.tar.gz"
+    ${SUDO} tar -xzf "go${requested_version}.linux-amd64.tar.gz" -C "${TARGET_BASE}"
+    ls -l "${TARGET_BASE}"
 
     cat profile.d.go.sh | \
-        TARGET_BASE="${TARGET_BASE}" envsubst '${TARGET_BASE}' | \
-        store_file go.sh /etc/profile.d
+        TARGET_BASE="${TARGET_BASE}" envsubst '${TARGET_BASE}' \
+        >go.sh
+    TARGET=/etc/profile.d install_file go.sh

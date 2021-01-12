@@ -20,9 +20,9 @@ tags:
   - yaml
 install:
   script: |-
-    echo "https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv${requested_version}/kustomize_v${requested_version}_linux_amd64.tar.gz" | \
-        download_file | \
-        untar_file kustomize
+    download "https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv${requested_version}/kustomize_v${requested_version}_linux_amd64.tar.gz"
+    untargz "kustomize_v${requested_version}_linux_amd64.tar.gz"
+    install_binary kustomize
 
-    echo "complete -C ${TARGET}/bin/kustomize kustomize" | \
-        store_completion kustomize
+    echo "complete -C ${TARGET}/bin/kustomize kustomize" >kustomize.sh
+    install_completion kustomize.sh

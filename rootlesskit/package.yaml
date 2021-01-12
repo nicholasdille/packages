@@ -11,6 +11,8 @@ tags:
   - rootless
 install:
   script: |-
-    echo "https://github.com/rootless-containers/rootlesskit/releases/download/v${requested_version}/rootlesskit-x86_64.tar.gz" | \
-        download_file | \
-        untar_file
+    download "https://github.com/rootless-containers/rootlesskit/releases/download/v${requested_version}/rootlesskit-x86_64.tar.gz"
+    untargz rootlesskit-x86_64.tar.gz
+    install_binary rootlesskit
+    install_binary rootlesskit-docker-proxy
+    install_binary rootlessctl

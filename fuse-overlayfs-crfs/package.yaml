@@ -35,8 +35,7 @@ install:
     EOF
 
     ${SUDO} mkdir --parents "${TARGET_BASE}/libexec/fuse-overlayfs"
-    docker cp "${container_name}:/usr/local/libexec/fuse-overlayfs/crfs-plugin.so" - | \
-        tar -x --to-stdout | \
-        TARGET_BIN="${TARGET_BASE}/libexec/fuse-overlayfs" store_file crfs-plugin.so
+    docker cp "${container_name}:/usr/local/libexec/fuse-overlayfs/crfs-plugin.so" .
+    TARGET="${TARGET_BASE}/libexec/fuse-overlayfs" install_file crfs-plugin.so
 
     docker image rm -f fuse-overlay-crfs

@@ -17,10 +17,9 @@ install:
         --interactive \
         ubuntu:bionic bash -xe
 
-    echo "https://github.com/jonas/tig/releases/download/tig-${requested_version}/tig-${requested_version}.tar.gz" | \
-        download_file | \
-        gunzip_file | \
-        docker cp - "${container_name}:/"
+    download "https://github.com/jonas/tig/releases/download/tig-${requested_version}/tig-${requested_version}.tar.gz"
+    untargz "tig-${requested_version}.tar.gz"
+    docker cp "tig-${requested_version}" "${container_name}:/"
 
     docker start --interactive "${container_name}" <<EOF
     apt-get update

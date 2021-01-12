@@ -16,9 +16,9 @@ tags:
   - deployment
 install:
   script: |-
-    echo "https://github.com/zaquestion/lab/releases/download/v${requested_version}/lab_${requested_version}_linux_amd64.tar.gz" | \
-        download_file | \
-        untar_file lab
+    download "https://github.com/zaquestion/lab/releases/download/v${requested_version}/lab_${requested_version}_linux_amd64.tar.gz"
+    untargz "lab_${requested_version}_linux_amd64.tar.gz"
+    install_binary lab
 
-    lab completion bash | \
-        store_completion lab
+    lab completion bash >lab.sh
+    install_completion lab.sh

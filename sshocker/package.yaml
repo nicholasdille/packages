@@ -16,7 +16,6 @@ tags:
   - mount
 install:
   script: |-
-    echo "https://github.com/AkihiroSuda/sshocker/releases/download/v${requested_version}/sshocker-Linux-x86_64" | \
-        download_file | \
-        store_file sshocker | \
-        make_executable
+    download "https://github.com/AkihiroSuda/sshocker/releases/download/v${requested_version}/sshocker-Linux-x86_64"
+    mv sshocker-Linux-x86_64 sshocker
+    install_binary sshocker

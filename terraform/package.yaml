@@ -11,7 +11,6 @@ tags:
   - deployment
 install:
   script: |-
-    echo "https://releases.hashicorp.com/terraform/${requested_version}/terraform_${requested_version}_linux_amd64.zip" | \
-        download_file | \
-        store_file "terraform.zip" "${temporary_directory}"
-    unzip_file "${temporary_directory}/terraform.zip"
+    download "https://releases.hashicorp.com/terraform/${requested_version}/terraform_${requested_version}_linux_amd64.zip"
+    unzip -q "terraform_${requested_version}_linux_amd64.zip"
+    install_binary terraform

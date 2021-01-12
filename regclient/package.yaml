@@ -10,12 +10,14 @@ tags:
 install:
   docker: false
   script: |-
-    echo "https://github.com/regclient/regclient/releases/download/v${requested_version}/regctl-linux-amd64" | \
-        download_file | \
-        store_file regctl | \
-        make_executable
+    download "https://github.com/regclient/regclient/releases/download/v${requested_version}/regctl-linux-amd64"
+    download "https://github.com/regclient/regclient/releases/download/v${requested_version}/regsync-linux-amd64"
+    download "https://github.com/regclient/regclient/releases/download/v${requested_version}/regbot-linux-amd64"
 
-    echo "https://github.com/regclient/regclient/releases/download/v${requested_version}/regsync-linux-amd64" | \
-        download_file | \
-        store_file regctl | \
-        make_executable
+    mv regctl-linux-amd64 regctl
+    mv regsync-linux-amd64 regsync
+    mv regbot-linux-amd64 regbot
+
+    install_binary regctl
+    install_binary regsync
+    install_binary regbot

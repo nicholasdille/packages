@@ -21,10 +21,12 @@ files:
 install:
   script: |-
     ${SUDO} mkdir -p "${TARGET_BASE}/nvm"
-    echo "https://github.com/nvm-sh/nvm/archive/v${requested_version}.tar.gz" | \
-        download_file | \
-        ${SUDO} tar -xvzC "${TARGET_BASE}/nvm" --strip-components=1
+    download "https://github.com/nvm-sh/nvm/archive/v${requested_version}.tar.gz"
+    untargz "v${requested_version}.tar.gz"
+    ls -l
+    TARGET="${TARGET_BASE}/nvm" install_file nvm-${requested_version}
 
     cat profile.d.nvm.sh | \
-        TARGET_BASE="${TARGET_BASE}" envsubst '${TARGET_BASE}' | \
-        store_file nvm.sh /etc/profile.d
+        TARGET_BASE="${TARGET_BASE}" envsubst '${TARGET_BASE}' \
+        >nvm.sh
+    TARGET=/etc/profile.d install_file nvm.sh

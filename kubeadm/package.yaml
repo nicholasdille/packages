@@ -16,10 +16,8 @@ tags:
   - bootstrap
 install:
   script: |-
-    echo "https://storage.googleapis.com/kubernetes-release/release/v${requested_version}/bin/linux/amd64/kubeadm" | \
-        download_file | \
-        store_file kubeadm | \
-        make_executable
+    download "https://storage.googleapis.com/kubernetes-release/release/v${requested_version}/bin/linux/amd64/kubeadm"
+    install_binary kubeadm
 
-    kubeadm completion bash | \
-        store_completion kubeadm
+    kubeadm completion bash >kubeadm.sh
+    install_completion kubeadm.sh

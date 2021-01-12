@@ -10,7 +10,6 @@ tags:
   - container
 install:
   script: |-
-    echo "https://github.com/whalebrew/whalebrew/releases/download/${requested_version}/whalebrew-Linux-x86_64" | \
-        download_file | \
-        store_file whalebrew | \
-        make_executable
+    download "https://github.com/whalebrew/whalebrew/releases/download/${requested_version}/whalebrew-Linux-x86_64"
+    mv whalebrew-Linux-x86_64 whalebrew
+    install_binary whalebrew

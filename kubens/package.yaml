@@ -10,6 +10,6 @@ tags:
   - namespaces
 install:
   script: |-
-    echo "https://github.com/ahmetb/kubectx/releases/download/v${requested_version}/kubens_v${requested_version}_linux_x86_64.tar.gz" | \
-        download_file | \
-        untar_file kubens
+    download "https://github.com/ahmetb/kubectx/releases/download/v${requested_version}/kubens_v${requested_version}_linux_x86_64.tar.gz"
+    untargz "kubens_v${requested_version}_linux_x86_64.tar.gz"
+    install_binary kubens

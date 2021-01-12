@@ -7,8 +7,7 @@ tags:
   - wsl
 install:
   script: |-
-    echo "https://github.com/wslutilities/wslu/archive/v${requested_version}.tar.gz" | \
-        download_file | \
-        tar -xz
+    download "https://github.com/wslutilities/wslu/archive/v${requested_version}.tar.gz"
+    untargz "v${requested_version}.tar.gz"
     cd "wslu-${requested_version}"
-    ${SUDO} make all install PREFIX=/usr/local
+    ${SUDO} make all install PREFIX="${TARGET_BASE}"

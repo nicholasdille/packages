@@ -17,10 +17,9 @@ tags:
   - container
 install:
   script: |-
-    echo "https://github.com/kubernetes/minikube/releases/download/v${requested_version}/minikube-linux-amd64" | \
-        download_file | \
-        store_file minikube | \
-        make_executable
+    download "https://github.com/kubernetes/minikube/releases/download/v${requested_version}/minikube-linux-amd64"
+    mv minikube-linux-amd64 minikube
+    install_binary minikube
 
-    minikube completion bash | \
-        store_completion minikube
+    minikube completion bash >minikube.sh
+    install_completion minikube.sh

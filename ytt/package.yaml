@@ -17,7 +17,6 @@ tags:
   - expansion
 install:
   script: |-
-    echo "https://github.com/vmware-tanzu/carvel-ytt/releases/download/v${requested_version}/ytt-linux-amd64" | \
-        download_file | \
-        store_file ytt | \
-        make_executable
+    download "https://github.com/vmware-tanzu/carvel-ytt/releases/download/v${requested_version}/ytt-linux-amd64"
+    mv ytt-linux-amd64 ytt
+    install_binary ytt

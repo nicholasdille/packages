@@ -80,5 +80,4 @@ install:
     install_python_module yamllint==${requested_version}
 
     mkdir -p "${HOME}/.config/yamllint"
-    cat yamllint.yaml | \
-        store_file config "${HOME}/.config/yamllint"
+    TARGET="${HOME}/.config/yamllint" install_file config

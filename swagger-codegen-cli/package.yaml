@@ -19,6 +19,6 @@ install:
     require java
     source /etc/profile.d/java.sh
 
-    echo "https://repo1.maven.org/maven2/io/swagger/codegen/v3/swagger-codegen-cli/${requested_version}/swagger-codegen-cli-${requested_version}.jar" | \
-        download_file | \
-        store_file swagger-codegen-cli.jar
+    download "https://repo1.maven.org/maven2/io/swagger/codegen/v3/swagger-codegen-cli/${requested_version}/swagger-codegen-cli-${requested_version}.jar"
+    mv swagger-codegen-cli-${requested_version}.jar swagger-codegen-cli.jar
+    TARGET="${TARGET_BIN}" install_file swagger-codegen-cli.jar

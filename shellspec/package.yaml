@@ -14,7 +14,6 @@ tags:
   - analysis
 install:
   script: |-
-    echo "https://github.com/shellspec/shellspec/archive/${requested_version}.tar.gz" | \
-        download_file | \
-        tar -xz --strip-components=1
-    ${SUDO} make install
+    download "https://github.com/shellspec/shellspec/archive/${requested_version}.tar.gz"
+    untargz "${requested_version}.tar.gz" --strip-components=1
+    ${SUDO} make install PREFIX="${TARGET_BASE}"

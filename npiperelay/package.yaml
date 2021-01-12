@@ -9,7 +9,5 @@ tags:
   - pipe
 install:
   script: |-
-    echo "https://github.com/NZSmartie/npiperelay/releases/download/v${requested_version}/npiperelay.exe" | \
-        download_file | \
-        store_file npiperelay.exe | \
-        make_executable
+    download "https://github.com/NZSmartie/npiperelay/releases/download/v${requested_version}/npiperelay.exe"
+    install_binary npiperelay.exe

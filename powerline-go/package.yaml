@@ -355,15 +355,13 @@ files:
       }
 install:
   script: |-
-    echo "https://github.com/justjanne/powerline-go/releases/download/v${requested_version}/powerline-go-linux-amd64" | \
-        download_file | \
-        store_file powerline-go | \
-        make_executable
+    download "https://github.com/justjanne/powerline-go/releases/download/v${requested_version}/powerline-go-linux-amd64"
+    mv powerline-go-linux-amd64 powerline-go
+    install_binary powerline-go
 
-    mkdir -p "${HOME}/.local/etc"
-    cat theme.json | \
-        store_file powerline-go-theme.json "${HOME}/.local/etc"
+    TARGET="${HOME}/.local/etc" install_file theme.json
 
     cat profile.d.powerline-go.sh | \
-        TARGET_BIN="${TARGET_BIN}" envsubst '${TARGET_BIN}' | \
-        store_file powerline-go.sh /etc/profile.d
+        TARGET_BIN="${TARGET_BIN}" envsubst '${TARGET_BIN}' \
+        >powerline-go.sh
+    TARGET=/etc/profile.d install_file powerline-go.sh

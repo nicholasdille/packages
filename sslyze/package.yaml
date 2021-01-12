@@ -22,5 +22,6 @@ install:
     install_python_module sslyze==${requested_version}
 
     cat profile.d.sslyze.sh | \
-        TARGET_BASE=${TARGET_BASE} envsubst '${TARGET_BASE}' | \
-        store_file sslyze.sh /etc/profile.d/
+        TARGET_BASE=${TARGET_BASE} envsubst '${TARGET_BASE}' \
+        >sslyze.sh
+    TARGET=/etc/profile.d install_file sslyze.sh

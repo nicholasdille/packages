@@ -15,9 +15,8 @@ install:
   docker: true
   script: |-
     if ! test -d "${TARGET_BASE}/src/WSL2-Linux-Kernel-${requested_version}"; then
-        echo "https://github.com/microsoft/WSL2-Linux-Kernel/archive/${requested_version}-microsoft-standard.tar.gz" | \
-            download_file | \
-            TARGET_BIN="${TARGET_BASE}/src" untar_file
+        download "https://github.com/microsoft/WSL2-Linux-Kernel/archive/${requested_version}-microsoft-standard.tar.gz"
+        ${SUDO} tar -xzf "${requested_version}-microsoft-standard.tar.gz" -C "${TARGET_BASE}/src"
     fi
 
     cd "${TARGET_BASE}/src/WSL2-Linux-Kernel-${requested_version}-microsoft-standard"
@@ -39,8 +38,7 @@ install:
     make modules_install
     EOF
 
-    cat kvm-nested.conf | \
-        store_file kvm-nested.conf /etc/modprobe.d
+    TARGET=/etc/modprobe.d install_file "${temporary_directory}/kvm-nested.conf"
 
     docker image rm -f wsl2-kernel
 

@@ -36,5 +36,6 @@ install:
         ${SUDO} tee "${TARGET_BASE}/share/man/man1/youtube-dl.1" >/dev/null
 
     docker cp "${container_name}:/youtube-dl.bash-completion" - | \
-        tar -x --to-stdout | \
-        store_completion youtube-dl
+        tar -x --to-stdout \
+        >youtube-dl.sh
+    install_completion youtube-dl.sh

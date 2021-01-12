@@ -14,9 +14,9 @@ tags:
   - quality
 install:
   script: |-
-    echo "https://github.com/aquasecurity/trivy/releases/download/v${requested_version}/trivy_${requested_version}_Linux-64bit.tar.gz" | \
-        download_file | \
-        untar_file trivy
+    download "https://github.com/aquasecurity/trivy/releases/download/v${requested_version}/trivy_${requested_version}_Linux-64bit.tar.gz"
+    untargz "trivy_${requested_version}_Linux-64bit.tar.gz"
+    install_binary trivy
 
     if ! test -d "${HOME}/.cache/trivy"; then
         trivy image --download-db-only

@@ -49,16 +49,12 @@ install:
     require containerd
     require cni
 
-    echo "https://github.com/innobead/kubefire/releases/download/v${requested_version}/kubefire-linux-amd64" | \
-        download_file | \
-        store_file kubefire | \
-        make_executable
-
-    echo "https://github.com/innobead/kubefire/releases/download/v${requested_version}/host-local-rev-linux-amd64" | \
-        download_file | \
-        store_file host-local-rev | \
-        make_executable
+    download "https://github.com/innobead/kubefire/releases/download/v${requested_version}/kubefire-linux-amd64"
+    download "https://github.com/innobead/kubefire/releases/download/v${requested_version}/host-local-rev-linux-amd64"
+    mv kubefire-linux-amd64 kubefire
+    mv host-local-rev-linux-amd64 host-local-rev
+    install_binary kubefire
+    install_binary host-local-rev
 
     ${SUDO} mkdir -p /etc/cni/net.d
-    cat 00-kubefire.conflist | \
-        store_file 00-kubefire.conflist /etc/cni/net.d
+    TARGET=/etc/cni/net.d install_file 00-kubefire.conflist

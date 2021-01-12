@@ -15,7 +15,7 @@ tags:
   - kubectl
 install:
   script: |-
-    echo "https://github.com/corneliusweig/rakkess/releases/download/v${requested_version}/rakkess-amd64-linux.tar.gz" | \
-        download_file | \
-        untar_file rakkess-amd64-linux
-    rename_file rakkess-amd64-linux rakkess
+    download "https://github.com/corneliusweig/rakkess/releases/download/v${requested_version}/rakkess-amd64-linux.tar.gz"
+    untargz rakkess-amd64-linux.tar.gz
+    mv rakkess-amd64-linux rakkess
+    install_binary rakkess

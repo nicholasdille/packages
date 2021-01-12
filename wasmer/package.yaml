@@ -14,6 +14,7 @@ tags:
   - wasm
 install:
   script: |-
-    echo "https://github.com/wasmerio/wasmer/releases/download/${requested_version}/wasmer-linux-amd64.tar.gz" | \
-        download_file | \
-        untar_file --strip-components=1 --wildcards bin/\* lib/\*
+    download "https://github.com/wasmerio/wasmer/releases/download/${requested_version}/wasmer-linux-amd64.tar.gz"
+    untargz wasmer-linux-amd64.tar.gz
+    install_binary bin
+    TARGET="${TARGET_BASE}/lib" install_file lib

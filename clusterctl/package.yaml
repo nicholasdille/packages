@@ -23,5 +23,5 @@ install:
     mv clusterctl-linux-amd64 clusterctl
     install_binary clusterctl
 
-    clusterctl completion bash | \
-        store_completion clusterctl
+    clusterctl completion bash >clusterctl.sh
+    install_completion clusterctl.sh

@@ -11,7 +11,6 @@ tags:
   - moby
 install:
   script: |-
-    echo "https://github.com/linuxkit/linuxkit/releases/download/v${requested_version}/linuxkit-linux-amd64" | \
-        download_file | \
-        store_file linuxkit | \
-        make_executable
+    download "https://github.com/linuxkit/linuxkit/releases/download/v${requested_version}/linuxkit-linux-amd64"
+    mv linuxkit-linux-amd64 linuxkit
+    install_binary linuxkit

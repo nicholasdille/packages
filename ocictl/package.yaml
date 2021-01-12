@@ -9,6 +9,6 @@ tags:
   - oci
 install:
   script: |-
-    echo "https://github.com/ocibuilder/ocibuilder/releases/download/${requested_version}/ocictl-linux-amd64.tar.gz" | \
-        download_file | \
-        ${SUDO} tar -xzC "${TARGET_BIN}" --strip-components=2 ./ocictl/ocictl
+    download "https://github.com/ocibuilder/ocibuilder/releases/download/${requested_version}/ocictl-linux-amd64.tar.gz"
+    untargz ocictl-linux-amd64.tar.gz
+    install_binary ocictl/ocictl

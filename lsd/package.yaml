@@ -11,10 +11,9 @@ tags:
   - terminal
 install:
   script: |-
-    echo "https://github.com/Peltoche/lsd/releases/download/${requested_version}/lsd-${requested_version}-x86_64-unknown-linux-gnu.tar.gz" | \
-        download_file | \
-        tar -xz --strip-components=1
+    download "https://github.com/Peltoche/lsd/releases/download/${requested_version}/lsd-${requested_version}-x86_64-unknown-linux-gnu.tar.gz"
+    untargz "lsd-${requested_version}-x86_64-unknown-linux-gnu.tar.gz"
 
-    ${SUDO} cp lsd "${TARGET_BIN}"
-    cat autocomplete/lsd.bash-completion | \
-        store_completion lsd
+    install_binary "lsd-${requested_version}-x86_64-unknown-linux-gnu/lsd"
+    cp "lsd-${requested_version}-x86_64-unknown-linux-gnu/autocomplete/lsd.bash-completion" lsd.sh
+    install_completion lsd.sh

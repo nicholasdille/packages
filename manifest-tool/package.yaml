@@ -15,7 +15,6 @@ tags:
   - architecture
 install:
   script: |-
-    echo "https://github.com/estesp/manifest-tool/releases/download/v${requested_version}/manifest-tool-linux-amd64" | \
-        download_file | \
-        store_file manifest-tool | \
-        make_executable
+    download "https://github.com/estesp/manifest-tool/releases/download/v${requested_version}/manifest-tool-linux-amd64"
+    mv manifest-tool-linux-amd64 manifest-tool
+    install_binary manifest-tool

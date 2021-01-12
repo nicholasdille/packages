@@ -15,7 +15,6 @@ tags:
   - oci
 install:
   script: |-
-    echo "https://github.com/opencontainers/umoci/releases/download/v${requested_version}/umoci.amd64" | \
-        download_file | \
-        store_file umoci | \
-        make_executable
+    download "https://github.com/opencontainers/umoci/releases/download/v${requested_version}/umoci.amd64"
+    mv umoci.amd64 umoci
+    install_binary umoci

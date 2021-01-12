@@ -55,5 +55,5 @@ install:
         whoami \
         kvaps/use
 
-    kubectl use -completion | \
-        store_completion kubectl-use
+    kubectl use -completion >kubectl-use.sh
+    install_completion kubectl-use.sh

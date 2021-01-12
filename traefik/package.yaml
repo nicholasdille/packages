@@ -17,6 +17,6 @@ tags:
   - security
 install:
   script: |-
-    echo "https://github.com/traefik/traefik/releases/download/v${requested_version}/traefik_v${requested_version}_linux_amd64.tar.gz" | \
-        download_file | \
-        untar_file traefik
+    download "https://github.com/traefik/traefik/releases/download/v${requested_version}/traefik_v${requested_version}_linux_amd64.tar.gz"
+    untargz "traefik_v${requested_version}_linux_amd64.tar.gz"
+    install_binary traefik

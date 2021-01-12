@@ -16,9 +16,9 @@ files:
       PS1='[\u@\h \W $(kube_ps1)]\$ '
 install:
   script: |-
-    echo "https://github.com/jonmosco/kube-ps1/archive/v${requested_version}.tar.gz" | \
-        download_file | \
-        untar_file --strip-components=1 "kube-ps1-${requested_version}/kube-ps1.sh"
+    download "https://github.com/jonmosco/kube-ps1/archive/v${requested_version}.tar.gz"
+    untargz "v${requested_version}.tar.gz"
+    install_binary "kube-ps1-${requested_version}/kube-ps1.sh"
 
-    cat profile.d.kube-ps1.sh | \
-        store_file kube-ps1.sh /etc/profile.d
+    cat profile.d.kube-ps1.sh >kube-ps1.sh
+    TARGET=/etc/profile.d install_file kube-ps1.sh

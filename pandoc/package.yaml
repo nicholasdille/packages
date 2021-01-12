@@ -14,6 +14,7 @@ tags:
   - markup
 install:
   script: |-
-    echo "https://github.com/jgm/pandoc/releases/download/${requested_version}/pandoc-${requested_version}-linux-amd64.tar.gz" | \
-        download_file | \
-        ${SUDO} tar -xzC "${TARGET_BASE}" --strip-components=1
+    download "https://github.com/jgm/pandoc/releases/download/${requested_version}/pandoc-${requested_version}-linux-amd64.tar.gz"
+    untargz "pandoc-${requested_version}-linux-amd64.tar.gz"
+    install_binary "pandoc-${requested_version}/bin/pandoc"
+    install_manpage 1 "pandoc-${requested_version}/share/man/man1/pandoc.1.gz"

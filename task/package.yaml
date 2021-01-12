@@ -13,6 +13,6 @@ tags:
   - make
 install:
   script: |-
-    echo "https://github.com/go-task/task/releases/download/v${requested_version}/task_linux_amd64.tar.gz" | \
-        download_file | \
-        untar_file task
+    download "https://github.com/go-task/task/releases/download/v${requested_version}/task_linux_amd64.tar.gz"
+    untargz task_linux_amd64.tar.gz
+    install_binary task

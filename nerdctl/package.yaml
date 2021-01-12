@@ -10,6 +10,6 @@ tags:
   - container
 install:
   script: |
-    echo "https://github.com/AkihiroSuda/nerdctl/releases/download/v${requested_version}/nerdctl-${requested_version}-linux-amd64.tar.gz" | \
-        download_file | \
-        untar_file nerdctl
+    download "https://github.com/AkihiroSuda/nerdctl/releases/download/v${requested_version}/nerdctl-${requested_version}-linux-amd64.tar.gz"
+    untargz "nerdctl-${requested_version}-linux-amd64.tar.gz"
+    install_binary nerdctl
