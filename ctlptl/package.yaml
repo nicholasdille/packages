@@ -2,7 +2,7 @@ name: ctlptl
 description: Making local Kubernetes clusters fun and easy to set up
 repo: tilt-dev/ctlptl
 version:
-  latest: 0.4.0 # renovate: datasource=github-releases depName=tilt-dev/ctlptl
+  latest: 0.4.1 # renovate: datasource=github-releases depName=tilt-dev/ctlptl
   command: ctlptl version
   filter: ^v
   pattern: s/^v([^,]+),.+$/\1/
