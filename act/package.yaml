@@ -2,7 +2,7 @@ name: act
 description: Run your GitHub Actions locally
 repo: nektos/act
 version:
-  latest: 0.2.17 # renovate: datasource=github-releases depName=nektos/act
+  latest: 0.2.18 # renovate: datasource=github-releases depName=nektos/act
   command: act --version
   filter: act
   pattern: s/^act\sversion\s(.+)$/\1/
