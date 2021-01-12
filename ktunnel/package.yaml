@@ -2,7 +2,7 @@ name: ktunnel
 description: A cli that exposes your local resources to kubernetes
 repo: omrikiei/ktunnel
 version:
-  latest: 1.3.2 # renovate: datasource=github-releases depName=omrikiei/ktunnel
+  latest: 1.3.3 # renovate: datasource=github-releases depName=omrikiei/ktunnel
   command: ktunnel --version 2>/dev/null
   filter: ^ktunnel
   pattern: s/^ktunnel\sversion\s(.+)$/\1/
