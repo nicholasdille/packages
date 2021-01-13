@@ -17,7 +17,7 @@ jobs:
 
       - name: Test package
         env:
-          TARGET_BASE: /tmp
+          TARGET_BASE: /usr/local
           DOCKER_BUILDKIT: 1
         run: |
           if test "${GITHUB_EVENT_NAME}" == "pull_request"; then
