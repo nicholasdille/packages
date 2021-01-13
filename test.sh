@@ -23,8 +23,8 @@ docker run \
     --detach \
     --env GITHUB_TOKEN \
     --mount=type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock \
-    --mount type=bind,src=${PWD}/packages.json,dst=/root/.pkgctl/packages.json \
-    --mount type=bind,src=${PWD}/pkgctl.sh,dst=/usr/local/bin/pkgctl.sh \
+    --mount "type=bind,src=${PWD}/packages.json,dst=/root/.pkgctl/packages.json" \
+    --mount "type=bind,src=${PWD}/pkgctl.sh,dst=/usr/local/bin/pkgctl.sh" \
     "nicholasdille/packages-runtime:${DISTRIB_ID,,}-${DISTRIB_CODENAME}"
 
 function cleanup() {

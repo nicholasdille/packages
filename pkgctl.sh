@@ -318,6 +318,7 @@ function get_latest_version() {
         exit 1
     fi
 
+    # shellcheck disable=SC2002
     cat "${temporary_directory}/package.json" | \
         jq --raw-output '.version.latest'
 }
@@ -374,6 +375,7 @@ function get_install_script() {
         exit 1
     fi
 
+    # shellcheck disable=SC2002
     cat "${temporary_directory}/package.json" | \
         jq \
             --raw-output \
@@ -388,6 +390,7 @@ function package_needs_docker() {
     fi
 
     local needs_docker
+    # shellcheck disable=SC2002
     needs_docker=$(
         cat "${temporary_directory}/package.json" | \
             jq \
