@@ -2,7 +2,7 @@ name: helm-docs
 description: A tool for automatically generating markdown documentation for helm charts
 repo: norwoodj/helm-docs
 version:
-  latest: 1.4.0 # renovate: datasource=github-releases depName=norwoodj/helm-docs
+  latest: 1.5.0 # renovate: datasource=github-releases depName=norwoodj/helm-docs
   command: helm-docs --version
   filter: ^helm-docs
   pattern: s/^helm-docs\sversion\s(.+)$/\1/
