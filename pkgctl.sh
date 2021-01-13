@@ -5,6 +5,9 @@ set -o errexit
 MY_REPO=nicholasdille/packages
 MY_VERSION=master
 
+: "${CACHE_DIR:=${HOME}/.local/var/cache/pkgctl}"
+: "${DOWNLOAD_DIR:=${CACHE_DIR}/download}"
+
 : "${TARGET_BASE:=/usr/local}"
 : "${TARGET_BIN:=${TARGET_BASE}/bin}"
 : "${TARGET_COMPLETION:=${TARGET_BASE}/etc/bash_completion.d}"
@@ -98,8 +101,24 @@ function download() {
         echo "ERROR: URL must be specified."
         exit 1
     fi
-    >&2 echo "Downloading file from <${url}>..."
-    curl --location --fail --remote-name "${url}"
+
+    local hash
+    hash=$(echo "${url}" | sha256sum | cut -d' ' -f1)
+
+    if ! test -d "${DOWNLOAD_DIR}/${hash}"; then
+        mkdir -p "${DOWNLOAD_DIR}/${hash}"
+        pushd "${DOWNLOAD_DIR}/${hash}"
+        echo "${url}" >url
+        >&2 echo "Downloading file from <${url}>..."
+        curl --location --fail --remote-name "${url}"
+        popd
+    fi
+
+    find "${DOWNLOAD_DIR}/${hash}" -type f | \
+        grep -vE "/url$" | \
+        while read -r FILE; do
+            cp "${FILE}" "${temporary_directory}"
+        done
 }
 
 function unpack() {
