@@ -2,7 +2,7 @@ name: yq
 description: yq is a portable command-line YAML processor
 repo: mikefarah/yq
 version:
-  latest: v4.3.1 # renovate: datasource=github-releases depName=mikefarah/yq
+  latest: v4.3.2 # renovate: datasource=github-releases depName=mikefarah/yq
   command: yq --version
   filter: ^yq
   pattern: s/^yq\sversion\s(.+)$/\1/
