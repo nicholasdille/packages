@@ -9,7 +9,7 @@ links:
 - text: Mixins and plugins
   url: https://github.com/getporter/packages
 version:
-  latest: 0.30.1 # renovate: datasource=github-releases depName=getporter/porter
+  latest: 0.31.0 # renovate: datasource=github-releases depName=getporter/porter
   command: porter --version
   filter: ^porter
   pattern: s/^porter\s(\S+)\s.+$/\1/

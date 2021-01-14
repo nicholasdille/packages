@@ -2,7 +2,7 @@ name: skopeo
 description: Work with remote images registries - retrieving information, images, signing content
 repo: containers/skopeo
 version:
-  latest: 1.2.0 # renovate: datasource=github-releases depName=containers/skopeo
+  latest: 1.2.1 # renovate: datasource=github-releases depName=containers/skopeo
   command: skopeo --version
   filter: ^skopeo
   pattern: s/^skopeo\sversion\s(\S+)\s.+$/\1/

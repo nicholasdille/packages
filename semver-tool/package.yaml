@@ -2,7 +2,7 @@ name: semver-tool
 description: semver bash implementation
 repo: fsaintjacques/semver-tool
 version:
-  latest: 3.1.0 # renovate: datasource=github-tags depName=fsaintjacques/semver-tool
+  latest: 3.2.0 # renovate: datasource=github-tags depName=fsaintjacques/semver-tool
   command: semver --version
   filter: ^semver
   pattern: s/^semver:\s(.+)$/\1/

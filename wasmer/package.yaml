@@ -5,7 +5,7 @@ links:
 - text: Homepage
   url: https://wasmer.io/
 version:
-  latest: 1.0.0 # renovate: datasource=github-releases depName=wasmerio/wasmer
+  latest: 1.0.1 # renovate: datasource=github-releases depName=wasmerio/wasmer
   command: whalebrew version
   filter: ^Whalebrew
   pattern: s/^Whalebrew\s(.+)$/\1/

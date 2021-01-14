@@ -2,7 +2,7 @@ name: helmsman
 description: Helm Charts as Code
 repo: Praqma/helmsman
 version:
-  latest: 3.6.2 # renovate: datasource=github-releases depName=Praqma/helmsman
+  latest: 3.6.3 # renovate: datasource=github-releases depName=Praqma/helmsman
   command: helmsman -v
   filter: ^Helmsman
   pattern: s/^Helmsman\sversion:\sv(.+)$/\1/

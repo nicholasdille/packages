@@ -5,7 +5,7 @@ links:
 - text: Homepage
   url: https://fontawesome.com/
 version:
-  latest: 5.15.1 # renovate: datasource=github-releases depName=FortAwesome/Font-Awesome
+  latest: 5.15.2 # renovate: datasource=github-releases depName=FortAwesome/Font-Awesome
 tags:
   - font
   - powerline
