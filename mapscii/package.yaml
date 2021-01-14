@@ -9,4 +9,6 @@ version:
 tags:
   - shell
 install:
+  requires:
+  - node
   script: install_node_module mapscii@${requested_version}

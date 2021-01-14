@@ -76,6 +76,8 @@ files:
           level: warning
           check-keys: false
 install:
+  requires:
+  - python
   script: |-
     install_python_module yamllint==${requested_version}
 

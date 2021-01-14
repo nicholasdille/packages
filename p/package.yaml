@@ -13,5 +13,7 @@ tags:
   - bookmark
   - shell
 install:
+  requires:
+  - python
   script: |
     install_python_module p-cli==${requested_version}

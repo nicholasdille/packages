@@ -36,8 +36,6 @@ install:
   - containerd
   docker: true
   script: |-
-    require containerd
-
     docker create \
         --name "${container_name}" \
         --interactive \

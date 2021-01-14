@@ -9,5 +9,7 @@ version:
 tags:
   - container
 install:
+  requires:
+  - python
   script: |-
     install_python_module podman-compose==${requested_version}

@@ -23,8 +23,6 @@ install:
   requires:
   - sops
   script: |-
-    require sops
-
     download "https://get.helm.sh/helm-v${requested_version}-linux-amd64.tar.gz"
     untargz helm-v${requested_version}-linux-amd64.tar.gz
     install_binary linux-amd64/helm

@@ -224,17 +224,14 @@ function install_manpage() {
 }
 
 function install_node_module() {
-    require node
     ${SUDO} npm install "${NODE_PARAMS[@]}" "$@"
 }
 
 function install_python_module() {
-    require python
     ${SUDO} pip3 install --upgrade "$@"
 }
 
 function install_ruby_module() {
-    require ruby
     ${SUDO} gem install "$@"
 }
 
@@ -247,7 +244,7 @@ function get_package_definition() {
 
     # shellcheck disable=SC2154
     if test -f "${working_directory}/${package}/package.yaml"; then
-        >&2 echo "Using local package.yaml"
+        #>&2 echo "Using local package.yaml"
 
         if test "$(yq --version | sed -E "s/^yq\sversion\s([0-9]+)\..+$/\1/")" == "3"; then
             yq --tojson read "${working_directory}/${package}/package.yaml"
@@ -406,42 +403,6 @@ function package_needs_docker() {
             return 1
         ;;
     esac
-}
-
-function require() {
-    local package=$1
-
-    if test -z "${package}"; then
-        echo "ERROR: Package must be supplied."
-        exit 1
-    fi
-
-    echo
-    echo "### Installing dependency <${package}>..."
-
-    # The following works for #783 but breaks stuff documented in #784
-    #force_install=false force_install_recursive=${force_install_recursive} install_package "${package}"
-
-    case "$0" in
-        -bash|bash)
-            curl --silent "https://github.com/${MY_REPO}/raw/${MY_VERSION}/pkgctl.sh" | \
-                bash -s install "${package}"
-        ;;
-        *)
-            if test -x "${working_directory}/pkgctl.sh"; then
-                "${working_directory}/pkgctl.sh" install "${package}"
-            elif command -v pkgctl >/dev/null; then
-                pkgctl install "${package}"
-            elif command -v pkgctl.sh >/dev/null; then
-                pkgctl.sh install "${package}"
-            else
-                echo "ERROR: Unable to recurse to install <${package}>."
-                exit 1
-            fi
-        ;;
-    esac
-
-    echo
 }
 
 function add_prefix() {
@@ -809,6 +770,37 @@ function install_package() {
     echo "Finished installation of ${package} version ${requested_version:-UNKNOWN}."
 }
 
+function get_deps() {
+    local package=$1
+
+    local my_deps
+    my_deps=$(
+        get_package_definition "${package}" | \
+            jq \
+                --raw-output \
+                --arg package "${package}" \
+                'select(.install.requires != null) | .install.requires[]'
+    )
+
+    local needs_docker
+    needs_docker=$(
+        get_package_definition "${package}" | \
+            jq \
+                --raw-output \
+                --arg package "${package}" \
+                'select(.install.docker != null) | .install.docker'
+    )
+    if ! test -z "${needs_docker}"; then
+        deps=( "docker" "${deps[@]}" )
+    fi
+
+    for my_dep in ${my_deps}; do
+        deps=( "${my_dep}" "${deps[@]}" )
+
+        get_deps "${my_dep}"
+    done
+}
+
 function handle_install() {
     local force_install=false
     local force_install_recursive=false
@@ -854,7 +846,14 @@ function handle_install() {
 
     working_directory="${PWD}"
 
-    for package_spec in "$@"; do
+    packages=()
+    until test "$#" -eq 0; do
+        packages=( "$1" "${packages[@]}" )
+        shift
+    done
+
+    deps=()
+    for package_spec in "${packages[@]}"; do
         local package
         package=$(echo "${package_spec}" | cut -d@ -f1)
         local requested_version
@@ -863,6 +862,20 @@ function handle_install() {
             unset requested_version
         fi
 
+        deps=( "${package_spec}" "${deps[@]}" )
+        get_deps "${package}"
+    done
+
+    for package_spec in "${deps[@]}"; do
+        local package
+        package=$(echo "${package_spec}" | cut -d@ -f1)
+        local requested_version
+        requested_version=$(echo "${package_spec}" | cut -d@ -f2)
+        if test "${requested_version}" == "${package}"; then
+            unset requested_version
+        fi
+
+        echo
         force_install=${force_install} force_install_recursive=${force_install_recursive} install_package "${package}" "${requested_version}"
     done
 }

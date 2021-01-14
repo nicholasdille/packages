@@ -20,8 +20,6 @@ install:
   requires:
   - cni
   script: |-
-    require cni
-
     if ! cat /proc/config.gz | gunzip | grep --quiet CONFIG_KVM=y || ! cat /proc/config.gz | gunzip | grep --quiet CONFIG_KVM_INTEL=y; then
         echo "ERROR: KVM is not configured in your kernel"
         exit 1

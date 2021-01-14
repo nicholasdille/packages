@@ -45,10 +45,6 @@ install:
   - cni
   - cnitool
   script: |-
-    require runc
-    require cni
-    require cnitool
-
     docker build --tag build-buildah .
 
     build_containerized build-buildah <<EOF

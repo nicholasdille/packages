@@ -12,6 +12,8 @@ version:
 tags:
   - documentation
 install:
+  requires:
+  - python
   script: |-
     install_python_module mkdocs==${requested_version}
     install_python_module mkdocs-material

@@ -14,8 +14,6 @@ install:
   requires:
   - python
   script: |-
-    require python
-
     download "https://github.com/weaveworks/kubediff/archive/${requested_version}.tar.gz"
     untargz ${requested_version}.tar.gz
 

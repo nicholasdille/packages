@@ -12,5 +12,7 @@ tags:
   - cast
   - screen
 install:
+  requires:
+  - python
   script: |
     install_python_module termtosvg==${requested_version}

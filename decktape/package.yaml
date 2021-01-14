@@ -11,5 +11,7 @@ tags:
   - pdf
   - html
 install:
+  requires:
+  - node
   script: |-
     install_node_module decktape@${requested_version}

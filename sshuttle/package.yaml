@@ -8,5 +8,7 @@ tags:
   - kubernetes
   - network
 install:
+  requires:
+  - python
   script: |-
     install_python_module sshuttle==${requested_version}

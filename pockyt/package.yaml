@@ -10,5 +10,7 @@ tags:
   - bookmark
   - shell
 install:
+  requires:
+  - python
   script: |
     install_python_module pockyt==${requested_version}

@@ -19,9 +19,6 @@ install:
   - helm
   - kubectl
   script: |-
-    require helm
-    require kubectl
-
     download "https://github.com/roboll/helmfile/releases/download/v${requested_version}/helmfile_linux_amd64"
     mv helmfile_linux_amd64 helmfile
     install_binary helmfile

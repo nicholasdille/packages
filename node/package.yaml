@@ -15,7 +15,6 @@ install:
   requires:
   - n
   script: |-
-    require n
     source /etc/profile.d/n.sh
     ${SUDO} n ${requested_version}
     ${SUDO} npm install -g npm

@@ -12,4 +12,6 @@ tags:
   - interface
   - ui
 install:
+  requires:
+  - node
   script: install_node_module dockly@${requested_version}

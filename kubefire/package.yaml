@@ -49,11 +49,6 @@ install:
   - containerd
   - cni
   script: |-
-    require ignite
-    require runc
-    require containerd
-    require cni
-
     download "https://github.com/innobead/kubefire/releases/download/v${requested_version}/kubefire-linux-amd64"
     download "https://github.com/innobead/kubefire/releases/download/v${requested_version}/host-local-rev-linux-amd64"
     mv kubefire-linux-amd64 kubefire

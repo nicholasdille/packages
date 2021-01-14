@@ -50,10 +50,6 @@ install:
   - firecracker
   docker: true
   script: |-
-    require cni
-    require containerd
-    require firecracker
-
     build_containerized golang <<EOF
     git clone https://github.com/firecracker-microvm/firecracker-containerd.git
     cd firecracker-containerd

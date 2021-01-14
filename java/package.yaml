@@ -15,8 +15,6 @@ install:
   requires:
   - jabba
   script: |-
-    require jabba
-
     ${SUDO} bash --login <<EOF
         jabba install openjdk@${requested_version}
         jabba use openjdk@${requested_version}

@@ -18,6 +18,8 @@ files:
       #!/bin/bash
       alias sslyze="python3 -m sslyze"
 install:
+  requires:
+  - python
   script: |-
     install_python_module sslyze==${requested_version}
 

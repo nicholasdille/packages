@@ -14,7 +14,5 @@ install:
   requires:
   - sshuttle
   script: |-
-    require sshuttle
-
     download "https://github.com/kayrus/kuttle/raw/${requested_version}/kuttle"
     install_binary kuttle

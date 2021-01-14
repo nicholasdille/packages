@@ -17,8 +17,6 @@ install:
   requires:
   - runc
   script: |-
-    require runc
-
     download "https://github.com/containerd/containerd/releases/download/v${requested_version}/containerd-${requested_version}-linux-amd64.tar.gz"
     untargz "containerd-${requested_version}-linux-amd64.tar.gz"
     install_binary bin

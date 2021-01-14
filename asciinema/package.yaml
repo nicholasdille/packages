@@ -15,4 +15,6 @@ tags:
   - cast
   - screen
 install:
+  requires:
+  - python
   script: install_python_module asciinema==${requested_version}

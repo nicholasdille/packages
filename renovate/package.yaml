@@ -11,4 +11,6 @@ tags:
   - security
   - quality
 install:
+  requires:
+  - node
   script: install_node_module renovate@${requested_version}

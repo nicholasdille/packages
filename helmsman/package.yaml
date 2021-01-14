@@ -19,9 +19,6 @@ install:
   - helm
   - kubectl
   script: |-
-    require helm
-    require kubectl
-
     download "https://github.com/Praqma/helmsman/releases/download/v${requested_version}/helmsman_${requested_version}_linux_amd64.tar.gz"
     untargz "helmsman_${requested_version}_linux_amd64.tar.gz"
     install_binary helmsman
