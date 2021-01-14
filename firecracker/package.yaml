@@ -18,7 +18,7 @@ install:
   script: |-
     download "https://github.com/firecracker-microvm/firecracker/releases/download/v${requested_version}/firecracker-v${requested_version}-x86_64.tgz"
     untargz "firecracker-v${requested_version}-x86_64.tgz"
-    mv firecracker-v${requested_version}-x86_64 firecracker
-    mv jailer-v${requested_version}-x86_64 jailer
+    mv "release-v${requested_version}/firecracker-v${requested_version}-x86_64" firecracker
+    mv "release-v${requested_version}/jailer-v${requested_version}-x86_64" jailer
     install_binary firecracker
     install_binary jailer
