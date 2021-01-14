@@ -18,10 +18,9 @@ MY_VERSION=master
 
 export DOCKER_BUILDKIT=1
 
-container_name=$(basename "$(mktemp --dry-run)")
-
 temporary_directories=()
-cleanup_tasks=( "remove_temporary_directory" )
+temporary_containers=()
+cleanup_tasks=( "remove_temporary_directory" "remove_temporary_container" )
 
 function cleanup() {
     for cleanup_task in "${cleanup_tasks[@]}"; do
@@ -31,9 +30,10 @@ function cleanup() {
 trap cleanup EXIT
 
 function remove_temporary_container() {
-    #echo "Cleaning up temporary container..."
     if type docker >/dev/null 2>&1 && docker version >/dev/null 2>&1; then
-        docker ps --all --quiet --filter name="${container_name}" | xargs --no-run-if-empty docker rm
+        for container_name in "${temporary_containers[@]}"; do
+            docker ps --all --quiet --filter name="${container_name}" | xargs --no-run-if-empty docker rm
+        done
     fi
 }
 
@@ -719,6 +719,9 @@ function install_package() {
     # shellcheck disable=SC2164
     cd "${temporary_directory}"
     temporary_directories+=( "${temporary_directory}" )
+
+    container_name=$(basename "$(mktemp --dry-run)")
+    temporary_containers+=( "${container_name}" )
 
     get_package_definition "${package}" >"${temporary_directory}/package.json"
     if ! test -s "${temporary_directory}/package.json"; then
