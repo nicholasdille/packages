@@ -12,6 +12,11 @@ tags:
   - cri
   - runtime
 install:
+  requires:
+  - cni
+  - runc
+  - conmon
+  - crictl
   script: |-
     require cni
     require runc

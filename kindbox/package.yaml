@@ -11,6 +11,8 @@ tags:
   - cluster
   - bootstrap
 install:
+  requires:
+  - sysbox
   script: |-
     require sysbox
 

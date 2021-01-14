@@ -20,6 +20,8 @@ tags:
   - expansion
   - configuration
 install:
+  requires:
+  - sops
   script: |-
     require sops
 

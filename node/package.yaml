@@ -12,6 +12,8 @@ tags:
   - javascript
   - typescript
 install:
+  requires:
+  - n
   script: |-
     require n
     source /etc/profile.d/n.sh

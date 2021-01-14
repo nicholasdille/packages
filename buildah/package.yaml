@@ -40,6 +40,10 @@ files:
               tar -xzC /usr/lib/go-1.13 --strip-components=1
 install:
   docker: true
+  requires:
+  - runc
+  - cni
+  - cnitool
   script: |-
     require runc
     require cni

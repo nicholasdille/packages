@@ -11,6 +11,8 @@ tags:
   - configuration
   - manifest
 install:
+  requires:
+  - python
   script: |-
     require python
 

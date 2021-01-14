@@ -44,6 +44,10 @@ files:
       }]
     }
 install:
+  requires:
+  - cni
+  - containerd
+  - firecracker
   docker: true
   script: |-
     require cni

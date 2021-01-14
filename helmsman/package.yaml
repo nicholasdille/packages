@@ -15,6 +15,9 @@ tags:
   - expansion
   - configuration
 install:
+  requires:
+  - helm
+  - kubectl
   script: |-
     require helm
     require kubectl

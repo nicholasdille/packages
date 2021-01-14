@@ -11,6 +11,8 @@ tags:
   - kubernetes
   - network
 install:
+  requires:
+  - sshuttle
   script: |-
     require sshuttle
 

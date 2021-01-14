@@ -17,6 +17,8 @@ tags:
   - gitops
   - firecracker
 install:
+  requires:
+  - cni
   script: |-
     require cni
 

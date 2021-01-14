@@ -32,6 +32,8 @@ files:
                      fmt.Fprintf(os.Stderr, "%s\n", err)
                      os.Exit(1)
 install:
+  requires:
+  - containerd
   docker: true
   script: |-
     require containerd

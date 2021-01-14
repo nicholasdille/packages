@@ -12,6 +12,8 @@ tags:
   - monitor
   - dashboard
 install:
+  requires:
+  - node
   script: |-
     require node
 

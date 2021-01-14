@@ -12,6 +12,8 @@ tags:
   - manager
   - version manager
 install:
+  requires:
+  - jabba
   script: |-
     require jabba
 

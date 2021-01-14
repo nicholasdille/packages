@@ -43,6 +43,11 @@ files:
       ]
     }
 install:
+  requires:
+  - ignite
+  - runc
+  - containerd
+  - cni
   script: |-
     require ignite
     require runc
