@@ -20,7 +20,8 @@ export DOCKER_BUILDKIT=1
 
 container_name=$(basename "$(mktemp --dry-run)")
 
-cleanup_tasks=()
+temporary_directories=()
+cleanup_tasks=( "remove_temporary_directory" )
 
 function cleanup() {
     for cleanup_task in "${cleanup_tasks[@]}"; do
@@ -37,9 +38,11 @@ function remove_temporary_container() {
 }
 
 function remove_temporary_directory() {
-    if test -n "${temporary_directory}" && test -d "${temporary_directory}"; then
-        rm -rf "${temporary_directory:?}"
-    fi
+    for temporary_directory in "${temporary_directories[@]}"; do
+        if test -n "${temporary_directory}" && test -d "${temporary_directory}"; then
+            rm -rf "${temporary_directory:?}"
+        fi
+    done
 }
 
 function check_target() {
@@ -715,7 +718,7 @@ function install_package() {
     temporary_directory=$(mktemp -d)
     # shellcheck disable=SC2164
     cd "${temporary_directory}"
-    cleanup_tasks+=("remove_temporary_directory")
+    temporary_directories+=( "${temporary_directory}" )
 
     get_package_definition "${package}" >"${temporary_directory}/package.json"
     if ! test -s "${temporary_directory}/package.json"; then
