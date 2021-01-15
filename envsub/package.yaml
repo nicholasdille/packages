@@ -15,5 +15,4 @@ install:
   requires:
   - rust
   script: |-
-    export CARGO_HOME="${TARGET_BASE}"
-    ${SUDO} env CARGO_HOME="${CARGO_HOME}" cargo install --version "${requested_version}" envsub
+    install_crate --version "${requested_version}" envsub

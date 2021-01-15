@@ -238,6 +238,10 @@ function install_ruby_module() {
     ${SUDO} gem install "$@"
 }
 
+function install_crate() {
+    ${SUDO} env CARGO_HOME="${TARGET_BASE}" cargo install "$@"
+}
+
 function get_package_definition() {
     local package=$1
     if test -z "${package}"; then
