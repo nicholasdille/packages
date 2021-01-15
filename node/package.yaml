@@ -2,7 +2,7 @@ name: node
 description: Node.js JavaScript runtime
 repo: nodejs/node
 version:
-  latest: 15.5.1 # renovate: datasource=github-releases depName=nodejs/node
+  latest: 15.6.0 # renovate: datasource=github-releases depName=nodejs/node
   command: node --version
   filter: ^v
   pattern: s/^v(.+)$/\1/
