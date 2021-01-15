@@ -73,6 +73,7 @@
     },
     {
       "packageNames": [
+        "chanwit/ekz",
         "robscott/kube-capacity",
         "rakyll/hey",
         "ynqa/ktop",
