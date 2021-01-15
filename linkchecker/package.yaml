@@ -5,7 +5,7 @@ links:
   - text: Homepage
     url: https://linkchecker.github.io/linkchecker/
 version:
-  latest: 9.4.0 # renovate: datasource=github-releases depName=linkchecker/linkchecker
+  latest: 10.0.0 # renovate: datasource=github-releases depName=linkchecker/linkchecker
   command: pip3 list
   filter: ^LinkChecker
   pattern: s/^LinkChecker\s+(.+)$/\1/
