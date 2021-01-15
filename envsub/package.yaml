@@ -12,6 +12,8 @@ tags:
   - expansion
   - variables
 install:
+  requires:
+  - rust
   script: |-
-    download "https://github.com/stephenc/envsub/releases/download/${requested_version}/envsub"
-    install_binary envsub
+    export CARGO_HOME="${TARGET_BASE}"
+    ${SUDO} env CARGO_HOME="${CARGO_HOME}" cargo install --version "${requested_version}" envsub
