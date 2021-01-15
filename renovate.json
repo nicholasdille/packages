@@ -73,6 +73,7 @@
     },
     {
       "packageNames": [
+        "bbl/secretize",
         "chanwit/ekz",
         "robscott/kube-capacity",
         "rakyll/hey",

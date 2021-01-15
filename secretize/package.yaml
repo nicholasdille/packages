@@ -1,0 +1,17 @@
+name: secretize
+description: Kubernetes secrets generator
+repo: bbl/secretize
+version:
+  latest: 0.0.1 # renovate: datasource=github-releases depName=bbl/secretize
+tags:
+  - kubernetes
+  - k8s
+  - secrets
+  - security
+install:
+  requires:
+  - kustomize
+  script: |-
+    download "https://github.com/bbl/secretize/releases/download/v${requested_version}/secretize-v${requested_version}-linux-amd64.tar.gz"
+    untargz "secretize-v${requested_version}-linux-amd64.tar.gz"
+    install_binary secretize
