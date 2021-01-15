@@ -73,6 +73,7 @@
     },
     {
       "packageNames": [
+        "innobead/huber",
         "bbl/secretize",
         "chanwit/ekz",
         "robscott/kube-capacity",

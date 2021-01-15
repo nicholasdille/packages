@@ -1,0 +1,15 @@
+name: huber
+description: Simplify `GitHub release` package management with a live awesome list of GitHub projects
+repo: innobead/huber
+version:
+  latest: 0.1.0 # renovate: datasource=github-releases depName=innobead/huber
+  command: huber --version
+  filter: ^huber
+  pattern: s/^huber\sv(\S+)\s.+$/\1/
+tags:
+  - development
+install:
+  script: |-
+    download "https://github.com/innobead/huber/releases/download/v0.1.0/huber-linux-amd64"
+    mv huber-linux-amd64 huber
+    install_binary huber
