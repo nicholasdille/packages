@@ -1,0 +1,50 @@
+name: libarchive
+description: Multi-format archive and compression library
+repo: libarchive/libarchive
+links:
+- text: Homepage
+  url: http://www.libarchive.org/
+version:
+  latest: 3.5.1 # renovate: datasource=github-releases depName=libarchive/libarchive
+  #command: xxx
+tags:
+  - compression
+  - library
+files:
+- name: Dockerfile
+  content: |
+    FROM ubuntu:20.04
+    RUN apt-get update \
+      && DEBIAN_FRONTEND=noninteractive apt-get -y install --no-install-recommends \
+            curl \
+            ca-certificates \
+            xz-utils \
+            build-essential
+install:
+  docker: true
+  script: |-
+    docker build --tag build-libarchive .
+
+    build_containerized build-libarchive <<EOF
+    cd /tmp
+    curl --silent --location https://github.com/libarchive/libarchive/releases/download/${requested_version}/libarchive-${requested_version}.tar.xz | \
+        tar -xJ
+
+    cd libarchive-${requested_version}
+    ./configure --prefix="${TARGET_BASE}"
+    make -j2
+    make install
+    EOF
+
+
+    docker cp "${container_name}:${TARGET_BASE}" - | \
+        ${SUDO} tar -xvC "${TARGET_BASE}" --strip-components=1 --wildcards \
+            local/bin/bsd{cat,cpio,tar} \
+            local/include/archive{,_entry}.h \
+            local/lib/libarchive.* \
+            local/share/man/man1/bsd{cat,cpio,tar}.1 \
+            local/share/man/man3/archive_*.3 \
+            local/share/man/man3/libarchive*.3 \
+            local/share/man/man5/{cpio,libarchive-formats,mtree,tar}.5
+
+    docker image rm -f build-libarchive
