@@ -5,7 +5,7 @@ links:
 - text: Homepage
   url: https://wasmtime.dev/
 version:
-  latest: 0.22.0 # renovate: datasource=github-releases depName=bytecodealliance/wasmtime
+  latest: 0.22.1 # renovate: datasource=github-releases depName=bytecodealliance/wasmtime
   command: wasmtime --version
   filter: ^wasmtime
   pattern: s/^wasmtime\s(.+)$/\1/
