@@ -2,6 +2,7 @@
 set -o errexit
 
 : "${CACHE_DIR:=${HOME}/.local/var/cache/pkgctl}"
+mkdir -p "${CACHE_DIR}"
 
 make packages.json
 
