@@ -21,22 +21,6 @@ install:
     : "${DOCKER_CLI_DIR:=${TARGET}/lib/docker/cli-plugins}"
     : "${DOCKER_CONFIG:=${HOME}/.docker}"
 
-    REQUIRED_DOCKER_VERSION=18.09
-    # Get smaller version of required and current version
-    DOCKER_VERSION=$(\
-        (\
-            docker version --format '{{.Client.Version}}'; \
-            echo "${REQUIRED_DOCKER_VERSION}"; \
-        ) | \
-        sort --version-sort | \
-        head -n 1; \
-    )
-    # if smaller version if required version
-    if test "${DOCKER_VERSION}" != "${REQUIRED_DOCKER_VERSION}"; then
-        echo "Error: Please install Docker >=${REQUIRED_DOCKER_VERSION}."
-        exit 1
-    fi
-
     ${SUDO} mkdir --parents "${DOCKER_CLI_DIR}"
     download "https://github.com/docker/buildx/releases/download/v${requested_version}/buildx-v${requested_version}.linux-amd64"
     mv buildx-v${requested_version}.linux-amd64 docker-buildx
