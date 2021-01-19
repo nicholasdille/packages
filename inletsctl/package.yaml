@@ -5,7 +5,7 @@ links:
   - text: Homepage
     url: https://inlets.dev/
 version:
-  latest: 0.7.2 # renovate: datasource=github-releases depName=inlets/inletsctl
+  latest: 0.8.0 # renovate: datasource=github-releases depName=inlets/inletsctl
   command: inletsctl version
   filter: ^Version
   pattern: s/^Version:\s(.+)$/\1/
