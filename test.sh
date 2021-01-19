@@ -1,6 +1,8 @@
 #!/bin/bash
 set -o errexit
 
+: "${CACHE_DIR:=${HOME}/.local/var/cache/pkgctl}"
+
 make packages.json
 
 # shellcheck disable=SC1091
@@ -25,6 +27,7 @@ docker run \
     --mount=type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock \
     --mount "type=bind,src=${PWD}/packages.json,dst=/root/.pkgctl/packages.json" \
     --mount "type=bind,src=${PWD}/pkgctl.sh,dst=/usr/local/bin/pkgctl.sh" \
+    --mount "type=bind,src=${CACHE_DIR},dst=/root/.local/var/cache/pkgctl" \
     "nicholasdille/packages-runtime:${DISTRIB_ID,,}-${DISTRIB_CODENAME}"
 
 function cleanup() {
