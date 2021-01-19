@@ -9,6 +9,8 @@ version:
 tags:
   - development
 install:
+  requires:
+  - libarchive
   script: |-
     download "https://github.com/innobead/huber/releases/download/v0.1.0/huber-linux-amd64"
     mv huber-linux-amd64 huber
