@@ -2,6 +2,129 @@
 
 set -o errexit
 
+# shellcheck disable=SC2034
+DEFAULT="\e[39m\e[49m"
+# shellcheck disable=SC2034
+LIGHT_GRAY="\e[37m"
+
+# shellcheck disable=SC2034
+DARK_GRAY="\e[90m"
+# shellcheck disable=SC2034
+RED="\e[91m"
+# shellcheck disable=SC2034
+GREEN="\e[92m"
+# shellcheck disable=SC2034
+YELLOW="\e[93m"
+# shellcheck disable=SC2034
+BLUE="\e[94m"
+# shellcheck disable=SC2034
+MAGENTA="\e[95m"
+# shellcheck disable=SC2034
+CYAN="\e[96m"
+
+# shellcheck disable=SC2034
+BG_DARKGRAY="\e[100m"
+# shellcheck disable=SC2034
+BG_RED="\e[101m"
+# shellcheck disable=SC2034
+BG_GREEN="\e[102m"
+# shellcheck disable=SC2034
+BG_YELLOW="\e[103m"
+# shellcheck disable=SC2034
+BG_BLUE="\e[104m"
+# shellcheck disable=SC2034
+BG_MAGENTA="\e[105m"
+# shellcheck disable=SC2034
+BG_CYAN="\e[106m"
+
+function echo_color() {
+    local color=$1
+    local message=$2
+
+    echo -e "${!color}${message}${DEFAULT}"
+}
+
+function echo_stderr_color() {
+    local color=$1
+    local message=$2
+
+    >&2 echo -e "${!color}${message}${DEFAULT}"
+}
+
+declare -a LOG_LEVELS
+LOG_LEVELS=(
+    "SILENT"
+    "QUIET"
+    "INFO"
+    "VERBOSE"
+    "DEBUG"
+)
+
+declare -A LOG_LEVEL_COLORS
+LOG_LEVEL_COLORS[SILENT]=DEFAULT
+LOG_LEVEL_COLORS[QUIET]=DEFAULT
+LOG_LEVEL_COLORS[INFO]=DEFAULT
+LOG_LEVEL_COLORS[VERBOSE]=GREEN
+LOG_LEVEL_COLORS[DEBUG]=YELLOW
+
+function get_log_level_id() {
+    local level=$1
+
+    for index in $(seq 0 1 $(( ${#LOG_LEVELS[@]} - 1 ))); do
+        if test "${LOG_LEVELS[${index}]}" == "${level^^}"; then
+            echo ${index}
+            break
+        fi
+    done
+}
+
+LOG_LEVEL=INFO
+LOG_LEVEL_ID=$(get_log_level_id "${LOG_LEVEL}")
+
+function log() {
+    local level=$1
+    local message=$2
+
+    local level_id
+    level_id="$(get_log_level_id "${level}")"
+    if test "${level_id}" -le ${LOG_LEVEL_ID}; then
+        local color="${LOG_LEVEL_COLORS[${level}]}"
+        echo_color "${color}" "${message}"
+    fi
+}
+
+function silent() {
+    log SILENT "$@"
+}
+
+function quiet() {
+    log QUIET "$@"
+}
+
+function info() {
+    log INFO "$@"
+}
+
+function verbose() {
+    log VERBOSE "$@"
+}
+
+function debug() {
+    log DEBUG "$@"
+}
+
+function warning() {
+    local message=$1
+
+    echo_color YELLOW "WARNING: ${message}"
+}
+
+function error() {
+    local message=$1
+
+    echo_color RED "ERROR: ${message}"
+}
+
 MY_REPO=nicholasdille/packages
 MY_VERSION=master
 
@@ -46,9 +169,9 @@ function remove_temporary_directory() {
 }
 
 function check_target() {
-    >&2 echo "Checking existence of target directory <${TARGET_BASE}>"
+    verbose "Checking existence of target directory <${TARGET_BASE}>"
     if ! test -d "${TARGET_BASE}"; then
-        >&2 echo "ERROR: Target directory <${TARGET_BASE}> does not exist. Please create it first."
+        error "Target directory <${TARGET_BASE}> does not exist. Please create it first."
         exit 1
     fi
 }
@@ -66,7 +189,7 @@ function target_requires_sudo() {
 
         # we are not root right now
         if test "$(id -u)" != "0"; then
-            >&2 echo "Target directory requires root access."
+            verbose "Target directory requires root access."
             export SUDO="sudo"
             export NODE_PARAMS=("-g")
             return 0
@@ -79,7 +202,7 @@ function target_requires_sudo() {
 
 function sudo_requires_password() {
     if ! sudo -n true 2>&1; then
-        >&2 echo "Sudo requires a password"
+        verbose "Sudo requires a password"
         return 0
     fi
     return 1
@@ -88,10 +211,10 @@ function sudo_requires_password() {
 function unlock_sudo() {
     if target_requires_sudo; then
         if sudo_requires_password; then
-            >&2 echo "Please enter your password to unlock sudo for the installation."
+            silent "Please enter your password to unlock sudo for the installation."
             sudo true
         else
-            >&2 echo "Sudo does not require a password (this time)."
+            verbose "Sudo does not require a password (this time)."
         fi
     fi
 
@@ -101,7 +224,7 @@ function unlock_sudo() {
 function download() {
     local url=$1
     if test -z "${url}"; then
-        echo "ERROR: URL must be specified."
+        error "URL must be specified."
         exit 1
     fi
 
@@ -112,7 +235,7 @@ function download() {
         mkdir -p "${DOWNLOAD_DIR}/${hash}"
         pushd "${DOWNLOAD_DIR}/${hash}"
         echo "${url}" >url
-        >&2 echo "Downloading file from <${url}>..."
+        verbose "Downloading file from <${url}>..."
         curl --location --fail --remote-name "${url}"
         popd
     fi
@@ -127,21 +250,21 @@ function download() {
 function unpack() {
     local filename=$1
     if test -z "${filename}"; then
-        echo "ERROR: Filename must be specified."
+        error "Filename must be specified."
         exit 1
     fi
     shift
     if ! test -s "${temporary_directory}/${filename}"; then
-        echo "ERROR: Filename must exist."
+        error "Filename must exist."
         exit 1
     fi
     local parameters=("$@")
 
     : "${COMPRESSION_PARAMETER:=-z}"
 
-    >&2 echo "Unpacking asset to temporary directory..."
+    verbose "Unpacking asset to temporary directory..."
     if test "${#parameters[*]}" -gt 0; then
-        >&2 echo "  Including parameters <${parameters[*]}>"
+        debug "  Including parameters <${parameters[*]}>"
     fi
     tar -x "${COMPRESSION_PARAMETER}" -C "${temporary_directory}" -f "${temporary_directory}/${filename}" "${parameters[@]}"
 }
@@ -161,23 +284,23 @@ function untarbz2() {
 function ungz() {
     local filename=$1
     if test -z "${filename}"; then
-        echo "ERROR: Filename must be specified."
+        error "Filename must be specified."
         exit 1
     fi
     shift
     if ! test -s "${temporary_directory}/${filename}"; then
-        echo "ERROR: Filename must exist."
+        error "Filename must exist."
         exit 1
     fi
 
-    >&2 echo "Unpacking asset in temporary directory..."
+    verbose "Unpacking asset in temporary directory..."
     gunzip "${temporary_directory}/${filename}"
 }
 
 function install_file() {
     local filename=$1
     if test -z "${filename}"; then
-        echo "ERROR: Filename must be specified."
+        error "Filename must be specified."
         exit 1
     fi
     shift
@@ -187,21 +310,21 @@ function install_file() {
     fi
 
     if test -z "${TARGET}"; then
-        echo "ERROR: Target must not be empty."
+        error "Target must not be empty."
         exit 1
     fi
 
     local FILES=""
     if test -d "${temporary_directory}/${filename}"; then
-        >&2 echo "DEBUG: Filename points to a directory."
+        debug "Filename points to a directory."
         FILES="$(find "${temporary_directory}/${filename}" -maxdepth 1 -type f)"
 
     elif test -s "${temporary_directory}/${filename}"; then
-        >&2 echo "DEBUG: Filename points to a non-empty file."
+        debug "Filename points to a non-empty file."
         FILES="${temporary_directory}/${filename}"
 
     else
-        echo "ERROR: Unable to determine type of <${filename}> (neither file nor directory)."
+        error "Unable to determine type of <${filename}> (neither file nor directory)."
         exit 1
     fi
 
@@ -245,13 +368,13 @@ function install_crate() {
 function get_package_definition() {
     local package=$1
     if test -z "${package}"; then
-        echo "ERROR: No package specified."
+        error "No package specified."
         exit 1
     fi
 
     # shellcheck disable=SC2154
     if test -f "${working_directory}/${package}/package.yaml"; then
-        #>&2 echo "Using local package.yaml"
+        debug "Using local package.yaml"
 
         if test "$(yq --version | sed -E "s/^yq\sversion\s([0-9]+)\..+$/\1/")" == "3"; then
             yq --tojson read "${working_directory}/${package}/package.yaml"
@@ -260,7 +383,7 @@ function get_package_definition() {
             yq --tojson eval '.' "${working_directory}/${package}/package.yaml"
 
         else
-            echo "ERROR: Unable to determine version of yq."
+            error "Unable to determine version of yq."
             exit 1
         fi
 
@@ -273,7 +396,7 @@ function get_package_definition() {
 function get_installed_version() {
     local package=$1
     if test -z "${package}"; then
-        echo "ERROR: No package specified."
+        error "No package specified."
         exit 1
     fi
 
@@ -285,7 +408,7 @@ function get_installed_version() {
             jq --raw-output .version.command
     )
     if test -z "${version_command}" || test "${version_command}" == "null"; then
-        >&2 echo "WARNING: No version command specified for package <${package}>."
+        warning "No version command specified for package <${package}>."
         return
     fi
 
@@ -295,7 +418,7 @@ function get_installed_version() {
             jq --raw-output '.version.filter'
     )
     if test -z "${version_filter}" || test "${version_filter}" == "null"; then
-        >&2 echo "WARNING: No version filter specified for package <${package}>."
+        warning "No version filter specified for package <${package}>."
         return
     fi
 
@@ -305,7 +428,7 @@ function get_installed_version() {
             jq --raw-output '.version.pattern'
     )
     if test -z "${version_pattern}" || test "${version_pattern}" == "null"; then
-        >&2 echo "WARNING: No version pattern specified for package <${package}>."
+        warning "No version pattern specified for package <${package}>."
         return
     fi
 
@@ -318,7 +441,7 @@ function get_installed_version() {
 function get_latest_version() {
     local package=$1
     if test -z "${package}"; then
-        echo "ERROR: No package specified."
+        error "No package specified."
         exit 1
     fi
 
@@ -330,7 +453,7 @@ function get_latest_version() {
 function requested_version_installed() {
     local package=$1
     if test -z "${package}"; then
-        echo "ERROR: No package specified."
+        error "No package specified."
         exit 1
     fi
     local requested_version=$2
@@ -338,19 +461,19 @@ function requested_version_installed() {
     local installed_version
     installed_version=$(get_installed_version "${package}")
     if test -z "${installed_version}"; then
-        echo "WARNING: Unable to determine installed version."
+        warning "Unable to determine installed version."
         return 1
     fi
 
     if test -z "${requested_version}"; then
         requested_version=$(get_latest_version "${package}")
         if test -z "${requested_version}"; then
-            echo "WARNING: Unable to determine latest version."
+            warning "Unable to determine latest version."
             return 1
         fi
     fi
 
-    >&2 echo "Comparing installed version ${installed_version} with version ${requested_version}..."
+    verbose "Comparing installed version ${installed_version} with version ${requested_version}..."
     if test "${installed_version}" == "${requested_version}"; then
         return 0
     else
@@ -361,13 +484,13 @@ function requested_version_installed() {
 function check_installed_version() {
     local package=$1
     if test -z "${package}"; then
-        echo "ERROR: No package specified."
+        error "No package specified."
         exit 1
     fi
     local requested_version=$2
 
     if requested_version_installed "${package}" "${requested_version}"; then
-        echo "Latest version of ${package} is already installed."
+        info "Latest version of ${package} is already installed."
         exit
     fi
 }
@@ -375,7 +498,7 @@ function check_installed_version() {
 function get_install_script() {
     local package=$1
     if test -z "${package}"; then
-        echo "ERROR: No package specified."
+        error "No package specified."
         exit 1
     fi
 
@@ -389,7 +512,7 @@ function get_install_script() {
 function package_needs_docker() {
     local package=$1
     if test -z "${package}"; then
-        echo "ERROR: No package specified."
+        error "No package specified."
         exit 1
     fi
 
@@ -416,7 +539,7 @@ function add_prefix() {
     local prefix=$1
 
     if test -z "${prefix}"; then
-        echo "ERROR: Prefix must be supplied."
+        error "Prefix must be supplied."
         exit 1
     fi
 
@@ -430,11 +553,11 @@ function github_api() {
 
     GITHUB_AUTH_PARAMETER=()
     if test -n "${GITHUB_TOKEN}"; then
-        >&2 echo "Using authentication for GitHub"
+        verbose "Using authentication for GitHub"
         GITHUB_AUTH_PARAMETER=("--header" "Authorization: token ${GITHUB_TOKEN}")
     else
         if ! github_rate_limit_ok; then
-            echo "ERROR: Rate limit exceeded"
+            error "Rate limit exceeded"
             exit 1
         fi
     fi
@@ -449,7 +572,7 @@ function github_api_repo() {
     local path=$2
 
     if test -z "${project}"; then
-        echo "ERROR: Project not specified."
+        error "Project not specified."
         return 1
     fi
 
@@ -469,9 +592,9 @@ function github_rate_limit_ok() {
             '
     )"
 
-    >&2 echo "VERBOSE: GitHub rate limit ${GITHUB_RATE_REMAINING}/${GITHUB_RATE_LIMIT} remaining"
+    verbose "GitHub rate limit ${GITHUB_RATE_REMAINING}/${GITHUB_RATE_LIMIT} remaining"
     if test "${GITHUB_RATE_REMAINING}" -eq 0; then
-        >&2 echo "WARNING: GitHub rate limit exceeded (resets as $(date -d "@${GITHUB_RATE_RESET}"))"
+        warning "GitHub rate limit exceeded (resets as $(date -d "@${GITHUB_RATE_RESET}"))"
         return 1
     fi
 
@@ -480,7 +603,7 @@ function github_rate_limit_ok() {
 
 function github_check_rate_limit() {
     if ! github_rate_limit_ok; then
-        >&2 echo "ERROR: GitHub rate limit exceeded"
+        error "GitHub rate limit exceeded"
         exit 1
     fi
 }
@@ -489,21 +612,21 @@ function github_get_releases() {
     local project=$1
 
     if test -z "${project}"; then
-        echo "ERROR: Project not specified."
+        error "Project not specified."
         return 1
     fi
 
-    >&2 echo "Fetching releases for ${project}..."
+    verbose "Fetching releases for ${project}..."
     github_api_repo "${project}" "/releases"
 }
 
 function check_docker() {
     if ! type docker >/dev/null 2>&1; then
-        echo "ERROR: Docker is required but was not found."
+        error "Docker is required but was not found."
         exit 1
     fi
     if ! docker version >/dev/null 2>&1; then
-        echo "ERROR: Docker daemon is not running"
+        error "Docker daemon is not running"
         exit 1
     fi
 }
@@ -514,7 +637,7 @@ function build_containerized() {
     local command=("$@")
 
     if test -z "${image}"; then
-        echo "ERROR: Image not specified."
+        error "Image not specified."
         exit 1
     fi
     if test "${#command[@]}" == 0; then
@@ -610,11 +733,11 @@ function get_packages() {
         cat "${HOME}/.pkgctl/packages.json"
 
     elif test -f packages.json; then
-        >&2 echo "Using local copy of packages.json in current directory. If you are not a contributor, please run <pkg cache>."
+        verbose "Using local copy of packages.json in current directory. If you are not a contributor, please run <pkg cache>."
         cat packages.json
 
     else
-        >&2 echo "ERROR: Unable to find packages.json. Run <pkg cache> first."
+        error "Unable to find packages.json. Run <pkg cache> first."
         exit 1
     fi
 }
@@ -655,12 +778,12 @@ function handle_cache() {
         )
     fi
     if test -z "${TAG}"; then
-        echo "ERROR: Failed to determine tag from version ${VERSION}."
+        error "Failed to determine tag from version ${VERSION}."
         exit 1
     fi
 
     mkdir -p "${HOME}/.pkgctl"
-    echo "Using version ${TAG}."
+    info "Using version ${TAG}."
     curl --silent "https://api.github.com/repos/${MY_REPO}/releases/tags/${TAG}" | \
         jq --raw-output '.assets[] | select(.name == "packages.json") | .browser_download_url' | \
         xargs curl --silent --location --output "${HOME}/.pkgctl/packages.json"
@@ -670,7 +793,7 @@ function handle_file() {
     package=$1
 
     if test -z "${package}"; then
-        echo "ERROR: No package specified."
+        error "No package specified."
         show_help_file
         exit 1
     fi
@@ -700,7 +823,7 @@ function handle_inspect() {
     package=$1
 
     if test -z "${package}"; then
-        echo "ERROR: No package specified."
+        error "No package specified."
         show_help_install
         exit 1
     fi
@@ -712,7 +835,7 @@ function handle_inspect() {
 function install_package() {
     local package=$1
     if test -z "${package}"; then
-        echo "ERROR: Package name must be specified."
+        error "Package name must be specified."
         exit 1
     fi
     local requested_version=$2
@@ -729,7 +852,7 @@ function install_package() {
 
     get_package_definition "${package}" >"${temporary_directory}/package.json"
     if ! test -s "${temporary_directory}/package.json"; then
-        echo "ERROR: Package <${package}> does not exist."
+        error "Package <${package}> does not exist."
         exit 1
     fi
     PACKAGE_REPOSITORY="$(jq --raw-output .repo "${temporary_directory}/package.json")"
@@ -746,10 +869,10 @@ function install_package() {
     export PACKAGE_REQUESTED_VERSION="${requested_version}"
 
     if ${force_install} || ${force_install_recursive}; then
-        echo "WARNING: This is a forced installation."
+        warning "This is a forced installation."
     else
         if requested_version_installed "${package}" "${requested_version}"; then
-            echo "Requested version ${requested_version} of ${package} is already installed."
+            info "Requested version ${requested_version} of ${package} is already installed."
             return
         fi
     fi
@@ -761,23 +884,23 @@ function install_package() {
     unlock_sudo
 
     for filename in $(jq --raw-output 'select(.files != null) | .files[].name' "${temporary_directory}/package.json"); do
-        >&2 echo "Injecting file <${filename}>..."
+        verbose "Injecting file <${filename}>..."
         jq --raw-output --arg name "${filename}" '.files[] | select(.name == $name) | .content' "${temporary_directory}/package.json" >"${temporary_directory}/${filename}"
     done
 
     install_script="$(get_install_script "${package}")"
     if test -z "${requested_version}"; then
         if echo "${install_script}" | grep requested_version; then
-            echo "ERROR: Requested package version is empty but install script uses it."
+            error "Requested package version is empty but install script uses it."
             exit 1
         fi
     fi
 
-    echo "Installing ${package} version ${requested_version:-UNKNOWN}..."
+    quiet "Installing ${package} version ${requested_version:-UNKNOWN}..."
 
     eval "${install_script}"
 
-    echo "Finished installation of ${package} version ${requested_version:-UNKNOWN}."
+    info "Finished installation of ${package} version ${requested_version:-UNKNOWN}."
 }
 
 function get_deps() {
@@ -837,7 +960,7 @@ function handle_install() {
 
     if test -n "${file}"; then
         if ! test -s "${file}"; then
-            echo "ERROR: File does not exist."
+            error "File does not exist."
             exit 1
         fi
         # shellcheck disable=SC2046
@@ -845,7 +968,7 @@ function handle_install() {
     fi
 
     if test "$#" -eq 0; then
-        echo "ERROR: No package specified."
+        error "No package specified."
         show_help_install
         exit 1
     fi
@@ -927,7 +1050,7 @@ function handle_search() {
     done
 
     if test -z "${SEARCH_TERM}"; then
-        echo "ERROR: No search term specified."
+        error "No search term specified."
         show_help_search
         exit 1
     fi
@@ -980,7 +1103,7 @@ function handle_version() {
     package=$1
 
     if test -z "${package}"; then
-        echo "ERROR: No package specified."
+        error "No package specified."
         show_help_version
         exit 1
     fi
@@ -998,7 +1121,7 @@ function handle_version() {
             jq --raw-output '.version.command'
     )
     if test -z "${version_command}" || test "${version_command}" == "null"; then
-        >&2 echo "ERROR: No version command specified for package <${package}>."
+        >&2 error "No version command specified for package <${package}>."
         return
     fi
 
@@ -1007,7 +1130,7 @@ function handle_version() {
             jq --raw-output '.version.filter'
     )
     if test -z "${version_filter}" || test "${version_filter}" == "null"; then
-        >&2 echo "ERROR: No version filter specified for package <${package}>."
+        >&2 error "No version filter specified for package <${package}>."
         return
     fi
 
@@ -1016,7 +1139,7 @@ function handle_version() {
             jq --raw-output '.version.pattern'
     )
     if test -z "${version_pattern}" || test "${version_pattern}" == "null"; then
-        >&2 echo "ERROR: No version pattern specified for package <${package}>."
+        >&2 error "No version pattern specified for package <${package}>."
         return
     fi
 
@@ -1040,6 +1163,10 @@ function main() {
             ;;
             --version|-v)
                 echo "pkgctl version ${MY_VERSION}"
+                exit 0
+            ;;
+            --log-level|-l)
+
                 exit 0
             ;;
             cache|c)
@@ -1086,7 +1213,7 @@ function main() {
 case "$0" in
     -bash)
         # Was started using "source pkgctl.sh"
-        echo "ERROR: Do not source this script."
+        error "Do not source this script."
     ;;
     bash)
         # Was started using "bash pkgctl.sh"
