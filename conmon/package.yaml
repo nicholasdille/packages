@@ -2,7 +2,7 @@ name: conmon
 description: An OCI container runtime monitor
 repo: containers/conmon
 version:
-  latest: 2.0.24 # renovate: datasource=github-releases depName=containers/conmon
+  latest: 2.0.25 # renovate: datasource=github-releases depName=containers/conmon
   command: conmon --version
   filter: ^conmon
   pattern: s/^conmon\sversion\s(.+)$/\1/
