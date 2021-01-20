@@ -48,3 +48,5 @@ install:
             local/share/man/man5/{cpio,libarchive-formats,mtree,tar}.5
 
     docker image rm -f build-libarchive
+
+    ${SUDO} ldconfig
