@@ -5,7 +5,7 @@ links:
   - text: Homepage
     url: https://carvel.dev/
 version:
-  latest: 0.14.0 # renovate: datasource=github-releases depName=vmware-tanzu/carvel-vendir
+  latest: 0.15.0 # renovate: datasource=github-releases depName=vmware-tanzu/carvel-vendir
   command: vendir --version
   filter: ^vendir
   pattern: s/^vendir\sversion\s(.+)$/\1/
