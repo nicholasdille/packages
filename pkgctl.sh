@@ -1165,9 +1165,9 @@ function main() {
                 echo "pkgctl version ${MY_VERSION}"
                 exit 0
             ;;
-            --log-level|-l)
-
-                exit 0
+            --log-level)
+                LOG_LEVEL=${1^^}
+                LOG_LEVEL_ID=$(get_log_level_id "${LOG_LEVEL}")
             ;;
             cache|c)
                 handle_cache "$@"
