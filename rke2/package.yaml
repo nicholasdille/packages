@@ -2,7 +2,7 @@ name: rke2
 description: RKE2, also known as RKE Government, is Rancher's next-generation Kubernetes distribution
 repo: rancher/rke2
 version:
-  latest: v1.19.5+rke2r1 # renovate: datasource=github-releases depName=rancher/rke2
+  latest: v1.19.7+rke2r1 # renovate: datasource=github-releases depName=rancher/rke2
   command: rke2 --version
   filter: ^rke2
   pattern: s/^rke2\sversion\s(\S+)\s.+$/\1/
