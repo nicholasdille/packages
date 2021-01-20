@@ -2,7 +2,7 @@ name: sslyze
 description: Fast and powerful SSL/TLS scanning library
 repo: nabla-c0d3/sslyze
 version:
-  latest: 4.0.0 # renovate: datasource=github-releases depName=nabla-c0d3/sslyze
+  latest: 4.0.1 # renovate: datasource=github-releases depName=nabla-c0d3/sslyze
   command: sslyze --version
   filter: ^[[:digit:]]
   pattern: s/^(.+)$/\1/
