@@ -331,7 +331,8 @@ function install_file() {
     ${SUDO} install --directory "${TARGET}"
     echo "${FILES}" | \
         while read -r binary; do
-            ${SUDO} install --verbose --mode="${mode}" --compare "${binary}" "${TARGET}"
+            verbose "Installing file ${binary} to ${TARGET} with mode ${mode}"
+            ${SUDO} install --mode="${mode}" --compare "${binary}" "${TARGET}"
         done
 }
 
@@ -461,7 +462,7 @@ function requested_version_installed() {
     local installed_version
     installed_version=$(get_installed_version "${package}")
     if test -z "${installed_version}"; then
-        warning "Unable to determine installed version."
+        verbose "Unable to determine installed version."
         return 1
     fi
 
@@ -838,26 +839,22 @@ function install_package() {
         error "Package name must be specified."
         exit 1
     fi
-    local requested_version=$2
-
-    export PACKAGE_NAME=${package}
+    quiet ">>> ${package} <<<"
 
     temporary_directory=$(mktemp -d)
+    debug "Using temporary directory ${temporary_directory}"
     # shellcheck disable=SC2164
     cd "${temporary_directory}"
     temporary_directories+=( "${temporary_directory}" )
-
-    container_name=$(basename "$(mktemp --dry-run)")
-    temporary_containers+=( "${container_name}" )
 
     get_package_definition "${package}" >"${temporary_directory}/package.json"
     if ! test -s "${temporary_directory}/package.json"; then
         error "Package <${package}> does not exist."
         exit 1
     fi
-    PACKAGE_REPOSITORY="$(jq --raw-output .repo "${temporary_directory}/package.json")"
-    export PACKAGE_REPOSITORY
+    debug "Placed package.json in temporary directory"
 
+    local requested_version=$2
     latest_version=$(get_latest_version "${package}")
     if test "${latest_version}" == "null"; then
         latest_version=""
@@ -865,14 +862,24 @@ function install_package() {
     if test -z "${requested_version}"; then
         requested_version="${latest_version}"
     fi
+    quiet "Installing version ${requested_version}"
+
+    container_name=$(basename "$(mktemp --dry-run)")
+    debug "Using temporary container name ${container_name}"
+    temporary_containers+=( "${container_name}" )
+
+    export PACKAGE_NAME=${package}
     export PACKAGE_LATEST_VERSION="${latest_version}"
     export PACKAGE_REQUESTED_VERSION="${requested_version}"
+    PACKAGE_REPOSITORY="$(jq --raw-output .repo "${temporary_directory}/package.json")"
+    export PACKAGE_REPOSITORY
+    debug "Exported environment variables"
 
     if ${force_install} || ${force_install_recursive}; then
         warning "This is a forced installation."
     else
         if requested_version_installed "${package}" "${requested_version}"; then
-            info "Requested version ${requested_version} of ${package} is already installed."
+            verbose "Requested version ${requested_version} of ${package} is already installed."
             return
         fi
     fi
@@ -896,11 +903,11 @@ function install_package() {
         fi
     fi
 
-    quiet "Installing ${package} version ${requested_version:-UNKNOWN}..."
+    verbose "Executing installation script"
 
     eval "${install_script}"
 
-    info "Finished installation of ${package} version ${requested_version:-UNKNOWN}."
+    verbose "Finished installation of ${package} version ${requested_version:-UNKNOWN}."
 }
 
 function get_deps() {
