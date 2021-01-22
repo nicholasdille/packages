@@ -5,7 +5,7 @@ links:
   - text: OCI artifacts
     url: https://github.com/opencontainers/artifacts
 version:
-  latest: 0.8.1 # renovate: datasource=github-releases depName=deislabs/oras
+  latest: 0.9.0 # renovate: datasource=github-releases depName=deislabs/oras
   command: oras version
   filter: ^Version
   pattern: s/^Version:\s+(\S+)$/\1/
