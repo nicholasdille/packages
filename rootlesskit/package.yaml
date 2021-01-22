@@ -2,7 +2,7 @@ name: rootlesskit
 description: Linux-native "fake root" for rootless containers
 repo: rootless-containers/rootlesskit
 version:
-  latest: 0.11.1 # renovate: datasource=github-releases depName=rootless-containers/rootlesskit
+  latest: 0.12.0 # renovate: datasource=github-releases depName=rootless-containers/rootlesskit
   command: rootlesskit --version
   filter: ^rootlesskit
   pattern: s/^rootlesskit\sversion\s(.+)$/\1/
