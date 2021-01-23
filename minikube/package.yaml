@@ -7,7 +7,7 @@ links:
 - text: Handbook
   url: https://minikube.sigs.k8s.io/docs/handbook/
 version:
-  latest: 1.16.0 # renovate: datasource=github-releases depName=kubernetes/minikube
+  latest: 1.17.0 # renovate: datasource=github-releases depName=kubernetes/minikube
   command: minikube version
   filter: ^minikube
   pattern: s/^minikube\sversion:\sv(.+)$/\1/
