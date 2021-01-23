@@ -2,7 +2,7 @@ name: kube-score
 description: Kubernetes object analysis with recommendations for improved reliability and security
 repo: zegl/kube-score
 version:
-  latest: 1.10.0 # renovate: datasource=github-releases depName=zegl/kube-score
+  latest: 1.10.1 # renovate: datasource=github-releases depName=zegl/kube-score
   command: kube-score version
   filter: ^kube-score
   pattern: s/^kube-score\sversion:\s([^,]+),.+$/\1/
