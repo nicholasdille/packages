@@ -1033,6 +1033,7 @@ function handle_install() {
         get_deps "${package}"
     done
 
+    local installed_packages
     for package_spec in "${deps[@]}"; do
         local package
         package=$(echo "${package_spec}" | cut -d@ -f1)
@@ -1042,8 +1043,11 @@ function handle_install() {
             unset requested_version
         fi
 
-        echo
-        force_install=${force_install} force_install_recursive=${force_install_recursive} install_package "${package}" "${requested_version}"
+        if test -z "${installed_packages[${package}]}"; then
+            echo
+            force_install=${force_install} force_install_recursive=${force_install_recursive} install_package "${package}" "${requested_version}"
+        fi
+        installed_packages[${package}]=1
     done
 
     echo
