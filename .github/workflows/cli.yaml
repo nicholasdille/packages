@@ -31,7 +31,7 @@ jobs:
       - name: Create changelog
         run: |
           TIMESTAMP=$(
-              curl "https://api.github.com/repos/nicholasdille/packages/releases" \
+              curl "https://api.github.com/repos/nicholasdille/packages/releases?per_page=100" \
                   --header "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
                   --silent | \
                       jq 'map(select(.tag_name | startswith("cli/"))) | first' | \
