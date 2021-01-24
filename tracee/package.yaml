@@ -2,7 +2,7 @@ name: tracee
 description: Container and system event tracing using eBPF
 repo: aquasecurity/tracee
 version:
-  latest: 0.3.1 # renovate: datasource=github-releases depName=aquasecurity/tracee
+  latest: 0.4.0 # renovate: datasource=github-releases depName=aquasecurity/tracee
 tags:
   - container
   - ebpf
