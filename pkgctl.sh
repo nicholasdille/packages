@@ -121,6 +121,10 @@ function verbose() {
     log VERBOSE "$@"
 }
 
+function verbose_stderr() {
+    log_stderr VERBOSE "$@"
+}
+
 function debug() {
     log DEBUG "$@"
 }
@@ -133,6 +137,12 @@ function warning() {
     local message=$1
 
     echo_color YELLOW "WARNING: ${message}"
+}
+
+function warning_stderr() {
+    local message=$1
+
+    echo_color_stderr YELLOW "WARNING: ${message}"
 }
 
 function error() {
@@ -581,11 +591,11 @@ function github_api() {
 
     GITHUB_AUTH_PARAMETER=()
     if test -n "${GITHUB_TOKEN}"; then
-        verbose "Using authentication for GitHub"
+        verbose_stderr "Using authentication for GitHub"
         GITHUB_AUTH_PARAMETER=("--header" "Authorization: token ${GITHUB_TOKEN}")
     else
         if ! github_rate_limit_ok; then
-            error "Rate limit exceeded"
+            error_stderr "Rate limit exceeded"
             exit 1
         fi
     fi
@@ -600,7 +610,7 @@ function github_api_repo() {
     local path=$2
 
     if test -z "${project}"; then
-        error "Project not specified."
+        error_stderr "Project not specified."
         return 1
     fi
 
@@ -620,9 +630,9 @@ function github_rate_limit_ok() {
             '
     )"
 
-    verbose "GitHub rate limit ${GITHUB_RATE_REMAINING}/${GITHUB_RATE_LIMIT} remaining"
+    verbose_stderr "GitHub rate limit ${GITHUB_RATE_REMAINING}/${GITHUB_RATE_LIMIT} remaining"
     if test "${GITHUB_RATE_REMAINING}" -eq 0; then
-        warning "GitHub rate limit exceeded (resets as $(date -d "@${GITHUB_RATE_RESET}"))"
+        warning_stderr "GitHub rate limit exceeded (resets as $(date -d "@${GITHUB_RATE_RESET}"))"
         return 1
     fi
 
@@ -631,7 +641,7 @@ function github_rate_limit_ok() {
 
 function github_check_rate_limit() {
     if ! github_rate_limit_ok; then
-        error "GitHub rate limit exceeded"
+        error_stderr "GitHub rate limit exceeded"
         exit 1
     fi
 }
@@ -640,11 +650,11 @@ function github_get_releases() {
     local project=$1
 
     if test -z "${project}"; then
-        error "Project not specified."
+        error_stderr "Project not specified."
         return 1
     fi
 
-    verbose "Fetching releases for ${project}..."
+    verbose_stderr "Fetching releases for ${project}..."
     github_api_repo "${project}" "/releases"
 }
 
@@ -784,17 +794,27 @@ function handle_bootstrap() {
 }
 
 function handle_cache() {
-    : "${VERSION:=latest}"
-    if test -z "${TAG}"; then
+    if test "${MY_VERSION}" == "master"; then
+        debug "Fetching latest tag for packages"
         TAG=$(
             github_get_releases "${MY_REPO}" | \
                 jq --raw-output 'map(select(.tag_name | startswith("packages/"))) | .[0].tag_name'
         )
+
+    else
+        debug "Fetching tag for packages matching major version ${MY_MAJOR_VERSION}"
+        local MY_MAJOR_VERSION
+        MY_MAJOR_VERSION=$(semver get major "${MY_VERSION}")
+        TAG=$(
+            github_get_releases "${MY_REPO}" | \
+                jq --raw-output --arg major "${MY_MAJOR_VERSION}" 'map(select(.tag_name | startswith("packages/\($major)"))) | .[0].tag_name'
+        )
     fi
     if test -z "${TAG}"; then
-        error "Failed to determine tag from version ${VERSION}."
+        error "Failed to determine latest version."
         exit 1
     fi
+    debug "Got tag ${TAG}"
 
     mkdir -p "${HOME}/.pkgctl"
     info "Using version ${TAG}."
