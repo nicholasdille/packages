@@ -93,6 +93,18 @@ function log() {
     fi
 }
 
+function log_stderr() {
+    local level=$1
+    local message=$2
+
+    local level_id
+    level_id="$(get_log_level_id "${level}")"
+    if test "${level_id}" -le ${LOG_LEVEL_ID}; then
+        local color="${LOG_LEVEL_COLORS[${level}]}"
+        echo_stderr_color "${color}" "${message}"
+    fi
+}
+
 function silent() {
     log SILENT "$@"
 }
@@ -113,6 +125,10 @@ function debug() {
     log DEBUG "$@"
 }
 
+function debug_stderr() {
+    log_stderr DEBUG "$@"
+}
+
 function warning() {
     local message=$1
 
@@ -125,9 +141,16 @@ function error() {
     echo_color RED "ERROR: ${message}"
 }
 
+function error_stderr() {
+    local message=$1
+
+    echo_stderr_color RED "ERROR: ${message}"
+}
+
 MY_REPO=nicholasdille/packages
 MY_VERSION=master
 
+: "${PACKAGES_JSON_PATH:=${HOME}/.pkgctl/packages.json}"
 : "${CACHE_DIR:=${HOME}/.local/var/cache/pkgctl}"
 : "${DOWNLOAD_DIR:=${CACHE_DIR}/download}"
 
@@ -375,21 +398,25 @@ function get_package_definition() {
 
     # shellcheck disable=SC2154
     if test -f "${working_directory}/${package}/package.yaml"; then
-        debug "Using local package.yaml"
+        debug_stderr "Using local package.yaml"
 
-        if test "$(yq --version | sed -E "s/^yq\sversion\s([0-9]+)\..+$/\1/")" == "3"; then
+        if ! type yq >/dev/null 2>&1; then
+            error_stderr "Missing yq to process YAML file."
+            exit 1
+
+        elif test "$(yq --version | sed -E "s/^yq\sversion\s([0-9]+)\..+$/\1/")" == "3"; then
             yq --tojson read "${working_directory}/${package}/package.yaml"
 
         elif test "$(yq --version | sed -E "s/^yq\sversion\s([0-9]+)\..+$/\1/")" == "4"; then
             yq --tojson eval '.' "${working_directory}/${package}/package.yaml"
 
         else
-            error "Unable to determine version of yq."
+            error_stderr "Unable to determine version of yq."
             exit 1
         fi
 
     else
-        get_packages | \
+        cat "${PACKAGES_JSON_PATH}" | \
             jq --arg package "${package}" '.packages[] | select(.name == $package)'
     fi
 }
@@ -729,20 +756,6 @@ function show_help_version() {
     echo
 }
 
-function get_packages() {
-    if test -f "${HOME}/.pkgctl/packages.json"; then
-        cat "${HOME}/.pkgctl/packages.json"
-
-    elif test -f packages.json; then
-        verbose "Using local copy of packages.json in current directory. If you are not a contributor, please run <pkg cache>."
-        cat packages.json
-
-    else
-        error "Unable to find packages.json. Run <pkg cache> first."
-        exit 1
-    fi
-}
-
 function handle_bootstrap() {
     PREFIX="${HOME}/.local"
     while test "$#" -gt 0; do
@@ -799,20 +812,27 @@ function handle_file() {
         exit 1
     fi
 
+    if ! test -f "${PACKAGES_JSON_PATH}"; then
+        error "Unable to locate packages.json. Please run <pkgctl cache> first."
+        exit 1
+    fi
+
     shift
     file=$1
     if test -z "${file}"; then
-        get_packages | \
+        cat "${PACKAGES_JSON_PATH}" | \
             jq --raw-output --arg package "${package}" '
                 .packages[] |
                 select(.name == $package) |
+                select(.files != null) |
                 .files[]
             '
     else
-        get_packages | \
+        cat "${PACKAGES_JSON_PATH}" | \
             jq --raw-output --arg package "${package}" --arg file "${file}" '
                 .packages[] |
                 select(.name == $package) |
+                select(.files != null) |
                 .files[] |
                 select(.name == $file) |
                 .content
@@ -829,7 +849,12 @@ function handle_inspect() {
         exit 1
     fi
 
-    get_packages | \
+    if ! test -f "${PACKAGES_JSON_PATH}"; then
+        error "Unable to locate packages.json. Please run <pkgctl cache> first."
+        exit 1
+    fi
+
+    cat "${PACKAGES_JSON_PATH}" | \
         jq --arg package "${package}" '.packages[] | select(.name == $package)'
 }
 
@@ -939,6 +964,8 @@ function get_deps() {
 
         get_deps "${my_dep}"
     done
+
+    debug "Determined installation order: ${deps[@]}"
 }
 
 function handle_install() {
@@ -1018,10 +1045,17 @@ function handle_install() {
         echo
         force_install=${force_install} force_install_recursive=${force_install_recursive} install_package "${package}" "${requested_version}"
     done
+
+    echo
 }
 
 function handle_list() {
-    get_packages | \
+    if ! test -f "${PACKAGES_JSON_PATH}"; then
+        error "Unable to locate packages.json. Please run <pkgctl cache> first."
+        exit 1
+    fi
+
+    cat "${PACKAGES_JSON_PATH}" | \
         jq --raw-output '
             .packages[] |
             "\(.name);\(.description)"
@@ -1067,10 +1101,14 @@ function handle_search() {
         SEARCH_TAGS=true
     fi
 
-    PACKAGES=$(get_packages)
+    if ! test -f "${PACKAGES_JSON_PATH}"; then
+        error "Unable to locate packages.json. Please run <pkgctl cache> first."
+        exit 1
+    fi
+
     (
         if ${SEARCH_NAME}; then
-            echo "${PACKAGES}" | \
+            cat "${PACKAGES_JSON_PATH}" | \
                 jq --raw-output --arg search "${SEARCH_TERM}" '
                     .packages[] |
                     select(.name | ascii_downcase | contains($search | ascii_downcase)) |
@@ -1078,7 +1116,7 @@ function handle_search() {
                 '
         fi
         if ${SEARCH_DESC}; then
-            echo "${PACKAGES}" | \
+            cat "${PACKAGES_JSON_PATH}" | \
                 jq --raw-output --arg search "${SEARCH_TERM}" '
                     .packages[] |
                     select(.description | ascii_downcase | contains($search | ascii_downcase)) |
@@ -1086,7 +1124,7 @@ function handle_search() {
                 '
         fi
         if ${SEARCH_TAGS}; then
-            echo "${PACKAGES}" | \
+            cat "${PACKAGES_JSON_PATH}" | \
                 jq --raw-output --arg search "${SEARCH_TERM}" '
                     .packages[] |
                     select(.tags[] | contains($search | ascii_downcase)) |
@@ -1100,7 +1138,12 @@ function handle_search() {
 }
 
 function handle_tags() {
-    get_packages | \
+    if ! test -f "${PACKAGES_JSON_PATH}"; then
+        error "Unable to locate packages.json. Please run <pkgctl cache> first."
+        exit 1
+    fi
+
+    cat "${PACKAGES_JSON_PATH}" | \
         jq --raw-output '.packages[].tags[]' | \
         sort | \
         uniq
@@ -1115,8 +1158,13 @@ function handle_version() {
         exit 1
     fi
 
+    if ! test -f "${PACKAGES_JSON_PATH}"; then
+        error "Unable to locate packages.json. Please run <pkgctl cache> first."
+        exit 1
+    fi
+
     package_json=$(
-        get_packages | \
+        cat "${PACKAGES_JSON_PATH}" | \
             jq --raw-output --arg package "${package}" '
                 .packages[] |
                 select(.name == $package)
@@ -1160,6 +1208,12 @@ function main() {
         show_help
         exit 0
     fi
+
+    if test -f "${PWD}/packages.json"; then
+        verbose "Using local copy of packages.json in current directory. If you are not a contributor, please run <pkg cache>."
+        PACKAGES_JSON_PATH="${PWD}/packages.json"
+    fi
+    debug "Using ${PACKAGES_JSON_PATH}"
 
     while test "$#" -gt 0; do
         param=$1
