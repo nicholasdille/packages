@@ -2,7 +2,7 @@ name: containerssh
 description: An SSH server that launches containers
 repo: ContainerSSH/ContainerSSH
 version:
-  latest: 0.4.0-PR2 # renovate: datasource=github-tags depName=ContainerSSH/ContainerSSH
+  latest: 0.4.0-PR3 # renovate: datasource=github-tags depName=ContainerSSH/ContainerSSH
 tags:
   - encryption
   - security
