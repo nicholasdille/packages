@@ -13,4 +13,3 @@ install:
     ls -l
     install_binary containerssh
     install_binary containerssh-auditlog-decoder
-    install_binary containerssh-testauthconfigserver
