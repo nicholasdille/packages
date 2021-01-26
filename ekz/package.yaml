@@ -2,7 +2,7 @@ name: ekz
 description: An EKS-D Kubernetes distribution for desktop
 repo: chanwit/ekz
 version:
-  latest: 0.0.7 # renovate: datasource=github-releases depName=chanwit/ekz
+  latest: 0.0.8 # renovate: datasource=github-releases depName=chanwit/ekz
   command: ekz --version
   filter: ^ekz
   pattern: s/^ekz\sversion\s(.+)$/\1/
