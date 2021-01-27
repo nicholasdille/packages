@@ -1057,7 +1057,7 @@ function handle_install() {
         get_deps "${package}"
     done
 
-    local installed_packages
+    declare -A installed_packages
     for package_spec in "${deps[@]}"; do
         local package
         package=$(echo "${package_spec}" | cut -d@ -f1)
