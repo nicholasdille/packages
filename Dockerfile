@@ -7,7 +7,7 @@ RUN apk add --update-cache \
 WORKDIR /tmp
 CMD while true; do sleep 10; done
 
-FROM ubuntu:18.04@sha256:2aeed98f2fa91c365730dc5d70d18e95e8d53ad4f1bbf4269c3bb625060383f0 AS ubuntu-bionic
+FROM ubuntu:18.04@sha256:ea188fdc5be9b25ca048f1e882b33f1bc763fb976a8a4fea446b38ed0efcbeba AS ubuntu-bionic
 RUN apt-get update \
  && DEBIAN_FRONTEND=noninteractive apt-get -y install --no-install-recommends \
         bash \
