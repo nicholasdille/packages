@@ -72,7 +72,7 @@ function get_log_level_id() {
 
     for index in $(seq 0 1 $(( ${#LOG_LEVELS[@]} - 1 ))); do
         if test "${LOG_LEVELS[${index}]}" == "${level^^}"; then
-            echo ${index}
+            echo "${index}"
             break
         fi
     done
@@ -87,7 +87,7 @@ function log() {
 
     local level_id
     level_id="$(get_log_level_id "${level}")"
-    if test "${level_id}" -le ${LOG_LEVEL_ID}; then
+    if test "${level_id}" -le "${LOG_LEVEL_ID}"; then
         local color="${LOG_LEVEL_COLORS[${level}]}"
         echo_color "${color}" "${message}"
     fi
@@ -99,7 +99,7 @@ function log_stderr() {
 
     local level_id
     level_id="$(get_log_level_id "${level}")"
-    if test "${level_id}" -le ${LOG_LEVEL_ID}; then
+    if test "${level_id}" -le "${LOG_LEVEL_ID}"; then
         local color="${LOG_LEVEL_COLORS[${level}]}"
         echo_stderr_color "${color}" "${message}"
     fi
@@ -426,6 +426,7 @@ function get_package_definition() {
         fi
 
     else
+        # shellcheck disable=SC2002
         cat "${PACKAGES_JSON_PATH}" | \
             jq --arg package "${package}" '.packages[] | select(.name == $package)'
     fi
@@ -840,6 +841,7 @@ function handle_file() {
     shift
     file=$1
     if test -z "${file}"; then
+        # shellcheck disable=SC2002
         cat "${PACKAGES_JSON_PATH}" | \
             jq --raw-output --arg package "${package}" '
                 .packages[] |
@@ -848,6 +850,7 @@ function handle_file() {
                 .files[]
             '
     else
+        # shellcheck disable=SC2002
         cat "${PACKAGES_JSON_PATH}" | \
             jq --raw-output --arg package "${package}" --arg file "${file}" '
                 .packages[] |
@@ -874,6 +877,7 @@ function handle_inspect() {
         exit 1
     fi
 
+    # shellcheck disable=SC2002
     cat "${PACKAGES_JSON_PATH}" | \
         jq --arg package "${package}" '.packages[] | select(.name == $package)'
 }
@@ -985,7 +989,7 @@ function get_deps() {
         get_deps "${my_dep}"
     done
 
-    debug "Determined installation order: ${deps[@]}"
+    debug "Determined installation order: ${deps[*]}"
 }
 
 function handle_install() {
@@ -1079,6 +1083,7 @@ function handle_list() {
         exit 1
     fi
 
+    # shellcheck disable=SC2002
     cat "${PACKAGES_JSON_PATH}" | \
         jq --raw-output '
             .packages[] |
@@ -1132,6 +1137,7 @@ function handle_search() {
 
     (
         if ${SEARCH_NAME}; then
+            # shellcheck disable=SC2002
             cat "${PACKAGES_JSON_PATH}" | \
                 jq --raw-output --arg search "${SEARCH_TERM}" '
                     .packages[] |
@@ -1140,6 +1146,7 @@ function handle_search() {
                 '
         fi
         if ${SEARCH_DESC}; then
+            # shellcheck disable=SC2002
             cat "${PACKAGES_JSON_PATH}" | \
                 jq --raw-output --arg search "${SEARCH_TERM}" '
                     .packages[] |
@@ -1148,6 +1155,7 @@ function handle_search() {
                 '
         fi
         if ${SEARCH_TAGS}; then
+            # shellcheck disable=SC2002
             cat "${PACKAGES_JSON_PATH}" | \
                 jq --raw-output --arg search "${SEARCH_TERM}" '
                     .packages[] |
@@ -1167,6 +1175,7 @@ function handle_tags() {
         exit 1
     fi
 
+    # shellcheck disable=SC2002
     cat "${PACKAGES_JSON_PATH}" | \
         jq --raw-output '.packages[].tags[]' | \
         sort | \
@@ -1187,6 +1196,7 @@ function handle_version() {
         exit 1
     fi
 
+    # shellcheck disable=SC2002
     package_json=$(
         cat "${PACKAGES_JSON_PATH}" | \
             jq --raw-output --arg package "${package}" '
