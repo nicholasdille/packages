@@ -22,6 +22,9 @@
   "pin": {
     "labels": ["type/renovate", "bump/pin"]
   },
+  "digest": {
+    "labels": ["type/renovate", "bump/digest"]
+  },
   "packageRules": [
     {
       "updateTypes": ["patch", "pin", "digest"],
