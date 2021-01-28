@@ -53,4 +53,6 @@ install:
     docker cp "${container_name}:${TARGET_BASE}" - | \
         ${SUDO} tar -xC "${TARGET_BASE}/.."
 
+    ${SUDO} gem update --system
+
     docker image rm -f build-ruby
