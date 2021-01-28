@@ -1,5 +1,4 @@
 DEFINITIONS        := $(shell find . -type f -name package.yaml)
-READMES            := $(DEFINITIONS:package.yaml=README.md)
 SCRIPTS            := $(shell find . -type f -name \*.sh | sort)
 PACKAGES_VERSION   := $(shell git tag | grep "packages/" | cut -d/ -f2 | sort -V -r | head -n 1)
 CLI_VERSION        := $(shell git tag | grep "cli/" | cut -d/ -f2 | sort -V -r | head -n 1)
@@ -78,36 +77,6 @@ packages.json: .bin/jq .bin/yq $(DEFINITIONS) tools
 	) | \
 	./.bin/yq --tojson read - | \
 	./.bin/jq . >packages.json
-
-.PHONY:
-readme: check-scripts $(READMES)
-
-%/README.md: .bin/yq .bin/jq %/package.yaml
-	@\
-	case "$$(./.bin/yq read $*/package.yaml type)" in \
-		codeberg) \
-			./.bin/yq read --tojson $*/package.yaml | \
-				./.bin/jq --raw-output '"# \(.name)\n\n\(.description)\n\n[Codeberg](https://codeberg.org/\(.repo))"' \
-				>"$@"; \
-		;; \
-		gitlab) \
-			./.bin/yq read --tojson $*/package.yaml | \
-				./.bin/jq --raw-output '"# \(.name)\n\n\(.description)\n\n[Codeberg](https://gitlab.com/\(.repo))"' \
-				>"$@"; \
-		;; \
-		"") \
-			./.bin/yq read --tojson $*/package.yaml | \
-				./.bin/jq --raw-output '"# \(.name)\n\n\(.description)\n\n[GitHub](https://github.com/\(.repo))"' \
-				>"$@"; \
-		;; \
-		*) \
-			echo "!!! Unknown type in $* !!!"; \
-			exit 1; \
-		;; \
-	esac; \
-	./.bin/yq read --tojson $*/package.yaml | \
-		./.bin/jq --raw-output 'select(.links != null) | .links[] | "\n[\(.text)](\(.url))"' \
-		>>"$@"
 
 .PHONY:
 check-dirty:
