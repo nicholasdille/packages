@@ -1,0 +1,20 @@
+name: jekyll
+description: Jekyll is a blog-aware static site generator in Ruby
+repo: jekyll/jekyll
+links:
+- text: Homepage
+  url: https://jekyllrb.com/
+version:
+  latest: 4.2.0 # renovate: datasource=github-releases depName=jekyll/jekyll
+  command: jekyll --version
+  filter: ^jekyll
+  pattern: s/^jekyll\s(.+)$/\1/
+tags:
+  - blog
+  - website
+  - generator
+install:
+  requires:
+  - ruby
+  script: |
+    install_ruby_module jekyll:${requested_version} bundler
