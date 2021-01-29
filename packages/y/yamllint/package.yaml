@@ -2,7 +2,7 @@ name: yamllint
 description: A linter for YAML files
 repo: adrienverge/yamllint
 version:
-  latest: 1.25.0 # renovate: datasource=github-tags depName=adrienverge/yamllint
+  latest: 1.26.0 # renovate: datasource=github-tags depName=adrienverge/yamllint
   command: yamllint --version
   filter: ^yamllint
   pattern: s/^yamllint\s(.+)$/\1/
