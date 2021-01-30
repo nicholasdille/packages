@@ -22,6 +22,11 @@ name="$(
     echo "${json}" | \
         jq --raw-output '.name'
 )"
+
+dirname="packages/${name:0:1}/${name}"
+mkdir -p "${dirname}"
+filename="${dirname}/package.yaml"
+
 description="$(
     echo "${json}" | \
         jq --raw-output '.description'
@@ -38,12 +43,12 @@ if test "${releases}" -gt 0; then
         latest_version="$(curl --silent --header "Authorization: token ${GITHUB_TOKEN}" "https://api.github.com/repos/${repo}/releases" | jq --raw-output '.[0].tag_name')"
     fi
 
-    asset=$(
+    assets=$(
         curl --silent --header "Authorization: token ${GITHUB_TOKEN}" "https://api.github.com/repos/${repo}/releases/tags/${latest_version}" | \
             jq --raw-output '.assets[].browser_download_url' | \
             tr '\n' ' ' | \
             sed "s/${latest_version}/\$\{requested_version\}/g" | \
-            sed "s|${repo}|\$\{PACKAGE_NAME\}|g"
+            sed "s|${repo}|\$\{PACKAGE_REPOSITORY\}|g"
     )
 
 else
@@ -51,7 +56,7 @@ else
     latest_version="$(curl --silent --header "Authorization: token ${GITHUB_TOKEN}" "https://api.github.com/repos/${repo}/tags" | jq --raw-output '.[0].name')"
 fi
 
-cat <<EOF
+cat >"${filename}" <<EOF
 name: ${name}
 description: ${description}
 repo: ${repo}
@@ -61,5 +66,39 @@ tags:
 - TODO
 install:
   script: |-
-    download "${asset}"
+EOF
+
+for asset_url in ${assets}; do
+    asset_name=$(basename "${asset_url}")
+
+    case "${asset_name}" in
+        *.tar.gz|*.tgz)
+            unpack_command=untargz
+            ;;
+        *.tar.bz2)
+            unpack_command=untarbz2
+            ;;
+        *.tar.xz)
+            unpack_command=untarxz
+            ;;
+        *.zip)
+            unpack_command="unzip -q"
+            ;;
+        *.gz)
+            unpack_command=ungz
+            ;;
+        *)
+            echo "ERROR: Unknown archive type for asset <${asset_name}>."
+            exit 1
+            ;;
+    esac
+
+    cat >>"${filename}" <<EOF
+    download "${asset_url}"
+    ${unpack_command} "${asset_name}"
+EOF
+done
+
+cat >>"${filename}" <<EOF
+    find . -type f
 EOF
