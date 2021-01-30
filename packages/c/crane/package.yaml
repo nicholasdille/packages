@@ -1,0 +1,15 @@
+name: crane
+description: Go library and CLIs for working with container registries
+repo: google/go-containerregistry
+version:
+  latest: 0.4.0 # renovate: datasource=github-releases depName=google/go-containerregistry
+  command: crane version
+  filter: ^[[:digit:]]
+  pattern: s/^(.+)$/\1/
+tags:
+- registry
+install:
+  script: |-
+    download "https://github.com/${PACKAGE_REPOSITORY}/releases/download/v${requested_version}/go-containerregistry_Linux_x86_64.tar.gz"
+    untargz "go-containerregistry_Linux_x86_64.tar.gz"
+    install_binary crane

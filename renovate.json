@@ -76,6 +76,7 @@
     },
     {
       "packageNames": [
+        "google/go-containerregistry",
         "ryane/kfilt",
         "homeport/dyff",
         "docker/hub-tool",
