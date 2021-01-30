@@ -1,0 +1,19 @@
+name: gofish
+description: Keep your fish fresh
+repo: fishworks/gofish
+links:
+- text: Homepage
+  url: https://gofi.sh/
+version:
+  latest: 0.13.0 # renovate: datasource=github-releases depName=fishworks/gofish
+  command: gofish version
+  filter: ^v
+  pattern: s/^v(.+)\+.+$/\1/
+tags:
+- shell
+- development
+install:
+  script: |-
+    download "https://gofi.sh/releases/gofish-v${requested_version}-linux-amd64.tar.gz"
+    untargz "gofish-v${requested_version}-linux-amd64.tar.gz"
+    install_binary linux-amd64/gofish
