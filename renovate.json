@@ -76,6 +76,7 @@
     },
     {
       "packageNames": [
+        "ukhomeoffice/kd",
         "google/go-containerregistry",
         "ryane/kfilt",
         "homeport/dyff",

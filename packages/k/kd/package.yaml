@@ -1,0 +1,17 @@
+name: kd
+description: Minimalistic kubernetes resources deployment tool with templating
+repo: ukhomeoffice/kd
+version:
+  latest: 1.17.1 # renovate: datasource=github-releases depName=ukhomeoffice/kd
+  command: kd --version
+  filter: ^kd
+  pattern: s/^kd\sversion\sv(.+)$/\1/
+tags:
+- kubernetes
+- k8s
+- template
+install:
+  script: |-
+    download "https://github.com/UKHomeOffice/kd/releases/download/v${requested_version}/kd_linux_amd64"
+    mv kd_linux_amd64 kd
+    install_binary kd
