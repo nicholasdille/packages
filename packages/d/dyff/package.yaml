@@ -1,0 +1,16 @@
+name: dyff
+description: diff tool for YAML files, and sometimes JSON
+repo: homeport/dyff
+version:
+  latest: 1.2.0 # renovate: datasource=github-releases depName=homeport/dyff
+  command: dyff version
+  filter: ^dyff
+  pattern: s/^dyff\sversion\sv(.+)$/\1/
+tags:
+- yaml
+- development
+install:
+  script: |-
+    download "https://github.com/${PACKAGE_REPOSITORY}/releases/download/${requested_version}/dyff-linux-amd64"
+    mv dyff-linux-amd64 dyff
+    install_binary dyff
