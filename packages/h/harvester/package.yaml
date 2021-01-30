@@ -1,0 +1,16 @@
+name: harvester
+description: Open source hyperconverged infrastructure (HCI) software
+repo: rancher/harvester
+version:
+  latest: 0.1.0 # renovate: datasource=github-releases depName=rancher/harvester
+  command: harvester --version
+  filter: ^rancher-harvester
+  pattern: s/^rancher-harvester\sversion\sv([^-]+)-.+$/\1/
+tags:
+- kubernetes
+- k8s
+install:
+  script: |-
+    download "https://github.com/${PACKAGE_REPOSITORY}/releases/download/v${requested_version}/harvester-amd64"
+    mv harvester-amd64 harvester
+    install_binary harvester
