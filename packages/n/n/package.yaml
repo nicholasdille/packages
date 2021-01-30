@@ -2,7 +2,7 @@ name: "n"
 description: Node version management
 repo: tj/n
 version:
-  latest: 7.0.0 # renovate: datasource=github-releases depName=tj/n
+  latest: 7.0.1 # renovate: datasource=github-releases depName=tj/n
   command: n --version
   filter: ^[[:digit:]]
   pattern: s/^(.+)$/\1/
