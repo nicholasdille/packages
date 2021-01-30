@@ -76,6 +76,7 @@
     },
     {
       "packageNames": [
+        "docker/hub-tool",
         "jekyll/jekyll",
         "innobead/huber",
         "bbl/secretize",

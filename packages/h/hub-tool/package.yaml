@@ -1,0 +1,16 @@
+name: hub-tool
+description: Docker Hub experimental CLI tool
+repo: docker/hub-tool
+version:
+  latest: 0.3.0 # renovate: datasource=github-releases depName=docker/hub-tool
+  command: hub-tool version
+  filter: ^Version
+  pattern: s/^Version:\s+v(.+)$/\1/
+tags:
+- docker
+- hub
+install:
+  script: |-
+    download "https://github.com/${PACKAGE_REPOSITORY}/releases/download/${requested_version}/hub-tool-linux-amd64.tar.gz"
+    untargz "hub-tool-linux-amd64.tar.gz"
+    install_binary hub-tool/hub-tool
