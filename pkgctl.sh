@@ -407,7 +407,7 @@ function get_package_definition() {
     fi
 
     # shellcheck disable=SC2154
-    if test -f "${working_directory}/${package:0:1}/${package}/package.yaml"; then
+    if test -f "${working_directory}/packages/${package:0:1}/${package}/package.yaml"; then
         debug_stderr "Using local package.yaml"
 
         if ! type yq >/dev/null 2>&1; then
@@ -415,10 +415,10 @@ function get_package_definition() {
             exit 1
 
         elif test "$(yq --version | sed -E "s/^yq\sversion\s([0-9]+)\..+$/\1/")" == "3"; then
-            yq --tojson read "${working_directory}/${package:0:1}/${package}/package.yaml"
+            yq --tojson read "${working_directory}/packages/${package:0:1}/${package}/package.yaml"
 
         elif test "$(yq --version | sed -E "s/^yq\sversion\s([0-9]+)\..+$/\1/")" == "4"; then
-            yq --tojson eval '.' "${working_directory}/${package:0:1}/${package}/package.yaml"
+            yq --tojson eval '.' "${working_directory}/packages/${package:0:1}/${package}/package.yaml"
 
         else
             error_stderr "Unable to determine version of yq."
