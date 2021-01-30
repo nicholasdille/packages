@@ -88,8 +88,7 @@ for asset_url in ${assets}; do
             unpack_command=ungz
             ;;
         *)
-            echo "ERROR: Unknown archive type for asset <${asset_name}>."
-            exit 1
+            unpack_command=UNKNOWN
             ;;
     esac
 
