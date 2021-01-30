@@ -1,0 +1,37 @@
+name: doas
+description: A port of OpenBSD's doas which runs on FreeBSD, Linux, NetBSD, and illumos
+repo: slicer69/doas
+version:
+  latest: 6.3p2 # renovate: datasource=github-releases depName=slicer69/doas
+tags:
+  - sudo
+files:
+- name: Dockerfile
+  content: |
+    FROM ubuntu:20.10
+    RUN apt-get update \
+     && apt-get -y install --no-install-recommends \
+            curl \
+            ca-certificates \
+            build-essential \
+            make \
+            bison \
+            flex \
+            libpam0g-dev
+install:
+  script: |-
+    docker build --tag build-doas .
+
+    build_containerized build-doas <<EOF
+    mkdir /tmp/doas
+    cd /tmp/doas
+    curl --silent --location https://github.com/${PACKAGE_REPOSITORY}/archive/${requested_version}.tar.gz | \
+        tar -xz --strip-components=1
+    make
+    make install PREFIX="${TARGET_BASE}"
+    EOF
+
+    docker cp "${container_name}:${TARGET_BASE}" - | \
+        ${SUDO} tar -xvC "${TARGET_BASE}/.."
+
+    docker image rm -f build-doas
