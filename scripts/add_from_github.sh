@@ -68,35 +68,43 @@ install:
   script: |-
 EOF
 
-for asset_url in ${assets}; do
-    asset_name=$(basename "${asset_url}")
-
-    case "${asset_name}" in
-        *.tar.gz|*.tgz)
-            unpack_command=untargz
-            ;;
-        *.tar.bz2)
-            unpack_command=untarbz2
-            ;;
-        *.tar.xz)
-            unpack_command=untarxz
-            ;;
-        *.zip)
-            unpack_command="unzip -q"
-            ;;
-        *.gz)
-            unpack_command=ungz
-            ;;
-        *)
-            unpack_command=UNKNOWN
-            ;;
-    esac
-
+if test -z "${assets}"; then
     cat >>"${filename}" <<EOF
+    curl --silent --location https://github.com/\${PACKAGE_REPOSITORY}/archive/\${requested_version}.tar.gz | \
+        tar -xz --strip-components=1
+EOF
+
+else
+    for asset_url in ${assets}; do
+        asset_name=$(basename "${asset_url}")
+
+        case "${asset_name}" in
+            *.tar.gz|*.tgz)
+                unpack_command=untargz
+                ;;
+            *.tar.bz2)
+                unpack_command=untarbz2
+                ;;
+            *.tar.xz)
+                unpack_command=untarxz
+                ;;
+            *.zip)
+                unpack_command="unzip -q"
+                ;;
+            *.gz)
+                unpack_command=ungz
+                ;;
+            *)
+                unpack_command=UNKNOWN
+                ;;
+        esac
+
+        cat >>"${filename}" <<EOF
     download "${asset_url}"
     ${unpack_command} "${asset_name}"
 EOF
-done
+    done
+fi
 
 cat >>"${filename}" <<EOF
     find . -type f
