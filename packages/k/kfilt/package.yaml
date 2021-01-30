@@ -1,0 +1,18 @@
+name: kfilt
+description: kfilt can filter Kubernetes resources.
+repo: ryane/kfilt
+version:
+  latest: 0.0.5 # renovate: datasource=github-releases depName=ryane/kfilt
+  command: kfilt --version
+  filter: ^[[:digit:]]
+  pattern: s/^(\S+)\s.+$/\1/
+tags:
+- kubernetes
+- k8s
+- yaml
+- development
+install:
+  script: |-
+    download "https://github.com/${PACKAGE_REPOSITORY}/releases/download/v${requested_version}/kfilt_${requested_version}_linux_amd64"
+    mv "kfilt_${requested_version}_linux_amd64" kfilt
+    install_binary kfilt
