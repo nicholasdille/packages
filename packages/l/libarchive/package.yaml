@@ -13,7 +13,23 @@ tags:
 files:
 - name: Dockerfile
   content: |
-    FROM ubuntu:20.04
+    FROM ubuntu:20.10 AS ubuntu-20.10
+    RUN apt-get update \
+      && DEBIAN_FRONTEND=noninteractive apt-get -y install --no-install-recommends \
+            curl \
+            ca-certificates \
+            xz-utils \
+            build-essential
+            
+    FROM ubuntu:20.04 AS ubuntu-20.04
+    RUN apt-get update \
+      && DEBIAN_FRONTEND=noninteractive apt-get -y install --no-install-recommends \
+            curl \
+            ca-certificates \
+            xz-utils \
+            build-essential
+            
+    FROM ubuntu:18.04 AS ubuntu-18.04
     RUN apt-get update \
       && DEBIAN_FRONTEND=noninteractive apt-get -y install --no-install-recommends \
             curl \
@@ -23,9 +39,7 @@ files:
 install:
   docker: true
   script: |-
-    docker build --tag build-libarchive .
-
-    build_containerized build-libarchive <<EOF
+    build_containerized <<EOF
     cd /tmp
     curl --silent --location https://github.com/libarchive/libarchive/releases/download/${requested_version}/libarchive-${requested_version}.tar.xz | \
         tar -xJ
@@ -46,7 +60,5 @@ install:
             local/share/man/man3/archive_*.3 \
             local/share/man/man3/libarchive*.3 \
             local/share/man/man5/{cpio,libarchive-formats,mtree,tar}.5
-
-    docker image rm -f build-libarchive
 
     ${SUDO} ldconfig

@@ -12,7 +12,45 @@ tags:
 files:
 - name: Dockerfile
   content: |
-      FROM ubuntu:20.04
+      FROM ubuntu:20.10 AS ubuntu-20.10
+      ENV DEBIAN_FRONTEND=noninteractive
+      RUN apt-get update \
+       && apt-get -y install --no-install-recommends \
+              build-essential \
+              libreadline-gplv2-dev \
+              libncursesw5-dev \
+              libssl-dev \
+              libsqlite3-dev \
+              tk-dev \
+              libgdbm-dev \
+              libc6-dev \
+              libbz2-dev \
+              libffi-dev \
+              zlib1g-dev \
+              openssl \
+              curl \
+              ca-certificates
+
+      FROM ubuntu:20.04 AS ubuntu-20.04
+      ENV DEBIAN_FRONTEND=noninteractive
+      RUN apt-get update \
+       && apt-get -y install --no-install-recommends \
+              build-essential \
+              libreadline-gplv2-dev \
+              libncursesw5-dev \
+              libssl-dev \
+              libsqlite3-dev \
+              tk-dev \
+              libgdbm-dev \
+              libc6-dev \
+              libbz2-dev \
+              libffi-dev \
+              zlib1g-dev \
+              openssl \
+              curl \
+              ca-certificates
+
+      FROM ubuntu:18.04 AS ubuntu-18.04
       ENV DEBIAN_FRONTEND=noninteractive
       RUN apt-get update \
        && apt-get -y install --no-install-recommends \
@@ -33,9 +71,7 @@ files:
 install:
   docker: true
   script: |-
-    docker build --tag build-python .
-
-    build_containerized build-python <<EOF
+    build_containerized <<EOF
         mkdir /tmp/python
         curl --silent --location "https://github.com/python/cpython/archive/v${requested_version}.tar.gz" | \
             tar -xzC /tmp/python --strip-components=1
@@ -53,5 +89,3 @@ install:
     EOF
     docker cp "${container_name}:${TARGET_BASE}" - | \
         ${SUDO} tar -xC "${TARGET_BASE}/.."
-
-    docker image rm -f build-python

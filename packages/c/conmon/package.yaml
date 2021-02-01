@@ -12,7 +12,31 @@ tags:
 files:
   - name: Dockerfile
     content: |
-      FROM ubuntu:20.04
+      FROM ubuntu:20.10 AS ubuntu-20.10
+      ENV DEBIAN_FRONTEND=noninteractive
+      RUN apt-get update \
+      && apt-get -y install \
+              gcc \
+              libc6-dev \
+              libglib2.0-dev \
+              pkg-config \
+              make \
+              runc \
+              curl
+
+      FROM ubuntu:20.04 AS ubuntu-20.04
+      ENV DEBIAN_FRONTEND=noninteractive
+      RUN apt-get update \
+      && apt-get -y install \
+              gcc \
+              libc6-dev \
+              libglib2.0-dev \
+              pkg-config \
+              make \
+              runc \
+              curl
+
+      FROM ubuntu:18.04 AS ubuntu-18.04
       ENV DEBIAN_FRONTEND=noninteractive
       RUN apt-get update \
       && apt-get -y install \
@@ -26,14 +50,10 @@ files:
 install:
   docker: true
   script: |-
-    docker build --tag conmon .
-
-    build_containerized conmon <<EOF
+    build_containerized <<EOF
     curl --silent --location https://github.com/containers/conmon/archive/v${requested_version}.tar.gz | tar -xvzC /tmp
     cd /tmp/conmon-${requested_version}
     PREFIX=/usr/local make all
     cp bin/conmon /
     EOF
     extract_file_from_container conmon
-
-    docker image rm -f conmon

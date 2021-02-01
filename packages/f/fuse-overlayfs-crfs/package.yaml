@@ -6,7 +6,22 @@ tags:
 files:
 - name: Dockerfile
   content: |
-    FROM ubuntu:20.04
+    FROM ubuntu:20.10 AS ubuntu-20.10
+    ENV DEBIAN_FRONTEND=noninteractive
+    RUN apt-get update \
+     && apt-get -y install \
+            build-essential \
+            autoconf \
+            autogen \
+            clang \
+            pkgconf \
+            libfuse3-dev \
+            golang \
+            ca-certificates \
+            git \
+            make
+
+    FROM ubuntu:20.04 AS ubuntu-20.04
     ENV DEBIAN_FRONTEND=noninteractive
     RUN apt-get update \
      && apt-get -y install \
@@ -25,9 +40,7 @@ install:
   - fuse-overlayfs
   docker: true
   script: |-
-    docker build --tag fuse-overlay-crfs .
-
-    build_containerized fuse-overlay-crfs <<EOF
+    build_containerized <<EOF
     git clone https://github.com/giuseppe/crfs-plugin
     cd crfs-plugin
     make
@@ -37,5 +50,3 @@ install:
     ${SUDO} mkdir --parents "${TARGET_BASE}/libexec/fuse-overlayfs"
     docker cp "${container_name}:/usr/local/libexec/fuse-overlayfs/crfs-plugin.so" .
     TARGET="${TARGET_BASE}/libexec/fuse-overlayfs" install_file crfs-plugin.so
-
-    docker image rm -f fuse-overlay-crfs

@@ -13,7 +13,7 @@ tags:
 files:
   - name: Dockerfile
     content: |
-      FROM ubuntu:18.04
+      FROM ubuntu:18.04 AS ubuntu-18.04
       ENV DEBIAN_FRONTEND=noninteractive
       RUN apt-get update \
        && apt-get -y install --no-install-recommends \
@@ -45,9 +45,7 @@ install:
   - cni
   - cnitool
   script: |-
-    docker build --tag build-buildah .
-
-    build_containerized build-buildah <<EOF
+    build_containerized <<EOF
     echo "START"
     export PATH="/usr/lib/go-1.13/bin:\${PATH}"
 
@@ -76,5 +74,3 @@ install:
         docker cp "${container_name}:/${MAN}.1" "${MAN}.1"
         TARGET="${TARGET_BASE}/share/man/man1" install_file "${MAN}.1"
     done
-
-    docker image rm -f build-buildah

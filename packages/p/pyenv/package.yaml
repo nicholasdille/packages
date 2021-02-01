@@ -19,7 +19,53 @@ tags:
 files:
   - name: Dockerfile
     content: |
-      FROM ubuntu:20.04
+      FROM ubuntu:20.10 AS ubuntu-20.10
+      ENV DEBIAN_FRONTEND=noninteractive
+      RUN apt-get update \
+      && apt-get -y install \
+              build-essential \
+              libssl-dev \
+              zlib1g-dev \
+              libbz2-dev \
+              libreadline-dev \
+              libsqlite3-dev \
+              wget \
+              curl \
+              llvm \
+              libncurses5-dev \
+              libncursesw5-dev \
+              xz-utils \
+              tk-dev \
+              libffi-dev \
+              liblzma-dev \
+              python-openssl \
+              git \
+              libedit-dev
+
+      FROM ubuntu:20.04 AS ubuntu-20.04
+      ENV DEBIAN_FRONTEND=noninteractive
+      RUN apt-get update \
+      && apt-get -y install \
+              build-essential \
+              libssl-dev \
+              zlib1g-dev \
+              libbz2-dev \
+              libreadline-dev \
+              libsqlite3-dev \
+              wget \
+              curl \
+              llvm \
+              libncurses5-dev \
+              libncursesw5-dev \
+              xz-utils \
+              tk-dev \
+              libffi-dev \
+              liblzma-dev \
+              python-openssl \
+              git \
+              libedit-dev
+
+      FROM ubuntu:18.04 AS ubuntu-18.04
       ENV DEBIAN_FRONTEND=noninteractive
       RUN apt-get update \
       && apt-get -y install \
@@ -64,7 +110,10 @@ install:
         ${SUDO} git clone https://github.com/pyenv/pyenv-doctor.git "${PYENV_ROOT}/plugins/pyenv-doctor"
     fi
 
-    docker build --tag pyenv .
+    docker build \
+        --target "${DISTRIBUTION_NAME}-${DISTRIBUTION_VERSION}" \
+        --tag pyenv \
+        .
 
     docker run \
         --name pyenv \

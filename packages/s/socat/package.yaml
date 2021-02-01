@@ -16,7 +16,27 @@ tags:
 files:
   - name: Dockerfile
     content: |
-      FROM ubuntu:20.04
+      FROM ubuntu:20.10 AS ubuntu-20.10
+      ENV DEBIAN_FRONTEND=noninteractive
+      RUN apt-get update \
+      && apt-get -y install \
+              autoconf \
+              build-essential \
+              yodl \
+              git \
+              curl
+
+      FROM ubuntu:20.04 AS ubuntu-20.04
+      ENV DEBIAN_FRONTEND=noninteractive
+      RUN apt-get update \
+      && apt-get -y install \
+              autoconf \
+              build-essential \
+              yodl \
+              git \
+              curl
+
+      FROM ubuntu:18.04 AS ubuntu-18.04
       ENV DEBIAN_FRONTEND=noninteractive
       RUN apt-get update \
       && apt-get -y install \
@@ -28,9 +48,7 @@ files:
 install:
   docker: true
   script: |-
-    docker build --tag socat .
-
-    build_containerized socat <<"EOF"
+    build_containerized <<"EOF"
     curl --silent --location "http://www.dest-unreach.org/socat/download/socat-${requested_version}.tar.gz" | \
         tar -xzC /tmp
     cd "/tmp/socat-${requested_version}"
@@ -46,5 +64,3 @@ install:
     docker cp "${container_name}:/socat.1" - | \
         tar -x --to-stdout | \
         ${SUDO} tee "${TARGET_BASE}/share/man/man1/socat.1" >/dev/null
-
-    docker image rm -f socat

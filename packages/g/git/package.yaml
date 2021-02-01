@@ -11,7 +11,45 @@ tags:
 files:
 - name: Dockerfile
   content: |
-    FROM ubuntu:20.04
+    FROM ubuntu:20.10 AS ubuntu-20.10
+    ENV DEBIAN_FRONTEND=noninteractive
+    RUN apt-get update \
+     && apt-get -y install --no-install-recommends \
+            curl \
+            ca-certificates \
+            xz-utils \
+            dh-autoreconf \
+            cmake \
+            gcc \
+            libcurl4-gnutls-dev \
+            libexpat1-dev \
+            gettext \
+            libz-dev \
+            libssl-dev \
+            asciidoc \
+            xmlto \
+            install-info
+
+    FROM ubuntu:20.04 AS ubuntu-20.04
+    ENV DEBIAN_FRONTEND=noninteractive
+    RUN apt-get update \
+     && apt-get -y install --no-install-recommends \
+            curl \
+            ca-certificates \
+            xz-utils \
+            dh-autoreconf \
+            cmake \
+            gcc \
+            libcurl4-gnutls-dev \
+            libexpat1-dev \
+            gettext \
+            libz-dev \
+            libssl-dev \
+            asciidoc \
+            xmlto \
+            install-info
+
+    FROM ubuntu:18.04 AS ubuntu-18.04
     ENV DEBIAN_FRONTEND=noninteractive
     RUN apt-get update \
      && apt-get -y install --no-install-recommends \
@@ -31,9 +69,7 @@ files:
             install-info
 install:
   script: |-
-    docker build --tag build-git .
-
-    build_containerized build-git <<EOF
+    build_containerized <<EOF
     mkdir /tmp/git
     cd /tmp/git
     curl --silent --location "https://www.kernel.org/pub/software/scm/git/git-${requested_version}.tar.xz" | \
@@ -49,5 +85,3 @@ install:
 
     docker cp "${container_name}:${TARGET_BASE}" - | \
         ${SUDO} tar -xvC "${TARGET_BASE}/.."
-
-    docker image rm -f build-git
