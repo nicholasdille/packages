@@ -12,7 +12,7 @@ tags:
   - test
   - quality
 files:
-  - name: yamllint.yaml
+  - name: config
     content: |
       ---
 
