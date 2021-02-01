@@ -1,0 +1,11 @@
+name: spawn
+description: Wrap chroot, systemd-nspawn or docker run to share an environment with the host
+repo: bazurbat/spawn
+version:
+  latest: master
+tags:
+- container
+install:
+  script: |-
+    download https://github.com/bazurbat/spawn/raw/master/spawn
+    install_binary spawn
