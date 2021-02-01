@@ -41,7 +41,7 @@ jobs:
         target: ubuntu-bionic
         cache-from: "${{ env.IMAGE_NAME }}:ubuntu-bionic"
         push: ${{ github.event_name != 'pull_request' }}
-        tags: "${{ env.IMAGE_NAME }}:ubuntu-bionic"
+        tags: "${{ env.IMAGE_NAME }}:ubuntu-18.04"
         labels: ${{ steps.docker_meta.outputs.labels }}
 
     - name: Run Trivy vulnerability scanner
@@ -87,7 +87,7 @@ jobs:
         target: ubuntu-focal
         cache-from: "${{ env.IMAGE_NAME }}:ubuntu-focal"
         push: ${{ github.event_name != 'pull_request' }}
-        tags: "${{ env.IMAGE_NAME }}:ubuntu-focal"
+        tags: "${{ env.IMAGE_NAME }}:ubuntu-20.04"
         labels: ${{ steps.docker_meta.outputs.labels }}
 
     - name: Run Trivy vulnerability scanner
@@ -133,7 +133,7 @@ jobs:
         target: ubuntu-groovy
         cache-from: "${{ env.IMAGE_NAME }}:ubuntu-groovy"
         push: ${{ github.event_name != 'pull_request' }}
-        tags: "${{ env.IMAGE_NAME }}:ubuntu-groovy"
+        tags: "${{ env.IMAGE_NAME }}:ubuntu-20.10"
         labels: ${{ steps.docker_meta.outputs.labels }}
 
     - name: Run Trivy vulnerability scanner
