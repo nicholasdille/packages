@@ -6,10 +6,16 @@ mkdir -p "${CACHE_DIR}"
 
 make packages.json
 
-# shellcheck disable=SC1091
-source /etc/lsb-release
-if test "${DISTRIB_ID}" != "Ubuntu"; then
-    echo "ERROR: Distribution ${DISTRIB_ID} is unsupported"
+if test "$#" -eq 2; then
+    ID=$1
+    VERSION_ID=$2
+fi
+if test -z "${ID}" || test -z "${VERSION_ID}"; then
+    # shellcheck disable=SC1091
+    source /etc/os-release
+fi
+if test -z "${ID}" || test -z "${VERSION_ID}"; then
+    echo "ERROR: Unable to determine distribution and/or version."
     exit 1
 fi
 
@@ -29,7 +35,7 @@ docker run \
     --mount "type=bind,src=${PWD}/packages.json,dst=/root/.pkgctl/packages.json" \
     --mount "type=bind,src=${PWD}/pkgctl.sh,dst=/usr/local/bin/pkgctl.sh" \
     --mount "type=bind,src=${CACHE_DIR},dst=/root/.local/var/cache/pkgctl" \
-    "nicholasdille/packages-runtime:${DISTRIB_ID,,}-${DISTRIB_CODENAME}"
+    "nicholasdille/packages-runtime:${ID,,}-${VERSION_ID}"
 
 function cleanup() {
     docker rm -f "test-build-${unique_name}"
