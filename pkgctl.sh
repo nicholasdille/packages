@@ -176,6 +176,7 @@ export DOCKER_BUILDKIT=1
 
 temporary_directories=()
 temporary_containers=()
+temporary_images=()
 cleanup_tasks=( "remove_temporary_directory" "remove_temporary_container" )
 
 function cleanup() {
@@ -189,6 +190,9 @@ function remove_temporary_container() {
     if type docker >/dev/null 2>&1 && docker version >/dev/null 2>&1; then
         for container_name in "${temporary_containers[@]}"; do
             docker ps --all --quiet --filter name="${container_name}" | xargs --no-run-if-empty docker rm
+        done
+        for image_name in "${temporary_images[@]}"; do
+            docker image ls --quiet "${container_name}" | xargs --no-run-if-empty docker image rm
         done
     fi
 }
@@ -269,7 +273,10 @@ function download() {
         pushd "${DOWNLOAD_DIR}/${hash}"
         echo "${url}" >url
         verbose "Downloading file from <${url}>..."
-        curl --location --fail --remote-name "${url}"
+        if ! curl --location --fail --remote-name "${url}"; then
+            error "Failed to download from <${url}>"
+            exit 1
+        fi
         popd
     fi
 
@@ -672,12 +679,29 @@ function check_docker() {
 
 function build_containerized() {
     local image=$1
-    shift
-    local command=("$@")
+
+    if test "$#" -gt 0; then
+        shift
+        local command=("$@")
+    fi
 
     if test -z "${image}"; then
-        error "Image not specified."
-        exit 1
+        if test -f "${temporary_directory}/Dockerfile"; then
+            image="${container_name,,}"
+            verbose "Building image for target ${DISTRIBUTION_NAME}-${DISTRIBUTION_VERSION}"
+            docker build \
+                --target "${DISTRIBUTION_NAME}-${DISTRIBUTION_VERSION}" \
+                --tag "${image}" \
+                .
+            temporary_images+=( "${image}" )
+
+        else
+            error "Image not specified."
+            exit 1
+        fi
+
+    else
+        debug "Building containerized using image <${image}>."
     fi
     if test "${#command[@]}" == 0; then
         command=("bash" "-xe")
@@ -685,7 +709,11 @@ function build_containerized() {
 
     # shellcheck disable=SC2154
     cat | \
-        docker run -i --name "${container_name}" --env requested_version="${requested_version}" "${image}" "${command[@]}"
+        docker run \
+            --name "${container_name}" \
+            --interactive \
+            --env requested_version="${requested_version}" \
+            "${image}" "${command[@]}"
 }
 
 function extract_file_from_container() {
@@ -1036,6 +1064,9 @@ function handle_install() {
     fi
 
     working_directory="${PWD}"
+
+    eval "$(cat /etc/os-release | sed -E 's/^ID=/export DISTRIBUTION_NAME=/; s/^VERSION_ID=/export DISTRIBUTION_VERSION=/' | grep "^export DISTRIBUTION_")"
+    debug "Running on distribution ${DISTRIBUTION_NAME} version ${DISTRIBUTION_VERSION}."
 
     packages=()
     until test "$#" -eq 0; do
