@@ -102,8 +102,7 @@ install:
             --with-ensurepip=yes \
             --enable-optimizations \
             LDFLAGS="-Wl,-rpath ${TARGET_BASE}/lib"
-        make -j2
-        make install
+        make -j2 install
         python3 -m pip install --upgrade pip
     EOF
     docker cp "${container_name}:${TARGET_BASE}" - | \
