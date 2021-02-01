@@ -61,7 +61,7 @@ RUN apt-get update \
 WORKDIR /tmp
 CMD sleep infinity
 
-FROM ubuntu:21.04 AS ubuntu-hirsute
+FROM ubuntu:21.04@sha256:2fc51f401cb873bfec33022d065efacbaf868b2e23f4dd76d7230d129258e255 AS ubuntu-hirsute
 RUN apt-get update \
  && DEBIAN_FRONTEND=noninteractive apt-get -y install --no-install-recommends \
         bash \
