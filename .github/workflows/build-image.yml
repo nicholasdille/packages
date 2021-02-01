@@ -39,7 +39,7 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         target: ubuntu-bionic
-        cache-from: "${{ env.IMAGE_NAME }}:ubuntu-bionic"
+        cache-from: "${{ env.IMAGE_NAME }}:ubuntu-18.04"
         push: ${{ github.event_name != 'pull_request' }}
         tags: "${{ env.IMAGE_NAME }}:ubuntu-18.04"
         labels: ${{ steps.docker_meta.outputs.labels }}
@@ -48,7 +48,7 @@ jobs:
       if: github.event_name != 'pull_request'
       uses: aquasecurity/trivy-action@master
       with:
-        image-ref: "${{ env.IMAGE_NAME }}:ubuntu-bionic"
+        image-ref: "${{ env.IMAGE_NAME }}:ubuntu-18.04"
         format: 'template'
         template: '@/contrib/sarif.tpl'
         output: 'trivy-results.sarif'
@@ -85,7 +85,7 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         target: ubuntu-focal
-        cache-from: "${{ env.IMAGE_NAME }}:ubuntu-focal"
+        cache-from: "${{ env.IMAGE_NAME }}:ubuntu-20.04"
         push: ${{ github.event_name != 'pull_request' }}
         tags: "${{ env.IMAGE_NAME }}:ubuntu-20.04"
         labels: ${{ steps.docker_meta.outputs.labels }}
@@ -94,7 +94,7 @@ jobs:
       if: github.event_name != 'pull_request'
       uses: aquasecurity/trivy-action@master
       with:
-        image-ref: "${{ env.IMAGE_NAME }}:ubuntu-focal"
+        image-ref: "${{ env.IMAGE_NAME }}:ubuntu-20.04"
         format: 'template'
         template: '@/contrib/sarif.tpl'
         output: 'trivy-results.sarif'
@@ -131,7 +131,7 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         target: ubuntu-groovy
-        cache-from: "${{ env.IMAGE_NAME }}:ubuntu-groovy"
+        cache-from: "${{ env.IMAGE_NAME }}:ubuntu-20.10"
         push: ${{ github.event_name != 'pull_request' }}
         tags: "${{ env.IMAGE_NAME }}:ubuntu-20.10"
         labels: ${{ steps.docker_meta.outputs.labels }}
@@ -140,7 +140,7 @@ jobs:
       if: github.event_name != 'pull_request'
       uses: aquasecurity/trivy-action@master
       with:
-        image-ref: "${{ env.IMAGE_NAME }}:ubuntu-groovy"
+        image-ref: "${{ env.IMAGE_NAME }}:ubuntu-20.10"
         format: 'template'
         template: '@/contrib/sarif.tpl'
         output: 'trivy-results.sarif'
@@ -177,16 +177,16 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         target: ubuntu-hirsute
-        cache-from: "${{ env.IMAGE_NAME }}:ubuntu-hirsute"
+        cache-from: "${{ env.IMAGE_NAME }}:ubuntu-21.04"
         push: ${{ github.event_name != 'pull_request' }}
-        tags: "${{ env.IMAGE_NAME }}:ubuntu-20.10"
+        tags: "${{ env.IMAGE_NAME }}:ubuntu-21.04"
         labels: ${{ steps.docker_meta.outputs.labels }}
 
     - name: Run Trivy vulnerability scanner
       if: github.event_name != 'pull_request'
       uses: aquasecurity/trivy-action@master
       with:
-        image-ref: "${{ env.IMAGE_NAME }}:ubuntu-hirsute"
+        image-ref: "${{ env.IMAGE_NAME }}:ubuntu-21.04"
         format: 'template'
         template: '@/contrib/sarif.tpl'
         output: 'trivy-results.sarif'
