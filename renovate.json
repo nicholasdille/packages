@@ -76,6 +76,7 @@
     },
     {
       "packageNames": [
+        "replicatedhq/dockerfilelint",
         "awslabs/cdk8s",
         "rancher/harvester",
         "fishworks/gofish",

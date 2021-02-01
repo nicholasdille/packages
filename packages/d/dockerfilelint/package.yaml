@@ -1,0 +1,16 @@
+name: dockerfilelint
+description: An opinionated Dockerfile linter.
+repo: replicatedhq/dockerfilelint
+version:
+  latest: 1.8.0 # renovate: datasource=github-tags depName=replicatedhq/dockerfilelint
+tags:
+- docker
+- container
+- image
+- dockerfile
+- lint
+install:
+  requires:
+  - node
+  script: |-
+    install_node_module dockerfilelint@${requested_version}
