@@ -689,10 +689,13 @@ function build_containerized() {
         if test -f "${temporary_directory}/Dockerfile"; then
             image="${container_name,,}"
             verbose "Building image for target ${DISTRIBUTION_NAME}-${DISTRIBUTION_VERSION}"
-            docker build \
-                --target "${DISTRIBUTION_NAME}-${DISTRIBUTION_VERSION}" \
-                --tag "${image}" \
-                .
+            if ! docker build \
+                    --target "${DISTRIBUTION_NAME}-${DISTRIBUTION_VERSION}" \
+                    --tag "${image}" \
+                    .; then
+                error "Unable to build image for ${DISTRIBUTION_NAME} ${DISTRIBUTION_VERSION}. Missing target?"
+                exit 1
+            fi
             temporary_images+=( "${image}" )
 
         else
