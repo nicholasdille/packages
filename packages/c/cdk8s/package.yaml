@@ -1,0 +1,17 @@
+name: cdk8s
+description: Define Kubernetes native apps and abstractions using object-oriented programming
+repo: awslabs/cdk8s
+links:
+- text: Homepage
+  url: https://cdk8s.io/
+version:
+  latest: 1.0.0-beta.6 # renovate: datasource=github-releases depName=awslabs/cdk8s
+tags:
+- kubernetes
+- k8s
+- aws
+install:
+  requires:
+  - node
+  script: |-
+    install_node_module cdk8s-cli@${requested_version}
