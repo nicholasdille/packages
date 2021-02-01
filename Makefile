@@ -93,6 +93,20 @@ check-dirty:
 	fi
 
 .PHONY:
+check-name: .bin/yq
+	@\
+	find packages -type f -name \*.yaml | \
+		sort | \
+		while read FILE; do \
+			DIRNAME="$$(basename "$$(dirname "$${FILE}")")"; \
+			PKGNAME="$$(./.bin/yq read "$${FILE}" 'name')"; \
+			if test "$${DIRNAME}" != "$${PKGNAME}"; then \
+				echo "Directory name does not match package name ($${DIRNAME}!=$${PKGNAME})."; \
+				exit 1; \
+			fi; \
+		done
+
+.PHONY:
 next-packages-%: .bin/semver
 	@\
 	.bin/semver bump $* $(PACKAGES_VERSION)

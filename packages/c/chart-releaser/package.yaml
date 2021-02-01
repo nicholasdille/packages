@@ -1,4 +1,4 @@
-name: cfssl
+name: chart-releaser
 description: Hosting Helm Charts via GitHub Pages and Releases
 repo: helm/chart-releaser
 version:
