@@ -60,3 +60,21 @@ RUN apt-get update \
         libffi8ubuntu1
 WORKDIR /tmp
 CMD sleep infinity
+
+FROM ubuntu:21.04 AS ubuntu-hirsute
+RUN apt-get update \
+ && DEBIAN_FRONTEND=noninteractive apt-get -y install --no-install-recommends \
+        bash \
+        curl \
+        jq \
+        xz-utils \
+        unzip \
+        git \
+        ca-certificates \
+        gettext \
+        fontconfig \
+        patch \
+        make \
+        libffi8ubuntu1
+WORKDIR /tmp
+CMD sleep infinity
