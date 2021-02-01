@@ -2,7 +2,7 @@ name: kube-capacity
 description: A simple CLI that provides an overview of the resource requests, limits, and utilization in a Kubernetes cluster
 repo: robscott/kube-capacity
 version:
-  latest: 0.5.0 # renovate: datasource=github-releases depName=robscott/kube-capacity
+  latest: 0.5.1 # renovate: datasource=github-releases depName=robscott/kube-capacity
   command: kube-capacity version
   filter: ^kube-capacity
   pattern: s/^kube-capacity\sversion\s(.+)$/\1/
