@@ -1,0 +1,14 @@
+name: k8s-tew
+description: Kubernetes - The Easier Way
+repo: darxkies/k8s-tew
+version:
+  latest: 2.4.5 # renovate: datasource=github-releases depName=darxkies/k8s-tew
+tags:
+- kubernetes
+- k8s
+- cluster
+- bootstrap
+install:
+  script: |-
+    download "https://github.com/${PACKAGE_REPOSITORY}/releases/download/${requested_version}/k8s-tew"
+    install_binary k8s-tew
