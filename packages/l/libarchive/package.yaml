@@ -13,6 +13,14 @@ tags:
 files:
 - name: Dockerfile
   content: |
+    FROM ubuntu:21.04 AS ubuntu-21.04
+    RUN apt-get update \
+      && DEBIAN_FRONTEND=noninteractive apt-get -y install --no-install-recommends \
+            curl \
+            ca-certificates \
+            xz-utils \
+            build-essential
+            
     FROM ubuntu:20.10 AS ubuntu-20.10
     RUN apt-get update \
       && DEBIAN_FRONTEND=noninteractive apt-get -y install --no-install-recommends \

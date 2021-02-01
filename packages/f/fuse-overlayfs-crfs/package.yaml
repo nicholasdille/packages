@@ -6,6 +6,21 @@ tags:
 files:
 - name: Dockerfile
   content: |
+    FROM ubuntu:21.04 AS ubuntu-21.04
+    ENV DEBIAN_FRONTEND=noninteractive
+    RUN apt-get update \
+     && apt-get -y install \
+            build-essential \
+            autoconf \
+            autogen \
+            clang \
+            pkgconf \
+            libfuse3-dev \
+            golang \
+            ca-certificates \
+            git \
+            make
+
     FROM ubuntu:20.10 AS ubuntu-20.10
     ENV DEBIAN_FRONTEND=noninteractive
     RUN apt-get update \

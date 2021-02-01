@@ -10,6 +10,25 @@ tags:
 files:
 - name: Dockerfile
   content: |
+      FROM ubuntu:21.04 AS ubuntu-21.04
+      RUN apt-get update \
+       && DEBIAN_FRONTEND=noninteractive apt-get -y install --no-install-recommends \
+              bison \
+              build-essential \
+              ca-certificates \
+              cmake \
+              curl \
+              flex \
+              git \
+              libedit-dev \
+              libllvm11 \
+              llvm-dev \
+              libclang-dev \
+              python \
+              zlib1g-dev \
+              libelf-dev \
+              libfl-dev
+
       FROM ubuntu:20.10 AS ubuntu-20.10
       RUN apt-get update \
        && DEBIAN_FRONTEND=noninteractive apt-get -y install --no-install-recommends \
@@ -21,7 +40,7 @@ files:
               flex \
               git \
               libedit-dev \
-              libllvm7 \
+              libllvm11 \
               llvm-dev \
               libclang-dev \
               python \
