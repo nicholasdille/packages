@@ -1271,7 +1271,65 @@ function handle_version() {
         sed -E \"${version_pattern}\""
 }
 
+function check_runtime_dependencies() {
+    local curl_available=true
+    local jq_available=true
+    local column_available=true
+    local yq_available=true
+    local xz_available=true
+    local unzip_available=true
+    local envsubst_available=true
+    local docker_available=true
+
+    if ! type curl >/dev/null 2>&1; then
+        curl_available=false
+    fi
+    if ! type jq >/dev/null 2>&1; then
+        jq_available=false
+    fi
+    if ! type column >/dev/null 2>&1; then
+        column_available=false
+    fi
+    if ! type yq >/dev/null 2>&1; then
+        yq_available=false
+    fi
+    if ! type xz >/dev/null 2>&1; then
+        xz_available=false
+    fi
+    if ! type unzip >/dev/null 2>&1; then
+        unzip_available=false
+    fi
+    if ! type envsubst >/dev/null 2>&1; then
+        envsubst_available=false
+    fi
+    if ! type docker >/dev/null 2>&1; then
+        docker_available=false
+    fi
+
+    if ${curl_available} && ${jq_available}; then
+        debug "All required tools available."
+    else
+    	${curl_available}   || error "curl is required for subcommands bootstrap/cache/install."
+    	${jq_available}     || error "jq is required for almost allsubcommands."
+        exit 1
+    fi
+
+    if ! ${column_available}; then
+        warning "column is required for subcommands list/search/tags."
+    fi
+
+    if ! ${xz_available} || ! ${unzip_available} || ! ${envsubst_available} || ! ${docker_available}; then
+        debug "Some packages will not install correctly because xz/unzip/envsubst/docker are required."
+    fi
+
+    if ! ${yq_available}; then
+        warning "yq is unavailable. Local development will not work."
+    fi
+}
+
 function main() {
+    check_runtime_dependencies
+
     if test "$#" -eq 0; then
         show_help
         exit 0
