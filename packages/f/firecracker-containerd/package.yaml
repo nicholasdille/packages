@@ -67,7 +67,7 @@ install:
     extract_file_from_container firecracker-ctr
 
     mv etc.firecracker-containerd.config.toml config.toml
-    TARGET=/etc/firecracker-containerd install_file config.toml
+    TARGET="${TARGET_BASE}/etc/firecracker-containerd" install_file config.toml
 
     mv etc.containerd.firecracker-runtime.json firecracker-runtime.json
-    TARGET=/etc/containerd install_file firecracker-runtime.json
+    TARGET="${TARGET_BASE}/etc/containerd" install_file firecracker-runtime.json

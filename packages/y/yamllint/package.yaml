@@ -81,5 +81,5 @@ install:
   script: |-
     install_python_module yamllint==${requested_version}
 
-    mkdir -p "${HOME}/.config/yamllint"
-    TARGET="${HOME}/.config/yamllint" install_file config
+    mkdir -p "${TARGET_BASE}/etc/yamllint"
+    TARGET="${TARGET_BASE}/etc/yamllint" install_file config

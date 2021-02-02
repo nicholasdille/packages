@@ -12,10 +12,10 @@ files:
     content: |
       #!/bin/bash
       function _update_ps1() {
-          PS1="$("${TARGET_BIN}/powerline-go" -theme "${HOME}/.local/etc/powerline-go-theme.json" -error $? -modules exit,user,cwd,git,docker-context,kube,jobs -newline)"
+          PS1="$("${TARGET_BIN}/powerline-go" -theme "${TARGET_BASE}/etc/powerline-go-theme.json" -error $? -modules exit,user,cwd,git,docker-context,kube,jobs -newline)"
       }
       PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
-  - name: theme.json
+  - name: powerline-go-theme.json
     content: |
       {
         "KubeClusterFg": 117,
@@ -359,7 +359,7 @@ install:
     mv powerline-go-linux-amd64 powerline-go
     install_binary powerline-go
 
-    TARGET="${HOME}/.local/etc" install_file theme.json
+    TARGET="${TARGET_BASE}/etc" install_file powerline-go-theme.json
 
     cat profile.d.powerline-go.sh | \
         TARGET_BIN="${TARGET_BIN}" envsubst '${TARGET_BIN}' \
