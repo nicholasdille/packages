@@ -43,7 +43,7 @@ install:
     install_completion docker.sh
 
     mv profile.d.docker.sh docker.sh
-    TARGET=/etc/profile.d install_file docker.sh
+    TARGET="${TARGET_BASE}/etc/profile.d" install_file docker.sh
 
     ${SUDO} mkdir --parents "/etc/docker/"
     if ! test -f "/etc/docker/daemon.json"; then

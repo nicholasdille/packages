@@ -27,4 +27,4 @@ install:
     cat profile.d.gvm.sh | \
         TARGET_BASE=${TARGET_BASE} envsubst '${TARGET_BASE}' \
         >gvm.sh
-    TARGET=/etc/profile.d install_file gvm.sh
+    TARGET="${TARGET_BASE}/etc/profile.d" install_file gvm.sh

@@ -24,4 +24,4 @@ install:
     install_binary direnv
 
     mv profile.d.direnv.sh direnv.sh
-    TARGET=/etc/profile.d install_file direnv.sh
+    TARGET="${TARGET_BASE}/etc/profile.d" install_file direnv.sh

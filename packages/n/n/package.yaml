@@ -25,4 +25,4 @@ install:
     cat profile.d.n.sh | \
         TARGET_BASE="${TARGET_BASE}" envsubst '${TARGET_BASE}' \
         >n.sh
-    TARGET=/etc/profile.d install_file n.sh
+    TARGET="${TARGET_BASE}/etc/profile.d" install_file n.sh

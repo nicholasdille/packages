@@ -26,4 +26,4 @@ install:
     cat profile.d.sslyze.sh | \
         TARGET_BASE=${TARGET_BASE} envsubst '${TARGET_BASE}' \
         >sslyze.sh
-    TARGET=/etc/profile.d install_file sslyze.sh
+    TARGET="${TARGET_BASE}/etc/profile.d" install_file sslyze.sh

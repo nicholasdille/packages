@@ -22,4 +22,4 @@ install:
     cat profile.d.go.sh | \
         TARGET_BASE="${TARGET_BASE}" envsubst '${TARGET_BASE}' \
         >go.sh
-    TARGET=/etc/profile.d install_file go.sh
+    TARGET="${TARGET_BASE}/etc/profile.d" install_file go.sh

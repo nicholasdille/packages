@@ -364,4 +364,4 @@ install:
     cat profile.d.powerline-go.sh | \
         TARGET_BIN="${TARGET_BIN}" envsubst '${TARGET_BIN}' \
         >powerline-go.sh
-    TARGET=/etc/profile.d install_file powerline-go.sh
+    TARGET="${TARGET_BASE}/etc/profile.d" install_file powerline-go.sh

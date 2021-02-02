@@ -150,4 +150,4 @@ install:
     cat profile.d.pyenv.sh | \
         TARGET_BASE="${TARGET_BASE}" envsubst '${TARGET_BASE}' \
         >pyenv.sh
-    TARGET=/etc/profile.d install_file pyenv.sh
+    TARGET="${TARGET_BASE}/etc/profile.d" install_file pyenv.sh

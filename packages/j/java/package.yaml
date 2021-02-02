@@ -24,7 +24,7 @@ install:
     cat profile.d.java.sh | \
         TARGET_BASE=${TARGET_BASE} envsubst '${TARGET_BASE}' \
         >java.sh
-    TARGET=/etc/profile.d install_file java.sh
+    TARGET="${TARGET_BASE}/etc/profile.d" install_file java.sh
 files:
 - name: profile.d.java.sh
   content: |

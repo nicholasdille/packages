@@ -20,7 +20,7 @@ install:
     cat profile.d.jabba.sh | \
         TARGET_BASE=${TARGET_BASE} envsubst '${TARGET_BASE}' \
         >jabba.sh
-    TARGET=/etc/profile.d install_file jabba.sh
+    TARGET="${TARGET_BASE}/etc/profile.d" install_file jabba.sh
 files:
 - name: profile.d.jabba.sh
   content: |
