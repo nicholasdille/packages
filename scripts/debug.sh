@@ -38,6 +38,9 @@ docker run \
     "nicholasdille/packages-runtime:${ID,,}-${VERSION_ID}"
 
 function cleanup() {
+    docker exec "test-build-${unique_name}" \
+        chown -R "$(id -u):$(id -g)" "/root/.local/var/cache/pkgctl"
+
     docker rm -f "test-build-${unique_name}"
 }
 trap cleanup EXIT
