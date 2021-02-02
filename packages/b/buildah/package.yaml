@@ -45,7 +45,7 @@ install:
   - cni
   - cnitool
   script: |-
-    build_containerized <<EOF
+    build_containerized ubuntu-18.04 <<EOF
     echo "START"
     export PATH="/usr/lib/go-1.13/bin:\${PATH}"
 

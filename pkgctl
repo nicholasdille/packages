@@ -716,6 +716,35 @@ function build_containerized() {
     else
         debug "Building containerized using image <${image}>."
     fi
+
+    if test "$(docker image ls --quiet "${image}" | wc -l)" -eq 0; then
+        debug "Specified image not found."
+
+        TARGET_FOUND=false
+        if test -f Dockerfile; then
+            debug "Looking for matching target in Dockerfile"
+
+            TARGETS=$(cat Dockerfile | grep ^FROM | sed -E "s/^FROM\s\S+\sAS\s(.+)$/\1/")
+            for TARGET in ${TARGETS}; do
+                if test "${TARGET}" == "${image}"; then
+                    TARGET_FOUND=true
+                    break
+                fi
+            done
+        fi
+        if ${TARGET_FOUND}; then
+            debug "Found target <${image}> in Dockerfile"
+            debug "Building from local Dockerfile"
+
+            docker build \
+                --target "${image}" \
+                --tag "${image}" \
+                .
+        else
+            verbose "Assuming public image <${image}>"
+        fi
+    fi
+
     if test "${#command[@]}" == 0; then
         command=("bash" "-xe")
     fi

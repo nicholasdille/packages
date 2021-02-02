@@ -1,3 +1,5 @@
+SHELL = /bin/bash
+
 DEFINITIONS        := $(shell find . -type f -name package.yaml)
 SCRIPTS            := $(shell find . -type f -name \*.sh | sort)
 PACKAGES_VERSION   := $(shell git tag | grep "packages/" | cut -d/ -f2 | sort -V -r | head -n 1)
@@ -133,6 +135,38 @@ bump-cli-%: check-dirty .bin/semver
 	echo "Updating CLI from $(CLI_VERSION) to $${NEW_VERSION}"; \
 	git tag --annotate --sign --message "CLI v$${NEW_VERSION}" cli/$${NEW_VERSION}; \
 	git push --tags
+
+.PHONY:
+images:
+	@\
+	TARGETS=$$(cat Dockerfile | grep ^FROM | sed -E "s/^FROM\s\S+\sAS\s(.+)$$/\1/"); \
+	for TARGET in $${TARGETS}; do \
+		docker build \
+			--target "$${TARGET}" \
+			--cache-from "nicholasdille/packages-runtime:$${TARGET}" \
+			--tag "nicholasdille/packages-runtime:$${TARGET}" \
+			.; \
+	done
+
+.PHONY:
+image-%:
+	@\
+	docker build \
+		--target $* \
+		--cache-from nicholasdille/packages-runtime:$* \
+		--tag nicholasdille/packages-runtime:$* \
+		.
+
+.PHONY:
+image:
+	@\
+	eval "export $$(cat /etc/os-release | grep ^ID=)"; \
+	eval "export $$(cat /etc/os-release | grep ^VERSION_ID=)"; \
+	docker build \
+		--target "$${ID,,}-$${VERSION_ID}" \
+		--cache-from "nicholasdille/packages-runtime:$${ID,,}-$${VERSION_ID}" \
+		--tag "nicholasdille/packages-runtime:$${ID,,}-$${VERSION_ID}" \
+		.
 
 .PHONY:
 tools: .bin/jq .bin/yq .bin/shellcheck .bin/semver

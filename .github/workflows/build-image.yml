@@ -38,7 +38,7 @@ jobs:
     - name: Build and push
       uses: docker/build-push-action@v2
       with:
-        target: ubuntu-bionic
+        target: ubuntu-18.04
         cache-from: "${{ env.IMAGE_NAME }}:ubuntu-18.04"
         push: ${{ github.event_name != 'pull_request' }}
         tags: "${{ env.IMAGE_NAME }}:ubuntu-18.04"
@@ -84,7 +84,7 @@ jobs:
     - name: Build and push
       uses: docker/build-push-action@v2
       with:
-        target: ubuntu-focal
+        target: ubuntu-20.04
         cache-from: "${{ env.IMAGE_NAME }}:ubuntu-20.04"
         push: ${{ github.event_name != 'pull_request' }}
         tags: "${{ env.IMAGE_NAME }}:ubuntu-20.04"
@@ -130,7 +130,7 @@ jobs:
     - name: Build and push
       uses: docker/build-push-action@v2
       with:
-        target: ubuntu-groovy
+        target: ubuntu-20.10
         cache-from: "${{ env.IMAGE_NAME }}:ubuntu-20.10"
         push: ${{ github.event_name != 'pull_request' }}
         tags: "${{ env.IMAGE_NAME }}:ubuntu-20.10"
@@ -176,7 +176,7 @@ jobs:
     - name: Build and push
       uses: docker/build-push-action@v2
       with:
-        target: ubuntu-hirsute
+        target: ubuntu-21.04
         cache-from: "${{ env.IMAGE_NAME }}:ubuntu-21.04"
         push: ${{ github.event_name != 'pull_request' }}
         tags: "${{ env.IMAGE_NAME }}:ubuntu-21.04"
