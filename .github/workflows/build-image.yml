@@ -49,6 +49,7 @@ jobs:
       uses: aquasecurity/trivy-action@master
       with:
         image-ref: "${{ env.IMAGE_NAME }}:ubuntu-18.04"
+        ignore-unfixed: true
         format: 'template'
         template: '@/contrib/sarif.tpl'
         output: 'trivy-results.sarif'
@@ -95,6 +96,7 @@ jobs:
       uses: aquasecurity/trivy-action@master
       with:
         image-ref: "${{ env.IMAGE_NAME }}:ubuntu-20.04"
+        ignore-unfixed: true
         format: 'template'
         template: '@/contrib/sarif.tpl'
         output: 'trivy-results.sarif'
@@ -141,6 +143,7 @@ jobs:
       uses: aquasecurity/trivy-action@master
       with:
         image-ref: "${{ env.IMAGE_NAME }}:ubuntu-20.10"
+        ignore-unfixed: true
         format: 'template'
         template: '@/contrib/sarif.tpl'
         output: 'trivy-results.sarif'
@@ -187,6 +190,7 @@ jobs:
       uses: aquasecurity/trivy-action@master
       with:
         image-ref: "${{ env.IMAGE_NAME }}:ubuntu-21.04"
+        ignore-unfixed: true
         format: 'template'
         template: '@/contrib/sarif.tpl'
         output: 'trivy-results.sarif'
