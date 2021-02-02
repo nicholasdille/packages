@@ -1,4 +1,4 @@
-name: docker-build
+name: Build images
 
 on:
   schedule:
@@ -13,7 +13,7 @@ on:
 jobs:
 
   build-ubuntu-bionic:
-    name: docker-build-ubuntu-bionic
+    name: Ubuntu 18.04
     runs-on: ubuntu-20.04
     env:
       IMAGE_NAME: "${{ secrets.DOCKER_HUB_USERNAME }}/packages-runtime"
@@ -59,7 +59,7 @@ jobs:
         sarif_file: 'trivy-results.sarif'
 
   build-ubuntu-focal:
-    name: docker-build-ubuntu-focal
+    name: Ubuntu 20.04
     runs-on: ubuntu-20.04
     env:
       IMAGE_NAME: "${{ secrets.DOCKER_HUB_USERNAME }}/packages-runtime"
@@ -105,7 +105,7 @@ jobs:
         sarif_file: 'trivy-results.sarif'
 
   build-ubuntu-groovy:
-    name: docker-build-ubuntu-groovy
+    name: Ubuntu 20.10
     runs-on: ubuntu-20.04
     env:
       IMAGE_NAME: "${{ secrets.DOCKER_HUB_USERNAME }}/packages-runtime"
@@ -151,7 +151,7 @@ jobs:
         sarif_file: 'trivy-results.sarif'
 
   build-ubuntu-hirsute:
-    name: docker-build-ubuntu-hirsute
+    name: Ubuntu 21.04
     runs-on: ubuntu-20.04
     env:
       IMAGE_NAME: "${{ secrets.DOCKER_HUB_USERNAME }}/packages-runtime"
