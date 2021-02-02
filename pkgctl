@@ -996,6 +996,7 @@ function install_package() {
         warning "This is a forced installation."
     else
         if requested_version_installed "${package}" "${requested_version}"; then
+            info "Version already installed."
             verbose "Requested version ${requested_version} of ${package} is already installed."
             return
         fi
@@ -1024,6 +1025,7 @@ function install_package() {
 
     eval "${install_script}"
 
+    info "Installation completed."
     verbose "Finished installation of ${package} version ${requested_version:-UNKNOWN}."
 }
 
