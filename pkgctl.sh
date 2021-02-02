@@ -314,10 +314,20 @@ function untargz() {
 }
 
 function untarxz() {
+    if ! type xz >/dev/null 2>&1; then
+        error "xz is not available."
+        exit 1
+    fi
+
     COMPRESSION_PARAMETER="-J" unpack "$@"
 }
 
 function untarbz2() {
+    if ! type bzip2 >/dev/null 2>&1; then
+        error "bzip2 is not available."
+        exit 1
+    fi
+
     COMPRESSION_PARAMETER="-j" unpack "$@"
 }
 
@@ -1117,6 +1127,11 @@ function handle_list() {
         exit 1
     fi
 
+    if ! type column >/dev/null 2>&1; then
+        error "column from util-linux is not available."
+        exit 1
+    fi
+
     # shellcheck disable=SC2002
     cat "${PACKAGES_JSON_PATH}" | \
         jq --raw-output '
@@ -1129,6 +1144,11 @@ function handle_list() {
 }
 
 function handle_search() {
+    if ! type column >/dev/null 2>&1; then
+        error "column from util-linux is not available."
+        exit 1
+    fi
+
     SEARCH_TERM=""
     SEARCH_NAME=false
     SEARCH_DESC=false
@@ -1277,6 +1297,7 @@ function check_runtime_dependencies() {
     local column_available=true
     local yq_available=true
     local xz_available=true
+    local bzip2_available=true
     local unzip_available=true
     local envsubst_available=true
     local docker_available=true
@@ -1296,6 +1317,9 @@ function check_runtime_dependencies() {
     if ! type xz >/dev/null 2>&1; then
         xz_available=false
     fi
+    if ! type bzip2 >/dev/null 2>&1; then
+        bzip2_available=false
+    fi
     if ! type unzip >/dev/null 2>&1; then
         unzip_available=false
     fi
@@ -1310,7 +1334,7 @@ function check_runtime_dependencies() {
         debug "All required tools available."
     else
     	${curl_available}   || error "curl is required for subcommands bootstrap/cache/install."
-    	${jq_available}     || error "jq is required for almost allsubcommands."
+    	${jq_available}     || error "jq is required for almost all subcommands."
         exit 1
     fi
 
@@ -1318,8 +1342,8 @@ function check_runtime_dependencies() {
         warning "column is required for subcommands list/search/tags."
     fi
 
-    if ! ${xz_available} || ! ${unzip_available} || ! ${envsubst_available} || ! ${docker_available}; then
-        debug "Some packages will not install correctly because xz/unzip/envsubst/docker are required."
+    if ! ${xz_available} || ! ${bzip2_available} || ! ${unzip_available} || ! ${envsubst_available} || ! ${docker_available}; then
+        debug "Some packages will not install correctly because xz/bzip2/unzip/envsubst/docker are required."
     fi
 
     if ! ${yq_available}; then
