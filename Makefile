@@ -31,7 +31,7 @@ check-scripts: .bin/shellcheck
 .PHONY:
 check-packages: packages.json
 	@\
-	bash pkgctl.sh cache; \
+	./pkgctl update; \
 	if ! diff "${HOME}/.pkgctl/packages.json" "packages.json" >/dev/null; then \
 		echo "!!! You must create a new release of packages.json !!!"; \
 		exit 1; \

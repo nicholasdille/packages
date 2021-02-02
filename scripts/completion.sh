@@ -46,5 +46,4 @@ function _pkgctl() {
     esac
 }
 
-complete -F _pkgctl pkgctl.sh
 complete -F _pkgctl pkgctl

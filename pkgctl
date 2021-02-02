@@ -738,10 +738,10 @@ function extract_file_from_container() {
 
 function show_help() {
     echo
-    echo "Usage: pkgctl.sh <command>"
+    echo "Usage: pkgctl <command>"
     echo
     echo "Commands:"
-    echo "    bootstrap, c   Bootstrap pkgctl.sh"
+    echo "    bootstrap, c   Bootstrap pkgctl"
     echo "    check, c       Get installed version"
     echo "    file, f        Manage files for a package"
     echo "    help, h        This message"
@@ -756,7 +756,7 @@ function show_help() {
 
 function show_help_bootstrap() {
     echo
-    echo "Usage: pkgctl.sh bootstrap [--prefix \${HOME}/.local] <string>"
+    echo "Usage: pkgctl bootstrap [<options>] <string>"
     echo
     echo "Options:"
     echo "    --prefix, -p    Location to install pkgctl into (defaults to \${HOME}/.local)"
@@ -766,7 +766,7 @@ function show_help_bootstrap() {
 
 function show_help_install() {
     echo
-    echo "Usage: pkgctl.sh install <package>[,<package>]"
+    echo "Usage: pkgctl install <package>[,<package>]"
     echo
     echo "Options:"
     echo "    --force, -f    Force installation of specified package"
@@ -777,13 +777,13 @@ function show_help_install() {
 
 function show_help_file() {
     echo
-    echo "Usage: pkgctl.sh file <package> [<file>]"
+    echo "Usage: pkgctl file <package> [<file>]"
     echo
 }
 
 function show_help_search() {
     echo
-    echo "Usage: pkgctl.sh search <string>"
+    echo "Usage: pkgctl search <string>"
     echo
     echo "Options:"
     echo "    --name, -n                   Only search in package name"
@@ -794,7 +794,7 @@ function show_help_search() {
 
 function show_help_version() {
     echo
-    echo "Usage: pkgctl.sh version <package>"
+    echo "Usage: pkgctl version <package>"
     echo
 }
 
@@ -824,7 +824,7 @@ function handle_bootstrap() {
     done
 
     mkdir -p "${PREFIX}/bin"
-    curl --silent --location "https://raw.githubusercontent.com/${MY_REPO}/${MY_VERSION}/pkgctl.sh" \
+    curl --silent --location "https://raw.githubusercontent.com/${MY_REPO}/${MY_VERSION}/pkgctl" \
         >"${PREFIX}/bin/pkgctl"
     chmod +x "${PREFIX}/bin/pkgctl"
 
@@ -873,7 +873,7 @@ function handle_file() {
     fi
 
     if ! test -f "${PACKAGES_JSON_PATH}"; then
-        error "Unable to locate packages.json. Please run <pkgctl cache> first."
+        error "Unable to locate packages.json. Please run <pkgctl update> first."
         exit 1
     fi
 
@@ -912,7 +912,7 @@ function handle_inspect() {
     fi
 
     if ! test -f "${PACKAGES_JSON_PATH}"; then
-        error "Unable to locate packages.json. Please run <pkgctl cache> first."
+        error "Unable to locate packages.json. Please run <pkgctl update> first."
         exit 1
     fi
 
@@ -1133,7 +1133,7 @@ function handle_install() {
 
 function handle_list() {
     if ! test -f "${PACKAGES_JSON_PATH}"; then
-        error "Unable to locate packages.json. Please run <pkgctl cache> first."
+        error "Unable to locate packages.json. Please run <pkgctl update> first."
         exit 1
     fi
 
@@ -1195,7 +1195,7 @@ function handle_search() {
     fi
 
     if ! test -f "${PACKAGES_JSON_PATH}"; then
-        error "Unable to locate packages.json. Please run <pkgctl cache> first."
+        error "Unable to locate packages.json. Please run <pkgctl update> first."
         exit 1
     fi
 
@@ -1235,7 +1235,7 @@ function handle_search() {
 
 function handle_tags() {
     if ! test -f "${PACKAGES_JSON_PATH}"; then
-        error "Unable to locate packages.json. Please run <pkgctl cache> first."
+        error "Unable to locate packages.json. Please run <pkgctl update> first."
         exit 1
     fi
 
@@ -1256,7 +1256,7 @@ function handle_check() {
     fi
 
     if ! test -f "${PACKAGES_JSON_PATH}"; then
-        error "Unable to locate packages.json. Please run <pkgctl cache> first."
+        error "Unable to locate packages.json. Please run <pkgctl update> first."
         exit 1
     fi
 
@@ -1343,7 +1343,7 @@ function check_runtime_dependencies() {
     if ${curl_available} && ${jq_available}; then
         debug "All required tools available."
     else
-    	${curl_available}   || error "curl is required for subcommands bootstrap/cache/install."
+    	${curl_available}   || error "curl is required for subcommands bootstrap/install/update."
     	${jq_available}     || error "jq is required for almost all subcommands."
         exit 1
     fi
@@ -1370,7 +1370,7 @@ function main() {
     fi
 
     if test -f "${PWD}/packages.json"; then
-        verbose "Using local copy of packages.json in current directory. If you are not a contributor, please run <pkg cache>."
+        verbose "Using local copy of packages.json in current directory. If you are not a contributor, please run <pkg update>."
         PACKAGES_JSON_PATH="${PWD}/packages.json"
     fi
     debug "Using ${PACKAGES_JSON_PATH}"
@@ -1433,15 +1433,15 @@ function main() {
 
 case "$0" in
     -bash)
-        # Was started using "source pkgctl.sh"
+        # Was started using "source pkgctl"
         error "Do not source this script."
     ;;
     bash)
-        # Was started using "bash pkgctl.sh"
+        # Was started using "bash pkgctl"
         main "$@"
     ;;
     *)
-        # Was started using "./pkgctl.sh"
+        # Was started using "./pkgctl"
         main "$@"
     ;;
 esac

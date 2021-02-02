@@ -40,14 +40,7 @@ Some packages require some logic to install which is based on `envsubst`, `make`
 Install the package manager:
 
 ```bash
-curl --silent https://pkg.dille.io/pkgctl.sh | sudo tee /usr/local/bin/pkgctl >/dev/null
-sudo chmod +x /usr/local/bin/pkgctl
-```
-
-... or...
-
-```bash
-curl --silent https://pkg.dille.io/pkgctl.sh | bash -s bootstrap
+curl --silent https://pkg.dille.io/pkgctl | bash -s bootstrap
 ```
 
 Download or update the package definitions:

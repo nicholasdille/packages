@@ -26,7 +26,7 @@ jobs:
               echo "ERROR: Unable to determine version"
               exit 1
           fi
-          sed -i "s/MY_VERSION=master/MY_VERSION=${VERSION}/" pkgctl.sh
+          sed -i "s/MY_VERSION=master/MY_VERSION=${VERSION}/" pkgctl
 
       - name: Create changelog
         run: |
@@ -72,6 +72,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./pkgctl.sh
+          asset_path: ./pkgctl
           asset_name: pkgctl
           asset_content_type: text/x-shellscript

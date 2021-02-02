@@ -33,7 +33,7 @@ docker run \
     --env GITHUB_TOKEN \
     --mount=type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock \
     --mount "type=bind,src=${PWD}/packages.json,dst=/root/.pkgctl/packages.json" \
-    --mount "type=bind,src=${PWD}/pkgctl.sh,dst=/usr/local/bin/pkgctl.sh" \
+    --mount "type=bind,src=${PWD}/pkgctl,dst=/usr/local/bin/pkgctl" \
     --mount "type=bind,src=${CACHE_DIR},dst=/root/.local/var/cache/pkgctl" \
     "nicholasdille/packages-runtime:${ID,,}-${VERSION_ID}"
 
