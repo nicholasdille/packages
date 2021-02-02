@@ -18,7 +18,7 @@ tags:
   - image
 install:
   script: |-
-    : "${DOCKER_CLI_DIR:=${TARGET}/lib/docker/cli-plugins}"
+    : "${DOCKER_CLI_DIR:=${TARGET_BASE}/lib/docker/cli-plugins}"
     : "${DOCKER_CONFIG:=${HOME}/.docker}"
 
     ${SUDO} mkdir --parents "${DOCKER_CLI_DIR}"
