@@ -49,6 +49,7 @@ jobs:
       uses: aquasecurity/trivy-action@master
       with:
         image-ref: "${{ env.IMAGE_NAME }}:ubuntu-18.04"
+        severity: HIGH,CRITICAL
         ignore-unfixed: true
         format: 'template'
         template: '@/contrib/sarif.tpl'
@@ -96,6 +97,7 @@ jobs:
       uses: aquasecurity/trivy-action@master
       with:
         image-ref: "${{ env.IMAGE_NAME }}:ubuntu-20.04"
+        severity: HIGH,CRITICAL
         ignore-unfixed: true
         format: 'template'
         template: '@/contrib/sarif.tpl'
@@ -143,6 +145,7 @@ jobs:
       uses: aquasecurity/trivy-action@master
       with:
         image-ref: "${{ env.IMAGE_NAME }}:ubuntu-20.10"
+        severity: HIGH,CRITICAL
         ignore-unfixed: true
         format: 'template'
         template: '@/contrib/sarif.tpl'
@@ -190,6 +193,7 @@ jobs:
       uses: aquasecurity/trivy-action@master
       with:
         image-ref: "${{ env.IMAGE_NAME }}:ubuntu-21.04"
+        severity: HIGH,CRITICAL
         ignore-unfixed: true
         format: 'template'
         template: '@/contrib/sarif.tpl'
