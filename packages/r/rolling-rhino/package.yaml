@@ -1,0 +1,11 @@
+name: rolling-rhino
+description: Convert Ubuntu into a rolling release
+repo: wimpysworld/rolling-rhino
+version:
+  latest: master
+tags:
+- ubuntu
+install:
+  script: |-
+    download https://github.com/wimpysworld/rolling-rhino/raw/master/rolling-rhino
+    install_binary rolling-rhino
