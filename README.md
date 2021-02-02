@@ -33,7 +33,7 @@ The subcommands `list` and `search` also require `column` for formatting the out
 
 Several packages require Docker and/or Git to compile the binaries from source
 
-Some packages require some logic to install which is based on `envsubst`, `make`, `xz` and `unzip`
+Some packages require some logic to install which is based on `envsubst`, `make`, `xz`, `bzip2` and `unzip`
 
 ## Usage
 
@@ -50,10 +50,10 @@ sudo chmod +x /usr/local/bin/pkgctl
 curl --silent https://pkg.dille.io/pkgctl.sh | bash -s bootstrap
 ```
 
-Cache the package definitions:
+Download or update the package definitions:
 
 ```bash
-pkgctl cache
+pkgctl update
 ```
 
 List available packages:
@@ -107,5 +107,5 @@ $ pkgctl install --file packages.txt
 `pkgctl` includes completion:
 
 ```bash
-source completion.sh
+source scripts/completion.sh
 ```

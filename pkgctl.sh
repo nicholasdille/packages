@@ -738,13 +738,11 @@ function extract_file_from_container() {
 
 function show_help() {
     echo
-    echo "Usage: sh ./pkgctl.sh <command>"
-    echo "       ./pkgctl.sh <command>"
-    echo "       curl https://pkg.dille.io/pkgctl.sh | sh -s <command>"
+    echo "Usage: pkgctl.sh <command>"
     echo
     echo "Commands:"
     echo "    bootstrap, c   Bootstrap pkgctl.sh"
-    echo "    cache, c       Cache packages.json"
+    echo "    check, c       Get installed version"
     echo "    file, f        Manage files for a package"
     echo "    help, h        This message"
     echo "    inspect        Inspect a package"
@@ -752,70 +750,66 @@ function show_help() {
     echo "    list, l        List available packages"
     echo "    search, s      Search packages (name, description and tags)"
     echo "    tags, t        Show tags"
-    echo "    version, v     Get installed version"
+    echo "    update, u      Download/updated packages.json"
     echo
 }
 
 function show_help_bootstrap() {
     echo
-    echo "Usage: sh ./pkgctl.sh bootstrap [--prefix \${HOME}/.local] <string>"
-    echo "       ./pkgctl.sh bootstrap [--prefix \${HOME}/.local] <string>"
-    echo "       curl https://pkg.dille.io/pkgctl.sh | sh -s bootstrap [<options>] <string>"
+    echo "Usage: pkgctl.sh bootstrap [--prefix \${HOME}/.local] <string>"
     echo
     echo "Options:"
-    echo "    --prefix    Location to install pkgctl into (defaults to \${HOME}/.local)"
+    echo "    --prefix, -p    Location to install pkgctl into (defaults to \${HOME}/.local)"
+    echo "    --update, -u    Download package definition after bootstrapping"
     echo
 }
 
 function show_help_install() {
     echo
-    echo "Usage: sh ./pkgctl.sh install <package>[,<package>]"
-    echo "       ./pkgctl.sh install <package>[,<package>]"
-    echo "       curl https://pkg.dille.io/pkgctl.sh | sh -s install [<options>] <package>[,<package>]"
+    echo "Usage: pkgctl.sh install <package>[,<package>]"
     echo
     echo "Options:"
     echo "    --force, -f    Force installation of specified package"
     echo "    --force-all    Force installation of specified package as well as all dependencies"
+    echo "    --dry-run      Only show installation order"
     echo
 }
 
 function show_help_file() {
     echo
-    echo "Usage: sh ./pkgctl.sh file <package> [<file>]"
-    echo "       ./pkgctl.sh file <package> [<file>]"
-    echo "       curl https://pkg.dille.io/pkgctl.sh | sh -s file <package> [<>]"
+    echo "Usage: pkgctl.sh file <package> [<file>]"
     echo
 }
 
 function show_help_search() {
     echo
-    echo "Usage: sh ./pkgctl.sh search <string>"
-    echo "       ./pkgctl.sh search <string>"
-    echo "       curl https://pkg.dille.io/pkgctl.sh | sh -s search [<options>] <string>"
+    echo "Usage: pkgctl.sh search <string>"
     echo
     echo "Options:"
-    echo "    --name, -n    Only search in package name"
-    echo "    --desc, -d    Only search in package description"
-    echo "    --tags, -t    Only search in package tags"
+    echo "    --name, -n                   Only search in package name"
+    echo "    --description, --desc, -d    Only search in package description"
+    echo "    --tags, -t                   Only search in package tags"
     echo
 }
 
 function show_help_version() {
     echo
-    echo "Usage: sh ./pkgctl.sh version <package>"
-    echo "       ./pkgctl.sh version <package>"
-    echo "       curl https://pkg.dille.io/pkgctl.sh | sh -s version <package>"
+    echo "Usage: pkgctl.sh version <package>"
     echo
 }
 
 function handle_bootstrap() {
     PREFIX="${HOME}/.local"
+    run_update=false
     while test "$#" -gt 0; do
         param=$1
         shift
         case "${param}" in
-            --prefix)
+            --prefix|-p)
                 PREFIX=$1
+            ;;
+            --update|-u)
+                run_update=true
             ;;
             --help)
                 show_help_bootstrap
@@ -833,9 +827,13 @@ function handle_bootstrap() {
     curl --silent --location "https://raw.githubusercontent.com/${MY_REPO}/${MY_VERSION}/pkgctl.sh" \
         >"${PREFIX}/bin/pkgctl"
     chmod +x "${PREFIX}/bin/pkgctl"
+
+    if ${run_update}; then
+        handle_update
+    fi
 }
 
-function handle_cache() {
+function handle_update() {
     if test "${MY_VERSION}" == "master"; then
         debug "Fetching latest tag for packages"
         TAG=$(
@@ -1037,6 +1035,7 @@ function handle_install() {
     local force_install=false
     local force_install_recursive=false
     local file=""
+    local dry_run=false
     while test "$#" -gt 0; do
         case "$1" in
             --force|-f)
@@ -1049,6 +1048,9 @@ function handle_install() {
             --file)
                 shift
                 file=$1
+                ;;
+            --dry-run)
+                dry_run=true
                 ;;
             *)
                 break
@@ -1073,7 +1075,7 @@ function handle_install() {
     fi
 
     if ! test -f "${HOME}/.pkgctl/packages.json"; then
-        handle_cache
+        handle_update
     fi
 
     working_directory="${PWD}"
@@ -1100,6 +1102,14 @@ function handle_install() {
         deps=( "${package_spec}" "${deps[@]}" )
         get_deps "${package}"
     done
+
+    if ${dry_run}; then
+        info "Installation order (ignore duplicates):"
+        for package_spec in "${deps[@]}"; do
+            info "${package_spec}"
+        done
+        exit
+    fi
 
     declare -A installed_packages
     for package_spec in "${deps[@]}"; do
@@ -1158,7 +1168,7 @@ function handle_search() {
             --name|-n)
                 SEARCH_NAME=true
             ;;
-            --desc|-d)
+            --description|--desc|-d)
                 SEARCH_DESC=true
             ;;
             --tags|-t)
@@ -1236,7 +1246,7 @@ function handle_tags() {
         uniq
 }
 
-function handle_version() {
+function handle_check() {
     package=$1
 
     if test -z "${package}"; then
@@ -1369,19 +1379,19 @@ function main() {
         param=$1
         shift
         case "${param}" in
-            help|h)
+            --help|help|h)
                 show_help
             ;;
             --version|-v)
                 echo "pkgctl version ${MY_VERSION}"
                 exit 0
             ;;
-            --log-level)
+            --log-level|-l)
                 LOG_LEVEL=${1^^}
                 LOG_LEVEL_ID=$(get_log_level_id "${LOG_LEVEL}")
             ;;
-            cache|c)
-                handle_cache "$@"
+            update|u)
+                handle_update "$@"
                 exit 0
             ;;
             bootstrap|b)
@@ -1412,8 +1422,8 @@ function main() {
                 handle_tags "$@"
                 exit 0
             ;;
-            version|v)
-                handle_version "$@"
+            check|c)
+                handle_check "$@"
                 exit 0
             ;;
         esac
