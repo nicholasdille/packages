@@ -1386,7 +1386,7 @@ function check_runtime_dependencies() {
     fi
 
     if ! ${yq_available}; then
-        warning "yq is unavailable. Local development will not work."
+        debug "yq is unavailable. Local development will not work."
     fi
 }
 
