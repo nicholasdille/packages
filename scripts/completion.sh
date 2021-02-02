@@ -39,7 +39,7 @@ function _pkgctl() {
             COMPREPLY=( "$(compgen -W "${options[*]}" -- "${cur}")" )
             ;;
         *)
-            commands=( help cache bootstrap file inspect install list search tags version )
+            commands=( help update bootstrap file inspect install list search tags check )
             options=( --version )
             COMPREPLY=( "$(compgen -W "${commands[*]} ${options[*]}" -- "${cur}")" )
             ;;
