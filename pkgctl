@@ -1462,6 +1462,9 @@ function main() {
     done
 }
 
+error "This project is discontinued in favor of homebrew (https://brew.sh/) and my own tap (https://github.com/nicholasdille/homebrew-tap)."
+exit 1
+
 case "$0" in
     -bash)
         # Was started using "source pkgctl"

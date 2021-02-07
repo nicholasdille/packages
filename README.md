@@ -1,5 +1,7 @@
 # packages
 
+**This project is discontinued in favor of [homebrew](https://brew.sh/) and [my own tap](https://github.com/nicholasdille/homebrew-tap).**
+
 Installer for tools I use regularly on Linux
 
 ## Why
