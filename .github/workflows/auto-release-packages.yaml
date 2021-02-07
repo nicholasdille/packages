@@ -1,6 +1,9 @@
 on:
-  schedule:
-  - cron: '5 0 * * *'
+  #schedule:
+  #- cron: '5 0 * * *'
+  push:
+    branches-ignore:
+      - '**'
 
 name: Auto release packages
 
@@ -62,7 +65,7 @@ jobs:
           echo "::set-output name=release::${RELEASE}"
           if ${RELEASE}; then
               make packages.json
-              
+
               echo "Release required (RELEASE=${RELEASE})"
               VERSION="$(
                   curl "https://api.github.com/repos/${GITHUB_REPOSITORY}/releases/latest" \
@@ -124,7 +127,7 @@ jobs:
           prerelease: false
 
       - name: Upload release asset
-        id: upload-release-asset 
+        id: upload-release-asset
         uses: actions/upload-release-asset@v1
         if: steps.check-for-changes.outputs.release == 'true'
         env:
